@@ -66,9 +66,7 @@ class DimensionWidgets extends Component {
 
   updateFieldState = (name, value) => {
     value = value > 0 ? value : 0;
-    this.setState({
-      [name]: value
-    })
+    this.setState({ [name]: value })
   }
 
   render() {
@@ -86,6 +84,7 @@ class DimensionWidgets extends Component {
 
 
 class LegPoseWidgets extends Component {
+
   state = {
     alpha: 0,
     beta: 0,
@@ -94,9 +93,7 @@ class LegPoseWidgets extends Component {
 
   updateFieldState = (name, value) => {
     value = Math.min(Math.max(value, -180), 180)
-    this.setState({
-      [name]: value
-    })
+    this.setState({ [name]: value })
   }
 
   render() {
@@ -106,7 +103,7 @@ class LegPoseWidgets extends Component {
 
     return (
       <div className="column-container">
-        <h3>(right middle)</h3>
+        <h3>{this.props.name}</h3>
         <form className="row-container">{inputFields}</form>
       </div>
     );
@@ -114,24 +111,26 @@ class LegPoseWidgets extends Component {
 }
 
 
-const ForwardKinematicsWidgets = () => {
-  return (
-    <>
-      <h2>Forward Kinematics</h2>
-      <div className="row-container">
-        <LegPoseWidgets/>
-        <LegPoseWidgets/>
-      </div>
-      <div className="row-container">
-        <LegPoseWidgets/>
-        <LegPoseWidgets/>
-      </div>
-      <div className="row-container">
-        <LegPoseWidgets/>
-        <LegPoseWidgets/>
-      </div>
-    </>
-  );
+class ForwardKinematicsWidgets extends Component {
+  render() {
+    return (
+      <>
+        <h2>Forward Kinematics</h2>
+        <div className="row-container">
+          <LegPoseWidgets name="left-front"/>
+          <LegPoseWidgets name="right-front"/>
+        </div>
+        <div className="row-container">
+        <LegPoseWidgets name="left-middle"/>
+          <LegPoseWidgets name="right-middle"/>
+        </div>
+        <div className="row-container">
+        <LegPoseWidgets name="left-back"/>
+          <LegPoseWidgets name="right-back"/>
+        </div>
+      </>
+    );
+  }
 }
 
 
