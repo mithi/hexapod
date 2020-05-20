@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 const InputField= props => {
   return (
@@ -9,6 +9,7 @@ const InputField= props => {
         id={props.name}
         value={props.value}
         className="input"
+        onChange={e => props.handleChange(props.name, e.target.value)}
         min={0}
         step={1}
       />
@@ -21,34 +22,48 @@ const IKSlider = () => {
   return (
     <div className="slider-container">
       <label htmlFor="rotx" className="label">rotx</label>
-      <input type="range" min={0} max={1.0} step={0.01} value={0.5} class="slider"/>
+      <input type="range" min={0} max={1.0} step={0.01} value={0.5} className="slider"/>
     </div>
   );
 }
 
-const StanceSlider = () => {
+const StanceSlider = props => {
   return (
     <div className="slider-container">
       <label htmlFor="rotx" className="label">rotx</label>
-      <input type="range" min={-90} max={90} step={0.5} value={0.0} class="slider"/>
+      <input type="range" min={-90} max={90} step={0.5} value={0.0} className="slider"/>
     </div>
   );
 }
 
-const DimensionWidgets = () => {
-  return (
-    <>
-    <h2>Dimensions</h2>
-    <form className="row-container">
-      <InputField name="FRONT" value={100} />
-      <InputField name="SIDE" value={100} />
-      <InputField name="BACK" value={100} />
-      <InputField name="COXIA" value={100} />
-      <InputField name="FEMUR" value={100} />
-      <InputField name="TIBIA" value={100} />
-    </form>
-    </>
-  );
+class DimensionWidgets extends Component {
+
+  state = {
+    front: 100,
+    side: 100,
+    middle: 100,
+    coxia: 100,
+    femur: 100,
+    tibia: 100,
+  }
+
+  updateFieldState = (name, value) => {
+    this.setState({
+      [name]: value
+    })
+  }
+
+  render() {
+    const inputFields = Object.keys(this.state).map(name => {
+      return <InputField key={name} name={name} value={this.state[name]} handleChange={this.updateFieldState}/>
+    });
+    return (
+      <>
+       <h2>Dimensions</h2>
+       <form className="row-container">{inputFields}</form>
+       </>
+     );
+  }
 }
 
 
@@ -89,7 +104,5 @@ const InverseKinematicsWidgets = () => {
     </>
     );
 }
-
-
 
 export { DimensionWidgets, ForwardKinematicsWidgets, InverseKinematicsWidgets };
