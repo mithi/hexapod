@@ -1,6 +1,6 @@
 import React from 'react';
 
-const InputWidget = props => {
+const InputField= props => {
   return (
     <div className="input-field-widget">
       <label htmlFor={props.name} className="label">{props.name}</label>
@@ -10,34 +10,42 @@ const InputWidget = props => {
         value={props.value}
         className="input"
         min={0}
-        step={0}
+        step={1}
       />
     </div>
   );
 }
 
 
-const Slider = () => {
-    return (
-        <div className="slider-container">
-          <label htmlFor="rotx" className="label">rotx</label>
-          <input type="range" min={0} max={1.0} step={0.01} value={0.5} class="slider"/>
-        </div>
-    );
-  }
+const IKSlider = () => {
+  return (
+    <div className="slider-container">
+      <label htmlFor="rotx" className="label">rotx</label>
+      <input type="range" min={0} max={1.0} step={0.01} value={0.5} class="slider"/>
+    </div>
+  );
+}
 
+const StanceSlider = () => {
+  return (
+    <div className="slider-container">
+      <label htmlFor="rotx" className="label">rotx</label>
+      <input type="range" min={-90} max={90} step={0.5} value={0.0} class="slider"/>
+    </div>
+  );
+}
 
 const DimensionWidgets = () => {
   return (
     <>
-    <h2>DIMENSIONS</h2>
+    <h2>Dimensions</h2>
     <form className="row-container">
-      <InputWidget name="FRONT" value={100} />
-      <InputWidget name="SIDE" value={100} />
-      <InputWidget name="BACK" value={100} />
-      <InputWidget name="COXIA" value={100} />
-      <InputWidget name="FEMUR" value={100} />
-      <InputWidget name="TIBIA" value={100} />
+      <InputField name="FRONT" value={100} />
+      <InputField name="SIDE" value={100} />
+      <InputField name="BACK" value={100} />
+      <InputField name="COXIA" value={100} />
+      <InputField name="FEMUR" value={100} />
+      <InputField name="TIBIA" value={100} />
     </form>
     </>
   );
@@ -49,9 +57,9 @@ const LegPoseWidgets = () => {
       <div className="column-container">
         <h3>(right middle)</h3>
         <form className="row-container">
-          <InputWidget name="alpha" value={0} />
-          <InputWidget name="beta" value={0} />
-          <InputWidget name="gamma" value={0} />
+          <InputField name="alpha" value={0} />
+          <InputField name="beta" value={0} />
+          <InputField name="gamma" value={0} />
         </form>
       </div>
     );
@@ -74,9 +82,9 @@ const InverseKinematicsWidgets = () => {
   return (
     <>
       <h2>Inverse Kinematics</h2>
-      <div className="row-container"><Slider/><Slider/><Slider/></div>
-      <div className="row-container"><Slider/><Slider/><Slider/></div>
-      <div className="row-container"><Slider/><Slider/></div>
+      <div className="row-container"><IKSlider/><IKSlider/><IKSlider/></div>
+      <div className="row-container"><IKSlider/><IKSlider/><IKSlider/></div>
+      <div className="row-container"><StanceSlider/><StanceSlider/></div>
 
     </>
     );
@@ -84,4 +92,4 @@ const InverseKinematicsWidgets = () => {
 
 
 
-export {DimensionWidgets, ForwardKinematicsWidgets, InverseKinematicsWidgets};
+export { DimensionWidgets, ForwardKinematicsWidgets, InverseKinematicsWidgets };
