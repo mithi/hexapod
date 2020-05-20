@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-const InputField= props => {
+const DimensionInputField= props => {
   return (
     <div className="input-field-widget">
       <label htmlFor={props.name} className="label">{props.name}</label>
@@ -17,6 +17,23 @@ const InputField= props => {
   );
 }
 
+const LegPoseInputField = props => {
+  return (
+    <div className="input-field-widget">
+      <label htmlFor={props.name} className="label">{props.name}</label>
+      <input
+        type="number"
+        id={props.name}
+        value={props.value}
+        className="input"
+        onChange={e => props.handleChange(props.name, e.target.value)}
+        min={-180}
+        max={180}
+        step={0.5}
+      />
+    </div>
+  );
+}
 
 const IKSlider = () => {
   return (
@@ -48,6 +65,7 @@ class DimensionWidgets extends Component {
   }
 
   updateFieldState = (name, value) => {
+    value = value > 0 ? value : 0;
     this.setState({
       [name]: value
     })
@@ -55,39 +73,63 @@ class DimensionWidgets extends Component {
 
   render() {
     const inputFields = Object.keys(this.state).map(name => {
-      return <InputField key={name} name={name} value={this.state[name]} handleChange={this.updateFieldState}/>
+      return <DimensionInputField key={name} name={name} value={this.state[name]} handleChange={this.updateFieldState}/>
     });
     return (
       <>
        <h2>Dimensions</h2>
        <form className="row-container">{inputFields}</form>
-       </>
+      </>
      );
   }
 }
 
 
-const LegPoseWidgets = () => {
+class LegPoseWidgets extends Component {
+  state = {
+    alpha: 0,
+    beta: 0,
+    gamma: 0,
+  }
+
+  updateFieldState = (name, value) => {
+    value = Math.min(Math.max(value, -180), 180)
+    this.setState({
+      [name]: value
+    })
+  }
+
+  render() {
+    const inputFields = Object.keys(this.state).map(name => {
+      return <LegPoseInputField key={name} name={name} value={this.state[name]} handleChange={this.updateFieldState}/>
+    });
+
     return (
       <div className="column-container">
         <h3>(right middle)</h3>
-        <form className="row-container">
-          <InputField name="alpha" value={0} />
-          <InputField name="beta" value={0} />
-          <InputField name="gamma" value={0} />
-        </form>
+        <form className="row-container">{inputFields}</form>
       </div>
     );
   }
+}
 
 
 const ForwardKinematicsWidgets = () => {
   return (
     <>
       <h2>Forward Kinematics</h2>
-      <div className="row-container"><LegPoseWidgets/><LegPoseWidgets/></div>
-      <div className="row-container"><LegPoseWidgets/><LegPoseWidgets/></div>
-      <div className="row-container"><LegPoseWidgets/><LegPoseWidgets/></div>
+      <div className="row-container">
+        <LegPoseWidgets/>
+        <LegPoseWidgets/>
+      </div>
+      <div className="row-container">
+        <LegPoseWidgets/>
+        <LegPoseWidgets/>
+      </div>
+      <div className="row-container">
+        <LegPoseWidgets/>
+        <LegPoseWidgets/>
+      </div>
     </>
   );
 }
