@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 const DimensionInputField = props => {
   return (
@@ -14,10 +14,8 @@ const DimensionInputField = props => {
         step={1}
       />
     </div>
-  );
+  )
 }
-
-
 
 class DimensionWidgets extends Component {
 
@@ -38,14 +36,14 @@ class DimensionWidgets extends Component {
     render() {
       const inputFields = Object.keys(this.state).map(name => {
         return <DimensionInputField key={name} name={name} value={this.state[name]} handleChange={this.updateFieldState}/>
-      });
+      })
       return (
         <>
          <h2>Dimensions</h2>
          <form className="row-container">{inputFields}</form>
         </>
-       );
+       )
     }
   }
 
-export default DimensionWidgets;
+export default DimensionWidgets

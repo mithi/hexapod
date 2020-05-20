@@ -15,7 +15,7 @@ const LegPoseInputField = props => {
         step={0.5}
       />
     </div>
-  );
+  )
 }
 
 class LegPoseWidgets extends Component {
@@ -34,14 +34,14 @@ class LegPoseWidgets extends Component {
   render() {
     const inputFields = Object.keys(this.state).map(name => {
       return <LegPoseInputField key={name} name={name} value={this.state[name]} handleChange={this.updateFieldState}/>
-    });
+    })
 
     return (
       <div className="column-container">
         <h3>{this.props.name}</h3>
         <form className="row-container">{inputFields}</form>
       </div>
-    );
+    )
   }
 }
 
@@ -63,7 +63,7 @@ class ForwardKinematicsWidgets extends Component {
           <LegPoseWidgets name="right-back"/>
         </div>
       </>
-    );
+    )
   }
 }
 
