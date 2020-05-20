@@ -31,6 +31,7 @@ class DimensionWidgets extends Component {
     updateFieldState = (name, value) => {
       value = value > 0 ? value : 0;
       this.setState({ [name]: value })
+      this.props.handleChange(this.state)
     }
 
     render() {

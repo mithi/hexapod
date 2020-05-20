@@ -6,22 +6,34 @@ import ForwardKinematicsWidgets from './components/ForwardKinematicsWidgets'
 import InverseKinematicsWidgets from './components/InverseKinematicsWidgets';
 
 class App extends React.Component {
+  state = {
+    currentPage: {},
+    ikParams: {},
+    hexapod: {
+      dimensions: {},
+      pose: {},
+      points: {},
+    }
+  }
 
+  updateDimensions = dimensions => {
+    this.setState({ hexapod: { ...this.state.hexapod, dimensions: dimensions } });
+  }
   render() {
     return (
       <>
-        <NavBar />
+        <NavBar/>
         <div className="app">
           <div className="sidebar">
-            <DimensionWidgets/>
+            <DimensionWidgets handleChange={this.updateDimensions} />
             <ForwardKinematicsWidgets/>
             <InverseKinematicsWidgets/>
           </div>
-          <div className="graph"><HexapodPlot /></div>
+          <div className="graph"><HexapodPlot/></div>
         </div>
         <NavFooter/>
       </>
-    );
+    )
   }
 }
 
