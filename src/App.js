@@ -1,7 +1,8 @@
 import React from 'react';
 import { NavBar, NavFooter } from './components/Nav';
-import { DimensionWidgets, ForwardKinematicsWidgets, InverseKinematicsWidgets } from './components/ControlWidgets';
+import { ForwardKinematicsWidgets, InverseKinematicsWidgets } from './components/ControlWidgets';
 import HexapodPlot from './components/HexapodPlot'
+import DimensionWidgets from './components/DimensionWidgets'
 
 class App extends React.Component {
 

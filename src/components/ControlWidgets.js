@@ -1,22 +1,5 @@
 import React, {Component} from 'react';
 
-const DimensionInputField= props => {
-  return (
-    <div className="input-field-widget">
-      <label htmlFor={props.name} className="label">{props.name}</label>
-      <input
-        type="number"
-        id={props.name}
-        value={props.value}
-        className="input"
-        onChange={e => props.handleChange(props.name, e.target.value)}
-        min={0}
-        step={1}
-      />
-    </div>
-  );
-}
-
 const LegPoseInputField = props => {
   return (
     <div className="input-field-widget">
@@ -35,14 +18,24 @@ const LegPoseInputField = props => {
   );
 }
 
-const IKSlider = () => {
+
+const TranslateSlider = props => {
   return (
     <div className="slider-container">
-      <label htmlFor="rotx" className="label">rotx</label>
-      <input type="range" min={0} max={1.0} step={0.01} value={0.5} className="slider"/>
+      <label htmlFor={props.name} className="label">{props.name}: {props.value}</label>
+      <input
+        type="range"
+        min={-1.0}
+        max={1.0}
+        step={0.01}
+        value={props.value}
+        onChange={e => props.handleChange(props.name, e.target.value)}
+        className="slider"
+      />
     </div>
   );
 }
+
 
 const StanceSlider = props => {
   return (
@@ -52,36 +45,6 @@ const StanceSlider = props => {
     </div>
   );
 }
-
-class DimensionWidgets extends Component {
-
-  state = {
-    front: 100,
-    side: 100,
-    middle: 100,
-    coxia: 100,
-    femur: 100,
-    tibia: 100,
-  }
-
-  updateFieldState = (name, value) => {
-    value = value > 0 ? value : 0;
-    this.setState({ [name]: value })
-  }
-
-  render() {
-    const inputFields = Object.keys(this.state).map(name => {
-      return <DimensionInputField key={name} name={name} value={this.state[name]} handleChange={this.updateFieldState}/>
-    });
-    return (
-      <>
-       <h2>Dimensions</h2>
-       <form className="row-container">{inputFields}</form>
-      </>
-     );
-  }
-}
-
 
 class LegPoseWidgets extends Component {
 
@@ -134,16 +97,29 @@ class ForwardKinematicsWidgets extends Component {
 }
 
 
-const InverseKinematicsWidgets = () => {
-  return (
-    <>
-      <h2>Inverse Kinematics</h2>
-      <div className="row-container"><IKSlider/><IKSlider/><IKSlider/></div>
-      <div className="row-container"><IKSlider/><IKSlider/><IKSlider/></div>
-      <div className="row-container"><StanceSlider/><StanceSlider/></div>
+class InverseKinematicsWidgets extends Component {
+  state = {
+    tx: 0,
+    ty: 0,
+    tz: 0,
+  }
 
-    </>
-    );
+  updateFieldState = (name, value) => {
+    this.setState({ [name]: value })
+  }
+  render() {
+    return (
+      <>
+        <h2>Inverse Kinematics</h2>
+        <div className="row-container">
+          <TranslateSlider name="tx" handleChange={this.updateFieldState} value={this.state.tx}/>
+          <TranslateSlider name="ty" handleChange={this.updateFieldState} value={this.state.ty}/>
+          <TranslateSlider name="tz" handleChange={this.updateFieldState} value={this.state.tz}/>
+        </div>
+        <div className="row-container"><StanceSlider/><StanceSlider/></div>
+      </>
+      );
+  }
 }
 
-export { DimensionWidgets, ForwardKinematicsWidgets, InverseKinematicsWidgets };
+export {ForwardKinematicsWidgets, InverseKinematicsWidgets };
