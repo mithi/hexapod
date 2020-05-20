@@ -1,5 +1,4 @@
-import React, {Component} from 'react';
-
+import React, { Component } from 'react';
 
 const TranslateSlider = props => {
   return (
@@ -17,7 +16,6 @@ const TranslateSlider = props => {
     </div>
   );
 }
-
 
 const StanceSlider = props => {
   return (
@@ -56,4 +54,4 @@ class InverseKinematicsWidgets extends Component {
   }
 }
 
-export { InverseKinematicsWidgets };
+export default InverseKinematicsWidgets;
