@@ -1,56 +1,61 @@
-import React, { Component } from 'react';
+import React, { Component } from "react"
 
-const TranslateSlider = props => {
+const TranslateSlider = (props) => {
   return (
     <div className="slider-container">
-      <label htmlFor={props.name} className="label">{props.name}: {props.value}</label>
+      <label htmlFor={props.name} className="label">
+        {props.name}: {props.value}
+      </label>
       <input
         type="range"
         min={-1.0}
         max={1.0}
         step={0.01}
         value={props.value}
-        onChange={e => props.handleChange(props.name, e.target.value)}
+        onChange={(e) => props.handleChange(props.name, e.target.value)}
         className="slider"
       />
     </div>
   )
 }
 
-const RotateSlider = props => {
+const RotateSlider = (props) => {
   return (
     <div className="slider-container">
-      <label htmlFor={props.name} className="label">{props.name}: {props.value}</label>
+      <label htmlFor={props.name} className="label">
+        {props.name}: {props.value}
+      </label>
       <input
         type="range"
         min={-45}
         max={45}
         step={0.5}
         value={props.value}
-        onChange={e => props.handleChange(props.name, e.target.value)}
+        onChange={(e) => props.handleChange(props.name, e.target.value)}
         className="slider"
       />
     </div>
   )
 }
 
-const StanceSlider = props => {
+const StanceSlider = (props) => {
   return (
     <div className="slider-container">
-      <label htmlFor={props.name} className="label">{props.name}: {props.value}</label>
+      <label htmlFor={props.name} className="label">
+        {props.name}: {props.value}
+      </label>
       <input
         type="range"
         min={-45}
         max={45}
         step={0.5}
         value={props.value}
-        onChange={e => props.handleChange(props.name, e.target.value)}
+        onChange={(e) => props.handleChange(props.name, e.target.value)}
         className="slider"
       />
     </div>
   )
 }
-
 
 class InverseKinematicsWidgets extends Component {
   state = {
@@ -72,22 +77,54 @@ class InverseKinematicsWidgets extends Component {
       <>
         <h2>Inverse Kinematics</h2>
         <div className="row-container">
-          <TranslateSlider name="tx" handleChange={this.updateFieldState} value={this.state.tx}/>
-          <TranslateSlider name="ty" handleChange={this.updateFieldState} value={this.state.ty}/>
-          <TranslateSlider name="tz" handleChange={this.updateFieldState} value={this.state.tz}/>
+          <TranslateSlider
+            name="tx"
+            handleChange={this.updateFieldState}
+            value={this.state.tx}
+          />
+          <TranslateSlider
+            name="ty"
+            handleChange={this.updateFieldState}
+            value={this.state.ty}
+          />
+          <TranslateSlider
+            name="tz"
+            handleChange={this.updateFieldState}
+            value={this.state.tz}
+          />
         </div>
         <div className="row-container">
-          <RotateSlider name="rx" handleChange={this.updateFieldState} value={this.state.rx}/>
-          <RotateSlider name="ry" handleChange={this.updateFieldState} value={this.state.ry}/>
-          <RotateSlider name="rz" handleChange={this.updateFieldState} value={this.state.rz}/>
+          <RotateSlider
+            name="rx"
+            handleChange={this.updateFieldState}
+            value={this.state.rx}
+          />
+          <RotateSlider
+            name="ry"
+            handleChange={this.updateFieldState}
+            value={this.state.ry}
+          />
+          <RotateSlider
+            name="rz"
+            handleChange={this.updateFieldState}
+            value={this.state.rz}
+          />
         </div>
         <div className="row-container">
-          <StanceSlider name="hipStance" handleChange={this.updateFieldState} value={this.state.hipStance}/>
-          <StanceSlider name="legStance" handleChange={this.updateFieldState} value={this.state.legStance}/>
+          <StanceSlider
+            name="hipStance"
+            handleChange={this.updateFieldState}
+            value={this.state.hipStance}
+          />
+          <StanceSlider
+            name="legStance"
+            handleChange={this.updateFieldState}
+            value={this.state.legStance}
+          />
         </div>
       </>
-      )
+    )
   }
 }
 
-export default InverseKinematicsWidgets;
+export default InverseKinematicsWidgets

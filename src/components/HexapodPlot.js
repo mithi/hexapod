@@ -1,5 +1,5 @@
-import React from 'react';
-import Plot from 'react-plotly.js';
+import React from "react"
+import Plot from "react-plotly.js"
 
 const BODY_MESH_COLOR = "#ff6348"
 const BODY_MESH_OPACITY = 0.3
@@ -30,7 +30,7 @@ const DATA = [
     z: [100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0],
   },
   {
-    line: {color: BODY_COLOR, opacity: 1.0, width: BODY_OUTLINE_WIDTH},
+    line: { color: BODY_COLOR, opacity: 1.0, width: BODY_OUTLINE_WIDTH },
     name: "body",
     showlegend: true,
     type: "scatter3d",
@@ -39,7 +39,7 @@ const DATA = [
     z: [100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0],
   },
   {
-    marker: {color: COG_COLOR, opacity: 1, size: COG_SIZE},
+    marker: { color: COG_COLOR, opacity: 1, size: COG_SIZE },
     mode: "markers",
     name: "cog",
     type: "scatter3d",
@@ -48,7 +48,7 @@ const DATA = [
     z: [100.0],
   },
   {
-    marker: {color: BODY_COLOR, opacity: 1.0, size: HEAD_SIZE},
+    marker: { color: BODY_COLOR, opacity: 1.0, size: HEAD_SIZE },
     mode: "markers",
     name: "head",
     type: "scatter3d",
@@ -57,7 +57,7 @@ const DATA = [
     z: [100.0],
   },
   {
-    line: {color: LEG_COLOR, width: LEG_OUTLINE_WIDTH},
+    line: { color: LEG_COLOR, width: LEG_OUTLINE_WIDTH },
     name: "leg 1",
     showlegend: false,
     type: "scatter3d",
@@ -66,7 +66,7 @@ const DATA = [
     z: [100.0, 100.0, 100.0, 0.0],
   },
   {
-    line: {color: LEG_COLOR, width: LEG_OUTLINE_WIDTH},
+    line: { color: LEG_COLOR, width: LEG_OUTLINE_WIDTH },
     name: "leg 2",
     showlegend: false,
     type: "scatter3d",
@@ -75,7 +75,7 @@ const DATA = [
     z: [100.0, 100.0, 100.0, 0.0],
   },
   {
-    line: {color: LEG_COLOR, width: LEG_OUTLINE_WIDTH},
+    line: { color: LEG_COLOR, width: LEG_OUTLINE_WIDTH },
     name: "leg 3",
     showlegend: false,
     type: "scatter3d",
@@ -84,21 +84,21 @@ const DATA = [
     z: [100.0, 100.0, 100.0, 0.0],
   },
   {
-      line: {color: LEG_COLOR, width: LEG_OUTLINE_WIDTH},
-      name: "leg 4",
-      showlegend: false,
-      type: "scatter3d",
-      x: [-100.0, -200.0, -300.0, -300.0],
-      y: [
-        0.0,
-        1.2246467991473532e-14,
-        2.4492935982947064e-14,
-        2.4492935982947064e-14,
-      ],
-      z: [100.0, 100.0, 100.0, 0.0],
+    line: { color: LEG_COLOR, width: LEG_OUTLINE_WIDTH },
+    name: "leg 4",
+    showlegend: false,
+    type: "scatter3d",
+    x: [-100.0, -200.0, -300.0, -300.0],
+    y: [
+      0.0,
+      1.2246467991473532e-14,
+      2.4492935982947064e-14,
+      2.4492935982947064e-14,
+    ],
+    z: [100.0, 100.0, 100.0, 0.0],
   },
   {
-    line: {color: LEG_COLOR, width: LEG_OUTLINE_WIDTH},
+    line: { color: LEG_COLOR, width: LEG_OUTLINE_WIDTH },
     name: "leg 5",
     showlegend: false,
     type: "scatter3d",
@@ -107,7 +107,7 @@ const DATA = [
     z: [100.0, 100.0, 100.0, 0.0],
   },
   {
-    line: {color: LEG_COLOR, width: LEG_OUTLINE_WIDTH},
+    line: { color: LEG_COLOR, width: LEG_OUTLINE_WIDTH },
     name: "leg 6",
     showlegend: false,
     type: "scatter3d",
@@ -140,7 +140,7 @@ const DATA = [
     z: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
   },
   {
-    line: {color: "#2f3640", width: 2},
+    line: { color: "#2f3640", width: 2 },
     name: "hexapod x",
     mode: "lines",
     showlegend: false,
@@ -151,7 +151,7 @@ const DATA = [
     z: [100.0, 100.0],
   },
   {
-    line: {color: "#e67e22", width: 2},
+    line: { color: "#e67e22", width: 2 },
     name: "hexapod y",
     mode: "lines",
     showlegend: false,
@@ -162,7 +162,7 @@ const DATA = [
     z: [100.0, 100.0],
   },
   {
-    line: {color: "#0097e6", "width": 2},
+    line: { color: "#0097e6", width: 2 },
     name: "hexapod z",
     mode: "lines",
     showlegend: false,
@@ -173,7 +173,7 @@ const DATA = [
     z: [100.0, 150.0],
   },
   {
-    line: {color: "#2f3640", width: 2},
+    line: { color: "#2f3640", width: 2 },
     name: "x direction",
     showlegend: false,
     mode: "lines",
@@ -184,7 +184,7 @@ const DATA = [
     z: [0, 0],
   },
   {
-    line: {color: "#e67e22", width: 2},
+    line: { color: "#e67e22", width: 2 },
     name: "y direction",
     showlegend: false,
     mode: "lines",
@@ -195,7 +195,7 @@ const DATA = [
     z: [0, 0],
   },
   {
-    line: {color: "#0097e6", width: 2},
+    line: { color: "#0097e6", width: 2 },
     name: "z direction",
     showlegend: false,
     mode: "lines",
@@ -205,7 +205,7 @@ const DATA = [
     y: [0, 0],
     z: [0, 50],
   },
-];
+]
 
 const SCENE = {
   xaxis: {
@@ -228,7 +228,7 @@ const SCENE = {
     backgroundcolor: GROUND_COLOR,
   },
   aspectmode: "manual",
-  aspectratio: {x: 1, y: 1, z: 0.5},
+  aspectratio: { x: 1, y: 1, z: 0.5 },
   camera: {
     center: {
       x: 0.0348603742736399,
@@ -240,31 +240,26 @@ const SCENE = {
       y: 0.45997575676993,
       z: -0.111568465000231,
     },
-    up: {x: 0, y: 0, z: 1},
+    up: { x: 0, y: 0, z: 1 },
   },
-};
+}
 
 const LAYOUT = {
   width: 875,
   height: 625,
   scene: SCENE,
-  margin: {b: 20, l: 10, r: 10, t: 20},
+  margin: { b: 20, l: 10, r: 10, t: 20 },
   paper_bgcolor: PAPER_BG_COLOR,
   legend: {
     x: 0,
     y: 0,
     bgcolor: LEGENDS_BG_COLOR,
-    font: {family: "courier", size: 12, color: LEGEND_FONT_COLOR},
+    font: { family: "courier", size: 12, color: LEGEND_FONT_COLOR },
   },
-};
-
-const HexapodPlot = () => {
-  return(
-    <Plot
-      data={DATA}
-      layout={LAYOUT}
-    />
-  );
 }
 
-export default HexapodPlot;
+const HexapodPlot = () => {
+  return <Plot data={DATA} layout={LAYOUT} />
+}
+
+export default HexapodPlot
