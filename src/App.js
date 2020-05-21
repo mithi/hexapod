@@ -5,6 +5,7 @@ import HexapodPlot from "./components/HexapodPlot"
 import DimensionWidgets from "./components/widgets/DimensionWidgets"
 import ForwardKinematicsWidgets from "./components/widgets/ForwardKinematicsWidgets"
 import InverseKinematicsWidgets from "./components/widgets/InverseKinematicsWidgets"
+import LegPatternWidgets from "./components/widgets/LegPatternWidgets"
 import { DATA, LAYOUT } from "./components/templates/plotParams"
 import {
   DIMENSIONS,
@@ -16,6 +17,7 @@ class App extends React.Component {
   state = {
     currentPage: {},
     ikParams: IK_PARAMS,
+    patternParams: { alpha: 0, beta: 0, gamma: 0 },
     alerts: "",
     messages: "",
     hexapod: {
@@ -29,34 +31,6 @@ class App extends React.Component {
       latestCameraView: {},
       revisionCounter: 0,
     },
-  }
-
-  updateDimensions = (name, value) => {
-    const dimensions = { ...this.state.hexapod.dimensions, [name]: value }
-    this.setState({
-      hexapod: { ...this.state.hexapod, dimensions: dimensions },
-    })
-  }
-
-  updateIkParams = (name, value) => {
-    this.setState({
-      ikParams: { ...this.state.ikParams, [name]: value },
-    })
-  }
-
-  updatePose = (legName, angle, value) => {
-    const { pose } = this.state.hexapod
-    const newPose = {
-      ...pose,
-      [legName]: { ...pose[legName], [angle]: value },
-    }
-    this.setState({ hexapod: { ...this.state.hexapod, pose: newPose } })
-  }
-
-  logCameraView = (relayoutData) => {
-    const newCameraView = relayoutData["scene.camera"]
-    const plot = { ...this.state.plot, latestCameraView: newCameraView }
-    this.setState({ ...this.state, plot: plot })
   }
 
   onFKPageLoad = () => {
@@ -79,6 +53,61 @@ class App extends React.Component {
     })
   }
 
+  onPLPageLoad = () => {
+    this.setState({
+      currentPage: "leg patterns",
+    })
+
+    this.setState({
+      pose: POSE,
+    })
+
+    this.setState({
+      patternParams: { alpha: 0, beta: 0, gamma: 0 },
+    })
+  }
+
+  updateDimensions = (name, value) => {
+    const dimensions = { ...this.state.hexapod.dimensions, [name]: value }
+    this.setState({
+      hexapod: { ...this.state.hexapod, dimensions: dimensions },
+    })
+  }
+
+  updateIkParams = (name, value) => {
+    this.setState({
+      ikParams: { ...this.state.ikParams, [name]: value },
+    })
+  }
+
+  updatePose = (name, angle, value) => {
+    const { pose } = this.state.hexapod
+    const newPose = {
+      ...pose,
+      [name]: { ...pose[name], [angle]: value },
+    }
+    this.setState({ hexapod: { ...this.state.hexapod, pose: newPose } })
+  }
+
+  updatePatternPose = (name, value) => {
+    const { pose } = this.state.hexapod
+
+    let newPose = {}
+    for (const leg in pose) {
+      newPose[leg] = { ...pose[leg], [name]: value }
+    }
+    this.setState({ hexapod: { ...this.state.hexapod, pose: newPose } })
+    this.setState({
+      patternParams: { ...this.state.patternParams, [name]: value },
+    })
+  }
+
+  logCameraView = (relayoutData) => {
+    const newCameraView = relayoutData["scene.camera"]
+    const plot = { ...this.state.plot, latestCameraView: newCameraView }
+    this.setState({ ...this.state, plot: plot })
+  }
+
   renderPageContent = () => {
     return (
       <Switch>
@@ -97,6 +126,13 @@ class App extends React.Component {
             params={this.state.ikParams}
             onUpdate={this.updateIkParams}
             onMount={this.onIKPageLoad}
+          />
+        </Route>
+        <Route path="/leg-patterns">
+          <LegPatternWidgets
+            params={this.state.patternParams}
+            onUpdate={this.updatePatternPose}
+            onMount={this.onLPPageLoad}
           />
         </Route>
       </Switch>

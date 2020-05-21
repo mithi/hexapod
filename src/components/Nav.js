@@ -8,6 +8,8 @@ const ICON_DOT = "●"
 const ICON_SRC = "👾"
 const PATH_IK = "inverse-kinematics"
 const PATH_FK = "forward-kinematics"
+const PATH_LP = "leg-patterns"
+
 const PATH_ROOT = "/"
 const ROOT_LINK_TXT = "💋 Root"
 const IK_LINK_TXT = `${ICON_DOT} Inverse Kinematics`
@@ -44,6 +46,7 @@ const NavBar = () => (
     <PageLink path={PATH_ROOT} symbol={ICON_DOT} />
     <PageLink path={PATH_FK} symbol={ICON_DOT} />
     <PageLink path={PATH_IK} symbol={ICON_DOT} />
+    <PageLink path={PATH_LP} symbol={ICON_DOT} />
   </div>
 )
 
@@ -66,7 +69,7 @@ const NavFooter = () => (
       <PageLink path={PATH_FK} symbol={FK_LINK_TXT} klass="nav-footer-link" />
       <PageLink path={PATH_IK} symbol={IK_LINK_TXT} klass="nav-footer-link" />
       <PageLink
-        path={PATH_ROOT}
+        path={PATH_LP}
         symbol={PATTERNS_LINK_TXT}
         klass="nav-footer-link"
       />

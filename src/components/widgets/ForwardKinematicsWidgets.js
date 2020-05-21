@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import LegPoseWidget from './LegPoseWidgetDefault'
+import LegPoseWidget from "./LegPoseWidgetDefault"
 
 class ForwardKinematicsWidgets extends Component {
   componentDidMount() {
@@ -20,7 +20,6 @@ class ForwardKinematicsWidgets extends Component {
 
     return <div className="row-container"> {legPoseWidget} </div>
   }
-
 
   render() {
     return (
