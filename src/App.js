@@ -5,6 +5,7 @@ import HexapodPlot from "./components/HexapodPlot"
 import DimensionWidgets from "./components/DimensionWidgets"
 import ForwardKinematicsWidgets from "./components/ForwardKinematicsWidgets"
 import InverseKinematicsWidgets from "./components/InverseKinematicsWidgets"
+import { DATA, LAYOUT } from "./components/templates/plotParams"
 import {
   DIMENSIONS,
   POSE,
@@ -21,6 +22,10 @@ class App extends React.Component {
       dimensions: DIMENSIONS,
       pose: POSE,
       points: {},
+    },
+    plot: {
+      data: DATA,
+      layout: LAYOUT,
     },
   }
 
@@ -82,7 +87,10 @@ class App extends React.Component {
             <NavFooter />
           </div>
           <div className="graph">
-            <HexapodPlot />
+            <HexapodPlot
+              data={this.state.plot.data}
+              layout={this.state.plot.layout}
+            />
           </div>
         </div>
       </Router>

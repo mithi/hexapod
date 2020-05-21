@@ -1,12 +1,11 @@
 import React from "react"
 import Plot from "react-plotly.js"
-import { DATA, LAYOUT } from "./templates/plotParams"
 
-const HexapodPlot = () => {
+const HexapodPlot = (props) => {
   return (
     <Plot
-      data={DATA}
-      layout={LAYOUT}
+      data={props.data}
+      layout={props.layout}
       useResizeHandler={true}
       style={{ height: "100%", width: "100%" }}
     />
