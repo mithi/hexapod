@@ -58,6 +58,10 @@ const StanceSlider = (props) => {
 }
 
 class InverseKinematicsWidgets extends Component {
+  componentDidMount() {
+    this.props.onMount()
+  }
+
   render() {
     const translateSliders = ["tx", "ty", "tz"].map((name) => {
       return (

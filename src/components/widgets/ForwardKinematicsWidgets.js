@@ -63,6 +63,10 @@ class ForwardKinematicsWidgets extends Component {
     return <div className="row-container"> {legPoseWidgets} </div>
   }
 
+  componentDidMount() {
+    this.props.onMount()
+  }
+
   render() {
     return (
       <>

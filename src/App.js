@@ -59,6 +59,26 @@ class App extends React.Component {
     this.setState({ ...this.state, plot: plot })
   }
 
+  onFKPageLoad = () => {
+    this.setState({
+      currentPage: "forward kinematics",
+    })
+
+    this.setState({
+      ikParams: IK_PARAMS,
+    })
+  }
+
+  onIKPageLoad = () => {
+    this.setState({
+      currentPage: "inverse kinematics",
+    })
+
+    this.setState({
+      pose: POSE,
+    })
+  }
+
   renderPageContent = () => {
     return (
       <Switch>
@@ -69,12 +89,14 @@ class App extends React.Component {
           <ForwardKinematicsWidgets
             pose={this.state.hexapod.pose}
             onUpdate={this.updatePose}
+            onMount={this.onFKPageLoad}
           />
         </Route>
         <Route path="/inverse-kinematics">
           <InverseKinematicsWidgets
             params={this.state.ikParams}
             onUpdate={this.updateIkParams}
+            onMount={this.onIKPageLoad}
           />
         </Route>
       </Switch>

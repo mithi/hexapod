@@ -36,6 +36,7 @@ class DimensionWidgets extends Component {
         />
       )
     })
+
     return (
       <>
         <h2>Dimensions</h2>
