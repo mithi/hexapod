@@ -5,7 +5,7 @@ body {
   font-weight: bold;
   background-color: rgb(34, 47, 62);
   color: rgb(50, 255, 126);
-  margin-left: 1rem;
+  margin-left: 0.5rem;
   font-size: 3px;
   font-family: Consolas, Monaco, "Courier New", Menlo, monospace;
   -webkit-font-smoothing: antialiased;
@@ -20,6 +20,7 @@ a {
 
 a:hover {
   color: #ffa801;
+  font-weight: bold;
 }
 
 h2,
@@ -34,11 +35,6 @@ h3 {
 
 h3 {
   font-size: 0.8rem;
-}
-
-.app {
-  display: flex;
-  /*flex-wrap: wrap;  wrap wrap-reverse*/
 }
 
 .sidebar {
@@ -95,8 +91,8 @@ h3 {
 }
 
 .input:hover {
-  color: #ffa801;
-  border: 3px solid #ef5777;
+  color: #ef5777;
+  border: 2px solid  #ffa801;
 }
 
 .label {
@@ -116,7 +112,6 @@ h3 {
 
 .slider-container {
   margin: 5px;
-  flex: 1;
 }
 
 .slider {
@@ -126,11 +121,13 @@ h3 {
   border-radius: 5px;
   background: #ef5777;
   outline: none;
+  margin: 5px;
 }
 
-/* Mouse-over effects */
 .slider:hover {
   background: #ffa801;
+  height: 7px;
+  margin: 3px;
 }
 
 .slider::-webkit-slider-thumb {
@@ -148,7 +145,6 @@ h3 {
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  outline: none;
   background: rgb(46, 204, 113);
   cursor: pointer;
   border: 0;

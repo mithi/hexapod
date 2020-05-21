@@ -72,7 +72,7 @@ class App extends React.Component {
     return (
       <Router>
         <NavBar />
-        <div className="app">
+        <div className="row-container">
           <div className="sidebar column-container">
             <DimensionWidgets
               dimensions={this.state.hexapod.dimensions}

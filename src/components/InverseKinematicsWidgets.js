@@ -2,7 +2,7 @@ import React, { Component } from "react"
 
 const TranslateSlider = (props) => {
   return (
-    <div className="slider-container">
+    <div className="slider-container cell">
       <label htmlFor={props.name} className="label">
         {props.name}: {props.value}
       </label>
@@ -21,7 +21,7 @@ const TranslateSlider = (props) => {
 
 const RotateSlider = (props) => {
   return (
-    <div className="slider-container">
+    <div className="slider-container cell">
       <label htmlFor={props.name} className="label">
         {props.name}: {props.value}
       </label>
@@ -40,7 +40,7 @@ const RotateSlider = (props) => {
 
 const StanceSlider = (props) => {
   return (
-    <div className="slider-container">
+    <div className="slider-container cell">
       <label htmlFor={props.name} className="label">
         {props.name}: {props.value}
       </label>
