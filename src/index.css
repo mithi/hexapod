@@ -47,6 +47,10 @@ h3 {
   flex-shrink: 0;
 }
 
+.main-content {
+  flex-grow: 1;
+}
+
 .graph {
   border: 1px;
 }

@@ -97,12 +97,12 @@ class App extends React.Component {
       <Router>
         <NavBar />
         <div className="app">
-          <div className="sidebar">
+          <div className="sidebar column-container">
             <DimensionWidgets
               dimensions={this.state.hexapod.dimensions}
               onUpdate={this.updateDimensions}
             />
-            {this.renderPageContent()}
+            <div className="main-content">{this.renderPageContent()}</div>
             <NavFooter />
           </div>
           <div className="graph">
