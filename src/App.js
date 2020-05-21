@@ -26,6 +26,7 @@ class App extends React.Component {
     plot: {
       data: DATA,
       layout: LAYOUT,
+      latestCameraView: {}
     },
   }
 
@@ -49,6 +50,12 @@ class App extends React.Component {
       [legName]: { ...pose[legName], [angle]: value },
     }
     this.setState({ hexapod: { ...this.state.hexapod, pose: newPose } })
+  }
+
+  logCameraView = (relayoutData) => {
+    const newCameraView = relayoutData['scene.camera']
+    const plot = {...this.state.plot, latestCameraView: newCameraView}
+    this.setState( {...this.state, plot: plot} )
   }
 
   renderPageContent = () => {
@@ -90,6 +97,7 @@ class App extends React.Component {
             <HexapodPlot
               data={this.state.plot.data}
               layout={this.state.plot.layout}
+              onRelayout={this.logCameraView}
             />
           </div>
         </div>

@@ -9,6 +9,7 @@ const HexapodPlot = (props) => {
       useResizeHandler={true}
       style={{ height: "100%", width: "100%" }}
       config={{displaylogo: false, responsive: true}}
+      onRelayout={props.onRelayout}
     />
   )
 }
