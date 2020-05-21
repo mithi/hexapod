@@ -37,10 +37,14 @@ h3 {
   font-size: 0.8rem;
 }
 
+.app {
+  display: flex;
+}
+
 .sidebar {
-  width: 400px;
-  height: 625px;
   margin-right: 10px;
+  width: 375px;
+  height: 625px;
   flex-shrink: 0;
 }
 
@@ -92,7 +96,7 @@ h3 {
 
 .input:hover {
   color: #ef5777;
-  border: 2px solid  #ffa801;
+  border: 2px solid #ffa801;
 }
 
 .label {
@@ -149,3 +153,56 @@ h3 {
   cursor: pointer;
   border: 0;
 }
+
+@media screen and (max-width: 900px) {
+  .app {
+    display: flex;
+  }
+
+  .sidebar {
+    width: 300px;
+  }
+
+  .graph {
+    width: 100%;
+    height: 500px;
+    flex: 1;
+  }
+
+  .main-content {
+    flex-grow: 0;
+  }
+
+  .nav-footer {
+    margin: 10px;
+    border-radius: 10px;
+    border: 1px solid rgb(41, 128, 185);
+    padding: 10px;
+    flex-direction: column;
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  .app {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    margin-right: 10px;
+    order: 1;
+  }
+
+  .graph {
+    width: 100%;
+    height: 400px;
+    order: 0;
+  }
+
+  .main-content {
+    flex-grow: 0;
+  }
+}
+
