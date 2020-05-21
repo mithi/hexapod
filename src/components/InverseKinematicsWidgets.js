@@ -58,29 +58,14 @@ const StanceSlider = (props) => {
 }
 
 class InverseKinematicsWidgets extends Component {
-  state = {
-    tx: 0,
-    ty: 0,
-    tz: 0,
-    rx: 0,
-    ry: 0,
-    rz: 0,
-    hipStance: 0,
-    legStance: 0,
-  }
-
-  updateFieldState = (name, value) => {
-    this.setState({ [name]: value })
-  }
-
   render() {
     const translateSliders = ["tx", "ty", "tz"].map((name) => {
       return (
         <TranslateSlider
           key={name}
           name={name}
-          handleChange={this.updateFieldState}
-          value={this.state[name]}
+          handleChange={this.props.onUpdate}
+          value={this.props.params[name]}
         />
       )
     })
@@ -90,8 +75,8 @@ class InverseKinematicsWidgets extends Component {
         <RotateSlider
           key={name}
           name={name}
-          handleChange={this.updateFieldState}
-          value={this.state[name]}
+          handleChange={this.props.onUpdate}
+          value={this.props.params[name]}
         />
       )
     })
@@ -100,8 +85,8 @@ class InverseKinematicsWidgets extends Component {
       return (
         <StanceSlider
           name={name}
-          handleChange={this.updateFieldState}
-          value={this.state[name]}
+          handleChange={this.props.onUpdate}
+          value={this.props.params[name]}
         />
       )
     })

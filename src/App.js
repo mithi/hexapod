@@ -23,10 +23,21 @@ const INITIAL_POSE = {
   rightBack: { alpha: 0, beta: 0, gamma: 0 },
 }
 
+const INITIAL_IK_PARAMS = {
+  tx: 0,
+  ty: 0,
+  tz: 0,
+  rx: 0,
+  ry: 0,
+  rz: 0,
+  hipStance: 0,
+  legStance: 0,
+}
+
 class App extends React.Component {
   state = {
     currentPage: {},
-    ikParams: {},
+    ikParams: INITIAL_IK_PARAMS,
     alerts: "",
     messages: "",
     hexapod: {
@@ -40,6 +51,12 @@ class App extends React.Component {
     const dimensions = { ...this.state.hexapod.dimensions, [name]: value }
     this.setState({
       hexapod: { ...this.state.hexapod, dimensions: dimensions },
+    })
+  }
+
+  updateIkParams = (name, value) => {
+    this.setState({
+      ikParams: { ...this.state.ikParams, [name]: value },
     })
   }
 
@@ -66,7 +83,10 @@ class App extends React.Component {
               pose={this.state.hexapod.pose}
               onUpdate={this.updatePose}
             />
-            <InverseKinematicsWidgets />
+            <InverseKinematicsWidgets
+              params={this.state.ikParams}
+              onUpdate={this.updateIkParams}
+            />
           </div>
           <div className="graph">
             <HexapodPlot />
