@@ -6,20 +6,20 @@ import DimensionWidgets from "./components/DimensionWidgets"
 import ForwardKinematicsWidgets from "./components/ForwardKinematicsWidgets"
 import InverseKinematicsWidgets from "./components/InverseKinematicsWidgets"
 import {
-  INITIAL_DIMENSIONS,
-  INITIAL_POSE,
-  INITIAL_IK_PARAMS,
-} from "./components/initial/hexapodParams"
+  DIMENSIONS,
+  POSE,
+  IK_PARAMS,
+} from "./components/templates/hexapodParams"
 
 class App extends React.Component {
   state = {
     currentPage: {},
-    ikParams: INITIAL_IK_PARAMS,
+    ikParams: IK_PARAMS,
     alerts: "",
     messages: "",
     hexapod: {
-      dimensions: INITIAL_DIMENSIONS,
-      pose: INITIAL_POSE,
+      dimensions: DIMENSIONS,
+      pose: POSE,
       points: {},
     },
   }

@@ -1,4 +1,4 @@
-const INITIAL_DIMENSIONS = {
+const DIMENSIONS = {
   front: 100,
   side: 100,
   middle: 100,
@@ -7,7 +7,7 @@ const INITIAL_DIMENSIONS = {
   tibia: 100,
 }
 
-const INITIAL_POSE = {
+const POSE = {
   leftFront: { alpha: 0, beta: 0, gamma: 0 },
   rightFront: { alpha: 0, beta: 0, gamma: 0 },
   leftMiddle: { alpha: 0, beta: 0, gamma: 0 },
@@ -16,7 +16,7 @@ const INITIAL_POSE = {
   rightBack: { alpha: 0, beta: 0, gamma: 0 },
 }
 
-const INITIAL_IK_PARAMS = {
+const IK_PARAMS = {
   tx: 0,
   ty: 0,
   tz: 0,
@@ -27,4 +27,4 @@ const INITIAL_IK_PARAMS = {
   legStance: 0,
 }
 
-export { INITIAL_DIMENSIONS, INITIAL_POSE, INITIAL_IK_PARAMS }
+export { DIMENSIONS, POSE, IK_PARAMS }
