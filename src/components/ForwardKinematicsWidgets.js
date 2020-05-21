@@ -48,50 +48,28 @@ class LegPoseWidgets extends Component {
 }
 
 class ForwardKinematicsWidgets extends Component {
-  updateState = (name, angle, value) => {
-    this.props.onUpdate(name, angle, value)
+  makeRow = (legName1, legName2) => {
+    const legPoseWidgets = [legName1, legName2].map((name) => {
+      return (
+        <LegPoseWidgets
+          key={name}
+          name={name}
+          pose={this.props.pose[name]}
+          onUpdate={this.props.onUpdate}
+        />
+      )
+    })
+
+    return <div className="row-container"> {legPoseWidgets} </div>
   }
 
   render() {
     return (
       <>
         <h2>Forward Kinematics</h2>
-        <div className="row-container">
-          <LegPoseWidgets
-            name="leftFront"
-            onUpdate={this.updateState}
-            pose={this.props.pose["leftFront"]}
-          />
-          <LegPoseWidgets
-            name="rightFront"
-            onUpdate={this.updateState}
-            pose={this.props.pose["rightFront"]}
-          />
-        </div>
-        <div className="row-container">
-          <LegPoseWidgets
-            name="leftMiddle"
-            onUpdate={this.updateState}
-            pose={this.props.pose["leftMiddle"]}
-          />
-          <LegPoseWidgets
-            name="rightMiddle"
-            onUpdate={this.updateState}
-            pose={this.props.pose["rightMiddle"]}
-          />
-        </div>
-        <div className="row-container">
-          <LegPoseWidgets
-            name="leftBack"
-            onUpdate={this.updateState}
-            pose={this.props.pose["leftBack"]}
-          />
-          <LegPoseWidgets
-            name="rightBack"
-            onUpdate={this.updateState}
-            pose={this.props.pose["rightBack"]}
-          />
-        </div>
+        {this.makeRow("leftFront", "rightFront")}
+        {this.makeRow("leftMiddle", "rightMiddle")}
+        {this.makeRow("leftBack", "rightBack")}
       </>
     )
   }
