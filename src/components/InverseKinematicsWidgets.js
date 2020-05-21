@@ -72,57 +72,47 @@ class InverseKinematicsWidgets extends Component {
   updateFieldState = (name, value) => {
     this.setState({ [name]: value })
   }
+
   render() {
+    const translateSliders = ["tx", "ty", "tz"].map((name) => {
+      return (
+        <TranslateSlider
+          key={name}
+          name={name}
+          handleChange={this.updateFieldState}
+          value={this.state[name]}
+        />
+      )
+    })
+
+    const rotateSliders = ["rx", "ry", "rz"].map((name) => {
+      return (
+        <RotateSlider
+          key={name}
+          name={name}
+          handleChange={this.updateFieldState}
+          value={this.state[name]}
+        />
+      )
+    })
+
+    const stanceSliders = ["hipStance", "legStance"].map((name) => {
+      return (
+        <StanceSlider
+          name={name}
+          handleChange={this.updateFieldState}
+          value={this.state[name]}
+        />
+      )
+    })
+
     return (
-      <>
+      <div>
         <h2>Inverse Kinematics</h2>
-        <div className="row-container">
-          <TranslateSlider
-            name="tx"
-            handleChange={this.updateFieldState}
-            value={this.state.tx}
-          />
-          <TranslateSlider
-            name="ty"
-            handleChange={this.updateFieldState}
-            value={this.state.ty}
-          />
-          <TranslateSlider
-            name="tz"
-            handleChange={this.updateFieldState}
-            value={this.state.tz}
-          />
-        </div>
-        <div className="row-container">
-          <RotateSlider
-            name="rx"
-            handleChange={this.updateFieldState}
-            value={this.state.rx}
-          />
-          <RotateSlider
-            name="ry"
-            handleChange={this.updateFieldState}
-            value={this.state.ry}
-          />
-          <RotateSlider
-            name="rz"
-            handleChange={this.updateFieldState}
-            value={this.state.rz}
-          />
-        </div>
-        <div className="row-container">
-          <StanceSlider
-            name="hipStance"
-            handleChange={this.updateFieldState}
-            value={this.state.hipStance}
-          />
-          <StanceSlider
-            name="legStance"
-            handleChange={this.updateFieldState}
-            value={this.state.legStance}
-          />
-        </div>
-      </>
+        <div className="row-container">{translateSliders}</div>
+        <div className="row-container">{rotateSliders}</div>
+        <div className="row-container">{stanceSliders}</div>
+      </div>
     )
   }
 }
