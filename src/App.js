@@ -1,4 +1,5 @@
 import React from "react"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import { NavBar, NavFooter } from "./components/Nav"
 import HexapodPlot from "./components/HexapodPlot"
 import DimensionWidgets from "./components/DimensionWidgets"
@@ -69,9 +70,31 @@ class App extends React.Component {
     this.setState({ hexapod: { ...this.state.hexapod, pose: newPose } })
   }
 
+  renderPageContent = () => {
+    return (
+      <Switch>
+        <Route path="/" exact>
+          <h2>Hello world!</h2>
+        </Route>
+        <Route path="/forward-kinematics">
+          <ForwardKinematicsWidgets
+            pose={this.state.hexapod.pose}
+            onUpdate={this.updatePose}
+          />
+        </Route>
+        <Route path="/inverse-kinematics">
+          <InverseKinematicsWidgets
+            params={this.state.ikParams}
+            onUpdate={this.updateIkParams}
+          />
+        </Route>
+      </Switch>
+    )
+  }
+
   render() {
     return (
-      <>
+      <Router>
         <NavBar />
         <div className="app">
           <div className="sidebar">
@@ -79,21 +102,14 @@ class App extends React.Component {
               dimensions={this.state.hexapod.dimensions}
               onUpdate={this.updateDimensions}
             />
-            <ForwardKinematicsWidgets
-              pose={this.state.hexapod.pose}
-              onUpdate={this.updatePose}
-            />
-            <InverseKinematicsWidgets
-              params={this.state.ikParams}
-              onUpdate={this.updateIkParams}
-            />
+            {this.renderPageContent()}
             <NavFooter />
           </div>
           <div className="graph">
             <HexapodPlot />
           </div>
         </div>
-      </>
+      </Router>
     )
   }
 }
