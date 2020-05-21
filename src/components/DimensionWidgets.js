@@ -19,24 +19,14 @@ const DimensionInputField = props => {
 
 class DimensionWidgets extends Component {
 
-    state = {
-      front: 100,
-      side: 100,
-      middle: 100,
-      coxia: 100,
-      femur: 100,
-      tibia: 100,
-    }
-
     updateFieldState = (name, value) => {
       value = value > 0 ? value : 0;
-      this.setState({ [name]: value })
       this.props.onUpdate(name, value)
     }
 
     render() {
-      const inputFields = Object.keys(this.state).map(name => {
-        return <DimensionInputField key={name} name={name} value={this.state[name]} handleChange={this.updateFieldState}/>
+      const inputFields = Object.keys(this.props.dimensions).map(name => {
+        return <DimensionInputField key={name} name={name} value={this.props.dimensions[name]} handleChange={this.updateFieldState}/>
       })
       return (
         <>

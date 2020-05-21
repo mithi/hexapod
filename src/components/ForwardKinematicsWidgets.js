@@ -40,17 +40,8 @@ class LegPoseWidgets extends Component {
 }
 
 class ForwardKinematicsWidgets extends Component {
-  state = {
-    leftFront: {alpha: 0, beta: 0, gamma: 0},
-    rightFront: {alpha: 0, beta: 0, gamma: 0},
-    leftMiddle: {alpha: 0, beta: 0, gamma: 0},
-    RightMiddle: {alpha: 0, beta: 0, gamma: 0},
-    leftBack: {alpha: 0, beta: 0, gamma: 0},
-    rightBack: {alpha: 0, beta: 0, gamma: 0},
-  }
 
   updateState = (name, angle, value) => {
-    this.setState({ [name]: {...this.state[name], [angle]: value}})
     this.props.onUpdate(name, angle, value)
   }
 
@@ -59,16 +50,16 @@ class ForwardKinematicsWidgets extends Component {
       <>
         <h2>Forward Kinematics</h2>
         <div className="row-container">
-          <LegPoseWidgets name="leftFront" onUpdate={this.updateState} pose={this.state["leftFront"]}/>
-          <LegPoseWidgets name="rightFront" onUpdate={this.updateState} pose={this.state["rightFront"]}/>
+          <LegPoseWidgets name="leftFront" onUpdate={this.updateState} pose={this.props.pose["leftFront"]}/>
+          <LegPoseWidgets name="rightFront" onUpdate={this.updateState} pose={this.props.pose["rightFront"]}/>
         </div>
         <div className="row-container">
-        <LegPoseWidgets name="leftMiddle" onUpdate={this.updateState} pose={this.state["leftMiddle"]}/>
-          <LegPoseWidgets name="rightMiddle" onUpdate={this.updateState} pose={this.state["RightMiddle"]}/>
+        <LegPoseWidgets name="leftMiddle" onUpdate={this.updateState} pose={this.props.pose["leftMiddle"]}/>
+          <LegPoseWidgets name="rightMiddle" onUpdate={this.updateState} pose={this.props.pose["RightMiddle"]}/>
         </div>
         <div className="row-container">
-        <LegPoseWidgets name="leftBack" onUpdate={this.updateState} pose={this.state["leftBack"]}/>
-          <LegPoseWidgets name="rightBack" onUpdate={this.updateState} pose={this.state["rightBack"]}/>
+        <LegPoseWidgets name="leftBack" onUpdate={this.updateState} pose={this.props.pose["leftBack"]}/>
+          <LegPoseWidgets name="rightBack" onUpdate={this.updateState} pose={this.props.pose["rightBack"]}/>
         </div>
       </>
     )
