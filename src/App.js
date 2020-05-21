@@ -26,7 +26,8 @@ class App extends React.Component {
     plot: {
       data: DATA,
       layout: LAYOUT,
-      latestCameraView: {}
+      latestCameraView: {},
+      revisionCounter: 0,
     },
   }
 
@@ -53,9 +54,9 @@ class App extends React.Component {
   }
 
   logCameraView = (relayoutData) => {
-    const newCameraView = relayoutData['scene.camera']
-    const plot = {...this.state.plot, latestCameraView: newCameraView}
-    this.setState( {...this.state, plot: plot} )
+    const newCameraView = relayoutData["scene.camera"]
+    const plot = { ...this.state.plot, latestCameraView: newCameraView }
+    this.setState({ ...this.state, plot: plot })
   }
 
   renderPageContent = () => {
@@ -98,6 +99,7 @@ class App extends React.Component {
               data={this.state.plot.data}
               layout={this.state.plot.layout}
               onRelayout={this.logCameraView}
+              revision={this.revisionCounter}
             />
           </div>
         </div>
