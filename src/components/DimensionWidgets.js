@@ -2,7 +2,7 @@ import React, { Component } from "react"
 
 const DimensionInputField = (props) => {
   return (
-    <div className="input-field-widget">
+    <div className="cell">
       <label htmlFor={props.name} className="label">
         {props.name}
       </label>

@@ -49,7 +49,7 @@ const NavBar = () => (
 
 const NavFooter = () => (
   <div className="row-container nav-footer">
-    <div className="nav-column cell">
+    <div className="column-container cell">
       <BasicLink
         path={URL_KOFI}
         symbol={KOFI_LINK_TXT}
@@ -62,7 +62,7 @@ const NavFooter = () => (
         klass="nav-footer-link"
       />
     </div>
-    <div className="nav-column cell">
+    <div className="column-container cell">
       <PageLink path={PATH_FK} symbol={FK_LINK_TXT} klass="nav-footer-link" />
       <PageLink path={PATH_IK} symbol={IK_LINK_TXT} klass="nav-footer-link" />
       <PageLink

@@ -36,6 +36,25 @@ h3 {
   font-size: 0.8rem;
 }
 
+.app {
+  display: flex;
+  /*flex-wrap: wrap;  wrap wrap-reverse*/
+}
+
+.sidebar {
+  width: 400px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.graph {
+  border: 1px;
+}
+
+.cell {
+  flex: 1;
+}
+
 .link-icon {
   font-size: 1rem;
   margin: 0.1rem;
@@ -52,11 +71,6 @@ h3 {
   border-radius: 10px;
   border: 1px solid rgb(41, 128, 185);
   padding: 10px;
-}
-
-.nav-column {
-  display: flex;
-  flex-direction: column;
 }
 
 .input {
@@ -78,10 +92,6 @@ h3 {
 .input:hover {
   color: #ffa801;
   border: 3px solid #ef5777;
-}
-
-.input-field-widget {
-  flex: 1;
 }
 
 .label {
@@ -137,23 +147,4 @@ h3 {
   background: rgb(46, 204, 113);
   cursor: pointer;
   border: 0;
-}
-
-.app {
-  display: flex;
-  /*flex-wrap: wrap;  wrap wrap-reverse*/
-}
-
-.sidebar {
-  width: 400px;
-  margin-right: 10px;
-  flex-shrink: 0;
-}
-
-.graph {
-  border: 1px;
-}
-
-.cell {
-  flex: 1;
 }
