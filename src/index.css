@@ -2,205 +2,226 @@
 @import url("https://fonts.googleapis.com/css2?family=Bungee&family=Permanent+Marker&display=swap");
 
 body {
-  font-weight: bold;
-  background-color: rgb(34, 47, 62);
-  color: rgb(50, 255, 126);
-  margin-left: 0.5rem;
-  font-size: 3px;
-  font-family: Consolas, Monaco, "Courier New", Menlo, monospace;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-weight: bold;
+    background-color: rgb(34, 47, 62);
+    color: rgb(50, 255, 126);
+    margin-left: 0.5rem;
+    font-size: 3px;
+    font-family: Consolas, Monaco, "Courier New", Menlo, monospace;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 a {
-  color: #ef5777;
-  text-decoration: none;
-  cursor: pointer;
+    color: #ef5777;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 a:hover {
-  color: #ffa801;
-  font-weight: bold;
+    color: #ffa801;
+    font-weight: bold;
 }
 
 h2,
 h3 {
-  font-family: "Permanent Marker", "Bungee", "Libre Franklin", monospace;
-  margin-top: 0;
-  margin-bottom: 0;
-  margin-left: 5px;
-  font-weight: bold;
-  font-size: 1.5rem;
+    font-family: "Permanent Marker", "Bungee", "Libre Franklin", monospace;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 5px;
+    font-weight: bold;
+    font-size: 1.5rem;
 }
 
 h3 {
-  font-size: 0.8rem;
+    font-size: 0.8rem;
 }
 
 .app {
-  display: flex;
+    display: flex;
 }
 
 .sidebar {
-  margin-right: 10px;
-  width: 375px;
-  height: 625px;
-  flex-shrink: 0;
+    margin-right: 10px;
+    width: 375px;
+    height: 625px;
+    flex-shrink: 0;
 }
 
 .main-content {
-  flex-grow: 1;
+    flex-grow: 1;
 }
 
 .graph {
-  width: 100%;
+    width: 100%;
 }
 
 .cell {
-  flex: 1;
+    flex: 1;
 }
 
 .link-icon {
-  font-size: 1rem;
-  margin: 0.1rem;
+    font-size: 1rem;
+    margin: 0.1rem;
 }
 
 .nav-footer-link {
-  flex: 1;
-  font-size: 0.6rem;
-  margin: 0rem;
+    flex: 1;
+    font-size: 0.6rem;
+    margin: 0rem;
 }
 
 .nav-footer {
-  margin: 10px;
-  border-radius: 10px;
-  border: 1px solid rgb(41, 128, 185);
-  padding: 10px;
-}
-
-.input {
-  font-size: 0.9rem;
-  margin-right: 5%;
-  margin-bottom: 10px;
-  width: 95%;
-  height: 2rem;
-  box-sizing: border-box;
-  border-radius: 10px;
-  border: 1px solid rgb(41, 128, 185);
-  background-color: rgb(44, 62, 80);
-  color: rgb(46, 204, 113);
-  font-family: Monaco, "Courier New", Menlo, Consolas, monospace;
-  box-sizing: border-box;
-  padding-left: 10px;
-}
-
-.input:hover {
-  color: #ef5777;
-  border: 2px solid #ffa801;
-}
-
-.label {
-  font-size: 0.6rem;
-  margin-left: 5px;
-  opacity: 0.5;
-}
-
-.row-container {
-  display: flex;
-}
-
-.column-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.slider-container {
-  margin: 5px;
-}
-
-.slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 5px;
-  border-radius: 5px;
-  background: #ef5777;
-  outline: none;
-  margin: 5px;
-}
-
-.slider:hover {
-  background: #ffa801;
-  height: 7px;
-  margin: 3px;
-}
-
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background: rgb(46, 204, 113);
-  cursor: pointer;
-  border: 0;
-}
-
-.slider::-moz-range-thumb {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  background: rgb(46, 204, 113);
-  cursor: pointer;
-  border: 0;
-}
-
-@media screen and (max-width: 900px) {
-  .app {
-    display: flex;
-  }
-
-  .sidebar {
-    width: 300px;
-  }
-
-  .graph {
-    width: 100%;
-    height: 500px;
-    flex: 1;
-  }
-
-  .main-content {
-    flex-grow: 0;
-  }
-
-  .nav-footer {
     margin: 10px;
     border-radius: 10px;
     border: 1px solid rgb(41, 128, 185);
     padding: 10px;
+}
+
+input {
+    font-size: 0.7rem;
+    text-align: justify;
+    font-weight: bolder;
+    margin-bottom: 10px;
+    width: 95%;
+    height: 2rem;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid rgb(41, 128, 185);
+    background-color: rgb(44, 62, 80);
+    color: rgb(46, 204, 113);
+    font-family: Monaco, "Courier New", Menlo, Consolas, monospace;
+    box-sizing: border-box;
+    padding-left: 10px;
+}
+
+input:hover {
+    color: #ef5777;
+    border: 2px solid #ffa801;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.label {
+    font-size: 0.6rem;
+    margin-left: 5px;
+    opacity: 0.5;
+}
+
+.row-container {
+    display: flex;
+}
+
+.column-container {
+    display: flex;
     flex-direction: column;
-  }
+}
+
+.slider-container {
+    margin: 5px;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 5px;
+    border-radius: 5px;
+    border: 0px;
+    background: #ef5777;
+    outline: none;
+    margin: 5px;
+}
+
+.slider:hover {
+    background: #ffa801;
+    height: 7px;
+    margin: 3px;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: rgb(46, 204, 113);
+    cursor: pointer;
+    border: 0;
+}
+
+.slider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: rgb(46, 204, 113);
+    cursor: pointer;
+    border: 0;
+}
+
+@media screen and (max-width: 900px) {
+
+    .input {
+        font-size: 0.70rem;
+    }
+
+    .app {
+        display: flex;
+    }
+
+    .sidebar {
+        width: 300px;
+    }
+
+    .graph {
+        width: 100%;
+        height: 500px;
+        flex: 1;
+    }
+
+    .main-content {
+        flex-grow: 0;
+    }
+
+    .nav-footer {
+        margin: 10px;
+        border-radius: 10px;
+        border: 1px solid rgb(41, 128, 185);
+        padding: 10px;
+        flex-direction: column;
+    }
 }
 
 @media screen and (max-width: 600px) {
-  .app {
-    display: flex;
-    flex-direction: column;
-  }
+    .input {
+        font-size: 1.0rem;
+    }
 
-  .sidebar {
-    width: 100%;
-    margin-right: 10px;
-    order: 1;
-  }
+    .app {
+        display: flex;
+        flex-direction: column;
+    }
 
-  .graph {
-    width: 100%;
-    height: 400px;
-    order: 0;
-  }
+    .sidebar {
+        width: 100%;
+        margin-right: 10px;
+        order: 1;
+    }
 
-  .main-content {
-    flex-grow: 0;
-  }
+    .graph {
+        width: 100%;
+        height: 400px;
+        order: 0;
+    }
+
+    .main-content {
+        flex-grow: 0;
+    }
 }
