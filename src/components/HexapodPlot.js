@@ -254,12 +254,18 @@ const LAYOUT = {
     bgcolor: LEGENDS_BG_COLOR,
     font: { family: "courier", size: 12, color: LEGEND_FONT_COLOR },
   },
-  width: 850,
-  height: 625,
+  autosize: true,
 }
 
 const HexapodPlot = () => {
-  return <Plot data={DATA} layout={LAYOUT} />
+  return (
+    <Plot
+      data={DATA}
+      layout={LAYOUT}
+      useResizeHandler={true}
+      style={{ height: "100%", width: "100%" }}
+    />
+  )
 }
 
 export default HexapodPlot

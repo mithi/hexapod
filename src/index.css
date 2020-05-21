@@ -43,6 +43,7 @@ h3 {
 
 .sidebar {
   width: 400px;
+  height: 625px;
   margin-right: 10px;
   flex-shrink: 0;
 }
@@ -52,7 +53,7 @@ h3 {
 }
 
 .graph {
-  border: 1px;
+  width: 100%;
 }
 
 .cell {
