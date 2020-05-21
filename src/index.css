@@ -102,12 +102,12 @@ input:hover {
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
-input[type=number] {
-  -moz-appearance: textfield;
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 
 .label {
@@ -167,9 +167,8 @@ input[type=number] {
 }
 
 @media screen and (max-width: 900px) {
-
     .input {
-        font-size: 0.70rem;
+        font-size: 0.7rem;
     }
 
     .app {
@@ -201,7 +200,7 @@ input[type=number] {
 
 @media screen and (max-width: 600px) {
     .input {
-        font-size: 1.0rem;
+        font-size: 1rem;
     }
 
     .app {
