@@ -7,8 +7,7 @@ body {
   color: rgb(50, 255, 126);
   margin-left: 1rem;
   font-size: 3px;
-  font-family: Consolas, Monaco, "Courier New", Menlo, source-code-pro,
-    monospace;
+  font-family: Consolas, Monaco, "Courier New", Menlo, monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -25,20 +24,16 @@ a:hover {
 
 h2,
 h3 {
-  font-family: "Permanent Marker", "Bungee", "Libre Franklin", cursive;
+  font-family: "Permanent Marker", "Bungee", "Libre Franklin", monospace;
   margin-top: 0;
   margin-bottom: 0;
   margin-left: 5px;
   font-weight: bold;
-}
-
-h2 {
   font-size: 1.5rem;
 }
 
 h3 {
   font-size: 0.8rem;
-  font-weight: bold;
 }
 
 .link-icon {
@@ -46,10 +41,22 @@ h3 {
   margin-bottom: 0.75rem;
 }
 
-.nav-footer {
+.nav-footer-link {
   flex: 1;
-  font-size: 0.75rem;
-  margin-bottom: 0rem;
+  font-size: 0.6rem;
+  margin: 0rem;
+}
+
+.nav-footer {
+  margin: 10px;
+  border-radius: 10px;
+  border: 1px solid rgb(41, 128, 185);
+  padding: 10px;
+}
+
+.nav-column {
+  display: flex;
+  flex-direction: column;
 }
 
 .input {
@@ -63,8 +70,7 @@ h3 {
   border: 1px solid rgb(41, 128, 185);
   background-color: rgb(44, 62, 80);
   color: rgb(46, 204, 113);
-  font-family: Monaco, "Courier New", Menlo, source-code-pro, Consolas,
-    monospace;
+  font-family: Monaco, "Courier New", Menlo, Consolas, monospace;
   box-sizing: border-box;
   padding-left: 10px;
 }
@@ -139,11 +145,15 @@ h3 {
 }
 
 .sidebar {
-  width: 375px;
+  width: 400px;
   margin-right: 10px;
   flex-shrink: 0;
 }
 
 .graph {
-  width: 1000px;
+  border: 1px;
+}
+
+.cell {
+  flex: 1;
 }

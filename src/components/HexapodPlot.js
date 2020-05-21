@@ -245,8 +245,6 @@ const SCENE = {
 }
 
 const LAYOUT = {
-  width: 875,
-  height: 625,
   scene: SCENE,
   margin: { b: 20, l: 10, r: 10, t: 20 },
   paper_bgcolor: PAPER_BG_COLOR,
@@ -256,6 +254,8 @@ const LAYOUT = {
     bgcolor: LEGENDS_BG_COLOR,
     font: { family: "courier", size: 12, color: LEGEND_FONT_COLOR },
   },
+  width: 850,
+  height: 625,
 }
 
 const HexapodPlot = () => {

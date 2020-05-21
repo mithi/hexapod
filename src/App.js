@@ -87,12 +87,12 @@ class App extends React.Component {
               params={this.state.ikParams}
               onUpdate={this.updateIkParams}
             />
+            <NavFooter />
           </div>
           <div className="graph">
             <HexapodPlot />
           </div>
         </div>
-        <NavFooter />
       </>
     )
   }

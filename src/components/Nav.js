@@ -9,7 +9,7 @@ const ICON_SRC = "👾"
 const BasicLink = (props) => {
   return (
     <a
-      className={`link-icon ${props.klass}`}
+      className={"link-icon nav-footer-link"}
       href={props.url}
       target="_blank"
       rel="noopener noreferrer"
@@ -31,19 +31,20 @@ const NavBar = () => (
 )
 
 const NavFooter = () => (
-  <div style={{ display: "flex", flexDirection: "column" }}>
-    <BasicLink
-      url={URL_KOFI}
-      symbol={`${ICON_KOFI} Buy me a coffee (or tea)`}
-      klass="nav-footer"
-    />
-    <BasicLink
-      url={URL_SRC}
-      symbol={`${ICON_SRC} Source code`}
-      klass="nav-footer"
-    />
-    <BasicLink url={URL_SRC} symbol={`> Root`} klass="nav-footer" />
-    <BasicLink url={URL_SRC} symbol={`> Page 2`} klass="nav-footer" />
+  <div className="row-container nav-footer">
+    <div className="nav-column cell">
+      <BasicLink
+        url={URL_KOFI}
+        symbol={`${ICON_KOFI} Buy Mithi coffee (or tea)`}
+      />
+      <BasicLink url={URL_SRC} symbol={`${ICON_SRC} Source code`} />
+      <BasicLink url={URL_SRC} symbol={`💋 Root`} />
+    </div>
+    <div className="nav-column cell">
+      <BasicLink url={URL_SRC} symbol={`${ICON_DOT} Forward Kinematics`} />
+      <BasicLink url={URL_SRC} symbol={`${ICON_DOT} Inverse Kinematics`} />
+      <BasicLink url={URL_SRC} symbol={`${ICON_DOT} Leg Patterns`} />
+    </div>
   </div>
 )
 
