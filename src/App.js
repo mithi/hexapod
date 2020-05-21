@@ -18,7 +18,7 @@ const INITIAL_POSE = {
   leftFront: { alpha: 0, beta: 0, gamma: 0 },
   rightFront: { alpha: 0, beta: 0, gamma: 0 },
   leftMiddle: { alpha: 0, beta: 0, gamma: 0 },
-  RightMiddle: { alpha: 0, beta: 0, gamma: 0 },
+  rightMiddle: { alpha: 0, beta: 0, gamma: 0 },
   leftBack: { alpha: 0, beta: 0, gamma: 0 },
   rightBack: { alpha: 0, beta: 0, gamma: 0 },
 }

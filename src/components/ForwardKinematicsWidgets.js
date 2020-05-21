@@ -27,7 +27,7 @@ class LegPoseWidgets extends Component {
   }
 
   render() {
-    const inputFields = ["alpha", "beta", "gamma"].map((name) => {
+    const inputFields = Object.keys(this.props.pose).map((name) => {
       return (
         <LegPoseInputField
           key={name}
@@ -77,7 +77,7 @@ class ForwardKinematicsWidgets extends Component {
           <LegPoseWidgets
             name="rightMiddle"
             onUpdate={this.updateState}
-            pose={this.props.pose["RightMiddle"]}
+            pose={this.props.pose["rightMiddle"]}
           />
         </div>
         <div className="row-container">
