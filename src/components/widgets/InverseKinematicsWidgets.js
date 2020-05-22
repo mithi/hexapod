@@ -6,33 +6,25 @@ class InverseKinematicsWidgets extends Component {
         this.props.onMount()
     }
 
-    render() {
-        const translateSliders = ["tx", "ty", "tz"].map(name => {
+    sliderList(sliderNames, params) {
+        return sliderNames.map(name => {
             return (
                 <Slider
                     key={name}
                     name={name}
-                    params={[-1, 1, 0.01]}
+                    params={params}
                     handleChange={this.props.onUpdate}
                     value={this.props.params[name]}
                 />
             )
         })
-
-        const rotateSliders = ["rx", "ry", "rz", "hipStance", "legStance"].map(
-            name => {
-                return (
-                    <Slider
-                        key={name}
-                        name={name}
-                        params={[-45, 45, 0.01]}
-                        handleChange={this.props.onUpdate}
-                        value={this.props.params[name]}
-                    />
-                )
-            }
+    }
+    render() {
+        const translateSliders = this.sliderList(["tx", "ty", "tz"], [-1, 1, 0.01])
+        const rotateSliders = this.sliderList(
+            ["rx", "ry", "rz", "hipStance", "legStance"],
+            [-45, 45, 0.01]
         )
-
         return (
             <div>
                 <h2>Inverse Kinematics</h2>
