@@ -1,23 +1,5 @@
 import React, { Component } from "react"
-
-const RotateSlider = props => {
-    return (
-        <div className="slider-container cell">
-            <label htmlFor={props.name} className="label">
-                {props.name}: {props.value}
-            </label>
-            <input
-                type="range"
-                min={-180}
-                max={180}
-                step={0.5}
-                value={props.value}
-                onChange={e => props.handleChange(props.name, e.target.value)}
-                className="slider"
-            />
-        </div>
-    )
-}
+import Slider from "./SliderWidget"
 
 class LegPatternWidgets extends Component {
     componentDidMount() {
@@ -27,9 +9,10 @@ class LegPatternWidgets extends Component {
     render() {
         const rotateSliders = ["alpha", "beta", "gamma"].map(name => {
             return (
-                <RotateSlider
+                <Slider
                     key={name}
                     name={name}
+                    params={[-1, 1, 0.01]}
                     handleChange={this.props.onUpdate}
                     value={this.props.params[name]}
                 />
