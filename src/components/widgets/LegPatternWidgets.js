@@ -6,20 +6,15 @@ class LegPatternWidgets extends Component {
         this.props.onMount()
     }
 
-    render() {
-        const rotateSliders = sliderList(
-            ["alpha", "beta", "gamma"],
-            [-1, 1, 0.01],
-            this.props
-        )
+    rotateSliders = () =>
+        sliderList(["alpha", "beta", "gamma"], [-1, 1, 0.01], this.props)
 
-        return (
-            <div>
-                <h2>leg patterns</h2>
-                <div className="row-container">{rotateSliders}</div>
-            </div>
-        )
-    }
+    render = () => (
+        <>
+            <h2>leg patterns</h2>
+            <div className="row-container">{this.rotateSliders()}</div>
+        </>
+    )
 }
 
 export default LegPatternWidgets

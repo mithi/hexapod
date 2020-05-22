@@ -20,12 +20,12 @@ class InverseKinematicsWidgets extends Component {
         )
 
         return (
-            <div>
+            <>
                 <h2>Inverse Kinematics</h2>
                 <div className="row-container">{translateSliders}</div>
                 <div className="row-container">{rotateSliders.slice(0, 3)}</div>
-                <div className="row-container">{rotateSliders.slice(3, 5)}</div>
-            </div>
+                <div className="row-container">{rotateSliders.slice(3)}</div>
+            </>
         )
     }
 }

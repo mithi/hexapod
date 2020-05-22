@@ -13,9 +13,9 @@ const BasicLink = props => (
 )
 
 const PageLink = props => (
-    <div className={`link-icon ${props.klass || ""}`}>
-        <Link to={props.path}>{props.symbol}</Link>
-    </div>
+    <Link className={`link-icon ${props.klass || ""}`} to={props.path}>
+        {props.symbol}
+    </Link>
 )
 
 export { BasicLink, PageLink }

@@ -12,8 +12,8 @@ class LegPoseWidget extends Component {
         this.props.onUpdate(this.props.name, angle, value)
     }
 
-    render() {
-        const inputFields = Object.keys(this.props.pose).map(name => (
+    inputFields = () =>
+        Object.keys(this.props.pose).map(name => (
             <InputField
                 key={name}
                 name={name}
@@ -23,13 +23,12 @@ class LegPoseWidget extends Component {
             />
         ))
 
-        return (
-            <div className="column-container">
-                <h3>{this.props.name}</h3>
-                <form className="row-container">{inputFields}</form>
-            </div>
-        )
-    }
+    render = () => (
+        <div className="column-container">
+            <h3>{this.props.name}</h3>
+            <form className="row-container">{this.inputFields()}</form>
+        </div>
+    )
 }
 
 export default LegPoseWidget

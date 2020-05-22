@@ -6,29 +6,27 @@ class ForwardKinematicsWidgets extends Component {
         this.props.onMount()
     }
 
-    makeRow = (legName1, legName2) => {
-        const legPoseWidget = [legName1, legName2].map(name => (
-            <LegPoseWidget
-                key={name}
-                name={name}
-                pose={this.props.pose[name]}
-                onUpdate={this.props.onUpdate}
-            />
-        ))
+    makeRow = (legName1, legName2) => (
+        <div className="row-container">
+            {[legName1, legName2].map(name => (
+                <LegPoseWidget
+                    key={name}
+                    name={name}
+                    pose={this.props.pose[name]}
+                    onUpdate={this.props.onUpdate}
+                />
+            ))}
+        </div>
+    )
 
-        return <div className="row-container"> {legPoseWidget} </div>
-    }
-
-    render() {
-        return (
-            <>
-                <h2>Forward Kinematics</h2>
-                {this.makeRow("leftFront", "rightFront")}
-                {this.makeRow("leftMiddle", "rightMiddle")}
-                {this.makeRow("leftBack", "rightBack")}
-            </>
-        )
-    }
+    render = () => (
+        <>
+            <h2>Forward Kinematics</h2>
+            {this.makeRow("leftFront", "rightFront")}
+            {this.makeRow("leftMiddle", "rightMiddle")}
+            {this.makeRow("leftBack", "rightBack")}
+        </>
+    )
 }
 
 export default ForwardKinematicsWidgets

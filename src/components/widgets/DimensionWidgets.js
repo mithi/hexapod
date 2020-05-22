@@ -7,8 +7,8 @@ class DimensionWidgets extends Component {
         this.props.onUpdate(name, Math.round(value))
     }
 
-    render() {
-        const inputFields = Object.keys(this.props.dimensions).map(name => (
+    inputFields = () =>
+        Object.keys(this.props.dimensions).map(name => (
             <InputField
                 key={name}
                 name={name}
@@ -18,13 +18,12 @@ class DimensionWidgets extends Component {
             />
         ))
 
-        return (
-            <>
-                <h2>Dimensions</h2>
-                <form className="row-container">{inputFields}</form>
-            </>
-        )
-    }
+    render = () => (
+        <>
+            <h2>Dimensions</h2>
+            <form className="row-container">{this.inputFields()}</form>
+        </>
+    )
 }
 
 export default DimensionWidgets
