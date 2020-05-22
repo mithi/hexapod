@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import InputField from './InputFieldWidget'
+import InputField from "./generic/InputFieldWidget"
 
 class LegPoseWidget extends Component {
     updateFieldState = (angle, value) => {

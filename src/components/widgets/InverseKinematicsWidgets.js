@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import Slider from "./SliderWidget"
+import Slider from "./generic/SliderWidget"
 
 class InverseKinematicsWidgets extends Component {
     componentDidMount() {

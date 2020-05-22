@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import InputField from './InputFieldWidget'
+import InputField from "./generic/InputFieldWidget"
 
 class DimensionWidgets extends Component {
     updateFieldState = (name, value) => {
