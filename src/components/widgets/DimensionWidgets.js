@@ -1,22 +1,5 @@
 import React, { Component } from "react"
-
-const DimensionInputField = props => {
-    return (
-        <div className="cell">
-            <label htmlFor={props.name} className="label">
-                {props.name}
-            </label>
-            <input
-                type="number"
-                id={props.name}
-                value={props.value}
-                onChange={e => props.handleChange(props.name, e.target.value)}
-                min={0}
-                step={1}
-            />
-        </div>
-    )
-}
+import InputField from './InputFieldWidget'
 
 class DimensionWidgets extends Component {
     updateFieldState = (name, value) => {
@@ -27,9 +10,10 @@ class DimensionWidgets extends Component {
     render() {
         const inputFields = Object.keys(this.props.dimensions).map(name => {
             return (
-                <DimensionInputField
+                <InputField
                     key={name}
                     name={name}
+                    params={[0, -Infinity, 1]}
                     value={this.props.dimensions[name]}
                     handleChange={this.updateFieldState}
                 />

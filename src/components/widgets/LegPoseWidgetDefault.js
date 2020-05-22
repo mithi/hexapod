@@ -1,23 +1,5 @@
 import React, { Component } from "react"
-
-const LegPoseInputField = props => {
-    return (
-        <div className="cell">
-            <label htmlFor={props.name} className="label">
-                {props.name}
-            </label>
-            <input
-                type="number"
-                id={props.name}
-                value={props.value}
-                onChange={e => props.handleChange(props.name, e.target.value)}
-                min={-180}
-                max={180}
-                step={0.01}
-            />
-        </div>
-    )
-}
+import InputField from './InputFieldWidget'
 
 class LegPoseWidget extends Component {
     updateFieldState = (angle, value) => {
@@ -33,9 +15,10 @@ class LegPoseWidget extends Component {
     render() {
         const inputFields = Object.keys(this.props.pose).map(name => {
             return (
-                <LegPoseInputField
+                <InputField
                     key={name}
                     name={name}
+                    params={[-180, 180, 0.01]}
                     value={this.props.pose[name]}
                     handleChange={this.updateFieldState}
                 />
