@@ -13,7 +13,7 @@ const PATH_LP = "leg-patterns"
 const PATH_ROOT = "/"
 
 const KOFI_LINK_TXT = "🍵 Buy Mithi coffee"
-const SRC_LINK_TXT = "🍵 Source code"
+const SRC_LINK_TXT = "👾 Source code"
 const ROOT_LINK_TXT = "💋 Root"
 
 const IK_LINK_TXT = "● Inverse Kinematics"

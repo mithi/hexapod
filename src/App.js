@@ -31,12 +31,12 @@ class App extends React.Component {
 
     resetParams = () => {
         this.setState({ ikParams: IK_PARAMS })
-        this.setState({ pose: POSE })
-
+        this.setState({ hexapod: { ...this.state.hexapod, pose: POSE } })
         this.setState({
             patternParams: { alpha: 0, beta: 0, gamma: 0 },
         })
     }
+
     onFKPageLoad = () => {
         this.setState({ currentPage: "forward kinematics" })
         this.resetParams()
@@ -76,8 +76,8 @@ class App extends React.Component {
 
     updatePatternPose = (name, value) => {
         const { pose } = this.state.hexapod
-
         let newPose = {}
+
         for (const leg in pose) {
             newPose[leg] = { ...pose[leg], [name]: value }
         }
@@ -94,64 +94,58 @@ class App extends React.Component {
         this.setState({ ...this.state, plot: plot })
     }
 
-    renderPageContent = () => {
-        return (
-            <Switch>
-                <Route path="/" exact>
-                    <h2>Hello world!</h2>
-                </Route>
-                <Route path="/forward-kinematics">
-                    <ForwardKinematicsWidgets
-                        pose={this.state.hexapod.pose}
-                        onUpdate={this.updatePose}
-                        onMount={this.onFKPageLoad}
-                    />
-                </Route>
-                <Route path="/inverse-kinematics">
-                    <InverseKinematicsWidgets
-                        params={this.state.ikParams}
-                        onUpdate={this.updateIkParams}
-                        onMount={this.onIKPageLoad}
-                    />
-                </Route>
-                <Route path="/leg-patterns">
-                    <LegPatternWidgets
-                        params={this.state.patternParams}
-                        onUpdate={this.updatePatternPose}
-                        onMount={this.onLPPageLoad}
-                    />
-                </Route>
-            </Switch>
-        )
-    }
+    renderPageContent = () => (
+        <Switch>
+            <Route path="/" exact>
+                <h2>Hello world!</h2>
+            </Route>
+            <Route path="/forward-kinematics">
+                <ForwardKinematicsWidgets
+                    pose={this.state.hexapod.pose}
+                    onUpdate={this.updatePose}
+                    onMount={this.onFKPageLoad}
+                />
+            </Route>
+            <Route path="/inverse-kinematics">
+                <InverseKinematicsWidgets
+                    params={this.state.ikParams}
+                    onUpdate={this.updateIkParams}
+                    onMount={this.onIKPageLoad}
+                />
+            </Route>
+            <Route path="/leg-patterns">
+                <LegPatternWidgets
+                    params={this.state.patternParams}
+                    onUpdate={this.updatePatternPose}
+                    onMount={this.onLPPageLoad}
+                />
+            </Route>
+        </Switch>
+    )
 
-    render() {
-        return (
-            <Router>
-                <NavBar />
-                <div className="app">
-                    <div className="sidebar column-container">
-                        <DimensionWidgets
-                            dimensions={this.state.hexapod.dimensions}
-                            onUpdate={this.updateDimensions}
-                        />
-                        <div className="main-content">
-                            {this.renderPageContent()}
-                        </div>
-                        <NavFooter />
-                    </div>
-                    <div className="graph">
-                        <HexapodPlot
-                            data={this.state.plot.data}
-                            layout={this.state.plot.layout}
-                            onRelayout={this.logCameraView}
-                            revision={this.revisionCounter}
-                        />
-                    </div>
+    render = () => (
+        <Router>
+            <NavBar />
+            <div className="app">
+                <div className="sidebar column-container">
+                    <DimensionWidgets
+                        dimensions={this.state.hexapod.dimensions}
+                        onUpdate={this.updateDimensions}
+                    />
+                    <div className="main-content">{this.renderPageContent()}</div>
+                    <NavFooter />
                 </div>
-            </Router>
-        )
-    }
+                <div className="graph">
+                    <HexapodPlot
+                        data={this.state.plot.data}
+                        layout={this.state.plot.layout}
+                        onRelayout={this.logCameraView}
+                        revision={this.revisionCounter}
+                    />
+                </div>
+            </div>
+        </Router>
+    )
 }
 
 export default App
