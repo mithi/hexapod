@@ -21,18 +21,15 @@ const Slider = props => {
     )
 }
 
-const sliderList = (sliderNames, params, props) => {
-    return sliderNames.map(name => {
-        return (
-            <Slider
-                key={name}
-                name={name}
-                params={params}
-                handleChange={props.onUpdate}
-                value={props.params[name]}
-            />
-        )
-    })
-}
+const sliderList = (sliderNames, params, props) =>
+    sliderNames.map(name => (
+        <Slider
+            key={name}
+            name={name}
+            params={params}
+            handleChange={props.onUpdate}
+            value={props.params[name]}
+        />
+    ))
 
 export { Slider, sliderList }

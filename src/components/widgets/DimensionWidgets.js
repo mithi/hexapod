@@ -8,17 +8,15 @@ class DimensionWidgets extends Component {
     }
 
     render() {
-        const inputFields = Object.keys(this.props.dimensions).map(name => {
-            return (
-                <InputField
-                    key={name}
-                    name={name}
-                    params={[0, -Infinity, 1]}
-                    value={this.props.dimensions[name]}
-                    handleChange={this.updateFieldState}
-                />
-            )
-        })
+        const inputFields = Object.keys(this.props.dimensions).map(name => (
+            <InputField
+                key={name}
+                name={name}
+                params={[0, -Infinity, 1]}
+                value={this.props.dimensions[name]}
+                handleChange={this.updateFieldState}
+            />
+        ))
 
         return (
             <>

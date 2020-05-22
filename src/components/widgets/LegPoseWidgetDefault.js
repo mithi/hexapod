@@ -13,17 +13,15 @@ class LegPoseWidget extends Component {
     }
 
     render() {
-        const inputFields = Object.keys(this.props.pose).map(name => {
-            return (
-                <InputField
-                    key={name}
-                    name={name}
-                    params={[-180, 180, 0.01]}
-                    value={this.props.pose[name]}
-                    handleChange={this.updateFieldState}
-                />
-            )
-        })
+        const inputFields = Object.keys(this.props.pose).map(name => (
+            <InputField
+                key={name}
+                name={name}
+                params={[-180, 180, 0.01]}
+                value={this.props.pose[name]}
+                handleChange={this.updateFieldState}
+            />
+        ))
 
         return (
             <div className="column-container">

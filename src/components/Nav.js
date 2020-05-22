@@ -26,23 +26,12 @@ const PATHS = [PATH_ROOT, PATH_FK, PATH_IK, PATH_LP]
 const LINK_TXTS = [ROOT_LINK_TXT, FK_LINK_TXT, IK_LINK_TXT, LP_LINK_TXT]
 
 const PAGE_LINKS = PATHS.map((path, index) => (
-    <PageLink
-        path={path}
-        symbol={LINK_TXTS[index]}
-        klass="nav-footer-link"
-    />
+    <PageLink path={path} symbol={LINK_TXTS[index]} klass="nav-footer-link" />
 ))
 
 const BASIC_LINKS = URLS.map((path, index) => (
-    <BasicLink
-        path={path}
-        symbol={URL_LINK_TXTS[index]}
-        klass="nav-footer-link"
-    />
+    <BasicLink path={path} symbol={URL_LINK_TXTS[index]} klass="nav-footer-link" />
 ))
-
-
-
 
 const NavBar = () => (
     <div className="row-container">
@@ -50,7 +39,7 @@ const NavBar = () => (
         <BasicLink path={URL_SRC} symbol={ICON_SRC} />
         {PATHS.map(path => {
             return <PageLink path={path} symbol="●" />
-         })}
+        })}
     </div>
 )
 
@@ -60,9 +49,7 @@ const NavFooter = () => (
             {BASIC_LINKS}
             {PAGE_LINKS[0]}
         </div>
-        <div className="column-container cell">
-            {PAGE_LINKS.slice(1)}
-        </div>
+        <div className="column-container cell">{PAGE_LINKS.slice(1)}</div>
     </div>
 )
 

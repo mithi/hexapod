@@ -12,11 +12,13 @@ class InverseKinematicsWidgets extends Component {
             [-1, 1, 0.01],
             this.props
         )
+
         const rotateSliders = sliderList(
             ["rx", "ry", "rz", "hipStance", "legStance"],
             [-45, 45, 0.01],
             this.props
         )
+
         return (
             <div>
                 <h2>Inverse Kinematics</h2>

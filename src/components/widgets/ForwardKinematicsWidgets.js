@@ -7,16 +7,14 @@ class ForwardKinematicsWidgets extends Component {
     }
 
     makeRow = (legName1, legName2) => {
-        const legPoseWidget = [legName1, legName2].map(name => {
-            return (
-                <LegPoseWidget
-                    key={name}
-                    name={name}
-                    pose={this.props.pose[name]}
-                    onUpdate={this.props.onUpdate}
-                />
-            )
-        })
+        const legPoseWidget = [legName1, legName2].map(name => (
+            <LegPoseWidget
+                key={name}
+                name={name}
+                pose={this.props.pose[name]}
+                onUpdate={this.props.onUpdate}
+            />
+        ))
 
         return <div className="row-container"> {legPoseWidget} </div>
     }
