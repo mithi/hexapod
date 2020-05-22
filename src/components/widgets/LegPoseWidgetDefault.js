@@ -13,7 +13,7 @@ const LegPoseInputField = props => {
                 onChange={e => props.handleChange(props.name, e.target.value)}
                 min={-180}
                 max={180}
-                step={0.5}
+                step={0.01}
             />
         </div>
     )
@@ -21,7 +21,12 @@ const LegPoseInputField = props => {
 
 class LegPoseWidget extends Component {
     updateFieldState = (angle, value) => {
-        value = Math.min(Math.max(value, -180), 180)
+        if (value === "") {
+            value = -1
+        } else {
+            value = Math.round(value * 100) / 100
+            value = Math.min(Math.max(value, -180), 180)
+        }
         this.props.onUpdate(this.props.name, angle, value)
     }
 

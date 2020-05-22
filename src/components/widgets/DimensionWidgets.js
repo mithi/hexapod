@@ -21,7 +21,7 @@ const DimensionInputField = props => {
 class DimensionWidgets extends Component {
     updateFieldState = (name, value) => {
         value = value > 0 ? value : 0
-        this.props.onUpdate(name, value)
+        this.props.onUpdate(name, Math.round(value))
     }
 
     render() {
