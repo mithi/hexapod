@@ -1,5 +1,5 @@
 import React from "react"
-import { BasicLink, PageLink } from "./widgets/generic/LinkWidgets"
+import { BasicLink, PageLink } from "./generic/LinkWidgets"
 
 const URL_KOFI = "https://ko-fi.com/minimithi"
 const URL_SRC = "https://github.com/mithi/hexapod-robot-simulator"
