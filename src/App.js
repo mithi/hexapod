@@ -5,22 +5,15 @@ import HexapodPlot from "./components/HexapodPlot"
 import DimensionWidgets from "./components/DimensionWidgets"
 import ForwardKinematicsPage from "./components/ForwardKinematicsPage"
 import InverseKinematicsPage from "./components/InverseKinematicsPage"
+import LandingPage from "./components/LandingPage"
+
 import LegPatternPage from "./components/LegPatternPage"
 import { DATA, LAYOUT } from "./components/templates/plotParams"
 import { DIMENSIONS, POSE, IK_PARAMS } from "./components/templates/hexapodParams"
 
-class Landing extends React.Component {
-    pageName = "Root"
-
-    componentDidMount() {
-        this.props.onMount(this.pageName)
-    }
-    render = () => <h1> Hello World! </h1>
-}
-
 class App extends React.Component {
     state = {
-        currentPage: {},
+        currentPage: "Root",
         ikParams: IK_PARAMS,
         patternParams: { alpha: 0, beta: 0, gamma: 0 },
         alerts: "",
@@ -89,10 +82,17 @@ class App extends React.Component {
         this.setState({ ...this.state, plot: plot })
     }
 
+    showDimensions = () => (
+        <DimensionWidgets
+            dimensions={this.state.hexapod.dimensions}
+            onUpdate={this.updateDimensions}
+        />
+    )
+
     renderPageContent = () => (
         <Switch>
             <Route path="/" exact>
-                <Landing onMount={this.onPageLoad} />
+                <LandingPage onMount={this.onPageLoad} />
             </Route>
             <Route path="/forward-kinematics">
                 <ForwardKinematicsPage
@@ -123,14 +123,21 @@ class App extends React.Component {
             <NavBar />
             <div className="main">
                 <div className="sidebar column-container cell">
-                    <DimensionWidgets
-                        dimensions={this.state.hexapod.dimensions}
-                        onUpdate={this.updateDimensions}
-                    />
-                    <div className="page-content">{this.renderPageContent()}</div>
+                    <div className="page-content">
+                        {this.state.currentPage !== "Root"
+                            ? this.showDimensions()
+                            : null}
+                        {this.renderPageContent()}
+                    </div>
                     <NavFooter />
                 </div>
-                <div className="plot border">
+                <div
+                    className={
+                        this.state.currentPage === "Root"
+                            ? "no-display"
+                            : "plot border"
+                    }
+                >
                     <HexapodPlot
                         data={this.state.plot.data}
                         layout={this.state.plot.layout}

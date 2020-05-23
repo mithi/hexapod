@@ -1,5 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Bungee&family=Permanent+Marker&display=swap");
 
+.hexapod-img {
+    background: url("https://mithi.github.io/robotics-blog/v2-hexapod-1.gif");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 150px;
+    width: 200px;
+    position: relative;
+}
+
 body {
     font-weight: bold;
     background-color: rgb(34, 47, 62);
@@ -40,6 +49,14 @@ h3 {
     font-size: 0.8rem;
 }
 
+p {
+    font-size: 0.6rem;
+    text-align: justify;
+    line-height: 1rem;
+    margin: 10px;
+    font-weight: lighter;
+}
+
 .app {
     display: flex;
 }
@@ -73,6 +90,11 @@ h3 {
 .link-icon {
     font-size: 1.2rem;
     margin: 0.2rem;
+}
+
+.text {
+    font-weight: bold;
+    font-size: 0.6rem;
 }
 
 .nav-footer-link {

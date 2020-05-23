@@ -10,7 +10,7 @@ const Card = props => (
 
 const BasicLink = props => (
     <a
-        className={`link-icon ${props.klass}`}
+        className={`link-icon ${props.klass || ""}`}
         href={props.path}
         target="_blank"
         rel="noopener noreferrer"
