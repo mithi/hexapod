@@ -3,8 +3,10 @@ import LegPoseWidget from "./LegPoseWidgetDefault"
 import { Card } from "./generic/SmallWidgets"
 
 class ForwardKinematicsWidgets extends Component {
+    pageName = "Forward Kinematics"
+
     componentDidMount() {
-        this.props.onMount()
+        this.props.onMount(this.pageName)
     }
 
     makeRow = (legName1, legName2) => (
@@ -21,7 +23,7 @@ class ForwardKinematicsWidgets extends Component {
     )
 
     render = () => (
-        <Card title="Forward Kinematics" h="h2">
+        <Card title={this.pageName} h="h2">
             {this.makeRow("leftFront", "rightFront")}
             {this.makeRow("leftMiddle", "rightMiddle")}
             {this.makeRow("leftBack", "rightBack")}

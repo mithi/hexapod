@@ -3,8 +3,10 @@ import { sliderList } from "./generic/SliderWidget"
 import { Card } from "./generic/SmallWidgets"
 
 class InverseKinematicsWidgets extends Component {
+    pageName = "Inverse Kinematics"
+
     componentDidMount() {
-        this.props.onMount()
+        this.props.onMount(this.pageName)
     }
 
     render() {
@@ -21,7 +23,7 @@ class InverseKinematicsWidgets extends Component {
         )
 
         return (
-            <Card title="Inverse Kinematics" h="h2">
+            <Card title={this.pageName} h="h2">
                 <div className="row-container">{translateSliders}</div>
                 <div className="row-container">{rotateSliders.slice(0, 3)}</div>
                 <div className="row-container">{rotateSliders.slice(3)}</div>

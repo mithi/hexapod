@@ -29,27 +29,13 @@ class App extends React.Component {
         },
     }
 
-    resetParams = () => {
+    onPageLoad = pageName => {
+        this.setState({ currentPage: pageName })
         this.setState({ ikParams: IK_PARAMS })
         this.setState({ hexapod: { ...this.state.hexapod, pose: POSE } })
         this.setState({
             patternParams: { alpha: 0, beta: 0, gamma: 0 },
         })
-    }
-
-    onFKPageLoad = () => {
-        this.setState({ currentPage: "forward kinematics" })
-        this.resetParams()
-    }
-
-    onIKPageLoad = () => {
-        this.setState({ currentPage: "inverse kinematics" })
-        this.resetParams()
-    }
-
-    onLPPageLoad = () => {
-        this.setState({ currentPage: "leg patterns" })
-        this.resetParams()
     }
 
     updateDimensions = (name, value) => {
@@ -103,21 +89,21 @@ class App extends React.Component {
                 <ForwardKinematicsWidgets
                     pose={this.state.hexapod.pose}
                     onUpdate={this.updatePose}
-                    onMount={this.onFKPageLoad}
+                    onMount={this.onPageLoad}
                 />
             </Route>
             <Route path="/inverse-kinematics">
                 <InverseKinematicsWidgets
                     params={this.state.ikParams}
                     onUpdate={this.updateIkParams}
-                    onMount={this.onIKPageLoad}
+                    onMount={this.onPageLoad}
                 />
             </Route>
             <Route path="/leg-patterns">
                 <LegPatternWidgets
                     params={this.state.patternParams}
                     onUpdate={this.updatePatternPose}
-                    onMount={this.onLPPageLoad}
+                    onMount={this.onPageLoad}
                 />
             </Route>
         </Switch>
