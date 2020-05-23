@@ -1,15 +1,14 @@
 import React from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import { NavBar, NavFooter } from "./components/Nav"
+import { DATA, LAYOUT } from "./components/templates/plotParams"
+import { DIMENSIONS, POSE, IK_PARAMS } from "./components/templates/hexapodParams"
 import HexapodPlot from "./components/HexapodPlot"
 import DimensionWidgets from "./components/DimensionWidgets"
 import ForwardKinematicsPage from "./components/ForwardKinematicsPage"
 import InverseKinematicsPage from "./components/InverseKinematicsPage"
 import LandingPage from "./components/LandingPage"
-
 import LegPatternPage from "./components/LegPatternPage"
-import { DATA, LAYOUT } from "./components/templates/plotParams"
-import { DIMENSIONS, POSE, IK_PARAMS } from "./components/templates/hexapodParams"
 
 class App extends React.Component {
     state = {
@@ -82,14 +81,31 @@ class App extends React.Component {
         this.setState({ ...this.state, plot: plot })
     }
 
-    showDimensions = () => (
-        <DimensionWidgets
-            dimensions={this.state.hexapod.dimensions}
-            onUpdate={this.updateDimensions}
-        />
+    mightShowDimensions = () => (
+        this.state.currentPage !== "Root" ? (
+            <DimensionWidgets
+                dimensions={this.state.hexapod.dimensions}
+                onUpdate={this.updateDimensions}
+            />
+        ) : null
     )
 
-    renderPageContent = () => (
+    mightShowPlot = () => (
+        <div
+            className={
+                this.state.currentPage === "Root" ? "no-display" : "plot border"
+            }
+        >
+            <HexapodPlot
+                data={this.state.plot.data}
+                layout={this.state.plot.layout}
+                onRelayout={this.logCameraView}
+                revision={this.revisionCounter}
+            />
+        </div>
+    )
+
+    showPage = () => (
         <Switch>
             <Route path="/" exact>
                 <LandingPage onMount={this.onPageLoad} />
@@ -124,27 +140,12 @@ class App extends React.Component {
             <div className="main">
                 <div className="sidebar column-container cell">
                     <div className="page-content">
-                        {this.state.currentPage !== "Root"
-                            ? this.showDimensions()
-                            : null}
-                        {this.renderPageContent()}
+                        {this.mightShowDimensions()}
+                        {this.showPage()}
                     </div>
                     <NavFooter />
                 </div>
-                <div
-                    className={
-                        this.state.currentPage === "Root"
-                            ? "no-display"
-                            : "plot border"
-                    }
-                >
-                    <HexapodPlot
-                        data={this.state.plot.data}
-                        layout={this.state.plot.layout}
-                        onRelayout={this.logCameraView}
-                        revision={this.revisionCounter}
-                    />
-                </div>
+                {this.mightShowPlot()}
             </div>
         </Router>
     )
