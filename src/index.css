@@ -76,7 +76,6 @@ h3 {
     margin: 0rem;
 }
 
-
 input {
     font-size: 0.7rem;
     text-align: justify;
@@ -183,8 +182,8 @@ input[type="number"] {
 
     .sidebar {
         width: 300px;
-        max-width: 300px;
-        min-width: 300px;
+        max-width: 275px;
+        min-width: 275px;
     }
 
     .plot {
@@ -205,7 +204,7 @@ input[type="number"] {
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 550px) {
     .input {
         font-size: 1rem;
     }
@@ -223,7 +222,13 @@ input[type="number"] {
 
     .plot {
         width: 100%;
-        height: 300px;
+        height: 400px;
         order: 0;
+        box-sizing: border-box;
+        margin: 0;
+    }
+
+    .main {
+        margin: 0;
     }
 }
