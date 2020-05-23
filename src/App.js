@@ -110,18 +110,20 @@ class App extends React.Component {
     )
 
     render = () => (
-        <Router>
-            <NavBar />
-            <div className="app">
-                <div className="sidebar column-container">
-                    <DimensionWidgets
+        <Router className="app">
+            <NavBar/>
+            <div className="main">
+                <div className="sidebar column-container cell">
+                    <DimensionWidgets className=""
                         dimensions={this.state.hexapod.dimensions}
                         onUpdate={this.updateDimensions}
                     />
-                    <div className="main-content">{this.renderPageContent()}</div>
+                    <div className="page-content">
+                        {this.renderPageContent()}
+                    </div>
                     <NavFooter />
                 </div>
-                <div className="graph">
+                <div className="plot border">
                     <HexapodPlot
                         data={this.state.plot.data}
                         layout={this.state.plot.layout}

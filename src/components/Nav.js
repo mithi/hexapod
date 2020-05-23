@@ -26,25 +26,35 @@ const PATHS = [PATH_ROOT, PATH_FK, PATH_IK, PATH_LP]
 const LINK_TXTS = [ROOT_LINK_TXT, FK_LINK_TXT, IK_LINK_TXT, LP_LINK_TXT]
 
 const PAGE_LINKS = PATHS.map((path, index) => (
-    <PageLink path={path} symbol={LINK_TXTS[index]} klass="nav-footer-link" />
+    <PageLink
+        key={path}
+        path={path}
+        symbol={LINK_TXTS[index]}
+        klass="nav-footer-link"
+    />
 ))
 
 const BASIC_LINKS = URLS.map((path, index) => (
-    <BasicLink path={path} symbol={URL_LINK_TXTS[index]} klass="nav-footer-link" />
+    <BasicLink
+        key={path}
+        path={path}
+        symbol={URL_LINK_TXTS[index]}
+        klass="nav-footer-link"
+    />
 ))
 
 const NavBar = () => (
-    <div className="row-container">
-        <BasicLink path={URL_KOFI} symbol={ICON_KOFI} />
-        <BasicLink path={URL_SRC} symbol={ICON_SRC} />
+    <div className="navbar row-container">
+        <BasicLink key={URL_KOFI} path={URL_KOFI} symbol={ICON_KOFI} />
+        <BasicLink key={URL_SRC} path={URL_SRC} symbol={ICON_SRC} />
         {PATHS.map(path => {
-            return <PageLink path={path} symbol="●" />
+            return <PageLink key={path} path={path} symbol="●" />
         })}
     </div>
 )
 
 const NavFooter = () => (
-    <div className="row-container nav-footer">
+    <div className="row-container border">
         <div className="column-container cell">
             {BASIC_LINKS}
             {PAGE_LINKS[0]}

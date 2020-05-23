@@ -5,7 +5,6 @@ body {
     font-weight: bold;
     background-color: rgb(34, 47, 62);
     color: rgb(50, 255, 126);
-    margin-left: 0.5rem;
     font-size: 3px;
     font-family: Consolas, Monaco, "Courier New", Menlo, monospace;
     -webkit-font-smoothing: antialiased;
@@ -26,11 +25,15 @@ a:hover {
 h2,
 h3 {
     font-family: "Permanent Marker", "Bungee", "Libre Franklin", monospace;
-    margin-top: 0;
-    margin-bottom: 0;
+    margin-top: 5px;
+    margin-bottom: 5px;
     margin-left: 5px;
     font-weight: bold;
     font-size: 1.5rem;
+}
+
+h2 {
+    margin: 5px;
 }
 
 h3 {
@@ -42,26 +45,28 @@ h3 {
 }
 
 .sidebar {
-    margin-right: 10px;
-    width: 375px;
-    height: 625px;
-    flex-shrink: 0;
+    min-width: 350px;
+    max-width: 375px;
+    flex: 1;
+    height: 600px;
+    margin-right: 15px;
 }
 
-.main-content {
+.page-content {
     flex-grow: 1;
 }
 
-.graph {
+.plot {
     width: 100%;
 }
 
-.cell {
-    flex: 1;
+.main {
+    display: flex;
+    margin: 0 15px 0 15px;
 }
 
 .link-icon {
-    font-size: 1rem;
+    font-size: 1.2rem;
     margin: 0.1rem;
 }
 
@@ -71,12 +76,6 @@ h3 {
     margin: 0rem;
 }
 
-.nav-footer {
-    margin: 10px;
-    border-radius: 10px;
-    border: 1px solid rgb(41, 128, 185);
-    padding: 10px;
-}
 
 input {
     font-size: 0.7rem;
@@ -110,6 +109,13 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 
+.border {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid rgb(41, 128, 185);
+    border-radius: 10px;
+}
+
 .label {
     font-size: 0.6rem;
     margin-left: 5px;
@@ -127,6 +133,10 @@ input[type="number"] {
 
 .slider-container {
     margin: 5px;
+}
+
+.cell {
+    flex: 1;
 }
 
 .slider {
@@ -171,30 +181,27 @@ input[type="number"] {
         font-size: 0.7rem;
     }
 
-    .app {
-        display: flex;
-    }
-
     .sidebar {
         width: 300px;
+        max-width: 300px;
+        min-width: 300px;
     }
 
-    .graph {
+    .plot {
         width: 100%;
-        height: 500px;
-        flex: 1;
+        height: 300px;
     }
 
-    .main-content {
+    .page-content {
         flex-grow: 0;
     }
 
     .nav-footer {
-        margin: 10px;
-        border-radius: 10px;
-        border: 1px solid rgb(41, 128, 185);
-        padding: 10px;
         flex-direction: column;
+    }
+
+    .navbar {
+        display: none;
     }
 }
 
@@ -203,24 +210,20 @@ input[type="number"] {
         font-size: 1rem;
     }
 
-    .app {
-        display: flex;
+    .main {
         flex-direction: column;
     }
 
     .sidebar {
         width: 100%;
-        margin-right: 10px;
         order: 1;
+        max-width: 600px;
+        margin-right: 0;
     }
 
-    .graph {
+    .plot {
         width: 100%;
-        height: 400px;
+        height: 300px;
         order: 0;
-    }
-
-    .main-content {
-        flex-grow: 0;
     }
 }
