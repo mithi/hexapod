@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { sliderList } from "./generic/SliderWidget"
+import { Card } from "./generic/SmallWidgets"
 
 class InverseKinematicsWidgets extends Component {
     componentDidMount() {
@@ -20,12 +21,11 @@ class InverseKinematicsWidgets extends Component {
         )
 
         return (
-            <>
-                <h2>Inverse Kinematics</h2>
+            <Card title="Inverse Kinematics" h="h2">
                 <div className="row-container">{translateSliders}</div>
                 <div className="row-container">{rotateSliders.slice(0, 3)}</div>
                 <div className="row-container">{rotateSliders.slice(3)}</div>
-            </>
+            </Card>
         )
     }
 }

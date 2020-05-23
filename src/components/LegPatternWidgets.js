@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { sliderList } from "./generic/SliderWidget"
+import { Card } from "./generic/SmallWidgets"
 
 class LegPatternWidgets extends Component {
     componentDidMount() {
@@ -10,10 +11,9 @@ class LegPatternWidgets extends Component {
         sliderList(["alpha", "beta", "gamma"], [-1, 1, 0.01], this.props)
 
     render = () => (
-        <>
-            <h2>leg patterns</h2>
+        <Card title="Leg Patterns" h="h2">
             <div className="row-container">{this.rotateSliders()}</div>
-        </>
+        </Card>
     )
 }
 

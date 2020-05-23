@@ -1,6 +1,13 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
+const Card = props => (
+    <div className={`${props.klass || ""}`}>
+        <props.h>{props.title}</props.h>
+        {props.children}
+    </div>
+)
+
 const BasicLink = props => (
     <a
         className={`link-icon ${props.klass}`}
@@ -18,4 +25,4 @@ const PageLink = props => (
     </Link>
 )
 
-export { BasicLink, PageLink }
+export { BasicLink, PageLink, Card }

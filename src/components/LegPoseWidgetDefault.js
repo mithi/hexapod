@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import InputField from "./generic/InputFieldWidget"
+import { Card } from "./generic/SmallWidgets"
 
 class LegPoseWidget extends Component {
     updateFieldState = (angle, value) => {
@@ -24,10 +25,9 @@ class LegPoseWidget extends Component {
         ))
 
     render = () => (
-        <div className="column-container">
-            <h3>{this.props.name}</h3>
+        <Card title={this.props.name} h="h3" klass="column-container">
             <form className="row-container">{this.inputFields()}</form>
-        </div>
+        </Card>
     )
 }
 

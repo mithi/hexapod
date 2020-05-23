@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import InputField from "./generic/InputFieldWidget"
+import { Card } from "./generic/SmallWidgets"
 
 class DimensionWidgets extends Component {
     updateFieldState = (name, value) => {
@@ -19,10 +20,9 @@ class DimensionWidgets extends Component {
         ))
 
     render = () => (
-        <>
-            <h2>Dimensions</h2>
-            <form className="row-container">{this.inputFields()}</form>
-        </>
+        <Card title="Dimensions" h="h2">
+            <div className="row-container">{this.inputFields()}</div>
+        </Card>
     )
 }
 

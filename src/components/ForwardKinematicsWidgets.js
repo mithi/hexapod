@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import LegPoseWidget from "./LegPoseWidgetDefault"
+import { Card } from "./generic/SmallWidgets"
 
 class ForwardKinematicsWidgets extends Component {
     componentDidMount() {
@@ -20,12 +21,11 @@ class ForwardKinematicsWidgets extends Component {
     )
 
     render = () => (
-        <>
-            <h2>Forward Kinematics</h2>
+        <Card title="Forward Kinematics" h="h2">
             {this.makeRow("leftFront", "rightFront")}
             {this.makeRow("leftMiddle", "rightMiddle")}
             {this.makeRow("leftBack", "rightBack")}
-        </>
+        </Card>
     )
 }
 
