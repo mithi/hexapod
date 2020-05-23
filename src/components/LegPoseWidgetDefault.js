@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import InputField from "./generic/InputFieldWidget"
 import { Card } from "./generic/SmallWidgets"
 
 class LegPoseWidget extends Component {
@@ -13,20 +12,28 @@ class LegPoseWidget extends Component {
         this.props.onUpdate(this.props.name, angle, value)
     }
 
-    inputFields = () =>
+    inputFields = Component =>
         Object.keys(this.props.pose).map(name => (
-            <InputField
+            <Component
                 key={name}
                 name={name}
                 params={[-180, 180, 0.01]}
-                value={this.props.pose[name]}
+                value={this.props.pose[name].toFixed(2).toString().padEnd(7, "0")}
                 handleChange={this.updateFieldState}
             />
         ))
 
     render = () => (
         <Card title={this.props.name} h="h3" klass="column-container">
-            <form className="row-container flex-wrap">{this.inputFields()}</form>
+            <form
+                className={
+                    this.props.renderStacked
+                        ? "column-container"
+                        : "row-container flex-wrap"
+                }
+            >
+                {this.inputFields(this.props.WidgetType)}
+            </form>
         </Card>
     )
 }

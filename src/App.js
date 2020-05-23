@@ -81,14 +81,13 @@ class App extends React.Component {
         this.setState({ ...this.state, plot: plot })
     }
 
-    mightShowDimensions = () => (
+    mightShowDimensions = () =>
         this.state.currentPage !== "Root" ? (
             <DimensionWidgets
                 dimensions={this.state.hexapod.dimensions}
                 onUpdate={this.updateDimensions}
             />
         ) : null
-    )
 
     mightShowPlot = () => (
         <div

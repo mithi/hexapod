@@ -1,6 +1,26 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
+const ToggleSwitch = props => (
+    <>
+        {props.labelTop ? (
+            <label className="label">
+                {props.value}
+                <br />
+            </label>
+        ) : null}
+        <label className="switch">
+            <input
+                type="checkbox"
+                value={props.value}
+                onChange={props.handleChange}
+            />
+            <span className="toggle-switch-widget round"></span>
+            {!props.labelTop ? <label className="label">{props.value}</label> : null}
+        </label>
+    </>
+)
+
 const Card = props => (
     <div className={`${props.klass || ""}`}>
         <props.h>{props.title}</props.h>
@@ -25,4 +45,4 @@ const PageLink = props => (
     </Link>
 )
 
-export { BasicLink, PageLink, Card }
+export { BasicLink, PageLink, Card, ToggleSwitch }

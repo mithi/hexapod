@@ -104,7 +104,7 @@ p {
 }
 
 input {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     text-align: justify;
     font-weight: bolder;
     margin-bottom: 10px;
@@ -117,7 +117,8 @@ input {
     color: rgb(46, 204, 113);
     font-family: Monaco, "Courier New", Menlo, Consolas, monospace;
     box-sizing: border-box;
-    padding-left: 10px;
+    padding-right: 7px;
+    text-align: right;
 }
 
 input:hover {
@@ -177,8 +178,8 @@ input[type="number"] {
     -webkit-appearance: none;
     width: 100%;
     height: 5px;
-    border-radius: 5px;
     border: 0px;
+    border-radius: 5px;
     background: #ef5777;
     outline: none;
     margin: 5px;
@@ -208,6 +209,71 @@ input[type="number"] {
     background: rgb(46, 204, 113);
     cursor: pointer;
     border: 0;
+}
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 17px;
+    border: 1px rgb(46, 204, 113);
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The toggle switch */
+.toggle-switch-widget {
+    position: absolute;
+    /*border: 2px solid rgb(41, 128, 185);*/
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ef5777;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.toggle-switch-widget:before {
+    position: absolute;
+    content: "";
+    height: 13px;
+    width: 13px;
+    left: 2px;
+    bottom: 2px;
+    background-color: rgb(44, 62, 80);
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+input:checked + .toggle-switch-widget {
+    background-color: rgb(46, 204, 113);
+}
+
+input:focus + .toggle-switch-widget {
+    box-shadow: 0 0 1px rgb(46, 204, 113);
+}
+
+input:checked + .toggle-switch-widget:before {
+    -webkit-transform: translateX(13px);
+    -ms-transform: translateX(13px);
+    transform: translateX(13px);
+}
+
+/* Rounded sliders */
+.toggle-switch-widget.round {
+    border-radius: 17px;
+}
+
+.toggle-switch-widget.round:before {
+    border-radius: 50%;
 }
 
 @media screen and (max-width: 900px) {

@@ -8,7 +8,7 @@ const InputField = props => (
         <input
             type="number"
             id={props.name}
-            value={props.value}
+            value={Number(props.value)}
             onChange={e => props.handleChange(props.name, e.target.value)}
             min={props.params[0]}
             max={props.params[1]}
