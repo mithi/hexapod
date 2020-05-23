@@ -15,7 +15,7 @@ class ForwardKinematicsWidgets extends Component {
                 <LegPoseWidget
                     key={name}
                     name={name}
-                    pose={this.props.pose[name]}
+                    pose={this.props.params[name]}
                     onUpdate={this.props.onUpdate}
                 />
             ))}

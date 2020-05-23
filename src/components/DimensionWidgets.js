@@ -21,7 +21,7 @@ class DimensionWidgets extends Component {
 
     render = () => (
         <Card title="Dimensions" h="h2">
-            <div className="row-container">{this.inputFields()}</div>
+            <div className="row-container flex-wrap">{this.inputFields()}</div>
         </Card>
     )
 }

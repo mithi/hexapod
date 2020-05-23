@@ -54,12 +54,9 @@ const NavBar = () => (
 )
 
 const NavFooter = () => (
-    <div className="row-container border">
-        <div className="column-container cell">
-            {BASIC_LINKS}
-            {PAGE_LINKS[0]}
-        </div>
-        <div className="column-container cell">{PAGE_LINKS.slice(1)}</div>
+    <div className="column-container border nav-footer">
+        {BASIC_LINKS}
+        {PAGE_LINKS}
     </div>
 )
 

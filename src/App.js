@@ -9,6 +9,15 @@ import LegPatternPage from "./components/LegPatternPage"
 import { DATA, LAYOUT } from "./components/templates/plotParams"
 import { DIMENSIONS, POSE, IK_PARAMS } from "./components/templates/hexapodParams"
 
+class Landing extends React.Component {
+    pageName = "Root"
+
+    componentDidMount() {
+        this.props.onMount(this.pageName)
+    }
+    render = () => <h1> Hello World! </h1>
+}
+
 class App extends React.Component {
     state = {
         currentPage: {},
@@ -83,11 +92,11 @@ class App extends React.Component {
     renderPageContent = () => (
         <Switch>
             <Route path="/" exact>
-                <h2>Hello world!</h2>
+                <Landing onMount={this.onPageLoad} />
             </Route>
             <Route path="/forward-kinematics">
                 <ForwardKinematicsPage
-                    pose={this.state.hexapod.pose}
+                    params={this.state.hexapod.pose}
                     onUpdate={this.updatePose}
                     onMount={this.onPageLoad}
                 />
@@ -115,7 +124,6 @@ class App extends React.Component {
             <div className="main">
                 <div className="sidebar column-container cell">
                     <DimensionWidgets
-                        className=""
                         dimensions={this.state.hexapod.dimensions}
                         onUpdate={this.updateDimensions}
                     />
