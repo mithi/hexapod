@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import { NavBar, NavFooter } from "./components/Nav"
 import HexapodPlot from "./components/HexapodPlot"
 import DimensionWidgets from "./components/DimensionWidgets"
-import ForwardKinematicsWidgets from "./components/ForwardKinematicsWidgets"
-import InverseKinematicsWidgets from "./components/InverseKinematicsWidgets"
-import LegPatternWidgets from "./components/LegPatternWidgets"
+import ForwardKinematicsPage from "./components/ForwardKinematicsPage"
+import InverseKinematicsPage from "./components/InverseKinematicsPage"
+import LegPatternPage from "./components/LegPatternPage"
 import { DATA, LAYOUT } from "./components/templates/plotParams"
 import { DIMENSIONS, POSE, IK_PARAMS } from "./components/templates/hexapodParams"
 
@@ -86,21 +86,21 @@ class App extends React.Component {
                 <h2>Hello world!</h2>
             </Route>
             <Route path="/forward-kinematics">
-                <ForwardKinematicsWidgets
+                <ForwardKinematicsPage
                     pose={this.state.hexapod.pose}
                     onUpdate={this.updatePose}
                     onMount={this.onPageLoad}
                 />
             </Route>
             <Route path="/inverse-kinematics">
-                <InverseKinematicsWidgets
+                <InverseKinematicsPage
                     params={this.state.ikParams}
                     onUpdate={this.updateIkParams}
                     onMount={this.onPageLoad}
                 />
             </Route>
             <Route path="/leg-patterns">
-                <LegPatternWidgets
+                <LegPatternPage
                     params={this.state.patternParams}
                     onUpdate={this.updatePatternPose}
                     onMount={this.onPageLoad}
