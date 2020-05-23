@@ -2,8 +2,8 @@ import React from "react"
 import { Link } from "react-router-dom"
 
 const ToggleSwitch = props => (
-    <>
-        {props.labelTop ? (
+    <div className="switch-container">
+        {props.showLabel && props.labelTop ? (
             <label className="label">
                 {props.value}
                 <br />
@@ -16,9 +16,11 @@ const ToggleSwitch = props => (
                 onChange={props.handleChange}
             />
             <span className="toggle-switch-widget round"></span>
-            {!props.labelTop ? <label className="label">{props.value}</label> : null}
+            {props.showLabel && !props.labelTop ? (
+                <label className="label">{props.value}</label>
+            ) : null}
         </label>
-    </>
+    </div>
 )
 
 const Card = props => (

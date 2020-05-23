@@ -64,15 +64,19 @@ class ForwardKinematicsWidgets extends Component {
             "rightBack",
         ]
         const cells = legNames.map(name => this.makeCell(name))
-
-        return (
-            <Card title={this.pageName} h="h2">
-                {renderTwoColumns(cells)}
+        const header = () => (
+            <div className="row-container flex-wrap">
+                <h2>{this.pageName}</h2>
                 <ToggleSwitch
                     value={this.state.widgetType}
                     handleChange={this.toggleMode}
-                    labelTop={false}
+                    showLabel={false}
                 />
+            </div>
+        )
+        return (
+            <Card title={header()} h="div">
+                {renderTwoColumns(cells)}
             </Card>
         )
     }
