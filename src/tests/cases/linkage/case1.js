@@ -57,6 +57,7 @@ const LINKAGE_CASE = {
         femurPoint: FEMUR_POINT,
         footTipPoint: FOOT_TIP_POINT,
     },
+    description: "Random Linkage #1",
 }
 
 export default LINKAGE_CASE

@@ -1,6 +1,7 @@
 import CASE1 from "./cases/linkage/case1"
 import CASE2 from "./cases/linkage/case2"
-import Linkage, { LEG_ID_MAPS } from "../hexapod/Linkage"
+import Linkage from "../hexapod/Linkage"
+import { LEG_ID_MAP } from "../hexapod/constants"
 
 const CASES = [CASE1, CASE2]
 
@@ -12,7 +13,7 @@ const isSamePoint = (point1, point2) => {
     expect(point1.z).toBeCloseTo(point2.z)
 }
 
-test.each(CASES)("Preliminary properties were set correctly", thisCase => {
+test.each(CASES)("Should Initialize Linkage: %p", thisCase => {
     const linkage = new Linkage(
         thisCase.params.coxia,
         thisCase.params.femur,
@@ -23,14 +24,19 @@ test.each(CASES)("Preliminary properties were set correctly", thisCase => {
         thisCase.params.beta,
         thisCase.params.gamma
     )
+
     expect(linkage.coxia).toBeCloseTo(thisCase.params.coxia)
     expect(linkage.femur).toBeCloseTo(thisCase.params.femur)
     expect(linkage.tibia).toBeCloseTo(thisCase.params.tibia)
+    expect(linkage.alpha).toBeCloseTo(thisCase.params.alpha)
+    expect(linkage.beta).toBeCloseTo(thisCase.params.beta)
+    expect(linkage.gamma).toBeCloseTo(thisCase.params.gamma)
+
     expect(linkage.name).toBe(thisCase.params.name)
-    expect(linkage.id).toBe(LEG_ID_MAPS[thisCase.params.name])
+    expect(linkage.id).toBe(LEG_ID_MAP[thisCase.params.name])
 
     expect(linkage.pointNameIdMap).toEqual(thisCase.answer.pointNameIdMap)
-    expect(linkage.startingBodyContactPoint).toEqual(linkage.pointsMap.bodyContact)
+    expect(linkage.givenBodyContactPoint).toEqual(linkage.pointsMap.bodyContact)
 
     expect(linkage.pointsMap.bodyContact).toBe(linkage.pointsList[0])
     expect(linkage.pointsMap.coxia).toBe(linkage.pointsList[1])
