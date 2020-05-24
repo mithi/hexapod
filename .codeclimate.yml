@@ -2,6 +2,7 @@ version: "2" # required to adjust maintainability checks
 exclude_patterns:
     - "src/components/templates/*.js"
     - "src/serviceWorker.js "
+    - "src/tests/*"
 
 checks:
     argument-count:
