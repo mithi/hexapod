@@ -13,7 +13,7 @@ class DimensionWidgets extends Component {
             <InputField
                 key={name}
                 name={name}
-                params={[0, -Infinity, 1]}
+                params={[0, Infinity, 1]}
                 value={this.props.dimensions[name]}
                 handleChange={this.updateFieldState}
             />
