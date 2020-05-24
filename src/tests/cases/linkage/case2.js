@@ -2,7 +2,7 @@ const PARAMS = {
     coxia: 51,
     femur: 83,
     tibia: 107,
-    name: "rightMiddle",
+    position: "rightMiddle",
     bodyContactPoint: { x: 94, y: 0, z: 107 },
     alpha: -17,
     beta: 22,

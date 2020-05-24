@@ -2,7 +2,7 @@ const PARAMS = {
     coxia: 54,
     femur: 105,
     tibia: 136,
-    name: "leftBack",
+    position: "leftBack",
     bodyContactPoint: { x: -41, y: -72, z: 136 },
     alpha: 0,
     beta: 0,

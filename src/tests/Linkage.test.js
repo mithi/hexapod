@@ -1,7 +1,7 @@
 import CASE1 from "./cases/linkage/case1"
 import CASE2 from "./cases/linkage/case2"
 import Linkage from "../hexapod/Linkage"
-import { LEG_ID_MAP } from "../hexapod/constants"
+import { POSITION_ID_MAP } from "../hexapod/constants"
 
 const CASES = [CASE1, CASE2]
 
@@ -18,7 +18,7 @@ test.each(CASES)("Should Initialize Linkage: %p", thisCase => {
         thisCase.params.coxia,
         thisCase.params.femur,
         thisCase.params.tibia,
-        thisCase.params.name,
+        thisCase.params.position,
         thisCase.params.bodyContactPoint,
         thisCase.params.alpha,
         thisCase.params.beta,
@@ -32,8 +32,8 @@ test.each(CASES)("Should Initialize Linkage: %p", thisCase => {
     expect(linkage.beta).toBeCloseTo(thisCase.params.beta)
     expect(linkage.gamma).toBeCloseTo(thisCase.params.gamma)
 
-    expect(linkage.name).toBe(thisCase.params.name)
-    expect(linkage.id).toBe(LEG_ID_MAP[thisCase.params.name])
+    expect(linkage.position).toBe(thisCase.params.position)
+    expect(linkage.id).toBe(POSITION_ID_MAP[thisCase.params.position])
 
     expect(linkage.pointNameIdMap).toEqual(thisCase.answer.pointNameIdMap)
     expect(linkage.givenBodyContactPoint).toEqual(linkage.pointsMap.bodyContact)

@@ -52,16 +52,16 @@ import { multiply } from "mathjs"
 import { tRotYframe, tRotZframe, pointWrtFrame } from "./utilities/geometry"
 import {
     LEG_POINT_TYPES,
-    LEG_ID_MAP,
-    LEG_LOCAL_X_AXIS_ANGLE_MAP,
-} from "./constants.js"
+    POSITION_ID_MAP,
+    LOCAL_X_AXIS_ANGLE_MAP,
+} from "./constants"
 
 class Linkage {
     constructor(
         coxia,
         femur,
         tibia,
-        name = "unnamed-linkage",
+        position = "unnamed-linkage",
         bodyContactPoint = { x: 0, y: 0, z: 0 },
         alpha = 0,
         beta = 0,
@@ -73,16 +73,16 @@ class Linkage {
         this.alpha = alpha
         this.beta = beta
         this.gamma = gamma
-        this.name = name
+        this.position = position
+        this.name = `${position}Leg`
 
-        this.id = LEG_ID_MAP[this.name]
+        this.id = POSITION_ID_MAP[this.position]
         this.pointNameIdMap = this.buildPointNameIdMap()
         this.givenBodyContactPoint = {
             ...bodyContactPoint,
             name: this.pointNameIdMap.bodyContact.name,
             id: this.pointNameIdMap.bodyContact.id,
         }
-
         this.pointsMap = this.computePoints(alpha, beta, gamma)
         this.pointsList = LEG_POINT_TYPES.reduce(
             (acc, pointType) => [...acc, this.pointsMap[pointType]],
@@ -92,7 +92,7 @@ class Linkage {
     }
 
     buildNameId = (pointName, id) => ({
-        name: `${this.name}-${pointName}Point`,
+        name: `${this.position}-${pointName}Point`,
         id: `${this.id}-${id}`,
     })
 
@@ -102,10 +102,10 @@ class Linkage {
      * .............
      *
      * pointNameIdMap = {
-     *   bodyContact: {name: "{legName}-bodyContactPoint", id: "{legId}-0" },
-     *   coxia: {name: "{legName}-coxiaPoint", id: "{legId}-1" },
-     *   femur: {name: "{legName}-femurPoint", id: "{legId}-2" },
-     *   footTip: {name: "{legName}-footTipPoint", id: "{legId}-3" },
+     *   bodyContact: {name: "{legPosition}-bodyContactPoint", id: "{legId}-0" },
+     *   coxia: {name: "{legPosition}-coxiaPoint", id: "{legId}-1" },
+     *   femur: {name: "{legPosition}-femurPoint", id: "{legId}-2" },
+     *   footTip: {name: "{legPosition}-footTipPoint", id: "{legId}-3" },
      * }
      * */
     buildPointNameIdMap = () =>
@@ -153,7 +153,7 @@ class Linkage {
 
         // STEP 2: find local points wrt hexapod's center of gravity (0, 0, 0)
         const twistFrame = tRotZframe(
-            LEG_LOCAL_X_AXIS_ANGLE_MAP[this.name] + alpha,
+            LOCAL_X_AXIS_ANGLE_MAP[this.position] + alpha,
             this.givenBodyContactPoint.x,
             this.givenBodyContactPoint.y,
             this.givenBodyContactPoint.z
@@ -169,7 +169,6 @@ class Linkage {
             acc[pointType] = point
             return acc
         }, {})
-
         return pointsMap
     }
     // computeGroundContactMaybe() {}
