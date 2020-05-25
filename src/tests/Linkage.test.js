@@ -34,10 +34,10 @@ test.each(CASES)("Should Initialize Linkage: %p", thisCase => {
     expect(linkage.pointNameIdMap).toEqual(thisCase.answer.pointNameIdMap)
     expect(linkage.givenBodyContactPoint).toEqual(linkage.pointsMap.bodyContact)
 
-    expect(linkage.pointsMap.bodyContact).toBe(linkage.pointsList[0])
-    expect(linkage.pointsMap.coxia).toBe(linkage.pointsList[1])
-    expect(linkage.pointsMap.femur).toBe(linkage.pointsList[2])
-    expect(linkage.pointsMap.footTip).toBe(linkage.pointsList[3])
+    expect(linkage.pointsMap.bodyContact).toBe(linkage.allPointsList[0])
+    expect(linkage.pointsMap.coxia).toBe(linkage.allPointsList[1])
+    expect(linkage.pointsMap.femur).toBe(linkage.allPointsList[2])
+    expect(linkage.pointsMap.footTip).toBe(linkage.allPointsList[3])
 
     isSamePoint(linkage.pointsMap.bodyContact, thisCase.answer.bodyContactPoint)
     isSamePoint(linkage.pointsMap.coxia, thisCase.answer.coxiaPoint)
