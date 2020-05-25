@@ -107,7 +107,6 @@ class Linkage {
             return acc
         }, {})
 
-
     /* *
      * ................
      * STEP 1 of computing points:
@@ -173,7 +172,7 @@ class Linkage {
     }
 
     _computePoints(pose) {
-        const {alpha, beta, gamma} = pose
+        const { alpha, beta, gamma } = pose
         const localPointsMap = this._computePointsWrtBodyContact(beta, gamma)
         const pointsMap = this._computePointsWrtHexapodsCog(localPointsMap, alpha)
         return pointsMap

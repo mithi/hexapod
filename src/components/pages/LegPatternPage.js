@@ -1,6 +1,6 @@
 import React, { Component } from "react"
-import { sliderList } from "../generic/Slider"
-import { Card } from "../generic/SmallWidgets"
+import { sliderList, Card } from "../generic"
+
 class LegPatternPage extends Component {
     pageName = "Leg Patterns"
 

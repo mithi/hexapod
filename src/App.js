@@ -13,7 +13,7 @@ import {
     InverseKinematicsPage,
     LandingPage,
     LegPatternPage,
-} from "./components/pages/"
+} from "./components/pages"
 
 class App extends React.Component {
     state = {

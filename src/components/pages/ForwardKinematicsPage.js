@@ -1,8 +1,6 @@
 import React, { Component } from "react"
 import LegPoseWidget from "./LegPoseWidgetDefault"
-import { Card, ToggleSwitch } from "../generic/SmallWidgets"
-import InputField from "../generic/InputField"
-import { Slider } from "../generic/Slider"
+import { Card, ToggleSwitch, InputField, Slider } from "../generic"
 
 const renderTwoColumns = cells => (
     <>
