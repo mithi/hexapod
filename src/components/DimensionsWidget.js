@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import InputField from "./generic/InputField"
 import { Card } from "./generic/SmallWidgets"
 
-class DimensionWidgets extends Component {
+class DimensionsWidget extends Component {
     updateFieldState = (name, value) => {
         value = value > 0 ? value : 0
         this.props.onUpdate(name, Math.round(value))
@@ -26,4 +26,4 @@ class DimensionWidgets extends Component {
     )
 }
 
-export default DimensionWidgets
+export default DimensionsWidget

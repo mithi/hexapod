@@ -6,7 +6,7 @@ import { DIMENSIONS, POSE, IK_PARAMS } from "./templates/hexapodParams"
 
 import { NavBar, NavFooter } from "./components/Nav"
 import HexapodPlot from "./components/HexapodPlot"
-import DimensionWidgets from "./components/DimensionWidgets"
+import DimensionsWidget from "./components/DimensionsWidget"
 
 import {
     ForwardKinematicsPage,
@@ -93,7 +93,7 @@ class App extends React.Component {
 
     mightShowDimensions = () =>
         this.state.shouldDisplayDimensionsAndPlot ? (
-            <DimensionWidgets
+            <DimensionsWidget
                 dimensions={this.state.hexapod.dimensions}
                 onUpdate={this.updateDimensions}
             />
