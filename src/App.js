@@ -102,12 +102,12 @@ class App extends React.Component {
     }
 
     updatePose = (name, angle, value) => {
-        const { pose } = this.state.hexapod
+        const { pose, dimensions } = this.state.hexapod
         const newPose = {
             ...pose,
             [name]: { ...pose[name], [angle]: value },
         }
-        this.setState({ hexapod: { ...this.state.hexapod, pose: newPose } })
+        this.updatePlot(dimensions, newPose)
     }
 
     updatePatternPose = (name, value) => {
@@ -118,10 +118,10 @@ class App extends React.Component {
             newPose[leg] = { ...pose[leg], [name]: Number(value) }
         }
 
-        this.updatePlot(dimensions, newPose)
         this.setState({
             patternParams: { ...this.state.patternParams, [name]: value },
         })
+        this.updatePlot(dimensions, newPose)
     }
 
     logCameraView = relayoutData => {
