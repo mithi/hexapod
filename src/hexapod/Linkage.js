@@ -76,7 +76,7 @@ class Linkage {
             id: this.pointNameIdMap.bodyContact.id,
         }
         this.pointsMap = this._computePoints(pose)
-        this.pointsList = LEG_POINT_TYPES.reduce(
+        this.allPointsList = LEG_POINT_TYPES.reduce(
             (acc, pointType) => [...acc, this.pointsMap[pointType]],
             []
         )
