@@ -1,8 +1,8 @@
 import React from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 
-import { DATA, LAYOUT } from "./components/templates/plotParams"
-import { DIMENSIONS, POSE, IK_PARAMS } from "./components/templates/hexapodParams"
+import { DATA, LAYOUT } from "./templates/plotParams"
+import { DIMENSIONS, POSE, IK_PARAMS } from "./templates/hexapodParams"
 
 import { NavBar, NavFooter } from "./components/Nav"
 import HexapodPlot from "./components/HexapodPlot"
@@ -19,10 +19,10 @@ class App extends React.Component {
     state = {
         currentPage: "Root",
         shouldDisplayDimensionsAndPlot: false,
-        ikParams: IK_PARAMS,
-        patternParams: { alpha: 0, beta: 0, gamma: 0 },
         alerts: "",
         messages: "",
+        ikParams: IK_PARAMS,
+        patternParams: { alpha: 0, beta: 0, gamma: 0 },
         hexapod: {
             dimensions: DIMENSIONS,
             pose: POSE,
