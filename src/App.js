@@ -18,6 +18,22 @@ import {
 import VirtualHexapod from "./hexapod/VirtualHexapod"
 import getNewPlotParams from "./hexapod/plotter"
 
+const splitDimensions = dimensions => {
+    const bodyDimensions = {
+        front: dimensions.front,
+        middle: dimensions.middle,
+        side: dimensions.side,
+    }
+
+    const legDimensions = {
+        coxia: dimensions.coxia,
+        femur: dimensions.femur,
+        tibia: dimensions.tibia,
+    }
+
+    return [bodyDimensions, legDimensions]
+}
+
 class App extends React.Component {
     state = {
         currentPage: "Root",
@@ -54,18 +70,7 @@ class App extends React.Component {
 
     updateDimensions = (name, value) => {
         const dimensions = { ...this.state.hexapod.dimensions, [name]: value }
-
-        const bodyDimensions = {
-            front: dimensions.front,
-            middle: dimensions.middle,
-            side: dimensions.side,
-        }
-
-        const legDimensions = {
-            coxia: dimensions.coxia,
-            femur: dimensions.femur,
-            tibia: dimensions.tibia,
-        }
+        const [bodyDimensions, legDimensions] = splitDimensions(dimensions)
 
         const newHexapodModel = new VirtualHexapod(
             bodyDimensions,
@@ -108,7 +113,7 @@ class App extends React.Component {
         let newPose = {}
 
         for (const leg in pose) {
-            newPose[leg] = { ...pose[leg], [name]: value }
+            newPose[leg] = { ...pose[leg], [name]: Number(value) }
         }
 
         this.setState({ hexapod: { ...this.state.hexapod, pose: newPose } })
