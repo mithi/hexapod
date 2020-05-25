@@ -1,12 +1,8 @@
 const PARAMS = {
-    coxia: 54,
-    femur: 105,
-    tibia: 136,
+    dimensions: { coxia: 54, femur: 105, tibia: 136 },
     position: "leftBack",
     bodyContactPoint: { x: -41, y: -72, z: 136 },
-    alpha: 0,
-    beta: 0,
-    gamma: 0,
+    pose: { alpha: 0, beta: 0, gamma: 0 },
 }
 
 const POINT_NAME_ID_MAP = {

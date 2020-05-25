@@ -15,22 +15,18 @@ const isSamePoint = (point1, point2) => {
 
 test.each(CASES)("Should Initialize Linkage: %p", thisCase => {
     const linkage = new Linkage(
-        thisCase.params.coxia,
-        thisCase.params.femur,
-        thisCase.params.tibia,
+        thisCase.params.dimensions,
         thisCase.params.position,
         thisCase.params.bodyContactPoint,
-        thisCase.params.alpha,
-        thisCase.params.beta,
-        thisCase.params.gamma
+        thisCase.params.pose
     )
 
-    expect(linkage.coxia).toBeCloseTo(thisCase.params.coxia)
-    expect(linkage.femur).toBeCloseTo(thisCase.params.femur)
-    expect(linkage.tibia).toBeCloseTo(thisCase.params.tibia)
-    expect(linkage.alpha).toBeCloseTo(thisCase.params.alpha)
-    expect(linkage.beta).toBeCloseTo(thisCase.params.beta)
-    expect(linkage.gamma).toBeCloseTo(thisCase.params.gamma)
+    expect(linkage.dimensions.coxia).toBeCloseTo(thisCase.params.dimensions.coxia)
+    expect(linkage.dimensions.femur).toBeCloseTo(thisCase.params.dimensions.femur)
+    expect(linkage.dimensions.tibia).toBeCloseTo(thisCase.params.dimensions.tibia)
+    expect(linkage.pose.alpha).toBeCloseTo(thisCase.params.pose.alpha)
+    expect(linkage.pose.beta).toBeCloseTo(thisCase.params.pose.beta)
+    expect(linkage.pose.gamma).toBeCloseTo(thisCase.params.pose.gamma)
 
     expect(linkage.position).toBe(thisCase.params.position)
     expect(linkage.id).toBe(POSITION_ID_MAP[thisCase.params.position])

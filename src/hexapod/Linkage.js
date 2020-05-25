@@ -58,21 +58,13 @@ import {
 
 class Linkage {
     constructor(
-        coxia,
-        femur,
-        tibia,
+        dimensions = { coxia: 100, femur: 100, tibia: 100 },
         position = "unnamed-linkage",
         bodyContactPoint = { x: 0, y: 0, z: 0 },
-        alpha = 0,
-        beta = 0,
-        gamma = 0
+        pose = { alpha: 0, beta: 0, gamma: 0 }
     ) {
-        this.coxia = coxia
-        this.femur = femur
-        this.tibia = tibia
-        this.alpha = alpha
-        this.beta = beta
-        this.gamma = gamma
+        this.dimensions = dimensions
+        this.pose = pose
         this.position = position
         this.name = `${position}Leg`
 
@@ -83,7 +75,7 @@ class Linkage {
             name: this.pointNameIdMap.bodyContact.name,
             id: this.pointNameIdMap.bodyContact.id,
         }
-        this.pointsMap = this.computePoints(alpha, beta, gamma)
+        this.pointsMap = this.computePoints(pose)
         this.pointsList = LEG_POINT_TYPES.reduce(
             (acc, pointType) => [...acc, this.pointsMap[pointType]],
             []
@@ -125,13 +117,13 @@ class Linkage {
      *   footTip: {...},
      * }
      * */
-    computePoints(alpha, beta, gamma) {
+    computePoints(pose = { alpha: 0, beta: 0, gamma: 0 }) {
         // NOTE: frame_ab is the pose of frame_b wrt frame_a
         // where pa is the origin of frame_a
         // and pb is the origin of frame_b
-        const frame01 = tRotYframe(-beta, this.coxia, 0, 0)
-        const frame12 = tRotYframe(90 - gamma, this.femur, 0, 0)
-        const frame23 = tRotYframe(0, this.tibia, 0, 0)
+        const frame01 = tRotYframe(-pose.beta, this.dimensions.coxia, 0, 0)
+        const frame12 = tRotYframe(90 - pose.gamma, this.dimensions.femur, 0, 0)
+        const frame23 = tRotYframe(0, this.dimensions.tibia, 0, 0)
         const frame02 = multiply(frame01, frame12)
         const frame03 = multiply(frame02, frame23)
 
@@ -153,7 +145,7 @@ class Linkage {
 
         // STEP 2: find local points wrt hexapod's center of gravity (0, 0, 0)
         const twistFrame = tRotZframe(
-            LOCAL_X_AXIS_ANGLE_MAP[this.position] + alpha,
+            LOCAL_X_AXIS_ANGLE_MAP[this.position] + pose.alpha,
             this.givenBodyContactPoint.x,
             this.givenBodyContactPoint.y,
             this.givenBodyContactPoint.z
@@ -171,8 +163,12 @@ class Linkage {
         }, {})
         return pointsMap
     }
-    // computeGroundContactMaybe() {}
-    // linkageWrtPose
+
+    //computeGroundContactMaybe() {}
+    linkageWrtPose(pose = { alpha: 0, beta: 0, gamma: 0 }) {
+        const pointsMap = this.computePoints(pose)
+        return { ...this, pointsMap, pose }
+    }
     // linkageWrtFrame
 }
 
