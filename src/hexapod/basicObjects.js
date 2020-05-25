@@ -65,13 +65,15 @@ const createHexagon = dimensions => {
         createVector(front, -side, 0, "rightBackVertex", 5),
     ]
 
+    const closedPointsList = [...verticesList, verticesList[0]]
+
     const vertices = verticesList.reduce(
         (acc, vertex) => ({ ...acc, [POSITION_LIST[vertex.id]]: vertex }),
         {}
     )
     const head = createVector(0, side, 0, "headPoint", 7)
     const cog = createVector(0, 0, 0, "centerOfGravityPoint", 6)
-    const allPointsList = [verticesList, cog, head]
+    const allPointsList = [...verticesList, cog, head]
 
     return {
         dimensions: {
@@ -79,13 +81,12 @@ const createHexagon = dimensions => {
             middle: middle,
             side: side,
         },
-        points: {
-            verticesList: verticesList,
-            vertices: vertices,
-            cog: cog,
-            head: head,
-            allPointsList: allPointsList,
-        },
+        verticesList: verticesList,
+        vertices: vertices,
+        cog: cog,
+        head: head,
+        allPointsList: allPointsList,
+        closedPointsList: closedPointsList,
     }
 }
 
