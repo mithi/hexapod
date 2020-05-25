@@ -1,23 +1,19 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
-const ToggleSwitch = props => (
+const ToggleSwitch = ({ value, handleChange, showLabel, labelTop }) => (
     <div className="switch-container">
-        {props.showLabel && props.labelTop ? (
+        {showLabel && labelTop ? (
             <label className="label">
-                {props.value}
+                {value}
                 <br />
             </label>
         ) : null}
         <label className="switch">
-            <input
-                type="checkbox"
-                value={props.value}
-                onChange={props.handleChange}
-            />
+            <input type="checkbox" value={value} onChange={handleChange} />
             <span className="toggle-switch-widget round"></span>
-            {props.showLabel && !props.labelTop ? (
-                <label className="label">{props.value}</label>
+            {showLabel && !labelTop ? (
+                <label className="label">{value}</label>
             ) : null}
         </label>
     </div>
@@ -30,20 +26,20 @@ const Card = props => (
     </div>
 )
 
-const BasicLink = props => (
+const BasicLink = ({ path, symbol, klass }) => (
     <a
-        className={`link-icon ${props.klass || ""}`}
-        href={props.path}
+        className={`link-icon ${klass || ""}`}
+        href={path}
         target="_blank"
         rel="noopener noreferrer"
     >
-        <span>{props.symbol}</span>
+        <span>{symbol}</span>
     </a>
 )
 
-const PageLink = props => (
-    <Link className={`link-icon ${props.klass || ""}`} to={props.path}>
-        {props.symbol}
+const PageLink = ({ path, symbol, klass }) => (
+    <Link className={`link-icon ${klass || ""}`} to={path}>
+        {symbol}
     </Link>
 )
 
