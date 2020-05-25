@@ -1,14 +1,19 @@
 import React from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-import { NavBar, NavFooter } from "./components/Nav"
+
 import { DATA, LAYOUT } from "./components/templates/plotParams"
 import { DIMENSIONS, POSE, IK_PARAMS } from "./components/templates/hexapodParams"
+
+import { NavBar, NavFooter } from "./components/Nav"
 import HexapodPlot from "./components/HexapodPlot"
 import DimensionWidgets from "./components/DimensionWidgets"
-import ForwardKinematicsPage from "./components/ForwardKinematicsPage"
-import InverseKinematicsPage from "./components/InverseKinematicsPage"
-import LandingPage from "./components/LandingPage"
-import LegPatternPage from "./components/LegPatternPage"
+
+import {
+    ForwardKinematicsPage,
+    InverseKinematicsPage,
+    LandingPage,
+    LegPatternPage,
+} from "./components/pages/"
 
 class App extends React.Component {
     state = {

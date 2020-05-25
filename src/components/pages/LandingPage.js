@@ -1,5 +1,5 @@
 import React from "react"
-import { BasicLink } from "./generic/SmallWidgets"
+import { BasicLink } from "../generic/SmallWidgets"
 
 class LandingPage extends React.Component {
     pageName = "Root"

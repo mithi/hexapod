@@ -1,8 +1,8 @@
 import React, { Component } from "react"
-import { sliderList } from "./generic/SliderWidget"
-import { Card } from "./generic/SmallWidgets"
+import { sliderList } from "../generic/SliderWidget"
+import { Card } from "../generic/SmallWidgets"
 
-class InverseKinematicsWidgets extends Component {
+class InverseKinematicsPage extends Component {
     pageName = "Inverse Kinematics"
 
     componentDidMount() {
@@ -32,4 +32,4 @@ class InverseKinematicsWidgets extends Component {
     }
 }
 
-export default InverseKinematicsWidgets
+export default InverseKinematicsPage

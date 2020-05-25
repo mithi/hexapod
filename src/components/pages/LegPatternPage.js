@@ -1,8 +1,8 @@
 import React, { Component } from "react"
-import { sliderList } from "./generic/SliderWidget"
-import { Card } from "./generic/SmallWidgets"
+import { sliderList } from "../generic/SliderWidget"
+import { Card } from "../generic/SmallWidgets"
 
-class LegPatternWidgets extends Component {
+class LegPatternPage extends Component {
     pageName = "Leg Patterns"
 
     componentDidMount() {
@@ -19,4 +19,4 @@ class LegPatternWidgets extends Component {
     )
 }
 
-export default LegPatternWidgets
+export default LegPatternPage

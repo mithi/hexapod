@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Card } from "./generic/SmallWidgets"
+import { Card } from "../generic/SmallWidgets"
 
 class LegPoseWidget extends Component {
     updateFieldState = (angle, value) => {

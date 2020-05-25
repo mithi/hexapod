@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 import LegPoseWidget from "./LegPoseWidgetDefault"
-import { Card, ToggleSwitch } from "./generic/SmallWidgets"
-import InputField from "./generic/InputFieldWidget"
-import { Slider } from "./generic/SliderWidget"
+import { Card, ToggleSwitch } from "../generic/SmallWidgets"
+import InputField from "../generic/InputFieldWidget"
+import { Slider } from "../generic/SliderWidget"
 
 const renderTwoColumns = cells => (
     <>
@@ -21,7 +21,7 @@ const renderTwoColumns = cells => (
     </>
 )
 
-class ForwardKinematicsWidgets extends Component {
+class ForwardKinematicsPage extends Component {
     pageName = "Forward Kinematics"
     widgetTypes = {
         Slider: Slider,
@@ -82,4 +82,4 @@ class ForwardKinematicsWidgets extends Component {
     }
 }
 
-export default ForwardKinematicsWidgets
+export default ForwardKinematicsPage
