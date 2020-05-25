@@ -18,6 +18,7 @@ import {
 class App extends React.Component {
     state = {
         currentPage: "Root",
+        shouldDisplayDimensionsAndPlot: false,
         ikParams: IK_PARAMS,
         patternParams: { alpha: 0, beta: 0, gamma: 0 },
         alerts: "",
@@ -36,6 +37,10 @@ class App extends React.Component {
     }
 
     onPageLoad = pageName => {
+        pageName === "Root"
+            ? this.setState({ shouldDisplayDimensionsAndPlot: false })
+            : this.setState({ shouldDisplayDimensionsAndPlot: true })
+
         this.setState({ currentPage: pageName })
         this.setState({ ikParams: IK_PARAMS })
         this.setState({ hexapod: { ...this.state.hexapod, pose: POSE } })
@@ -87,7 +92,7 @@ class App extends React.Component {
     }
 
     mightShowDimensions = () =>
-        this.state.currentPage !== "Root" ? (
+        this.state.shouldDisplayDimensionsAndPlot ? (
             <DimensionWidgets
                 dimensions={this.state.hexapod.dimensions}
                 onUpdate={this.updateDimensions}
@@ -97,7 +102,9 @@ class App extends React.Component {
     mightShowPlot = () => (
         <div
             className={
-                this.state.currentPage === "Root" ? "no-display" : "plot border"
+                this.state.shouldDisplayDimensionsAndPlot
+                    ? "plot border"
+                    : "no-display"
             }
         >
             <HexapodPlot
