@@ -9,7 +9,7 @@ class LegPatternPage extends Component {
     }
 
     rotateSliders = () =>
-        sliderList(["alpha", "beta", "gamma"], [-1, 1, 0.01], this.props)
+        sliderList(["alpha", "beta", "gamma"], [-180, 180, 1], this.props)
 
     render = () => (
         <Card title={this.pageName} h="h2">
