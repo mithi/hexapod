@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import InputField from "./generic/InputFieldWidget"
+import InputField from "./generic/InputField"
 import { Card } from "./generic/SmallWidgets"
 
 class DimensionWidgets extends Component {
