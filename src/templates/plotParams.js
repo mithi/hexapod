@@ -18,21 +18,22 @@ const LEGEND_FONT_COLOR = "#2ecc71"
 const DATA_INDEX_MAP = {
     bodyMesh: 0,
     bodyOutline: 1,
-    centerOfGravity: 2,
-    head: 3,
-    rightMiddleLeg: 4,
-    rightFrontLeg: 5,
-    leftFrontLeg: 6,
-    leftMiddleLeg: 7,
-    leftBackLeg: 8,
-    rightBackLeg: 9,
-    supportPolygonMesh: 10,
-    hexapodXaxis: 11,
-    hexapodYaxis: 12,
-    hexapodZaxis: 13,
-    worldXaxis: 14,
-    worldYaxis: 15,
-    worldZaxis: 16,
+    head: 2,
+    centerOfGravity: 3,
+    centerOfGravityProjection: 4,
+    rightMiddleLeg: 5,
+    rightFrontLeg: 6,
+    leftFrontLeg: 7,
+    leftMiddleLeg: 8,
+    leftBackLeg: 9,
+    rightBackLeg: 10,
+    supportPolygonMesh: 11,
+    hexapodXaxis: 12,
+    hexapodYaxis: 13,
+    hexapodZaxis: 14,
+    worldXaxis: 15,
+    worldYaxis: 16,
+    worldZaxis: 17,
 }
 
 const DATA = [
@@ -56,6 +57,15 @@ const DATA = [
         z: [100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0],
     },
     {
+        marker: { color: BODY_COLOR, opacity: 1.0, size: HEAD_SIZE },
+        mode: "markers",
+        name: "head",
+        type: "scatter3d",
+        x: [0.0],
+        y: [100.0],
+        z: [100.0],
+    },
+    {
         marker: { color: COG_COLOR, opacity: 1, size: COG_SIZE },
         mode: "markers",
         name: "centerOfGravity",
@@ -65,13 +75,13 @@ const DATA = [
         z: [100.0],
     },
     {
-        marker: { color: BODY_COLOR, opacity: 1.0, size: HEAD_SIZE },
+        marker: { color: COG_COLOR, opacity: 0.5, size: 0.5 * COG_SIZE },
         mode: "markers",
-        name: "head",
+        name: "centerOfGravityProjection",
         type: "scatter3d",
         x: [0.0],
-        y: [100.0],
-        z: [100.0],
+        y: [0.0],
+        z: [0.0],
     },
     {
         line: { color: LEG_COLOR, width: LEG_OUTLINE_WIDTH },
@@ -224,6 +234,20 @@ const DATA = [
     },
 ]
 
+const CAMERA_VIEW = {
+    center: {
+        x: 0.0062108976108147355,
+        y: 0.04549389872193933,
+        z: -0.2516083317155232,
+    },
+    eye: {
+        x: 0.3193783095920226,
+        y: 0.6171526987735645,
+        z: 0.3062618734999992,
+    },
+    up: { x: 0, y: 0, z: 1 },
+}
+
 const SCENE = {
     xaxis: {
         nticks: 1,
@@ -239,26 +263,14 @@ const SCENE = {
     },
     zaxis: {
         nticks: 1,
-        range: [-10, 600],
+        range: [-10, 590],
         zerolinecolor: AXIS_ZERO_LINE_COLOR,
-        showbackground: true,
+        showbackground: false,
         backgroundcolor: GROUND_COLOR,
     },
     aspectmode: "manual",
     aspectratio: { x: 1, y: 1, z: 0.5 },
-    camera: {
-        center: {
-            x: 0.0062108976108147355,
-            y: 0.04549389872193933,
-            z: -0.2516083317155232,
-        },
-        eye: {
-            x: 0.3193783095920226,
-            y: 0.6171526987735645,
-            z: 0.3062618734999992,
-        },
-        up: { x: 0, y: 0, z: 1 },
-    },
+    camera: CAMERA_VIEW,
 }
 
 const LAYOUT = {
@@ -271,7 +283,8 @@ const LAYOUT = {
         bgcolor: LEGENDS_BG_COLOR,
         font: { family: "courier", size: 12, color: LEGEND_FONT_COLOR },
     },
+    showlegend: false,
     autosize: true,
 }
 
-export { DATA, LAYOUT, DATA_INDEX_MAP }
+export { DATA, LAYOUT, DATA_INDEX_MAP, SCENE, CAMERA_VIEW }
