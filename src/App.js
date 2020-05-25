@@ -1,7 +1,7 @@
 import React from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 
-import { DATA, LAYOUT } from "./templates/plotParams"
+import { DATA, LAYOUT, CAMERA_VIEW } from "./templates/plotParams"
 import { DIMENSIONS, POSE, IK_PARAMS } from "./templates/hexapodParams"
 
 import { NavBar, NavFooter } from "./components/Nav"
@@ -14,6 +14,9 @@ import {
     LandingPage,
     LegPatternPage,
 } from "./components/pages"
+
+import VirtualHexapod from "./hexapod/VirtualHexapod"
+import getNewPlotParams from "./hexapod/plotter"
 
 class App extends React.Component {
     state = {
@@ -31,7 +34,7 @@ class App extends React.Component {
         plot: {
             data: DATA,
             layout: LAYOUT,
-            latestCameraView: {},
+            latestCameraView: CAMERA_VIEW,
             revisionCounter: 0,
         },
     }
@@ -51,8 +54,37 @@ class App extends React.Component {
 
     updateDimensions = (name, value) => {
         const dimensions = { ...this.state.hexapod.dimensions, [name]: value }
+
+        const bodyDimensions = {
+            front: dimensions.front,
+            middle: dimensions.middle,
+            side: dimensions.side,
+        }
+
+        const legDimensions = {
+            coxia: dimensions.coxia,
+            femur: dimensions.femur,
+            tibia: dimensions.tibia,
+        }
+
+        const newHexapodModel = new VirtualHexapod(
+            bodyDimensions,
+            legDimensions,
+            this.state.hexapod.pose
+        )
+        const [data, layout] = getNewPlotParams(
+            newHexapodModel,
+            this.state.plot.latestCameraView
+        )
+
         this.setState({
             hexapod: { ...this.state.hexapod, dimensions: dimensions },
+            plot: {
+                ...this.state.plot,
+                data,
+                layout,
+                revisionCounter: this.state.plot.revisionCounter + 1,
+            },
         })
     }
 
@@ -111,7 +143,7 @@ class App extends React.Component {
                 data={this.state.plot.data}
                 layout={this.state.plot.layout}
                 onRelayout={this.logCameraView}
-                revision={this.revisionCounter}
+                revision={this.state.plot.revisionCounter}
             />
         </div>
     )
