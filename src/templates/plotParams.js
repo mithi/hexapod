@@ -15,9 +15,29 @@ const PAPER_BG_COLOR = "#222f3e"
 const GROUND_COLOR = "#0a3d62"
 const LEGEND_FONT_COLOR = "#2ecc71"
 
+const DATA_INDEX_MAP = {
+    bodyMesh: 0,
+    bodyOutline: 1,
+    centerOfGravity: 2,
+    head: 3,
+    rightMiddleLeg: 4,
+    rightFrontLeg: 5,
+    leftFrontLeg: 6,
+    leftMiddleLeg: 7,
+    leftBackLeg: 8,
+    rightBackLeg: 9,
+    supportPolygonMesh: 10,
+    hexapodXaxis: 11,
+    hexapodYaxis: 12,
+    hexapodZaxis: 13,
+    worldXaxis: 14,
+    worldYaxis: 15,
+    worldZaxis: 16,
+}
+
 const DATA = [
     {
-        name: "body mesh",
+        name: "bodyMesh",
         showlegend: true,
         type: "mesh3d",
         opacity: BODY_MESH_OPACITY,
@@ -28,7 +48,7 @@ const DATA = [
     },
     {
         line: { color: BODY_COLOR, opacity: 1.0, width: BODY_OUTLINE_WIDTH },
-        name: "body",
+        name: "bodyOutline",
         showlegend: true,
         type: "scatter3d",
         x: [100.0, 100.0, -100.0, -100.0, -100.0, 100.0, 100.0],
@@ -38,7 +58,7 @@ const DATA = [
     {
         marker: { color: COG_COLOR, opacity: 1, size: COG_SIZE },
         mode: "markers",
-        name: "cog",
+        name: "centerOfGravity",
         type: "scatter3d",
         x: [0.0],
         y: [0.0],
@@ -55,7 +75,7 @@ const DATA = [
     },
     {
         line: { color: LEG_COLOR, width: LEG_OUTLINE_WIDTH },
-        name: "leg 1",
+        name: "rightMiddleLeg",
         showlegend: false,
         type: "scatter3d",
         x: [100.0, 200.0, 300.0, 300.0],
@@ -64,7 +84,7 @@ const DATA = [
     },
     {
         line: { color: LEG_COLOR, width: LEG_OUTLINE_WIDTH },
-        name: "leg 2",
+        name: "rightFrontLeg",
         showlegend: false,
         type: "scatter3d",
         x: [100.0, 170.71067811865476, 241.4213562373095, 241.4213562373095],
@@ -73,7 +93,7 @@ const DATA = [
     },
     {
         line: { color: LEG_COLOR, width: LEG_OUTLINE_WIDTH },
-        name: "leg 3",
+        name: "leftFrontLeg",
         showlegend: false,
         type: "scatter3d",
         x: [-100.0, -170.71067811865476, -241.42135623730948, -241.42135623730948],
@@ -82,7 +102,7 @@ const DATA = [
     },
     {
         line: { color: LEG_COLOR, width: LEG_OUTLINE_WIDTH },
-        name: "leg 4",
+        name: "leftMiddleLeg",
         showlegend: false,
         type: "scatter3d",
         x: [-100.0, -200.0, -300.0, -300.0],
@@ -96,7 +116,7 @@ const DATA = [
     },
     {
         line: { color: LEG_COLOR, width: LEG_OUTLINE_WIDTH },
-        name: "leg 5",
+        name: "leftBackLeg",
         showlegend: false,
         type: "scatter3d",
         x: [-100.0, -170.71067811865476, -241.42135623730954, -241.42135623730954],
@@ -105,7 +125,7 @@ const DATA = [
     },
     {
         line: { color: LEG_COLOR, width: LEG_OUTLINE_WIDTH },
-        name: "leg 6",
+        name: "rightBackLeg",
         showlegend: false,
         type: "scatter3d",
         x: [100.0, 170.71067811865476, 241.42135623730948, 241.42135623730948],
@@ -113,7 +133,7 @@ const DATA = [
         z: [100.0, 100.0, 100.0, 0.0],
     },
     {
-        name: "support polygon mesh",
+        name: "supportPolygonMesh",
         showlegend: true,
         type: "mesh3d",
         opacity: SUPPORT_POLYGON_MESH_OPACITY,
@@ -138,7 +158,7 @@ const DATA = [
     },
     {
         line: { color: "#2f3640", width: 2 },
-        name: "hexapod x",
+        name: "hexapodXaxis",
         mode: "lines",
         showlegend: false,
         opacity: 1.0,
@@ -149,7 +169,7 @@ const DATA = [
     },
     {
         line: { color: "#e67e22", width: 2 },
-        name: "hexapod y",
+        name: "hexapodYaxis",
         mode: "lines",
         showlegend: false,
         opacity: 1.0,
@@ -160,7 +180,7 @@ const DATA = [
     },
     {
         line: { color: "#0097e6", width: 2 },
-        name: "hexapod z",
+        name: "hexapodZaxis",
         mode: "lines",
         showlegend: false,
         opacity: 1.0,
@@ -171,7 +191,7 @@ const DATA = [
     },
     {
         line: { color: "#2f3640", width: 2 },
-        name: "x direction",
+        name: "worldXaxis",
         showlegend: false,
         mode: "lines",
         opacity: 1.0,
@@ -182,7 +202,7 @@ const DATA = [
     },
     {
         line: { color: "#e67e22", width: 2 },
-        name: "y direction",
+        name: "worldYaxis",
         showlegend: false,
         mode: "lines",
         opacity: 1.0,
@@ -193,7 +213,7 @@ const DATA = [
     },
     {
         line: { color: "#0097e6", width: 2 },
-        name: "z direction",
+        name: "worldZaxis",
         showlegend: false,
         mode: "lines",
         opacity: 1.0,
@@ -254,4 +274,4 @@ const LAYOUT = {
     autosize: true,
 }
 
-export { DATA, LAYOUT }
+export { DATA, LAYOUT, DATA_INDEX_MAP }
