@@ -68,29 +68,31 @@ class App extends React.Component {
         })
     }
 
-    updateDimensions = (name, value) => {
-        const dimensions = { ...this.state.hexapod.dimensions, [name]: value }
+    updatePlot = (dimensions, pose) => {
         const [bodyDimensions, legDimensions] = splitDimensions(dimensions)
-
         const newHexapodModel = new VirtualHexapod(
             bodyDimensions,
             legDimensions,
-            this.state.hexapod.pose
+            pose
         )
         const [data, layout] = getNewPlotParams(
             newHexapodModel,
             this.state.plot.latestCameraView
         )
-
         this.setState({
-            hexapod: { ...this.state.hexapod, dimensions: dimensions },
             plot: {
                 ...this.state.plot,
                 data,
                 layout,
                 revisionCounter: this.state.plot.revisionCounter + 1,
             },
+            hexapod: { ...this.state.hexapod, dimensions, pose },
         })
+    }
+
+    updateDimensions = (name, value) => {
+        const dimensions = { ...this.state.hexapod.dimensions, [name]: value }
+        this.updatePlot(dimensions, this.state.hexapod.pose)
     }
 
     updateIkParams = (name, value) => {
@@ -109,14 +111,14 @@ class App extends React.Component {
     }
 
     updatePatternPose = (name, value) => {
-        const { pose } = this.state.hexapod
+        const { pose, dimensions } = this.state.hexapod
         let newPose = {}
 
         for (const leg in pose) {
             newPose[leg] = { ...pose[leg], [name]: Number(value) }
         }
 
-        this.setState({ hexapod: { ...this.state.hexapod, pose: newPose } })
+        this.updatePlot(dimensions, newPose)
         this.setState({
             patternParams: { ...this.state.patternParams, [name]: value },
         })
