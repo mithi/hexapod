@@ -69,24 +69,19 @@ class Linkage {
         this.name = `${position}Leg`
 
         this.id = POSITION_ID_MAP[this.position]
-        this.pointNameIdMap = this.buildPointNameIdMap()
+        this.pointNameIdMap = this._buildPointNameIdMap()
         this.givenBodyContactPoint = {
             ...bodyContactPoint,
             name: this.pointNameIdMap.bodyContact.name,
             id: this.pointNameIdMap.bodyContact.id,
         }
-        this.pointsMap = this.computePoints(pose)
+        this.pointsMap = this._computePoints(pose)
         this.pointsList = LEG_POINT_TYPES.reduce(
             (acc, pointType) => [...acc, this.pointsMap[pointType]],
             []
         )
         // this.groundContactMaybe
     }
-
-    buildNameId = (pointName, id) => ({
-        name: `${this.position}-${pointName}Point`,
-        id: `${this.id}-${id}`,
-    })
 
     /* *
      * .............
@@ -99,35 +94,38 @@ class Linkage {
      *   femur: {name: "{legPosition}-femurPoint", id: "{legId}-2" },
      *   footTip: {name: "{legPosition}-footTipPoint", id: "{legId}-3" },
      * }
+     *
      * */
-    buildPointNameIdMap = () =>
+    _buildNameId = (pointName, id) => ({
+        name: `${this.position}-${pointName}Point`,
+        id: `${this.id}-${id}`,
+    })
+
+    _buildPointNameIdMap = () =>
         LEG_POINT_TYPES.reduce((acc, pointType, index) => {
-            acc[pointType] = this.buildNameId(pointType, index)
+            acc[pointType] = this._buildNameId(pointType, index)
             return acc
         }, {})
 
-    /**
-     * .............
-     * structure of pointNameIdMap
-     * .............
-     * pointMap = {
-     *   bodyContact: {x, y, z, name, id},
-     *   coxia: {...},
-     *   femur: {...},
-     *   footTip: {...},
-     * }
+
+    /* *
+     * ................
+     * STEP 1 of computing points:
+     *   find points wrt body contact point
+     * ................
+     * NOTE:
+     * frame_ab is the pose of frame_b wrt frame_a
+     * where pa is the origin of frame_a
+     * and pb is the origin of frame_b wrt pa
+     *
      * */
-    computePoints(pose = { alpha: 0, beta: 0, gamma: 0 }) {
-        // NOTE: frame_ab is the pose of frame_b wrt frame_a
-        // where pa is the origin of frame_a
-        // and pb is the origin of frame_b
-        const frame01 = tRotYframe(-pose.beta, this.dimensions.coxia, 0, 0)
-        const frame12 = tRotYframe(90 - pose.gamma, this.dimensions.femur, 0, 0)
+    _computePointsWrtBodyContact(beta, gamma) {
+        const frame01 = tRotYframe(-beta, this.dimensions.coxia, 0, 0)
+        const frame12 = tRotYframe(90 - gamma, this.dimensions.femur, 0, 0)
         const frame23 = tRotYframe(0, this.dimensions.tibia, 0, 0)
         const frame02 = multiply(frame01, frame12)
         const frame03 = multiply(frame02, frame23)
 
-        // STEP 1: find points wrt body contact point
         const localBodyContactPoint = {
             x: 0,
             y: 0,
@@ -143,9 +141,18 @@ class Linkage {
             footTip: pointWrtFrame(localBodyContactPoint, frame03),
         }
 
-        // STEP 2: find local points wrt hexapod's center of gravity (0, 0, 0)
+        return localPointsMap
+    }
+
+    /* *
+     * ................
+     * STEP 2 of computing points:
+     *   find local points wrt hexapod's center of gravity (0, 0, 0)
+     * ................
+     */
+    _computePointsWrtHexapodsCog(localPointsMap, alpha) {
         const twistFrame = tRotZframe(
-            LOCAL_X_AXIS_ANGLE_MAP[this.position] + pose.alpha,
+            LOCAL_X_AXIS_ANGLE_MAP[this.position] + alpha,
             this.givenBodyContactPoint.x,
             this.givenBodyContactPoint.y,
             this.givenBodyContactPoint.z
@@ -161,15 +168,16 @@ class Linkage {
             acc[pointType] = point
             return acc
         }, {})
+
         return pointsMap
     }
 
-    //computeGroundContactMaybe() {}
-    linkageWrtPose(pose = { alpha: 0, beta: 0, gamma: 0 }) {
-        const pointsMap = this.computePoints(pose)
-        return { ...this, pointsMap, pose }
+    _computePoints(pose) {
+        const {alpha, beta, gamma} = pose
+        const localPointsMap = this._computePointsWrtBodyContact(beta, gamma)
+        const pointsMap = this._computePointsWrtHexapodsCog(localPointsMap, alpha)
+        return pointsMap
     }
-    // linkageWrtFrame
 }
 
 export default Linkage
