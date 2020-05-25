@@ -61,14 +61,13 @@ class App extends React.Component {
             return
         }
 
-        this.setState({ shouldDisplayDimensionsAndPlot: true })
-        this.setState({ currentPage: pageName })
-        this.setState({ ikParams: IK_PARAMS })
-        this.setState({ hexapod: { ...this.state.hexapod, pose: POSE } })
         this.setState({
+            shouldDisplayDimensionsAndPlot: true,
+            currentPage: pageName,
+            ikParams: IK_PARAMS,
+            hexapod: { ...this.state.hexapod, pose: POSE },
             patternParams: { alpha: 0, beta: 0, gamma: 0 },
         })
-
         this.updatePlot(this.state.hexapod.dimensions, POSE)
     }
 
