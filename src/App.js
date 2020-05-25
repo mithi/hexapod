@@ -56,16 +56,20 @@ class App extends React.Component {
     }
 
     onPageLoad = pageName => {
-        pageName === "Root"
-            ? this.setState({ shouldDisplayDimensionsAndPlot: false })
-            : this.setState({ shouldDisplayDimensionsAndPlot: true })
+        if (pageName === "Root") {
+            this.setState({ shouldDisplayDimensionsAndPlot: false })
+            return
+        }
 
+        this.setState({ shouldDisplayDimensionsAndPlot: true })
         this.setState({ currentPage: pageName })
         this.setState({ ikParams: IK_PARAMS })
         this.setState({ hexapod: { ...this.state.hexapod, pose: POSE } })
         this.setState({
             patternParams: { alpha: 0, beta: 0, gamma: 0 },
         })
+
+        this.updatePlot(this.state.hexapod.dimensions, POSE)
     }
 
     updatePlot = (dimensions, pose) => {
