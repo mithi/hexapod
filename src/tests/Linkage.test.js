@@ -24,6 +24,7 @@ test.each(CASES)("Should Initialize Linkage: %p", thisCase => {
     expect(linkage.dimensions.coxia).toBeCloseTo(thisCase.params.dimensions.coxia)
     expect(linkage.dimensions.femur).toBeCloseTo(thisCase.params.dimensions.femur)
     expect(linkage.dimensions.tibia).toBeCloseTo(thisCase.params.dimensions.tibia)
+
     expect(linkage.pose.alpha).toBeCloseTo(thisCase.params.pose.alpha)
     expect(linkage.pose.beta).toBeCloseTo(thisCase.params.pose.beta)
     expect(linkage.pose.gamma).toBeCloseTo(thisCase.params.pose.gamma)
@@ -31,7 +32,7 @@ test.each(CASES)("Should Initialize Linkage: %p", thisCase => {
     expect(linkage.position).toBe(thisCase.params.position)
     expect(linkage.id).toBe(POSITION_ID_MAP[thisCase.params.position])
 
-    expect(linkage.pointNameIdMap).toEqual(thisCase.answer.pointNameIdMap)
+    expect(linkage.pointNameIdMap).toEqual(thisCase.result.pointNameIdMap)
     expect(linkage.givenBodyContactPoint).toEqual(linkage.pointsMap.bodyContact)
 
     expect(linkage.pointsMap.bodyContact).toBe(linkage.allPointsList[0])
@@ -39,8 +40,8 @@ test.each(CASES)("Should Initialize Linkage: %p", thisCase => {
     expect(linkage.pointsMap.femur).toBe(linkage.allPointsList[2])
     expect(linkage.pointsMap.footTip).toBe(linkage.allPointsList[3])
 
-    isSamePoint(linkage.pointsMap.bodyContact, thisCase.answer.bodyContactPoint)
-    isSamePoint(linkage.pointsMap.coxia, thisCase.answer.coxiaPoint)
-    isSamePoint(linkage.pointsMap.femur, thisCase.answer.femurPoint)
-    isSamePoint(linkage.pointsMap.footTip, thisCase.answer.footTipPoint)
+    isSamePoint(linkage.pointsMap.bodyContact, thisCase.result.bodyContactPoint)
+    isSamePoint(linkage.pointsMap.coxia, thisCase.result.coxiaPoint)
+    isSamePoint(linkage.pointsMap.femur, thisCase.result.femurPoint)
+    isSamePoint(linkage.pointsMap.footTip, thisCase.result.footTipPoint)
 })

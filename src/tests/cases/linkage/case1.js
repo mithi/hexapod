@@ -44,9 +44,9 @@ const FOOT_TIP_POINT = {
     id: "4-3",
 }
 
-const LINKAGE_CASE = {
+const CASE = {
     params: PARAMS,
-    answer: {
+    result: {
         pointNameIdMap: POINT_NAME_ID_MAP,
         bodyContactPoint: BODY_CONTACT_POINT,
         coxiaPoint: COXIA_POINT,
@@ -56,4 +56,4 @@ const LINKAGE_CASE = {
     description: "Random Linkage #1",
 }
 
-export default LINKAGE_CASE
+export default CASE
