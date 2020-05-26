@@ -1,4 +1,5 @@
 import { sin, cos, unit, matrix, multiply, transpose, index } from "mathjs"
+import { createVector } from "../basicObjects"
 
 function getSinCos(theta) {
     return [sin(unit(theta, "deg")), cos(unit(theta, "deg"))]
@@ -50,4 +51,30 @@ function pointWrtFrame(point, referenceFrame, name = "unnamed-point", id = "no-i
     }
 }
 
-export { tRotXframe, tRotYframe, tRotZframe, pointWrtFrame }
+const dot = (a, b) => a.x * b.x + a.y * b.y + a.z * b.z
+
+const cross = (a, b) => {
+    const x = a.y * b.z - a.z * b.y
+    const y = a.z * b.x - a.x * b.z
+    const z = a.x * b.y - a.y * b.x
+    return createVector(x, y, z)
+}
+
+const vectorFromTo = (a, b) => createVector(b.x - a.x, b.y - a.y, b.z - a.z)
+
+const scaleVector = (v, d) => createVector(d * v.x, d * v.y, d * v.z)
+
+const vectorLength = v => Math.sqrt(dot(v, v))
+
+const getNormalofThreePoints = (a, b, c) => {
+    const ab = vectorFromTo(a, b)
+    const ac = vectorFromTo(a, c)
+    const n = cross(ab, ac)
+    const len_n = vectorLength(n)
+    const unit_n = scaleVector(n, 1 / len_n)
+
+    return unit_n
+}
+
+
+export { tRotXframe, tRotYframe, tRotZframe, pointWrtFrame , dot, cross, getNormalofThreePoints, scaleVector, vectorFromTo }
