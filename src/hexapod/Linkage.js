@@ -59,7 +59,7 @@ import {
 class Linkage {
     constructor(
         dimensions = { coxia: 100, femur: 100, tibia: 100 },
-        position = "unnamed-linkage",
+        position = "linkage-position-not-defined",
         bodyContactPoint = { x: 0, y: 0, z: 0 },
         pose = { alpha: 0, beta: 0, gamma: 0 }
     ) {
@@ -80,7 +80,8 @@ class Linkage {
             (acc, pointType) => [...acc, this.pointsMap[pointType]],
             []
         )
-        // this.groundContactMaybe
+
+        this.maybeFootTipsOnGround = this._computeMaybeFootTipOnGround()
     }
 
     /* *
@@ -176,6 +177,16 @@ class Linkage {
         const localPointsMap = this._computePointsWrtBodyContact(beta, gamma)
         const pointsMap = this._computePointsWrtHexapodsCog(localPointsMap, alpha)
         return pointsMap
+    }
+
+    _computeMaybeFootTipOnGround() {
+        const reversedPointList = this.allPointsList.slice().reverse()
+        const testPoint = reversedPointList[0]
+        const footTip = reversedPointList.reduce(
+            (testPoint, point) => (point.z < testPoint.z ? point : testPoint),
+            testPoint
+        )
+        return footTip
     }
 }
 
