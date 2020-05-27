@@ -1,5 +1,10 @@
 import { createVector } from "../basicObjects"
-import { dot, cross, vectorFromTo, getNormalofThreePoints } from '../utilities/geometry'
+import {
+    dot,
+    cross,
+    vectorFromTo,
+    getNormalofThreePoints,
+} from "../utilities/geometry"
 
 const SOME_LEG_ID_TRIOS = [
     [0, 1, 3],
@@ -61,11 +66,11 @@ const computeOrientationProperties = legsWithoutGravity => {
  * .................
  * */
 const computePlaneProperties = legs => {
-    const maybeFootTipsOnGround = legs.map(leg => leg.maybeFootTipsOnGround)
+    const maybeGroundContactPoints = legs.map(leg => leg.maybeGroundContactPoint)
 
     for (let i = 0; i < LEG_ID_TRIOS.length; i++) {
         const legTrio = LEG_ID_TRIOS[i]
-        const [p0, p1, p2] = legTrio.map(j => maybeFootTipsOnGround[j])
+        const [p0, p1, p2] = legTrio.map(j => maybeGroundContactPoints[j])
 
         if (!isStable(p0, p1, p2)) {
             continue
@@ -73,9 +78,8 @@ const computePlaneProperties = legs => {
         const normal = getNormalofThreePoints(p0, p1, p2, "normalVector")
         const height = -dot(normal, p0)
         const otherTrio = [...Array(6).keys()].filter(j => !legTrio.includes(j))
-        const otherFootTips = otherTrio.map(j => maybeFootTipsOnGround[j])
+        const otherFootTips = otherTrio.map(j => maybeGroundContactPoints[j])
         if (noOtherLegLower(otherFootTips, normal, height)) {
-            console.log(normal, height)
             return [normal, height]
         }
     }
@@ -96,7 +100,7 @@ const computeLegsOnGround = (legs, normal, height, tol = 1) => {
         const reversedPoints = legs[i].allPointsList.slice(1).reverse()
         for (let j = 0; j < reversedPoints.length; j++) {
             const _height = -dot(normal, reversedPoints[j])
-            if (Math.abs(height - _height) <= 1) {
+            if (Math.abs(height - _height) <= 2) {
                 legsOnGround.push(legs[i])
                 break
             }
@@ -147,6 +151,5 @@ const isStable = (p0, p1, p2, tol = 0.001) => {
 
     return cond0 && cond1 && cond2
 }
-
 
 export { computeOrientationProperties }

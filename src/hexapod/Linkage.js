@@ -49,7 +49,12 @@
  *
  * * * * */
 import { multiply } from "mathjs"
-import { tRotYframe, tRotZframe, pointWrtFrame } from "./utilities/geometry"
+import {
+    tRotYframe,
+    tRotZframe,
+    pointWrtFrame,
+    pointWrtFrameShiftClone,
+} from "./utilities/geometry"
 import {
     LEG_POINT_TYPES,
     POSITION_ID_MAP,
@@ -81,7 +86,7 @@ class Linkage {
             []
         )
 
-        this.maybeFootTipsOnGround = this._computeMaybeFootTipOnGround()
+        this.maybeGroundContactPoint = this._computeMaybeGroundContactPoint()
     }
 
     /* *
@@ -179,14 +184,32 @@ class Linkage {
         return pointsMap
     }
 
-    _computeMaybeFootTipOnGround() {
+    _computeMaybeGroundContactPoint() {
         const reversedPointList = this.allPointsList.slice().reverse()
         const testPoint = reversedPointList[0]
-        const footTip = reversedPointList.reduce(
+        const maybeGroundContactPoint = reversedPointList.reduce(
             (testPoint, point) => (point.z < testPoint.z ? point : testPoint),
             testPoint
         )
-        return footTip
+        return maybeGroundContactPoint
+    }
+
+    WrtFrameShiftClone(frame, tx, ty, tz) {
+        // Return a copy of the leg with the same properties
+        // except all the points are shifted and rotated
+        // given the reference frame and tx, ty, tz
+        const pointsMap = LEG_POINT_TYPES.reduce((acc, pointType) => {
+            const oldPoint = this.pointsMap[pointType]
+            const newPoint = pointWrtFrameShiftClone(oldPoint, frame, tx, ty, tz)
+            acc[pointType] = newPoint
+            return acc
+        }, {})
+
+        const allPointsList = LEG_POINT_TYPES.reduce(
+            (acc, pointType) => [...acc, pointsMap[pointType]],
+            []
+        )
+        return { ...this, pointsMap, allPointsList }
     }
 }
 
