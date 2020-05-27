@@ -114,15 +114,10 @@ class VirtualHexapod {
         legDimensions = { coxia: 100, femur: 100, tibia: 100 },
         pose = POSE
     ) {
-        this.legDimensions = legDimensions
-        this.bodyDimensions = bodyDimensions
-        this.pose = pose
-        this.twistProperties = {
-            hasTwisted: false,
-            twistAngle: null,
-            twistFrame: identity(4),
-        }
         this.sumOfDimensions = getSumOfDimensions(bodyDimensions, legDimensions)
+        // IMPORTANT: why is moving sum of dimensions to a helper messing thing up?
+        this._storeInitialProperties(bodyDimensions, legDimensions, pose)
+
         const neutralHexagon = createHexagon(bodyDimensions)
         const legsWithoutGravity = computeLegsList(
             legDimensions,
@@ -141,7 +136,8 @@ class VirtualHexapod {
 
         if (nAxis == null || isNaN(nAxis.x) || isNaN(nAxis.y) || isNaN(nAxis.z)) {
             console.log("invalid nAxis / unstable", nAxis)
-            return this._rawHexapod(neutralHexagon, legsWithoutGravity)
+            this._rawHexapod(neutralHexagon, legsWithoutGravity)
+            return
         }
 
         // STEP 2: rotate and shift legs and body
@@ -200,16 +196,22 @@ class VirtualHexapod {
     // getDetachedHexagon
     // getTranslatedHexapod
     // getStancedHexapod
-
-    _rawHexapod(body, legs) {
-        return {
-            ...this,
-            body,
-            legs,
-            localFrame: DEFAULT_LOCAL_FRAME,
-            cogProjection: DEFAULT_COG_PROJECTION,
-            groundContactPoints: [],
+    _storeInitialProperties(legDimensions, bodyDimensions, pose) {
+        this.legDimensions = legDimensions
+        this.bodyDimensions = bodyDimensions
+        this.pose = pose
+        this.twistProperties = {
+            hasTwisted: false,
+            twistAngle: null,
+            twistFrame: identity(4),
         }
+    }
+    _rawHexapod(body, legs) {
+        this.body = body
+        this.legs = legs
+        this.localFrame = DEFAULT_LOCAL_FRAME
+        this.cogProjection = DEFAULT_COG_PROJECTION
+        this.groundContactPoints = []
     }
 }
 
