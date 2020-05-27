@@ -265,11 +265,11 @@ const SCENE = {
         nticks: 1,
         range: [-10, 590],
         zerolinecolor: AXIS_ZERO_LINE_COLOR,
-        showbackground: false,
+        showbackground: true,
         backgroundcolor: GROUND_COLOR,
     },
     aspectmode: "manual",
-    aspectratio: { x: 1, y: 1, z: 0.5 },
+    aspectratio: { x: 1, y: 1, z: 1 },
     camera: CAMERA_VIEW,
 }
 

@@ -61,23 +61,23 @@ const _drawHexapod = hexapod => {
 
     const hXaxis = {
         ...DATA[12],
-        x: [cog.x, axisScale * hexapod.localFrame.xAxis.x],
-        y: [cog.y, axisScale * hexapod.localFrame.xAxis.y],
-        z: [cog.z, axisScale * hexapod.localFrame.xAxis.z],
+        x: [cog.x, cog.x + axisScale * hexapod.localFrame.xAxis.x],
+        y: [cog.y, cog.y + axisScale * hexapod.localFrame.xAxis.y],
+        z: [cog.z, cog.z + axisScale * hexapod.localFrame.xAxis.z],
     }
 
     const hYaxis = {
         ...DATA[13],
-        x: [cog.x, axisScale * hexapod.localFrame.yAxis.x],
-        y: [cog.y, axisScale * hexapod.localFrame.yAxis.y],
-        z: [cog.z, axisScale * hexapod.localFrame.yAxis.z],
+        x: [cog.x, cog.x + axisScale * hexapod.localFrame.yAxis.x],
+        y: [cog.y, cog.y + axisScale * hexapod.localFrame.yAxis.y],
+        z: [cog.z, cog.z + axisScale * hexapod.localFrame.yAxis.z],
     }
 
     const hZaxis = {
         ...DATA[14],
-        x: [cog.x, axisScale * hexapod.localFrame.zAxis.x],
-        y: [cog.y, axisScale * hexapod.localFrame.zAxis.y],
-        z: [cog.z, axisScale * hexapod.localFrame.zAxis.z],
+        x: [cog.x, cog.x + axisScale * hexapod.localFrame.zAxis.x],
+        y: [cog.y, cog.y + axisScale * hexapod.localFrame.zAxis.y],
+        z: [cog.z, cog.z + axisScale * hexapod.localFrame.zAxis.z],
     }
 
     const wXaxis = {
@@ -119,7 +119,7 @@ const getNewPlotParams = (hexapod, cameraView) => {
     const newRange = [-range, range]
     const xaxis = { ...SCENE.xaxis, range: newRange }
     const yaxis = { ...SCENE.yaxis, range: newRange }
-    const zaxis = { ...SCENE.zaxis, range: [-range / 2, range / 2] }
+    const zaxis = { ...SCENE.zaxis, range: [-10, 2 * range - 10] }
     const scene = {
         ...SCENE,
         xaxis,
