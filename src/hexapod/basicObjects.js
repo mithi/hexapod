@@ -42,6 +42,7 @@
  *
  * * */
 import { POSITION_LIST } from "./constants"
+import { pointWrtFrameShiftClone } from "./utilities/geometry"
 
 const createVector = (x, y, z, name = "no-name-point", id = "no-id-point") => {
     return {
@@ -90,4 +91,29 @@ const createHexagon = dimensions => {
     }
 }
 
-export { createVector, createHexagon }
+const hexagonWrtFrameShiftClone = (hexagon, frame, tx, ty, tz) => {
+    const allPointsList = hexagon.allPointsList.map(point => (
+        pointWrtFrameShiftClone(point, frame, tx, ty, tz)
+    ))
+
+    const verticesList = allPointsList.slice(0, 6)
+    const closedPointsList = [...verticesList, verticesList[0]]
+    const vertices = verticesList.reduce(
+        (acc, vertex) => ({ ...acc, [POSITION_LIST[vertex.id]]: vertex }),
+        {}
+    )
+
+    const cog = allPointsList[6]
+    const head = allPointsList[7]
+    const { dimensions } = hexagon
+    return {
+        dimensions,
+        verticesList,
+        vertices,
+        cog,
+        head,
+        allPointsList,
+        closedPointsList,
+    }
+}
+export { createVector, createHexagon, hexagonWrtFrameShiftClone }
