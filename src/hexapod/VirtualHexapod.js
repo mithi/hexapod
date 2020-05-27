@@ -9,7 +9,6 @@ import { POSITION_LIST } from "./constants"
 import { POSE } from "../templates/hexapodParams"
 import {
     pointWrtFrame,
-    shiftedPointClone,
     frameToAlignVectorAtoB,
     pointWrtFrameShiftClone,
     pointWrtFrameClone,
@@ -93,19 +92,20 @@ const computeTwistFrame = (oldGroundContactPoints, newGroundContactPoints) => {
     const thetaRadians =
         atan2(oldSamePoint.y, oldSamePoint.x) - atan2(newSamePoint.y, newSamePoint.x)
     const thetaDegrees = (thetaRadians * 180) / Math.PI
-    return tRotZframe(thetaDegrees)
+    return [thetaDegrees, tRotZframe(thetaDegrees)]
 }
 
 // Which point on each leg contacts the ground
 // when all angles are equal to zero
 const computeDefaultGroundContactPoints = (legDimensions, verticesList) =>
+    computeLegsList(legDimensions, verticesList).map(
+        leg => leg.maybeGroundContactPoint
+    )
+
+const computeLegsList = (legDimensions, verticesList, pose = POSE) =>
     POSITION_LIST.map(
         (position, index) =>
-            new Linkage(legDimensions, position, verticesList[index], {
-                alpha: 0,
-                beta: 0,
-                gamma: 0,
-            }).maybeGroundContactPoint
+            new Linkage(legDimensions, position, verticesList[index], pose[position])
     )
 
 class VirtualHexapod {
@@ -114,35 +114,40 @@ class VirtualHexapod {
         legDimensions = { coxia: 100, femur: 100, tibia: 100 },
         pose = POSE
     ) {
+        this.legDimensions = legDimensions
+        this.bodyDimensions = bodyDimensions
+        this.pose = pose
+        this.twistProperties = {
+            hasTwisted: false,
+            twistAngle: null,
+            twistFrame: identity(4),
+        }
         this.sumOfDimensions = getSumOfDimensions(bodyDimensions, legDimensions)
         const neutralHexagon = createHexagon(bodyDimensions)
-        const legListWithoutGravity = POSITION_LIST.map(
-            (position, index) =>
-                new Linkage(
-                    legDimensions,
-                    position,
-                    neutralHexagon.verticesList[index],
-                    pose[position]
-                )
+        const legsWithoutGravity = computeLegsList(
+            legDimensions,
+            neutralHexagon.verticesList,
+            pose
         )
 
         // STEP 1: Find new orientation of the body (new normal / nAxis).
-        // distance of cog from ground and which legs are on the ground
         const [
             nAxis,
             height,
             legsOnGroundWithoutGravity,
-        ] = oSolver1.computeOrientationProperties(legListWithoutGravity)
+        ] = oSolver1.computeOrientationProperties(legsWithoutGravity)
+
+        this.distanceFromGround = height
 
         if (nAxis == null || isNaN(nAxis.x) || isNaN(nAxis.y) || isNaN(nAxis.z)) {
             console.log("invalid nAxis / unstable", nAxis)
-            return this.rawHexapod(neutralHexagon, legListWithoutGravity)
+            return this._rawHexapod(neutralHexagon, legsWithoutGravity)
         }
 
         // STEP 2: rotate and shift legs and body
         const frame = frameToAlignVectorAtoB(nAxis, WORLD_FRAME.zAxis)
 
-        this.legs = legListWithoutGravity.map(leg =>
+        this.legs = legsWithoutGravity.map(leg =>
             leg.wrtFrameShiftClone(frame, 0, 0, height)
         )
 
@@ -152,43 +157,51 @@ class VirtualHexapod {
             pointWrtFrameShiftClone(leg.maybeGroundContactPoint, frame, 0, 0, height)
         )
 
-        // STEP 3: Twist if we have to
         if (mightTwist(legsOnGroundWithoutGravity)) {
-            // since we known the previous pose is the when
-            // all the angles === 0, then the old contacts are the foot tips
-            const newGroundContactPoints = legsOnGroundWithoutGravity.map(
-                leg => leg.maybeGroundContactPoint
-            )
-            const oldGroundContactPoints = computeDefaultGroundContactPoints(
-                legDimensions,
-                neutralHexagon.verticesList
-            )
-            const twistFrame = computeTwistFrame(
-                oldGroundContactPoints,
-                newGroundContactPoints
-            )
-            this.legs = this.legs.map(leg =>
-                leg.wrtFrameShiftClone(twistFrame, 0, 0, 0)
-            )
-            this.body = hexagonWrtFrameShiftClone(this.body, twistFrame)
-            this.groundContactPoints = this.groundContactPoints.map(point =>
-                pointWrtFrameClone(point, twistFrame)
-            )
-            this.localFrame = {
-                xAxis: pointWrtFrameClone(this.localFrame.xAxis, twistFrame),
-                yAxis: pointWrtFrameClone(this.localFrame.yAxis, twistFrame),
-                zAxis: pointWrtFrameClone(this.localFrame.zAxis, twistFrame),
-            }
+            this._twist(legsOnGroundWithoutGravity, neutralHexagon.verticesList)
         }
 
         this.cogProjection = getCogProjection(this.body.cog)
+    }
+
+    _twist(legsOnGroundWithoutGravity, verticesList) {
+        // since we known the previous pose is the when
+        // all the angles === 0, then the old contacts are the foot tips
+        const newGroundContactPoints = legsOnGroundWithoutGravity.map(
+            leg => leg.maybeGroundContactPoint
+        )
+        const oldGroundContactPoints = computeDefaultGroundContactPoints(
+            this.legDimensions,
+            verticesList
+        )
+        const [twistAngle, twistFrame] = computeTwistFrame(
+            oldGroundContactPoints,
+            newGroundContactPoints
+        )
+
+        this.twistProperties = {
+            hasTwisted: true,
+            twistAngle,
+            twistFrame,
+        }
+
+        this.legs = this.legs.map(leg => leg.wrtFrameShiftClone(twistFrame, 0, 0, 0))
+        this.body = hexagonWrtFrameShiftClone(this.body, twistFrame)
+        this.groundContactPoints = this.groundContactPoints.map(point =>
+            pointWrtFrameClone(point, twistFrame)
+        )
+        this.localFrame = {
+            xAxis: pointWrtFrameClone(this.localFrame.xAxis, twistFrame),
+            yAxis: pointWrtFrameClone(this.localFrame.yAxis, twistFrame),
+            zAxis: pointWrtFrameClone(this.localFrame.zAxis, twistFrame),
+        }
     }
 
     // getDetachedHexagon
     // getTranslatedHexapod
     // getStancedHexapod
 
-    rawHexapod(body, legs) {
+    _rawHexapod(body, legs) {
         return {
             ...this,
             body,
