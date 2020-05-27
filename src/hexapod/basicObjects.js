@@ -84,7 +84,7 @@ const createHexagon = dimensions => {
     }
 }
 
-const hexagonWrtFrameShiftClone = (hexagon, frame, tx, ty, tz) => {
+const hexagonWrtFrameShiftClone = (hexagon, frame, tx = 0, ty = 0, tz = 0) => {
     const allPointsList = hexagon.allPointsList.map(point =>
         pointWrtFrameShiftClone(point, frame, tx, ty, tz)
     )
