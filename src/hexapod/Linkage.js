@@ -89,6 +89,32 @@ class Linkage {
         this.maybeGroundContactPoint = this._computeMaybeGroundContactPoint()
     }
 
+    wrtFrameShiftClone(frame, tx = 0, ty = 0, tz = 0) {
+        // Return a copy of the leg with the same properties
+        // except all the points are shifted and rotated
+        // given the reference frame and tx, ty, tz
+        const pointsMap = LEG_POINT_TYPES.reduce((acc, pointType) => {
+            const oldPoint = this.pointsMap[pointType]
+            const newPoint = pointWrtFrameShiftClone(oldPoint, frame, tx, ty, tz)
+            acc[pointType] = newPoint
+            return acc
+        }, {})
+
+        const allPointsList = LEG_POINT_TYPES.reduce(
+            (acc, pointType) => [...acc, pointsMap[pointType]],
+            []
+        )
+
+        let clone = new Linkage(
+            this.dimensions,
+            this.position,
+            this.bodyContactPoint,
+            this.pose
+        )
+
+        clone._overridePoints(pointsMap, allPointsList)
+        return clone
+    }
     /* *
      * .............
      * structure of pointNameIdMap
@@ -194,22 +220,10 @@ class Linkage {
         return maybeGroundContactPoint
     }
 
-    WrtFrameShiftClone(frame, tx, ty, tz) {
-        // Return a copy of the leg with the same properties
-        // except all the points are shifted and rotated
-        // given the reference frame and tx, ty, tz
-        const pointsMap = LEG_POINT_TYPES.reduce((acc, pointType) => {
-            const oldPoint = this.pointsMap[pointType]
-            const newPoint = pointWrtFrameShiftClone(oldPoint, frame, tx, ty, tz)
-            acc[pointType] = newPoint
-            return acc
-        }, {})
-
-        const allPointsList = LEG_POINT_TYPES.reduce(
-            (acc, pointType) => [...acc, pointsMap[pointType]],
-            []
-        )
-        return { ...this, pointsMap, allPointsList }
+    _overridePoints(pointsMap, allPointsList) {
+        this.pointsMap = pointsMap
+        this.allPointsList = allPointsList
+        this.maybeGroundContactPoint = this._computeMaybeGroundContactPoint()
     }
 }
 
