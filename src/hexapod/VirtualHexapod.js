@@ -14,7 +14,16 @@ import {
     pointWrtFrame,
     pointWrtFrameShiftClone,
 } from "./utilities/geometry"
-import { matrix, identity, multiply, concat, transpose, dotMultiply, ones, add } from "mathjs"
+import {
+    matrix,
+    identity,
+    multiply,
+    concat,
+    transpose,
+    dotMultiply,
+    ones,
+    add,
+} from "mathjs"
 
 const WORLD_FRAME = {
     xAxis: createVector(1, 0, 0, "wXaxis"),
@@ -84,7 +93,7 @@ class VirtualHexapod {
             legListWithoutGravity
         )
 
-        if (nAxis == null || isNaN(nAxis.x) || isNaN(nAxis.y) || isNaN(nAxis.z )) {
+        if (nAxis == null || isNaN(nAxis.x) || isNaN(nAxis.y) || isNaN(nAxis.z)) {
             console.log("invalid nAxis:", nAxis)
             this.legs = legListWithoutGravity
             this.body = neutralHexagon

@@ -1,1 +1,0 @@
-prettier --config ./.prettierrc.yaml --write .
