@@ -25,7 +25,7 @@ test.each(CASES)("Should Initialize Linkage: %p", thisCase => {
     const { pointsMap, allPointsList } = linkage
 
     expect(linkage.id).toBe(POSITION_ID_MAP[params.position])
-    expect(linkage.name).toBe(POSITION_ID_MAP[params.position] + "Leg")
+    expect(linkage.name).toBe(params.position + "Leg")
 
     expect(linkage.pointNameIdMap).toEqual(result.pointNameIdMap)
     expect(linkage.givenBodyContactPoint).toEqual(linkage.pointsMap.bodyContactPoint)
