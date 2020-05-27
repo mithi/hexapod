@@ -8,51 +8,10 @@ import {
 import { POSITION_LIST } from "./constants"
 import { POSE } from "../templates/hexapodParams"
 import {
-    dot,
-    cross,
-    vectorLength,
     pointWrtFrame,
+    frameToAlignVectorAtoB,
     pointWrtFrameShiftClone,
 } from "./utilities/geometry"
-import {
-    matrix,
-    identity,
-    multiply,
-    concat,
-    transpose,
-    dotMultiply,
-    ones,
-    add,
-} from "mathjs"
-
-const skew = p =>
-    matrix([
-        [0, -p.z, p.y],
-        [p.z, 0, -p.x],
-        [-p.y, p.x, 0],
-    ])
-
-// https://math.stackexchange.com/questions/180418/
-// calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d
-const frameToAlignVectorAtoB = (a, b) => {
-    const v = cross(a, b)
-    const s = vectorLength(v)
-    // When angle between a and b is zero or 180 degrees
-    // cross product is 0, R = I
-    if (s === 0) {
-        return identity(4)
-    }
-
-    const c = dot(a, b)
-    const vx = skew(v)
-    const d = (1 - c) / (s * s)
-    const vx2 = multiply(vx, vx)
-    const dvx2 = dotMultiply(vx2, multiply(ones(3, 3), d))
-    const r = add(add(identity(3), vx), dvx2)
-    const r_ = concat(r, [[0, 0, 0]], 0)
-    const frame = concat(r_, transpose([[0, 0, 0, 1]]), 1)
-    return frame
-}
 
 const WORLD_FRAME = {
     xAxis: createVector(1, 0, 0, "wXaxis"),
