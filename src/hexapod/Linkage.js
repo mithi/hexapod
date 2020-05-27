@@ -77,8 +77,8 @@ class Linkage {
         this.pointNameIdMap = this._buildPointNameIdMap()
         this.givenBodyContactPoint = {
             ...bodyContactPoint,
-            name: this.pointNameIdMap.bodyContact.name,
-            id: this.pointNameIdMap.bodyContact.id,
+            name: this.pointNameIdMap.bodyContactPoint.name,
+            id: this.pointNameIdMap.bodyContactPoint.id,
         }
         this.pointsMap = this._computePoints(pose)
         this.allPointsList = LEG_POINT_TYPES.reduce(
@@ -103,7 +103,7 @@ class Linkage {
      *
      * */
     _buildNameId = (pointName, id) => ({
-        name: `${this.position}-${pointName}Point`,
+        name: `${this.position}-${pointName}`,
         id: `${this.id}-${id}`,
     })
 
@@ -135,15 +135,15 @@ class Linkage {
             x: 0,
             y: 0,
             z: 0,
-            name: this.pointNameIdMap.bodyContact.name,
-            id: this.pointNameIdMap.bodyContact.id,
+            name: this.pointNameIdMap.bodyContactPoint.name,
+            id: this.pointNameIdMap.bodyContactPoint.id,
         }
 
         const localPointsMap = {
-            bodyContact: localBodyContactPoint,
-            coxia: pointWrtFrame(localBodyContactPoint, frame01),
-            femur: pointWrtFrame(localBodyContactPoint, frame02),
-            footTip: pointWrtFrame(localBodyContactPoint, frame03),
+            bodyContactPoint: localBodyContactPoint,
+            coxiaPoint: pointWrtFrame(localBodyContactPoint, frame01),
+            femurPoint: pointWrtFrame(localBodyContactPoint, frame02),
+            footTipPoint: pointWrtFrame(localBodyContactPoint, frame03),
         }
 
         return localPointsMap

@@ -6,10 +6,10 @@ const PARAMS = {
 }
 
 const POINT_NAME_ID_MAP = {
-    bodyContact: { name: "rightMiddle-bodyContactPoint", id: "0-0" },
-    coxia: { name: "rightMiddle-coxiaPoint", id: "0-1" },
-    femur: { name: "rightMiddle-femurPoint", id: "0-2" },
-    footTip: { name: "rightMiddle-footTipPoint", id: "0-3" },
+    bodyContactPoint: { name: "rightMiddle-bodyContactPoint", id: "0-0" },
+    coxiaPoint: { name: "rightMiddle-coxiaPoint", id: "0-1" },
+    femurPoint: { name: "rightMiddle-femurPoint", id: "0-2" },
+    footTipPoint: { name: "rightMiddle-footTipPoint", id: "0-3" },
 }
 
 const BODY_CONTACT_POINT = {

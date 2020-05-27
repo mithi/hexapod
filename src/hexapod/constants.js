@@ -1,4 +1,9 @@
-const LEG_POINT_TYPES = ["bodyContact", "coxia", "femur", "footTip"]
+const LEG_POINT_TYPES = [
+    "bodyContactPoint",
+    "coxiaPoint",
+    "femurPoint",
+    "footTipPoint",
+]
 
 const POSITION_ID_MAP = {
     rightMiddle: 0,
