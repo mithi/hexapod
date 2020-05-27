@@ -318,6 +318,29 @@ input:checked + .toggle-switch-widget:before {
     }
 }
 
+@media screen and (max-width: 600px) {
+
+    .sidebar {
+        max-width: 225px;
+        min-width: 225px;
+    }
+
+    .plot {
+        width: 100%;
+        height: 275px;
+        min-width: 250px;
+    }
+
+    .page-content {
+        flex-grow: 0;
+    }
+
+    .nav-footer {
+        flex-direction: column;
+    }
+
+}
+
 @media screen and (max-width: 550px) {
     .input {
         font-size: 1rem;
@@ -330,7 +353,7 @@ input:checked + .toggle-switch-widget:before {
     .sidebar {
         width: 100%;
         order: 1;
-        max-width: 600px;
+        max-width: 550px;
         margin-right: 0;
     }
 
