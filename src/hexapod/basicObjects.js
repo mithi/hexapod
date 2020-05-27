@@ -56,15 +56,12 @@ const createVector = (x, y, z, name = "no-name-point", id = "no-id-point") => {
 
 const createHexagon = dimensions => {
     const { front, middle, side } = dimensions
+    const vertexX = [middle, front, -front, -middle, -front, front]
+    const vertexY = [0, side, side, 0, -side, -side]
 
-    const verticesList = [
-        createVector(middle, 0, 0, "rightMiddleVertex", 0),
-        createVector(front, side, 0, "rightFrontVertex", 1),
-        createVector(-front, side, 0, "leftFrontVertex", 2),
-        createVector(-middle, 0, 0, "leftMiddleVertex", 3),
-        createVector(-front, -side, 0, "leftBackVertex", 4),
-        createVector(front, -side, 0, "rightBackVertex", 5),
-    ]
+    const verticesList = POSITION_LIST.map((position, i) =>
+        createVector(vertexX[i], vertexY[i], 0, `${position}Vertex`, i)
+    )
 
     const closedPointsList = [...verticesList, verticesList[0]]
 
