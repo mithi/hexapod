@@ -33,7 +33,6 @@ class ForwardKinematicsPage extends Component {
     }
 
     toggleMode = () => {
-        console.log(this.state.mode)
         const newModeBool = !this.state.modeBool
         this.setState({
             modeBool: newModeBool,

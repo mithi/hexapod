@@ -92,9 +92,9 @@ const createHexagon = dimensions => {
 }
 
 const hexagonWrtFrameShiftClone = (hexagon, frame, tx, ty, tz) => {
-    const allPointsList = hexagon.allPointsList.map(point => (
+    const allPointsList = hexagon.allPointsList.map(point =>
         pointWrtFrameShiftClone(point, frame, tx, ty, tz)
-    ))
+    )
 
     const verticesList = allPointsList.slice(0, 6)
     const closedPointsList = [...verticesList, verticesList[0]]

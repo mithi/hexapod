@@ -319,7 +319,6 @@ input:checked + .toggle-switch-widget:before {
 }
 
 @media screen and (max-width: 600px) {
-
     .sidebar {
         max-width: 225px;
         min-width: 225px;
@@ -338,7 +337,6 @@ input:checked + .toggle-switch-widget:before {
     .nav-footer {
         flex-direction: column;
     }
-
 }
 
 @media screen and (max-width: 550px) {
