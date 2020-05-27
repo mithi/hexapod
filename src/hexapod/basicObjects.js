@@ -74,17 +74,13 @@ const createHexagon = dimensions => {
     const allPointsList = [...verticesList, cog, head]
 
     return {
-        dimensions: {
-            front: front,
-            middle: middle,
-            side: side,
-        },
-        verticesList: verticesList,
-        vertices: vertices,
-        cog: cog,
-        head: head,
-        allPointsList: allPointsList,
-        closedPointsList: closedPointsList,
+        dimensions,
+        verticesList,
+        vertices,
+        cog,
+        head,
+        allPointsList,
+        closedPointsList,
     }
 }
 
@@ -95,20 +91,19 @@ const hexagonWrtFrameShiftClone = (hexagon, frame, tx, ty, tz) => {
 
     const verticesList = allPointsList.slice(0, 6)
     const closedPointsList = [...verticesList, verticesList[0]]
+
+    // {position: point} ie { 'rightMiddle': {x, y, z, id, name} }
     const vertices = verticesList.reduce(
         (acc, vertex) => ({ ...acc, [POSITION_LIST[vertex.id]]: vertex }),
         {}
     )
 
-    const cog = allPointsList[6]
-    const head = allPointsList[7]
-    const { dimensions } = hexagon
     return {
-        dimensions,
+        dimensions: hexagon.dimensions,
         verticesList,
         vertices,
-        cog,
-        head,
+        cog: allPointsList[6],
+        head: allPointsList[7],
         allPointsList,
         closedPointsList,
     }

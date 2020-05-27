@@ -117,14 +117,7 @@ class VirtualHexapod {
 
         if (nAxis == null || isNaN(nAxis.x) || isNaN(nAxis.y) || isNaN(nAxis.z)) {
             console.log("invalid nAxis:", nAxis)
-            return {
-                ...this,
-                legs: legListWithoutGravity,
-                body: neutralHexagon,
-                localFrame: DEFAULT_LOCAL_FRAME,
-                cogProjection: DEFAULT_COG_PROJECTION,
-                groundContactPoints: [],
-            }
+            return this.rawHexapod(neutralHexagon, legListWithoutGravity)
         }
 
         // STEP 2:
@@ -151,6 +144,17 @@ class VirtualHexapod {
     // getDetachedHexagon
     // getTranslatedHexapod
     // getStancedHexapod
+
+    rawHexapod(body, legs) {
+        return {
+            ...this,
+            body,
+            legs,
+            localFrame: DEFAULT_LOCAL_FRAME,
+            cogProjection: DEFAULT_COG_PROJECTION,
+            groundContactPoints: [],
+        }
+    }
 }
 
 export default VirtualHexapod
