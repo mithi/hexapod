@@ -25,20 +25,6 @@ import {
     add,
 } from "mathjs"
 
-const WORLD_FRAME = {
-    xAxis: createVector(1, 0, 0, "wXaxis"),
-    yAxis: createVector(0, 1, 0, "wYaxis"),
-    zAxis: createVector(0, 0, 1, "wZaxis"),
-}
-
-const getSumOfDimensions = (bodyDimensions, legDimensions) =>
-    bodyDimensions.front +
-    bodyDimensions.middle +
-    bodyDimensions.side +
-    legDimensions.coxia +
-    legDimensions.femur +
-    legDimensions.tibia
-
 const skew = p =>
     matrix([
         [0, -p.z, p.y],
@@ -68,6 +54,42 @@ const frameToAlignVectorAtoB = (a, b) => {
     return frame
 }
 
+const WORLD_FRAME = {
+    xAxis: createVector(1, 0, 0, "wXaxis"),
+    yAxis: createVector(0, 1, 0, "wYaxis"),
+    zAxis: createVector(0, 0, 1, "wZaxis"),
+}
+
+const DEFAULT_LOCAL_FRAME = {
+    xAxis: { ...WORLD_FRAME.xAxis, name: "hexapodXaxis" },
+    yAxis: { ...WORLD_FRAME.yAxis, name: "hexapodYaxis" },
+    zAxis: { ...WORLD_FRAME.zAxis, name: "hexapodZaxis" },
+}
+
+const DEFAULT_COG_PROJECTION = createVector(
+    0,
+    0,
+    0,
+    "centerOfGravityProjectionPoint"
+)
+
+const getCogProjection = cog =>
+    createVector(cog.x, cog.y, 0, "centerOfGravityProjectionPoint")
+
+const computeLocalFrame = frame => ({
+    xAxis: pointWrtFrame(WORLD_FRAME.xAxis, frame, "hexapodXaxis"),
+    yAxis: pointWrtFrame(WORLD_FRAME.yAxis, frame, "hexapodYaxis"),
+    zAxis: pointWrtFrame(WORLD_FRAME.zAxis, frame, "hexapodZaxis"),
+})
+
+const getSumOfDimensions = (bodyDimensions, legDimensions) =>
+    bodyDimensions.front +
+    bodyDimensions.middle +
+    bodyDimensions.side +
+    legDimensions.coxia +
+    legDimensions.femur +
+    legDimensions.tibia
+
 class VirtualHexapod {
     constructor(
         bodyDimensions = { front: 100, middle: 100, side: 100 },
@@ -95,22 +117,17 @@ class VirtualHexapod {
 
         if (nAxis == null || isNaN(nAxis.x) || isNaN(nAxis.y) || isNaN(nAxis.z)) {
             console.log("invalid nAxis:", nAxis)
-            this.legs = legListWithoutGravity
-            this.body = neutralHexagon
-            this.localFrame = {
-                xAxis: { ...WORLD_FRAME.xAxis, name: "hexapodXaxis" },
-                yAxis: { ...WORLD_FRAME.yAxis, name: "hexapodYaxis" },
-                zAxis: { ...WORLD_FRAME.zAxis, name: "hexapodZaxis" },
+            return {
+                ...this,
+                legs: legListWithoutGravity,
+                body: neutralHexagon,
+                localFrame: DEFAULT_LOCAL_FRAME,
+                cogProjection: DEFAULT_COG_PROJECTION,
+                groundContactPoints: [],
             }
-            this.cogProjection = createVector(
-                0,
-                0,
-                0,
-                "centerOfGravityProjectionPoint"
-            )
-            this.groundContactPoints = []
         }
 
+        // STEP 2:
         // rotate and shift legs and body
         const frame = frameToAlignVectorAtoB(nAxis, WORLD_FRAME.zAxis)
         this.legs = legListWithoutGravity.map(leg =>
@@ -118,26 +135,16 @@ class VirtualHexapod {
         )
 
         this.body = hexagonWrtFrameShiftClone(neutralHexagon, frame, 0, 0, height)
+        this.localFrame = computeLocalFrame(frame)
 
-        this.localFrame = {
-            xAxis: pointWrtFrame(WORLD_FRAME.xAxis, frame, "hexapodXaxis"),
-            yAxis: pointWrtFrame(WORLD_FRAME.yAxis, frame, "hexapodYaxis"),
-            zAxis: pointWrtFrame(WORLD_FRAME.zAxis, frame, "hexapodZaxis"),
-        }
-
-        this.cogProjection = {
-            x: this.body.cog.x,
-            y: this.body.cog.y,
-            z: 0,
-            name: "centerOfGravityProjectionPoint",
-        }
+        this.groundContactPoints = legsOnGround.map(leg =>
+            pointWrtFrameShiftClone(leg.maybeGroundContactPoint, frame, 0, 0, height)
+        )
 
         // STEP 3: Twist if we have to
         // Hexapod will twist if three more alphas are non-zero
         // and the corresponding legs have foot tips that are NOT above body contact
-        this.groundContactPoints = legsOnGround.map(leg =>
-            pointWrtFrameShiftClone(leg.maybeGroundContactPoint, frame, 0, 0, height)
-        )
+        this.cogProjection = getCogProjection(this.body.cog)
         this.sumOfDimensions = getSumOfDimensions(bodyDimensions, legDimensions)
     }
 
