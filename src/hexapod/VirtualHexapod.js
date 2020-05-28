@@ -10,7 +10,7 @@ import {
     frameToAlignVectorAtoB,
     tRotZframe,
 } from "./utilities/geometry"
-import { identity, atan2 } from "mathjs"
+import { identity } from "mathjs"
 
 const WORLD_FRAME = {
     xAxis: createVector(1, 0, 0, "wXaxis"),
@@ -48,61 +48,25 @@ const getSumOfDimensions = (bodyDimensions, legDimensions) =>
     legDimensions.femur +
     legDimensions.tibia
 
-const mightTwist = legsOnGround => {
-    // Because we are ALWAYS starting at a pose where
-    // all alphas are zero and
-    // all foot tips are touching the ground, then
-    // Hexapod will twist if three more alphas are non-zero
-    // and the corresponding legs have foot tips are on the ground
-    // The hexapod will only definitely NOT twist
-    // if only two or lest of the legs that's
-    // currently on the ground has alpha != 0
-    const didTwistCount = legsOnGround.reduce((didTwistCount, leg) => {
-        const pointType = leg.maybeGroundContactPoint.name.split("-")[1]
-        const footTipOnGround = pointType !== "bodyContactPoint"
-        const changedAlpha = leg.pose.alpha !== 0
-        return footTipOnGround && changedAlpha ? didTwistCount + 1 : didTwistCount
-    }, 0)
-    return didTwistCount >= 3
-}
-
-const computeTwistFrame = (oldGroundContactPoints, newGroundContactPoints) => {
-    // Because we are ALWAYS starting at a pose where
-    // all alphas are zero and ground contacts are foot tips,
-    // let's find atleast one point that are the same before and after
-    const newSamePoint = newGroundContactPoints.find(point => {
-        const pointType = point.name.split("-")[1]
-        return pointType === "footTipPoint"
-    })
-
-    if (newSamePoint === undefined) {
-        return [null, identity(4)]
-    }
-
-    const newPointPosition = newSamePoint.name.split("-")[0]
-    const oldSamePoint = oldGroundContactPoints.find(point => {
-        const oldPointPosition = point.name.split("-")[0]
-        return newPointPosition === oldPointPosition
-    })
-
-    const thetaRadians =
-        atan2(oldSamePoint.y, oldSamePoint.x) - atan2(newSamePoint.y, newSamePoint.x)
-    const thetaDegrees = (thetaRadians * 180) / Math.PI
-    return [thetaDegrees, tRotZframe(thetaDegrees)]
-}
-
-// Which point on each leg contacts the ground
-// when all angles are equal to zero
-const computeDefaultGroundContactPoints = (legDimensions, verticesList) =>
-    computeLegsList(legDimensions, verticesList).map(
-        leg => leg.maybeGroundContactPoint
-    )
-
 const computeLegsList = (legDimensions, verticesList, pose = POSE) =>
     POSITION_LIST.map(
         (position, index) =>
             new Linkage(legDimensions, position, verticesList[index], pose[position])
     )
+
+const simpleTwist = legsOnGroundWithoutGravity => {
+    // we twist in the condition that
+    // 1. all the legs pose has same alpha
+    // 2. the ground contact is not the coxia point
+    const firstAlpha = legsOnGroundWithoutGravity[0].pose.alpha
+    const allAlphaTwist = legsOnGroundWithoutGravity.every(leg => {
+        const sameAlpha = leg.pose.alpha === firstAlpha
+        const pointType = leg.maybeGroundContactPoint.name.split("-")[1]
+        return sameAlpha && pointType !== "coxiaPoint"
+    })
+
+    return !allAlphaTwist ? 0 : -firstAlpha
+}
 
 class VirtualHexapod {
     constructor(
@@ -148,35 +112,23 @@ class VirtualHexapod {
         this.groundContactPoints = legsOnGroundWithoutGravity.map(leg =>
             pointCloneTrotShift(leg.maybeGroundContactPoint, frame, 0, 0, height)
         )
+        this.cogProjection = getCogProjection(this.body.cog)
 
-        if (mightTwist(legsOnGroundWithoutGravity)) {
-            this._twist(legsOnGroundWithoutGravity, neutralHexagon.verticesList)
+        if (this.legs.every(leg => leg.pose.alpha === 0)) {
+            return
         }
 
-        this.cogProjection = getCogProjection(this.body.cog)
+        const twistAngle = simpleTwist(legsOnGroundWithoutGravity)
+        this._twist(twistAngle)
     }
 
-    _twist(legsOnGroundWithoutGravity, verticesList) {
-        // since we known the previous pose is the when
-        // all the angles === 0, then the old contacts are the foot tips
-        const newGroundContactPoints = legsOnGroundWithoutGravity.map(
-            leg => leg.maybeGroundContactPoint
-        )
-        const oldGroundContactPoints = computeDefaultGroundContactPoints(
-            this.legDimensions,
-            verticesList
-        )
-        const [twistAngle, twistFrame] = computeTwistFrame(
-            oldGroundContactPoints,
-            newGroundContactPoints
-        )
-
+    _twist(twistAngle) {
+        const twistFrame = tRotZframe(twistAngle)
         this.twistProperties = {
             hasTwisted: true,
             twistAngle,
             twistFrame,
         }
-
         this.legs = this.legs.map(leg => leg.cloneTrotShift(twistFrame))
         this.body = hexagonCloneTrotShift(this.body, twistFrame)
         this.groundContactPoints = this.groundContactPoints.map(point =>
