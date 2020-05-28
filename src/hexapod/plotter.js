@@ -1,10 +1,10 @@
 import { DATA, SCENE, LAYOUT } from "../templates/plotParams"
 
 const _drawHexapod = hexapod => {
-    const polygonPoints = hexapod.body.closedPointsList
-    const bodyX = polygonPoints.map(point => point.x)
-    const bodyY = polygonPoints.map(point => point.y)
-    const bodyZ = polygonPoints.map(point => point.z)
+    const polygonVertices = hexapod.body.closedPointsList
+    const bodyX = polygonVertices.map(point => point.x)
+    const bodyY = polygonVertices.map(point => point.y)
+    const bodyZ = polygonVertices.map(point => point.z)
     const { head, cog } = hexapod.body
     const { cogProjection, legs, groundContactPoints } = hexapod
 
