@@ -36,7 +36,7 @@ const LEG_ID_TRIOS = [...SOME_LEG_ID_TRIOS, ...ADJACENT_LEG_ID_TRIOS]
 
 /* *
  * .................
- * COMPUTE ORIENTATION PROPERTIES
+ * COMPUTE ORIENTATION PROPERTIES (TYPE: SPECIFIC)
  * .................
  * Given: 1. A list of legs with known pose and
  *           its points wrt the hexapod body is known

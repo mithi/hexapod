@@ -1,8 +1,8 @@
 import Linkage from "../hexapod/Linkage"
 import { NUMBER_OF_LEGS, POSITION_LIST } from "../hexapod/constants"
-import * as oSolver1 from "../hexapod/solvers/orientationSolverType1"
-import CASE1 from "./cases/orientationSolverType1/case1"
-import CASE2 from "./cases/orientationSolverType1/case2"
+import * as specificOSolver from "../hexapod/solvers/orientationSolverSpecific"
+import CASE1 from "./cases/orientationSolverSpecific/case1"
+import CASE2 from "./cases/orientationSolverSpecific/case2"
 
 const CASES = [CASE1, CASE2]
 
@@ -28,7 +28,7 @@ test.each(CASES)("Should return the correct orientation properties %p", thisCase
         normalVector,
         height,
         legsOnGround,
-    ] = oSolver1.computeOrientationProperties(legs)
+    ] = specificOSolver.computeOrientationProperties(legs)
     expectPointsSameValues(normalVector, thisCase.result.normalVector)
 
     expect(height).toBeCloseTo(thisCase.result.height)

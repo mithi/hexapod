@@ -1,5 +1,5 @@
 import Linkage from "./Linkage"
-import * as oSolver1 from "./solvers/orientationSolverType1"
+import * as specificOSolver from "./solvers/orientationSolverSpecific"
 import { createVector, createHexagon, hexagonCloneTrotShift } from "./basicObjects"
 import { POSITION_LIST } from "./constants"
 import { POSE } from "../templates/hexapodParams"
@@ -126,7 +126,7 @@ class VirtualHexapod {
             nAxis,
             height,
             legsOnGroundWithoutGravity,
-        ] = oSolver1.computeOrientationProperties(legsWithoutGravity)
+        ] = specificOSolver.computeOrientationProperties(legsWithoutGravity)
 
         this.distanceFromGround = height
 
