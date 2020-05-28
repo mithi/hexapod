@@ -1,17 +1,13 @@
 import Linkage from "./Linkage"
 import * as oSolver1 from "./solvers/orientationSolverType1"
-import {
-    createVector,
-    createHexagon,
-    hexagonWrtFrameShiftClone,
-} from "./basicObjects"
+import { createVector, createHexagon, hexagonCloneTrotShift } from "./basicObjects"
 import { POSITION_LIST } from "./constants"
 import { POSE } from "../templates/hexapodParams"
 import {
-    pointWrtFrame,
+    pointNewTrot,
+    pointCloneTrotShift,
+    pointCloneTrot,
     frameToAlignVectorAtoB,
-    pointWrtFrameShiftClone,
-    pointWrtFrameClone,
     tRotZframe,
 } from "./utilities/geometry"
 import { identity, atan2 } from "mathjs"
@@ -39,9 +35,9 @@ const getCogProjection = cog =>
     createVector(cog.x, cog.y, 0, "centerOfGravityProjectionPoint")
 
 const computeLocalFrame = frame => ({
-    xAxis: pointWrtFrame(WORLD_FRAME.xAxis, frame, "hexapodXaxis"),
-    yAxis: pointWrtFrame(WORLD_FRAME.yAxis, frame, "hexapodYaxis"),
-    zAxis: pointWrtFrame(WORLD_FRAME.zAxis, frame, "hexapodZaxis"),
+    xAxis: pointNewTrot(WORLD_FRAME.xAxis, frame, "hexapodXaxis"),
+    yAxis: pointNewTrot(WORLD_FRAME.yAxis, frame, "hexapodYaxis"),
+    zAxis: pointNewTrot(WORLD_FRAME.zAxis, frame, "hexapodZaxis"),
 })
 
 const getSumOfDimensions = (bodyDimensions, legDimensions) =>
@@ -62,7 +58,7 @@ const mightTwist = legsOnGround => {
     // if only two or lest of the legs that's
     // currently on the ground has alpha != 0
     const didTwistCount = legsOnGround.reduce((didTwistCount, leg) => {
-        const [_, pointType] = leg.maybeGroundContactPoint.name.split("-")
+        const pointType = leg.maybeGroundContactPoint.name.split("-")[1]
         const footTipOnGround = pointType !== "bodyContactPoint"
         const changedAlpha = leg.pose.alpha !== 0
         return footTipOnGround && changedAlpha ? didTwistCount + 1 : didTwistCount
@@ -80,12 +76,12 @@ const computeTwistFrame = (oldGroundContactPoints, newGroundContactPoints) => {
     })
 
     if (newSamePoint === undefined) {
-        return identity(4)
+        return [null, identity(4)]
     }
 
-    const [newPointPosition, _] = newSamePoint.name.split("-")
+    const newPointPosition = newSamePoint.name.split("-")[0]
     const oldSamePoint = oldGroundContactPoints.find(point => {
-        const [oldPointPosition, _] = point.name.split("-")
+        const oldPointPosition = point.name.split("-")[0]
         return newPointPosition === oldPointPosition
     })
 
@@ -144,13 +140,13 @@ class VirtualHexapod {
         const frame = frameToAlignVectorAtoB(nAxis, WORLD_FRAME.zAxis)
 
         this.legs = legsWithoutGravity.map(leg =>
-            leg.wrtFrameShiftClone(frame, 0, 0, height)
+            leg.cloneTrotShift(frame, 0, 0, height)
         )
 
-        this.body = hexagonWrtFrameShiftClone(neutralHexagon, frame, 0, 0, height)
+        this.body = hexagonCloneTrotShift(neutralHexagon, frame, 0, 0, height)
         this.localFrame = computeLocalFrame(frame)
         this.groundContactPoints = legsOnGroundWithoutGravity.map(leg =>
-            pointWrtFrameShiftClone(leg.maybeGroundContactPoint, frame, 0, 0, height)
+            pointCloneTrotShift(leg.maybeGroundContactPoint, frame, 0, 0, height)
         )
 
         if (mightTwist(legsOnGroundWithoutGravity)) {
@@ -181,15 +177,15 @@ class VirtualHexapod {
             twistFrame,
         }
 
-        this.legs = this.legs.map(leg => leg.wrtFrameShiftClone(twistFrame, 0, 0, 0))
-        this.body = hexagonWrtFrameShiftClone(this.body, twistFrame)
+        this.legs = this.legs.map(leg => leg.cloneTrotShift(twistFrame))
+        this.body = hexagonCloneTrotShift(this.body, twistFrame)
         this.groundContactPoints = this.groundContactPoints.map(point =>
-            pointWrtFrameClone(point, twistFrame)
+            pointCloneTrotShift(point, twistFrame)
         )
         this.localFrame = {
-            xAxis: pointWrtFrameClone(this.localFrame.xAxis, twistFrame),
-            yAxis: pointWrtFrameClone(this.localFrame.yAxis, twistFrame),
-            zAxis: pointWrtFrameClone(this.localFrame.zAxis, twistFrame),
+            xAxis: pointCloneTrot(this.localFrame.xAxis, twistFrame),
+            yAxis: pointCloneTrot(this.localFrame.yAxis, twistFrame),
+            zAxis: pointCloneTrot(this.localFrame.zAxis, twistFrame),
         }
     }
 

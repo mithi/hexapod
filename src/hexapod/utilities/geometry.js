@@ -48,7 +48,8 @@ function tRotZframe(theta, tx = 0, ty = 0, tz = 0) {
     ])
 }
 
-function pointWrtFrame(point, referenceFrame, name = "unnamed-point", id = "no-id") {
+// previously pointWrtFrame
+function pointNewTrot(point, referenceFrame, name = "unnamed-point", id = "no-id") {
     // given point `point` location wrt a local frame
     // find point in a global frame
     // where the local frame wrt the global frame is defined by
@@ -64,18 +65,21 @@ function pointWrtFrame(point, referenceFrame, name = "unnamed-point", id = "no-i
     }
 }
 
-function pointWrtFrameClone(point, referenceFrame) {
+// pointWrtFrameClone
+function pointCloneTrot(point, referenceFrame) {
     // Same as pointWrtFrame except it also copies
     // the name and id of the point
-    return pointWrtFrame(point, referenceFrame, point.name, point.id)
+    return pointNewTrot(point, referenceFrame, point.name, point.id)
 }
 
-const shiftedPointClone = (point, tx, ty, tz) =>
+// shiftedPointClone
+const pointCloneShift = (point, tx = 0, ty = 0, tz = 0) =>
     createVector(point.x + tx, point.y + ty, point.z + tz, point.name, point.id)
 
-const pointWrtFrameShiftClone = (point, frame, tx, ty, tz) => {
-    const newPoint = pointWrtFrameClone(point, frame)
-    return shiftedPointClone(newPoint, tx, ty, tz)
+// pointWrtFrameShiftClone
+const pointCloneTrotShift = (point, frame, tx = 0, ty = 0, tz = 0) => {
+    const newPoint = pointCloneTrot(point, frame)
+    return pointCloneShift(newPoint, tx, ty, tz)
 }
 
 const cross = (a, b) => {
@@ -136,10 +140,10 @@ export {
     tRotXframe,
     tRotYframe,
     tRotZframe,
-    pointWrtFrame,
-    pointWrtFrameClone,
-    shiftedPointClone,
-    pointWrtFrameShiftClone,
+    pointNewTrot,
+    pointCloneTrot,
+    pointCloneShift,
+    pointCloneTrotShift,
     frameToAlignVectorAtoB,
     dot,
     cross,

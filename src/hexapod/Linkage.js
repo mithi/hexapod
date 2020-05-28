@@ -52,14 +52,15 @@ import { multiply } from "mathjs"
 import {
     tRotYframe,
     tRotZframe,
-    pointWrtFrame,
-    pointWrtFrameShiftClone,
+    pointNewTrot,
+    pointCloneTrotShift,
 } from "./utilities/geometry"
 import {
     LEG_POINT_TYPES,
     POSITION_ID_MAP,
     LOCAL_X_AXIS_ANGLE_MAP,
 } from "./constants"
+import { createVector } from "./basicObjects"
 
 class Linkage {
     constructor(
@@ -89,13 +90,13 @@ class Linkage {
         this.maybeGroundContactPoint = this._computeMaybeGroundContactPoint()
     }
 
-    wrtFrameShiftClone(frame, tx = 0, ty = 0, tz = 0) {
+    cloneTrotShift(frame, tx = 0, ty = 0, tz = 0) {
         // Return a copy of the leg with the same properties
         // except all the points are shifted and rotated
         // given the reference frame and tx, ty, tz
         const pointsMap = LEG_POINT_TYPES.reduce((acc, pointType) => {
             const oldPoint = this.pointsMap[pointType]
-            const newPoint = pointWrtFrameShiftClone(oldPoint, frame, tx, ty, tz)
+            const newPoint = pointCloneTrotShift(oldPoint, frame, tx, ty, tz)
             acc[pointType] = newPoint
             return acc
         }, {})
@@ -157,19 +158,13 @@ class Linkage {
         const frame02 = multiply(frame01, frame12)
         const frame03 = multiply(frame02, frame23)
 
-        const localBodyContactPoint = {
-            x: 0,
-            y: 0,
-            z: 0,
-            name: this.pointNameIdMap.bodyContactPoint.name,
-            id: this.pointNameIdMap.bodyContactPoint.id,
-        }
+        const originPoint = createVector(0, 0, 0)
 
         const localPointsMap = {
-            bodyContactPoint: localBodyContactPoint,
-            coxiaPoint: pointWrtFrame(localBodyContactPoint, frame01),
-            femurPoint: pointWrtFrame(localBodyContactPoint, frame02),
-            footTipPoint: pointWrtFrame(localBodyContactPoint, frame03),
+            bodyContactPoint: originPoint,
+            coxiaPoint: pointNewTrot(originPoint, frame01),
+            femurPoint: pointNewTrot(originPoint, frame02),
+            footTipPoint: pointNewTrot(originPoint, frame03),
         }
 
         return localPointsMap
@@ -180,7 +175,7 @@ class Linkage {
      * STEP 2 of computing points:
      *   find local points wrt hexapod's center of gravity (0, 0, 0)
      * ................
-     */
+     * */
     _computePointsWrtHexapodsCog(localPointsMap, alpha) {
         const twistFrame = tRotZframe(
             LOCAL_X_AXIS_ANGLE_MAP[this.position] + alpha,
@@ -190,7 +185,7 @@ class Linkage {
         )
 
         const pointsMap = LEG_POINT_TYPES.reduce((acc, pointType) => {
-            const point = pointWrtFrame(
+            const point = pointNewTrot(
                 localPointsMap[pointType],
                 twistFrame,
                 this.pointNameIdMap[pointType].name,
