@@ -1,5 +1,8 @@
 import { DATA, SCENE, LAYOUT } from "../templates/plotParams"
 
+const _getSumOfDimensions = dimensions =>
+    Object.values(dimensions).reduce((sum, dimension) => sum + dimension, 0)
+
 const _drawHexapod = hexapod => {
     const polygonVertices = hexapod.body.closedPointsList
     const bodyX = polygonVertices.map(point => point.x)
@@ -115,7 +118,7 @@ const _drawHexapod = hexapod => {
 const getNewPlotParams = (hexapod, cameraView) => {
     const data = _drawHexapod(hexapod)
 
-    const range = hexapod.sumOfDimensions
+    const range = _getSumOfDimensions(hexapod.dimensions)
     const newRange = [-range, range]
     const xaxis = { ...SCENE.xaxis, range: newRange }
     const yaxis = { ...SCENE.yaxis, range: newRange }

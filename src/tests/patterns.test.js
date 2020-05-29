@@ -45,6 +45,5 @@ test.each(CASES)("Should twist or not twist hexapod appropriately: %p", thisCase
         )
     )
 
-    expect(virtualHexapod.twistProperties.hasTwisted).toBe(result.hasTwisted)
-    expect(virtualHexapod.twistProperties.twistedAngle).toBe(result.twistedAngle)
+    expect(virtualHexapod.twistedAngle).toBe(result.twistedAngle)
 })
