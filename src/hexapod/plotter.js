@@ -1,4 +1,4 @@
-import { DATA, SCENE, LAYOUT } from "../templates/plotParams"
+import { DATA, SCENE, LAYOUT, CAMERA_VIEW } from "../templates/plotParams"
 
 const _getSumOfDimensions = dimensions =>
     Object.values(dimensions).reduce((sum, dimension) => sum + dimension, 0)
@@ -61,26 +61,26 @@ const _drawHexapod = hexapod => {
     }
 
     const axisScale = hexapod.body.dimensions.front / 2
-
+    const { xAxis, yAxis, zAxis } = hexapod.localFrame
     const hXaxis = {
         ...DATA[12],
-        x: [cog.x, cog.x + axisScale * hexapod.localFrame.xAxis.x],
-        y: [cog.y, cog.y + axisScale * hexapod.localFrame.xAxis.y],
-        z: [cog.z, cog.z + axisScale * hexapod.localFrame.xAxis.z],
+        x: [cog.x, cog.x + axisScale * xAxis.x],
+        y: [cog.y, cog.y + axisScale * xAxis.y],
+        z: [cog.z, cog.z + axisScale * xAxis.z],
     }
 
     const hYaxis = {
         ...DATA[13],
-        x: [cog.x, cog.x + axisScale * hexapod.localFrame.yAxis.x],
-        y: [cog.y, cog.y + axisScale * hexapod.localFrame.yAxis.y],
-        z: [cog.z, cog.z + axisScale * hexapod.localFrame.yAxis.z],
+        x: [cog.x, cog.x + axisScale * yAxis.x],
+        y: [cog.y, cog.y + axisScale * yAxis.y],
+        z: [cog.z, cog.z + axisScale * yAxis.z],
     }
 
     const hZaxis = {
         ...DATA[14],
-        x: [cog.x, cog.x + axisScale * hexapod.localFrame.zAxis.x],
-        y: [cog.y, cog.y + axisScale * hexapod.localFrame.zAxis.y],
-        z: [cog.z, cog.z + axisScale * hexapod.localFrame.zAxis.z],
+        x: [cog.x, cog.x + axisScale * zAxis.x],
+        y: [cog.y, cog.y + axisScale * zAxis.y],
+        z: [cog.z, cog.z + axisScale * zAxis.z],
     }
 
     const wXaxis = {
@@ -117,7 +117,9 @@ const _drawHexapod = hexapod => {
 
 const getNewPlotParams = (hexapod, cameraView) => {
     const data = _drawHexapod(hexapod)
-
+    if ([null, undefined, {}].includes(cameraView)) {
+        cameraView = CAMERA_VIEW
+    }
     const range = _getSumOfDimensions(hexapod.dimensions)
     const newRange = [-range, range]
     const xaxis = { ...SCENE.xaxis, range: newRange }
