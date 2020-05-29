@@ -42,7 +42,7 @@
  *
  * * */
 import { POSITION_LIST } from "./constants"
-import { Vector } from "./utilities/geometry"
+import Vector from "./Vector"
 
 class Hexagon {
     constructor(dimensions) {

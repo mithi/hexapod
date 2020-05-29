@@ -78,16 +78,13 @@
 
   * * * * */
 import { multiply } from "mathjs"
-import {
-    tRotYframe,
-    tRotZframe,
-    Vector,
-} from "./utilities/geometry"
+import { tRotYframe, tRotZframe } from "./utilities/geometry"
 import {
     LEG_POINT_TYPES,
     POSITION_ID_MAP,
     LOCAL_X_AXIS_ANGLE_MAP,
 } from "./constants"
+import Vector from "./Vector"
 
 class Linkage {
     constructor(

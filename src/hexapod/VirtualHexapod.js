@@ -3,7 +3,9 @@ import * as specificOSolver from "./solvers/orientationSolverSpecific"
 import Hexagon from "./Hexagon"
 import { POSITION_LIST } from "./constants"
 import { DEFAULT_POSE, DEFAULT_DIMENSIONS } from "../templates/hexapodParams"
-import { frameToAlignVectorAtoB, tRotZframe, Vector } from "./utilities/geometry"
+import { frameToAlignVectorAtoB, tRotZframe } from "./utilities/geometry"
+import Vector from "./Vector"
+
 import { identity } from "mathjs"
 
 const WORLD_FRAME = {
@@ -144,7 +146,7 @@ class VirtualHexapod {
         ] = specificOSolver.computeOrientationProperties(legsWithoutGravity)
 
         if (nAxis == null || isNaN(nAxis.x) || isNaN(nAxis.y) || isNaN(nAxis.z)) {
-            // Unstable pose
+            console.log("unstable pose")
             this._rawHexapod(neutralHexagon, legsWithoutGravity)
             return
         }
