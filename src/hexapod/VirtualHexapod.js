@@ -8,7 +8,6 @@ import {
 } from "./basicObjects"
 import { POSITION_LIST } from "./constants"
 import { DEFAULT_POSE, DEFAULT_DIMENSIONS } from "../templates/hexapodParams"
-
 import {
     pointNewTrot,
     pointCloneTrotShift,
@@ -17,6 +16,8 @@ import {
     tRotZframe,
 } from "./utilities/geometry"
 import { identity } from "mathjs"
+
+const SHOULD_LOG_HEXAPOD_PROPERTIES = false
 
 const WORLD_FRAME = {
     xAxis: createVector(1, 0, 0, "wXaxis"),
@@ -112,11 +113,13 @@ class VirtualHexapod {
         this.cogProjection = getCogProjection(this.body.cog)
 
         if (this.legs.every(leg => leg.pose.alpha === 0)) {
+            this._mightLog()
             return
         }
 
         const twistAngle = simpleTwist(legsOnGroundWithoutGravity)
         this._twist(twistAngle)
+        this._mightLog()
     }
 
     _twist(twistAngle) {
@@ -148,7 +151,7 @@ class VirtualHexapod {
         this.pose = pose
         this.twistProperties = {
             hasTwisted: false,
-            twistAngle: null,
+            twistAngle: 0,
             twistFrame: identity(4),
         }
     }
@@ -158,6 +161,18 @@ class VirtualHexapod {
         this.localFrame = DEFAULT_LOCAL_FRAME
         this.cogProjection = DEFAULT_COG_PROJECTION
         this.groundContactPoints = []
+    }
+
+    _mightLog() {
+        console.log("In might Log")
+        if (SHOULD_LOG_HEXAPOD_PROPERTIES) {
+            console.log("body", this.body)
+            console.log("legs", this.legs)
+            console.log("groundContactPoints", this.groundContactPoints)
+            console.log("localFrame", this.localFrame)
+            console.log("twistProperties", this.twistProperties)
+            console.log(this)
+        }
     }
 }
 
