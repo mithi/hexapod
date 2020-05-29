@@ -1,6 +1,6 @@
 import Linkage from "./Linkage"
 import * as specificOSolver from "./solvers/orientationSolverSpecific"
-import Hexagon from "./basicObjects"
+import Hexagon from "./Hexagon"
 import { POSITION_LIST } from "./constants"
 import { DEFAULT_POSE, DEFAULT_DIMENSIONS } from "../templates/hexapodParams"
 import { frameToAlignVectorAtoB, tRotZframe, Vector } from "./utilities/geometry"
