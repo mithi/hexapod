@@ -13,14 +13,47 @@ import {
     add,
 } from "mathjs"
 
-const createVector = (x, y, z, name = "no-name-point", id = "no-id-point") => {
-    return {
-        x: x,
-        y: y,
-        z: z,
-        id: id,
-        name: name,
+class Vector {
+    constructor(x, y, z, name = "no-name-point", id = "no-id-point") {
+        this.x = x
+        this.y = y
+        this.z = z
+        this.name = name
+        this.id = id
     }
+
+    newTrot(referenceFrame, name = "unnamed-point", id = "no-id") {
+        // given point `point` location wrt a local frame
+        // find point in a global frame
+        // where the local frame wrt the global frame is defined by
+        // parameter `referenceFrame`
+        const givenPointVector = transpose([[this.x, this.y, this.z, 1]])
+        const resultPointVector = transpose(
+            multiply(referenceFrame, givenPointVector)
+        )
+        return new Vector(
+            resultPointVector.subset(index(0, 0)),
+            resultPointVector.subset(index(0, 1)),
+            resultPointVector.subset(index(0, 2)),
+            name,
+            id
+        )
+    }
+
+    cloneTrot(referenceFrame) {
+        return this.newTrot(referenceFrame, this.name, this.id)
+    }
+
+    cloneShift(tx = 0, ty = 0, tz = 0) {
+        return new Vector(this.x + tx, this.y + ty, this.z + tz, this.name, this.id)
+    }
+
+    cloneTrotShift(referenceFrame, tx, ty, tz) {
+        return this.cloneTrot(referenceFrame).cloneShift(tx, ty, tz)
+    }
+}
+const createVector = (x, y, z, name = "no-name-point", id = "no-id-point") => {
+    return new Vector(x, y, z, name, id)
 }
 
 function getSinCos(theta) {
@@ -57,38 +90,16 @@ function tRotZframe(theta, tx = 0, ty = 0, tz = 0) {
     ])
 }
 
-// previously pointWrtFrame
 function pointNewTrot(point, referenceFrame, name = "unnamed-point", id = "no-id") {
-    // given point `point` location wrt a local frame
-    // find point in a global frame
-    // where the local frame wrt the global frame is defined by
-    // parameter `referenceFrame`
-    const givenPointVector = transpose([[point.x, point.y, point.z, 1]])
-    const resultPointVector = transpose(multiply(referenceFrame, givenPointVector))
-    return {
-        x: resultPointVector.subset(index(0, 0)),
-        y: resultPointVector.subset(index(0, 1)),
-        z: resultPointVector.subset(index(0, 2)),
-        name: name,
-        id: id,
-    }
+    return point.newTrot(referenceFrame, name, id)
 }
 
-// pointWrtFrameClone
 function pointCloneTrot(point, referenceFrame) {
-    // Same as pointWrtFrame except it also copies
-    // the name and id of the point
-    return pointNewTrot(point, referenceFrame, point.name, point.id)
+    return point.cloneTrot(referenceFrame)
 }
 
-// shiftedPointClone
-const pointCloneShift = (point, tx = 0, ty = 0, tz = 0) =>
-    createVector(point.x + tx, point.y + ty, point.z + tz, point.name, point.id)
-
-// pointWrtFrameShiftClone
 const pointCloneTrotShift = (point, frame, tx = 0, ty = 0, tz = 0) => {
-    const newPoint = pointCloneTrot(point, frame)
-    return pointCloneShift(newPoint, tx, ty, tz)
+    return point.cloneTrotShift(frame, tx, ty, tz)
 }
 
 const cross = (a, b) => {
@@ -151,7 +162,6 @@ export {
     tRotZframe,
     pointNewTrot,
     pointCloneTrot,
-    pointCloneShift,
     pointCloneTrotShift,
     frameToAlignVectorAtoB,
     dot,
