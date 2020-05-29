@@ -42,30 +42,27 @@ const simpleTwist = legsOnGroundWithoutGravity => {
     //    if all femurPoints on ground, make sure bodyContactPoint.z != femurPoint.z
     //     (ie  if hexapod body is not on the ground we should not twist)
     const firstAlpha = legsOnGroundWithoutGravity[0].pose.alpha
-    const allAlphaTwist = legsOnGroundWithoutGravity.every(leg => {
-        const sameAlpha = leg.pose.alpha === firstAlpha
-        if (!sameAlpha) {
+    const shouldTwist = legsOnGroundWithoutGravity.every(leg => {
+        if (leg.pose.alpha !== firstAlpha) {
             return false
         }
 
         const pointType = leg.maybeGroundContactPoint.name.split("-")[1]
-        if (["bodyContactPoint", "coxiaPoint"].includes(pointType)) {
-            return false
-        }
+
         if (pointType === "footTipPoint") {
             return true
         }
 
-        // pointType is femurPoint at this point
-        const hexapodBodyPlaneOnGround =
-            leg.pointsMap["bodyContactPoint"].z === leg.pointsMap["femurPoint"].z
-        if (hexapodBodyPlaneOnGround) {
-            return false
+        if (pointType === "femurPoint") {
+            const hexapodBodyPlaneOnGround =
+                leg.pointsMap["bodyContactPoint"].z === leg.pointsMap["femurPoint"].z
+            return hexapodBodyPlaneOnGround ? false : true
         }
-        return true
+
+        return false
     })
 
-    return !allAlphaTwist ? 0 : -firstAlpha
+    return !shouldTwist ? 0 : -firstAlpha
 }
 
 /* * *
@@ -207,19 +204,13 @@ class VirtualHexapod {
     }
 
     get bodyDimensions() {
-        return {
-            front: this.dimensions.front,
-            middle: this.dimensions.middle,
-            side: this.dimensions.side,
-        }
+        const { front, middle, side } = this.dimensions
+        return { front, middle, side }
     }
 
     get legDimensions() {
-        return {
-            coxia: this.dimensions.coxia,
-            femur: this.dimensions.femur,
-            tibia: this.dimensions.tibia,
-        }
+        const { coxia, femur, tibia } = this.dimensions
+        return { coxia, femur, tibia }
     }
 
     _twist() {
