@@ -10,17 +10,12 @@ import {
     frameToAlignVectorAtoB,
     tRotZframe,
 } from "./utilities/geometry"
+import { identity } from "mathjs"
 
 const WORLD_FRAME = {
     xAxis: createVector(1, 0, 0, "wXaxis"),
     yAxis: createVector(0, 1, 0, "wYaxis"),
     zAxis: createVector(0, 0, 1, "wZaxis"),
-}
-
-const DEFAULT_LOCAL_FRAME = {
-    xAxis: { ...WORLD_FRAME.xAxis, name: "hexapodXaxis" },
-    yAxis: { ...WORLD_FRAME.yAxis, name: "hexapodYaxis" },
-    zAxis: { ...WORLD_FRAME.zAxis, name: "hexapodZaxis" },
 }
 
 const computeLocalFrame = frame => ({
@@ -236,7 +231,7 @@ class VirtualHexapod {
     _rawHexapod(body, legs) {
         this.body = body
         this.legs = legs
-        this.localFrame = DEFAULT_LOCAL_FRAME
+        this.localFrame = computeLocalFrame(identity(4))
         this.groundContactPoints = []
     }
 

@@ -12,7 +12,16 @@ import {
     ones,
     add,
 } from "mathjs"
-import { createVector } from "../basicObjects"
+
+const createVector = (x, y, z, name = "no-name-point", id = "no-id-point") => {
+    return {
+        x: x,
+        y: y,
+        z: z,
+        id: id,
+        name: name,
+    }
+}
 
 function getSinCos(theta) {
     return [sin(unit(theta, "deg")), cos(unit(theta, "deg"))]
@@ -152,4 +161,5 @@ export {
     scaleVector,
     vectorFromTo,
     vectorLength,
+    createVector,
 }

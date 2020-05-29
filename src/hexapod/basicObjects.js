@@ -42,17 +42,7 @@
  *
  * * */
 import { POSITION_LIST } from "./constants"
-import { pointCloneTrotShift } from "./utilities/geometry"
-
-const createVector = (x, y, z, name = "no-name-point", id = "no-id-point") => {
-    return {
-        x: x,
-        y: y,
-        z: z,
-        id: id,
-        name: name,
-    }
-}
+import { pointCloneTrotShift, createVector } from "./utilities/geometry"
 
 class Hexagon {
     constructor(dimensions) {
