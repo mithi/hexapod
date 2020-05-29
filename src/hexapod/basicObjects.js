@@ -54,60 +54,45 @@ const createVector = (x, y, z, name = "no-name-point", id = "no-id-point") => {
     }
 }
 
-const createHexagon = dimensions => {
-    const { front, middle, side } = dimensions
-    const vertexX = [middle, front, -front, -middle, -front, front]
-    const vertexY = [0, side, side, 0, -side, -side]
+class Hexagon {
+    constructor(dimensions) {
+        this.dimensions = dimensions
+        const { front, middle, side } = this.dimensions
+        const vertexX = [middle, front, -front, -middle, -front, front]
+        const vertexY = [0, side, side, 0, -side, -side]
 
-    const verticesList = POSITION_LIST.map((position, i) =>
-        createVector(vertexX[i], vertexY[i], 0, `${position}Vertex`, i)
-    )
+        this.verticesList = POSITION_LIST.map((position, i) =>
+            createVector(vertexX[i], vertexY[i], 0, `${position}Vertex`, i)
+        )
+        this.head = createVector(0, side, 0, "headPoint", 7)
+        this.cog = createVector(0, 0, 0, "centerOfGravityPoint", 6)
+    }
 
-    const closedPointsList = [...verticesList, verticesList[0]]
+    get closedPointsList() {
+        return [...this.verticesList, this.verticesList[0]]
+    }
 
-    const vertices = verticesList.reduce(
-        (acc, vertex) => ({ ...acc, [POSITION_LIST[vertex.id]]: vertex }),
-        {}
-    )
-    const head = createVector(0, side, 0, "headPoint", 7)
-    const cog = createVector(0, 0, 0, "centerOfGravityPoint", 6)
-    const allPointsList = [...verticesList, cog, head]
+    get vertices() {
+        // a hash mapping the position ie(right middle) to the vertex point
+        return this.verticesList.reduce(
+            (acc, vertex) => ({ ...acc, [POSITION_LIST[vertex.id]]: vertex }),
+            {}
+        )
+    }
 
-    return {
-        dimensions,
-        verticesList,
-        vertices,
-        cog,
-        head,
-        allPointsList,
-        closedPointsList,
+    get allPointsList() {
+        return [...this.verticesList, this.cog, this.head]
+    }
+
+    cloneTrotShift(frame, tx = 0, ty = 0, tz = 0) {
+        let clone = new Hexagon(this.dimensions)
+        clone.cog = pointCloneTrotShift(this.cog, frame, tx, ty, tz)
+        clone.head = pointCloneTrotShift(this.head, frame, tx, ty, tz)
+        clone.verticesList = this.verticesList.map(point =>
+            pointCloneTrotShift(point, frame, tx, ty, tz)
+        )
+        return clone
     }
 }
 
-const hexagonCloneTrotShift = (hexagon, frame, tx = 0, ty = 0, tz = 0) => {
-    const allPointsList = hexagon.allPointsList.map(point =>
-        pointCloneTrotShift(point, frame, tx, ty, tz)
-    )
-
-    const verticesList = allPointsList.slice(0, 6)
-    const closedPointsList = [...verticesList, verticesList[0]]
-
-    // {position: point} ie { 'rightMiddle': {x, y, z, id, name} }
-    const vertices = verticesList.reduce(
-        (acc, vertex) => ({ ...acc, [POSITION_LIST[vertex.id]]: vertex }),
-        {}
-    )
-
-    return {
-        dimensions: hexagon.dimensions,
-        verticesList,
-        vertices,
-        cog: allPointsList[6],
-        head: allPointsList[7],
-        allPointsList,
-        closedPointsList,
-    }
-}
-
-
-export { createVector, createHexagon, hexagonCloneTrotShift}
+export { createVector, Hexagon }

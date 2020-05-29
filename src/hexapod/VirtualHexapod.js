@@ -1,6 +1,6 @@
 import Linkage from "./Linkage"
 import * as specificOSolver from "./solvers/orientationSolverSpecific"
-import { createVector, createHexagon, hexagonCloneTrotShift } from "./basicObjects"
+import { createVector, Hexagon } from "./basicObjects"
 import { POSITION_LIST } from "./constants"
 import { DEFAULT_POSE, DEFAULT_DIMENSIONS } from "../templates/hexapodParams"
 import {
@@ -141,7 +141,7 @@ class VirtualHexapod {
         // IMPORTANT: why is moving sum of dimensions to a helper messing thing up?
         this._storeInitialProperties(dimensions, pose)
 
-        const neutralHexagon = createHexagon(this.bodyDimensions)
+        const neutralHexagon = new Hexagon(this.bodyDimensions)
         const legsWithoutGravity = computeLegsList(
             this.legDimensions,
             neutralHexagon.verticesList,
@@ -172,7 +172,7 @@ class VirtualHexapod {
             leg.cloneTrotShift(frame, 0, 0, height)
         )
 
-        this.body = hexagonCloneTrotShift(neutralHexagon, frame, 0, 0, height)
+        this.body = neutralHexagon.cloneTrotShift(frame, 0, 0, height)
         this.localFrame = computeLocalFrame(frame)
         this.groundContactPoints = legsOnGroundWithoutGravity.map(leg =>
             pointCloneTrotShift(leg.maybeGroundContactPoint, frame, 0, 0, height)
@@ -225,7 +225,7 @@ class VirtualHexapod {
     _twist() {
         const twistFrame = tRotZframe(this.twistAngle)
         this.legs = this.legs.map(leg => leg.cloneTrotShift(twistFrame))
-        this.body = hexagonCloneTrotShift(this.body, twistFrame)
+        this.body = this.body.cloneTrotShift(twistFrame)
         this.groundContactPoints = this.groundContactPoints.map(point =>
             pointCloneTrotShift(point, twistFrame)
         )
