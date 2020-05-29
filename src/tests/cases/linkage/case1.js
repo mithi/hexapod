@@ -5,13 +5,6 @@ const PARAMS = {
     pose: { alpha: 0, beta: 0, gamma: 0 },
 }
 
-const POINT_NAME_ID_MAP = {
-    bodyContactPoint: { name: "leftBack-bodyContactPoint", id: "4-0" },
-    coxiaPoint: { name: "leftBack-coxiaPoint", id: "4-1" },
-    femurPoint: { name: "leftBack-femurPoint", id: "4-2" },
-    footTipPoint: { name: "leftBack-footTipPoint", id: "4-3" },
-}
-
 const BODY_CONTACT_POINT = {
     x: -41,
     y: -72,
@@ -47,7 +40,6 @@ const FOOT_TIP_POINT = {
 const CASE = {
     params: PARAMS,
     result: {
-        pointNameIdMap: POINT_NAME_ID_MAP,
         bodyContactPoint: BODY_CONTACT_POINT,
         coxiaPoint: COXIA_POINT,
         femurPoint: FEMUR_POINT,
