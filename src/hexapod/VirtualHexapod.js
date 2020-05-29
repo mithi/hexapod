@@ -1,8 +1,14 @@
 import Linkage from "./Linkage"
 import * as specificOSolver from "./solvers/orientationSolverSpecific"
-import { createVector, createHexagon, hexagonCloneTrotShift } from "./basicObjects"
+import {
+    createVector,
+    createHexagon,
+    hexagonCloneTrotShift,
+    splitDimensions,
+} from "./basicObjects"
 import { POSITION_LIST } from "./constants"
-import { POSE } from "../templates/hexapodParams"
+import { DEFAULT_POSE, DEFAULT_DIMENSIONS } from "../templates/hexapodParams"
+
 import {
     pointNewTrot,
     pointCloneTrotShift,
@@ -18,18 +24,18 @@ const WORLD_FRAME = {
     zAxis: createVector(0, 0, 1, "wZaxis"),
 }
 
-const DEFAULT_LOCAL_FRAME = {
-    xAxis: { ...WORLD_FRAME.xAxis, name: "hexapodXaxis" },
-    yAxis: { ...WORLD_FRAME.yAxis, name: "hexapodYaxis" },
-    zAxis: { ...WORLD_FRAME.zAxis, name: "hexapodZaxis" },
-}
-
 const DEFAULT_COG_PROJECTION = createVector(
     0,
     0,
     0,
     "centerOfGravityProjectionPoint"
 )
+
+const DEFAULT_LOCAL_FRAME = {
+    xAxis: { ...WORLD_FRAME.xAxis, name: "hexapodXaxis" },
+    yAxis: { ...WORLD_FRAME.yAxis, name: "hexapodYaxis" },
+    zAxis: { ...WORLD_FRAME.zAxis, name: "hexapodZaxis" },
+}
 
 const getCogProjection = cog =>
     createVector(cog.x, cog.y, 0, "centerOfGravityProjectionPoint")
@@ -40,15 +46,10 @@ const computeLocalFrame = frame => ({
     zAxis: pointNewTrot(WORLD_FRAME.zAxis, frame, "hexapodZaxis"),
 })
 
-const getSumOfDimensions = (bodyDimensions, legDimensions) =>
-    bodyDimensions.front +
-    bodyDimensions.middle +
-    bodyDimensions.side +
-    legDimensions.coxia +
-    legDimensions.femur +
-    legDimensions.tibia
+const getSumOfDimensions = dimensions =>
+    Object.values(dimensions).reduce((sum, dimension) => sum + dimension, 0)
 
-const computeLegsList = (legDimensions, verticesList, pose = POSE) =>
+const computeLegsList = (legDimensions, verticesList, pose = DEFAULT_POSE) =>
     POSITION_LIST.map(
         (position, index) =>
             new Linkage(legDimensions, position, verticesList[index], pose[position])
@@ -69,18 +70,14 @@ const simpleTwist = legsOnGroundWithoutGravity => {
 }
 
 class VirtualHexapod {
-    constructor(
-        bodyDimensions = { front: 100, middle: 100, side: 100 },
-        legDimensions = { coxia: 100, femur: 100, tibia: 100 },
-        pose = POSE
-    ) {
-        this.sumOfDimensions = getSumOfDimensions(bodyDimensions, legDimensions)
+    constructor(dimensions = DEFAULT_DIMENSIONS, pose = DEFAULT_POSE) {
+        this.sumOfDimensions = getSumOfDimensions(dimensions)
         // IMPORTANT: why is moving sum of dimensions to a helper messing thing up?
-        this._storeInitialProperties(bodyDimensions, legDimensions, pose)
+        this._storeInitialProperties(dimensions, pose)
 
-        const neutralHexagon = createHexagon(bodyDimensions)
+        const neutralHexagon = createHexagon(this.bodyDimensions)
         const legsWithoutGravity = computeLegsList(
-            legDimensions,
+            this.legDimensions,
             neutralHexagon.verticesList,
             pose
         )
@@ -144,7 +141,8 @@ class VirtualHexapod {
     // getDetachedHexagon
     // getTranslatedHexapod
     // getStancedHexapod
-    _storeInitialProperties(legDimensions, bodyDimensions, pose) {
+    _storeInitialProperties(dimensions, pose) {
+        const [bodyDimensions, legDimensions] = splitDimensions(dimensions)
         this.legDimensions = legDimensions
         this.bodyDimensions = bodyDimensions
         this.pose = pose

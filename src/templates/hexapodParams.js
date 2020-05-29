@@ -1,13 +1,20 @@
-const DIMENSIONS = {
+const DEFAULT_BODY_DIMENSIONS = {
     front: 100,
     side: 100,
     middle: 100,
+}
+const DEFAULT_LEG_DIMENSIONS = {
     coxia: 100,
     femur: 100,
     tibia: 100,
 }
 
-const POSE = {
+const DEFAULT_DIMENSIONS = {
+    ...DEFAULT_BODY_DIMENSIONS,
+    ...DEFAULT_LEG_DIMENSIONS,
+}
+
+const DEFAULT_POSE = {
     leftFront: { alpha: 0, beta: 0, gamma: 0 },
     rightFront: { alpha: 0, beta: 0, gamma: 0 },
     leftMiddle: { alpha: 0, beta: 0, gamma: 0 },
@@ -16,7 +23,7 @@ const POSE = {
     rightBack: { alpha: 0, beta: 0, gamma: 0 },
 }
 
-const IK_PARAMS = {
+const DEFAULT_IK_PARAMS = {
     tx: 0,
     ty: 0,
     tz: 0,
@@ -27,4 +34,10 @@ const IK_PARAMS = {
     legStance: 0,
 }
 
-export { DIMENSIONS, POSE, IK_PARAMS }
+export {
+    DEFAULT_DIMENSIONS,
+    DEFAULT_LEG_DIMENSIONS,
+    DEFAULT_BODY_DIMENSIONS,
+    DEFAULT_POSE,
+    DEFAULT_IK_PARAMS,
+}

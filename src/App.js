@@ -2,7 +2,11 @@ import React from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 
 import { DATA, LAYOUT, CAMERA_VIEW } from "./templates/plotParams"
-import { DIMENSIONS, POSE, IK_PARAMS } from "./templates/hexapodParams"
+import {
+    DEFAULT_DIMENSIONS,
+    DEFAULT_POSE,
+    DEFAULT_IK_PARAMS,
+} from "./templates/hexapodParams"
 
 import { NavBar, NavFooter } from "./components/Nav"
 import HexapodPlot from "./components/HexapodPlot"
@@ -18,33 +22,17 @@ import {
 import VirtualHexapod from "./hexapod/VirtualHexapod"
 import getNewPlotParams from "./hexapod/plotter"
 
-const splitDimensions = dimensions => {
-    const bodyDimensions = {
-        front: dimensions.front,
-        middle: dimensions.middle,
-        side: dimensions.side,
-    }
-
-    const legDimensions = {
-        coxia: dimensions.coxia,
-        femur: dimensions.femur,
-        tibia: dimensions.tibia,
-    }
-
-    return [bodyDimensions, legDimensions]
-}
-
 class App extends React.Component {
     state = {
         currentPage: "Root",
         shouldDisplayDimensionsAndPlot: false,
         alerts: "",
         messages: "",
-        ikParams: IK_PARAMS,
+        ikParams: DEFAULT_IK_PARAMS,
         patternParams: { alpha: 0, beta: 0, gamma: 0 },
         hexapod: {
-            dimensions: DIMENSIONS,
-            pose: POSE,
+            dimensions: DEFAULT_DIMENSIONS,
+            pose: DEFAULT_POSE,
             points: {},
         },
         plot: {
@@ -64,20 +52,15 @@ class App extends React.Component {
         this.setState({
             shouldDisplayDimensionsAndPlot: true,
             currentPage: pageName,
-            ikParams: IK_PARAMS,
-            hexapod: { ...this.state.hexapod, pose: POSE },
+            ikParams: DEFAULT_IK_PARAMS,
+            hexapod: { ...this.state.hexapod, pose: DEFAULT_POSE },
             patternParams: { alpha: 0, beta: 0, gamma: 0 },
         })
-        this.updatePlot(this.state.hexapod.dimensions, POSE)
+        this.updatePlot(this.state.hexapod.dimensions, DEFAULT_POSE)
     }
 
     updatePlot = (dimensions, pose) => {
-        const [bodyDimensions, legDimensions] = splitDimensions(dimensions)
-        const newHexapodModel = new VirtualHexapod(
-            bodyDimensions,
-            legDimensions,
-            pose
-        )
+        const newHexapodModel = new VirtualHexapod(dimensions, pose)
         const [data, layout] = getNewPlotParams(
             newHexapodModel,
             this.state.plot.latestCameraView

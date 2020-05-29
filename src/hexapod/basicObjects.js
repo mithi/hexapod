@@ -108,4 +108,21 @@ const hexagonCloneTrotShift = (hexagon, frame, tx = 0, ty = 0, tz = 0) => {
         closedPointsList,
     }
 }
-export { createVector, createHexagon, hexagonCloneTrotShift }
+
+const splitDimensions = dimensions => {
+    const bodyDimensions = {
+        front: dimensions.front,
+        middle: dimensions.middle,
+        side: dimensions.side,
+    }
+
+    const legDimensions = {
+        coxia: dimensions.coxia,
+        femur: dimensions.femur,
+        tibia: dimensions.tibia,
+    }
+
+    return [bodyDimensions, legDimensions]
+}
+
+export { createVector, createHexagon, hexagonCloneTrotShift, splitDimensions }
