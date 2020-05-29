@@ -1,13 +1,3 @@
-// TEST CASES:
-// 1. should twist when footip on the ground and all alpha twist
-// 2. should twist when femur point on the ground and all alpha twist
-// 3. should NOT twist when all alpha == 0
-// 4. should NOT twist when all coxia points are the ground contact points
-//    even when all alpha twists
-
-// alpha, beta, gamma
-// 0,
-
 const PATTERN_POSE = {
     alpha: 28,
     beta: -51,
@@ -23,14 +13,56 @@ const DIMENSIONS = {
 }
 
 const BODY_ALL_POINTS_LIST = [
-    { x: 125.37855818596763, y: -66.66496191559649, z: 91.70322345192254, name: "rightMiddleVertex",  id: 0 },
-    { x: 126.05495913853233, y: 49.630104539311084, z: 91.70322345192254, name: "rightFrontVertex",  id: 1 },
-    { x: -29.34381720463883, y: 132.25709958962787, z: 91.70322345192254, name: "leftFrontVertex",  id: 2  },
-    { x: -125.37855818596763, y: 66.66496191559649, z: 91.70322345192254, name: "leftMiddleVertex",  id: 3  },
-    { x: -126.05495913853233, y: -49.630104539311084, z: 91.70322345192254, name: "leftBackVertex",  id: 4  },
-    { x: 29.34381720463883, y: -132.25709958962787, z: 91.70322345192254, name: "rightBackVertex",  id: 5  },
-    { x: 0, y: 0, z: 91.70322345192254, name: "centerOfGravityPoint", id: 6},
-    { x: 48.35557096694675, y: 90.94360206446947, z: 91.70322345192254, name: "headPoint", id: 7 },
+    {
+        x: 125.37855818596763,
+        y: -66.66496191559649,
+        z: 91.70322345192254,
+        name: "rightMiddleVertex",
+        id: 0,
+    },
+    {
+        x: 126.05495913853233,
+        y: 49.630104539311084,
+        z: 91.70322345192254,
+        name: "rightFrontVertex",
+        id: 1,
+    },
+    {
+        x: -29.34381720463883,
+        y: 132.25709958962787,
+        z: 91.70322345192254,
+        name: "leftFrontVertex",
+        id: 2,
+    },
+    {
+        x: -125.37855818596763,
+        y: 66.66496191559649,
+        z: 91.70322345192254,
+        name: "leftMiddleVertex",
+        id: 3,
+    },
+    {
+        x: -126.05495913853233,
+        y: -49.630104539311084,
+        z: 91.70322345192254,
+        name: "leftBackVertex",
+        id: 4,
+    },
+    {
+        x: 29.34381720463883,
+        y: -132.25709958962787,
+        z: 91.70322345192254,
+        name: "rightBackVertex",
+        id: 5,
+    },
+    { x: 0, y: 0, z: 91.70322345192254, name: "centerOfGravityPoint", id: 6 },
+    {
+        x: 48.35557096694675,
+        y: 90.94360206446947,
+        z: 91.70322345192254,
+        name: "headPoint",
+        id: 7,
+    },
 ]
 
 const GROUND_CONTACT_POINTS_LIST = [
@@ -82,9 +114,21 @@ const HAS_TWISTED = true
 const TWIST_ANGLE = -28
 
 const LOCAL_FRAME = {
-    xAxis: { x: 0.882947592858927, y: -0.4694715627858908, z: 0, name: "hexapodXaxis", id: "no-id" },
-    yAxis: { x: 0.4694715627858908, y: 0.882947592858927, z: 0, name: "hexapodYaxis", id: "no-id"  },
-    zAxis: { x: 0, y: 0, z: 1, name: "hexapodZaxis", id: "no-id"  },
+    xAxis: {
+        x: 0.882947592858927,
+        y: -0.4694715627858908,
+        z: 0,
+        name: "hexapodXaxis",
+        id: "no-id",
+    },
+    yAxis: {
+        x: 0.4694715627858908,
+        y: 0.882947592858927,
+        z: 0,
+        name: "hexapodYaxis",
+        id: "no-id",
+    },
+    zAxis: { x: 0, y: 0, z: 1, name: "hexapodZaxis", id: "no-id" },
 }
 
 const CASE = {
