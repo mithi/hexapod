@@ -81,15 +81,13 @@ import { multiply } from "mathjs"
 import {
     tRotYframe,
     tRotZframe,
-    pointNewTrot,
-    pointCloneTrotShift,
+    Vector,
 } from "./utilities/geometry"
 import {
     LEG_POINT_TYPES,
     POSITION_ID_MAP,
     LOCAL_X_AXIS_ANGLE_MAP,
 } from "./constants"
-import { createVector } from "./basicObjects"
 
 class Linkage {
     constructor(
@@ -151,7 +149,7 @@ class Linkage {
     cloneTrotShift(frame, tx = 0, ty = 0, tz = 0) {
         const pointsMap = LEG_POINT_TYPES.reduce((acc, pointType) => {
             const oldPoint = this.pointsMap[pointType]
-            const newPoint = pointCloneTrotShift(oldPoint, frame, tx, ty, tz)
+            const newPoint = oldPoint.cloneTrotShift(frame, tx, ty, tz)
             acc[pointType] = newPoint
             return acc
         }, {})
@@ -209,13 +207,13 @@ class Linkage {
         const frame02 = multiply(frame01, frame12)
         const frame03 = multiply(frame02, frame23)
 
-        const originPoint = createVector(0, 0, 0)
+        const originPoint = new Vector(0, 0, 0)
 
         const localPointsMap = {
             bodyContactPoint: originPoint,
-            coxiaPoint: pointNewTrot(originPoint, frame01),
-            femurPoint: pointNewTrot(originPoint, frame02),
-            footTipPoint: pointNewTrot(originPoint, frame03),
+            coxiaPoint: originPoint.cloneTrot(frame01),
+            femurPoint: originPoint.cloneTrot(frame02),
+            footTipPoint: originPoint.cloneTrot(frame03),
         }
 
         return localPointsMap
@@ -241,8 +239,7 @@ class Linkage {
         )
 
         const pointsMap = LEG_POINT_TYPES.reduce((acc, pointType) => {
-            const point = pointNewTrot(
-                localPointsMap[pointType],
+            const point = localPointsMap[pointType].newTrot(
                 twistFrame,
                 pointNameIdMap[pointType].name,
                 pointNameIdMap[pointType].id

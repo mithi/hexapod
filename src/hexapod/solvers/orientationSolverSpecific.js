@@ -1,9 +1,9 @@
-import { createVector } from "../basicObjects"
 import {
     dot,
     cross,
     vectorFromTo,
     getNormalofThreePoints,
+    Vector,
 } from "../utilities/geometry"
 
 const SOME_LEG_ID_TRIOS = [
@@ -128,7 +128,7 @@ const isLower = (point, normal, height, tol = 0.001) =>
  * is within a triangle defined by p0, p1, p2.
  * */
 const isStable = (p0, p1, p2, tol = 0.001) => {
-    const cog = createVector(0, 0, 0)
+    const cog = new Vector(0, 0, 0)
 
     const u = vectorFromTo(p0, p1)
     const v = vectorFromTo(p0, p2)

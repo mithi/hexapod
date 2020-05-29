@@ -1,27 +1,21 @@
 import Linkage from "./Linkage"
 import * as specificOSolver from "./solvers/orientationSolverSpecific"
-import { createVector, Hexagon } from "./basicObjects"
+import Hexagon from "./basicObjects"
 import { POSITION_LIST } from "./constants"
 import { DEFAULT_POSE, DEFAULT_DIMENSIONS } from "../templates/hexapodParams"
-import {
-    pointNewTrot,
-    pointCloneTrotShift,
-    pointCloneTrot,
-    frameToAlignVectorAtoB,
-    tRotZframe,
-} from "./utilities/geometry"
+import { frameToAlignVectorAtoB, tRotZframe, Vector } from "./utilities/geometry"
 import { identity } from "mathjs"
 
 const WORLD_FRAME = {
-    xAxis: createVector(1, 0, 0, "wXaxis"),
-    yAxis: createVector(0, 1, 0, "wYaxis"),
-    zAxis: createVector(0, 0, 1, "wZaxis"),
+    xAxis: new Vector(1, 0, 0, "worldXaxis"),
+    yAxis: new Vector(0, 1, 0, "worldYaxis"),
+    zAxis: new Vector(0, 0, 1, "worldZaxis"),
 }
 
 const computeLocalFrame = frame => ({
-    xAxis: pointNewTrot(WORLD_FRAME.xAxis, frame, "hexapodXaxis"),
-    yAxis: pointNewTrot(WORLD_FRAME.yAxis, frame, "hexapodYaxis"),
-    zAxis: pointNewTrot(WORLD_FRAME.zAxis, frame, "hexapodZaxis"),
+    xAxis: WORLD_FRAME.xAxis.newTrot(frame, "hexapodXaxis"),
+    yAxis: WORLD_FRAME.yAxis.newTrot(frame, "hexapodYaxis"),
+    zAxis: WORLD_FRAME.zAxis.newTrot(frame, "hexapodZaxis"),
 })
 
 const computeLegsList = (legDimensions, verticesList, pose = DEFAULT_POSE) =>
@@ -167,7 +161,7 @@ class VirtualHexapod {
         this.body = neutralHexagon.cloneTrotShift(frame, 0, 0, height)
         this.localFrame = computeLocalFrame(frame)
         this.groundContactPoints = legsOnGroundWithoutGravity.map(leg =>
-            pointCloneTrotShift(leg.maybeGroundContactPoint, frame, 0, 0, height)
+            leg.maybeGroundContactPoint.cloneTrotShift(frame, 0, 0, height)
         )
 
         if (this.legs.every(leg => leg.pose.alpha === 0)) {
@@ -186,7 +180,7 @@ class VirtualHexapod {
     }
 
     get cogProjection() {
-        return createVector(
+        return new Vector(
             this.body.cog.x,
             this.body.cog.y,
             0,
@@ -213,12 +207,12 @@ class VirtualHexapod {
         this.legs = this.legs.map(leg => leg.cloneTrotShift(twistFrame))
         this.body = this.body.cloneTrotShift(twistFrame)
         this.groundContactPoints = this.groundContactPoints.map(point =>
-            pointCloneTrotShift(point, twistFrame)
+            point.cloneTrot(twistFrame)
         )
         this.localFrame = {
-            xAxis: pointCloneTrot(this.localFrame.xAxis, twistFrame),
-            yAxis: pointCloneTrot(this.localFrame.yAxis, twistFrame),
-            zAxis: pointCloneTrot(this.localFrame.zAxis, twistFrame),
+            xAxis: this.localFrame.xAxis.cloneTrot(twistFrame),
+            yAxis: this.localFrame.yAxis.cloneTrot(twistFrame),
+            zAxis: this.localFrame.zAxis.cloneTrot(twistFrame),
         }
     }
 

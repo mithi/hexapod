@@ -52,9 +52,6 @@ class Vector {
         return this.cloneTrot(referenceFrame).cloneShift(tx, ty, tz)
     }
 }
-const createVector = (x, y, z, name = "no-name-point", id = "no-id-point") => {
-    return new Vector(x, y, z, name, id)
-}
 
 function getSinCos(theta) {
     return [sin(unit(theta, "deg")), cos(unit(theta, "deg"))]
@@ -90,30 +87,18 @@ function tRotZframe(theta, tx = 0, ty = 0, tz = 0) {
     ])
 }
 
-function pointNewTrot(point, referenceFrame, name = "unnamed-point", id = "no-id") {
-    return point.newTrot(referenceFrame, name, id)
-}
-
-function pointCloneTrot(point, referenceFrame) {
-    return point.cloneTrot(referenceFrame)
-}
-
-const pointCloneTrotShift = (point, frame, tx = 0, ty = 0, tz = 0) => {
-    return point.cloneTrotShift(frame, tx, ty, tz)
-}
-
 const cross = (a, b) => {
     const x = a.y * b.z - a.z * b.y
     const y = a.z * b.x - a.x * b.z
     const z = a.x * b.y - a.y * b.x
-    return createVector(x, y, z)
+    return new Vector(x, y, z)
 }
 
 const dot = (a, b) => a.x * b.x + a.y * b.y + a.z * b.z
 
-const vectorFromTo = (a, b) => createVector(b.x - a.x, b.y - a.y, b.z - a.z)
+const vectorFromTo = (a, b) => new Vector(b.x - a.x, b.y - a.y, b.z - a.z)
 
-const scaleVector = (v, d) => createVector(d * v.x, d * v.y, d * v.z)
+const scaleVector = (v, d) => new Vector(d * v.x, d * v.y, d * v.z)
 
 const vectorLength = v => Math.sqrt(dot(v, v))
 
@@ -160,9 +145,6 @@ export {
     tRotXframe,
     tRotYframe,
     tRotZframe,
-    pointNewTrot,
-    pointCloneTrot,
-    pointCloneTrotShift,
     frameToAlignVectorAtoB,
     dot,
     cross,
@@ -171,5 +153,5 @@ export {
     scaleVector,
     vectorFromTo,
     vectorLength,
-    createVector,
+    Vector,
 }
