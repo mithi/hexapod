@@ -59,12 +59,31 @@ const computeLegsList = (legDimensions, verticesList, pose = DEFAULT_POSE) =>
 const simpleTwist = legsOnGroundWithoutGravity => {
     // we twist in the condition that
     // 1. all the legs pose has same alpha
-    // 2. the ground contact is not the coxia point
+    // 2. the ground contact points are either all femurPoints or all footTipPoints
+    //    if all femurPoints on ground, make sure bodyContactPoint.z != femurPoint.z
+    //     (ie  if hexapod body is not on the ground we should not twist)
     const firstAlpha = legsOnGroundWithoutGravity[0].pose.alpha
     const allAlphaTwist = legsOnGroundWithoutGravity.every(leg => {
         const sameAlpha = leg.pose.alpha === firstAlpha
+        if (!sameAlpha) {
+            return false
+        }
+
         const pointType = leg.maybeGroundContactPoint.name.split("-")[1]
-        return sameAlpha && pointType !== "coxiaPoint"
+        if (["bodyContactPoint", "coxiaPoint"].includes(pointType)) {
+            return false
+        }
+        if (pointType === "footTipPoint") {
+            return true
+        }
+
+        // pointType is femurPoint at this point
+        const hexapodBodyPlaneOnGround =
+            leg.pointsMap["bodyContactPoint"].z === leg.pointsMap["femurPoint"].z
+        if (hexapodBodyPlaneOnGround) {
+            return false
+        }
+        return true
     })
 
     return !allAlphaTwist ? 0 : -firstAlpha
@@ -164,7 +183,6 @@ class VirtualHexapod {
     }
 
     _mightLog() {
-        console.log("In might Log")
         if (SHOULD_LOG_HEXAPOD_PROPERTIES) {
             console.log("body", this.body)
             console.log("legs", this.legs)
