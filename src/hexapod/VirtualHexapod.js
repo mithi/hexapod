@@ -130,11 +130,10 @@ class VirtualHexapod {
         // .................
         // STEP 1: Find new orientation of the body (new normal / nAxis).
         // .................
-        const result = oSolver1.computeOrientationProperties(legsNoGravity)
-        const [nAxis, height, groundLegsNoGravity] = result
+        const solved = oSolver1.computeOrientationProperties(legsNoGravity)
 
-        if (nAxis == null) {
-            //unstable pose, or specified
+        if (solved === null) {
+            //unstable pose
             this._rawHexapod(flatHexagon, legsNoGravity)
             return
         }
@@ -142,16 +141,24 @@ class VirtualHexapod {
         // .................
         // STEP 2: Rotate and shift legs and body to this orientation
         // .................
-        const transformMatrix = matrixToAlignVectorAtoB(nAxis, WORLD_AXES.zAxis)
+        const transformMatrix = matrixToAlignVectorAtoB(
+            solved.nAxis,
+            WORLD_AXES.zAxis
+        )
 
         this.legs = legsNoGravity.map(leg =>
-            leg.cloneTrotShift(transformMatrix, 0, 0, height)
+            leg.cloneTrotShift(transformMatrix, 0, 0, solved.height)
         )
-        this.body = flatHexagon.cloneTrotShift(transformMatrix, 0, 0, height)
+        this.body = flatHexagon.cloneTrotShift(transformMatrix, 0, 0, solved.height)
         this.localAxes = computeLocalAxes(transformMatrix)
 
-        this.groundContactPoints = groundLegsNoGravity.map(leg =>
-            leg.maybeGroundContactPoint.cloneTrotShift(transformMatrix, 0, 0, height)
+        this.groundContactPoints = solved.groundLegsNoGravity.map(leg =>
+            leg.maybeGroundContactPoint.cloneTrotShift(
+                transformMatrix,
+                0,
+                0,
+                solved.height
+            )
         )
 
         if (this.legs.every(leg => leg.pose.alpha === 0)) {
@@ -160,7 +167,7 @@ class VirtualHexapod {
         }
 
         // handles the case were all alpha angles uniformly twist
-        this.twistAngle = simpleTwist(groundLegsNoGravity)
+        this.twistAngle = simpleTwist(solved.groundLegsNoGravity)
         this._twist()
         // we'll handle more complex types of list soon...
     }

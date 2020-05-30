@@ -56,7 +56,7 @@ const CASE = {
         legPoses: LEG_POSES,
     },
     result: {
-        normalVector: NORMAL_VECTOR,
+        nAxis: NORMAL_VECTOR,
         height: HEIGHT,
         legsOnGroundPositions: LEGS_ON_GROUND_POSITIONS,
     },

@@ -24,14 +24,14 @@ test.each(CASES)("Should return the correct orientation properties %p", thisCase
                 legPoses[i]
             )
     )
-    const [
-        normalVector,
+    const {
+        nAxis,
         height,
-        legsOnGround,
-    ] = specificOSolver.computeOrientationProperties(legs)
-    expectPointsSameValues(normalVector, thisCase.result.normalVector)
+        groundLegsNoGravity,
+    } = specificOSolver.computeOrientationProperties(legs)
+    expectPointsSameValues(nAxis, thisCase.result.nAxis)
 
     expect(height).toBeCloseTo(thisCase.result.height)
-    const legOnGroundPositions = legsOnGround.map(leg => leg.position)
+    const legOnGroundPositions = groundLegsNoGravity.map(leg => leg.position)
     expect(legOnGroundPositions).toEqual(thisCase.result.legsOnGroundPositions)
 })

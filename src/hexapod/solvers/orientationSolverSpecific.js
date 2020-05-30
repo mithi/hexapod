@@ -48,16 +48,18 @@ const LEG_ID_TRIOS = [...SOME_LEG_ID_TRIOS, ...ADJACENT_LEG_ID_TRIOS]
  *          defined by the foot tips on the ground
  *       3. Which legs are on the ground
  * */
-const computeOrientationProperties = legsWithoutGravity => {
-    const [normal, height] = computePlaneProperties(legsWithoutGravity)
-    const LegsOnGroundWithoutGravity = computeLegsOnGround(
-        legsWithoutGravity,
-        normal,
-        height
+const computeOrientationProperties = legsNoGravity => {
+    const result = computePlaneProperties(legsNoGravity)
+
+    if (result === null) {
+        return null
+    }
+    const groundLegsNoGravity = computeLegsOnGround(
+        legsNoGravity,
+        result.normal,
+        result.height
     )
-    return normal === null
-        ? [null, null, []]
-        : [normal, height, LegsOnGroundWithoutGravity]
+    return { nAxis: result.normal, height: result.height, groundLegsNoGravity }
 }
 
 /* *
@@ -80,11 +82,11 @@ const computePlaneProperties = legs => {
         const otherTrio = [...Array(6).keys()].filter(j => !legTrio.includes(j))
         const otherFootTips = otherTrio.map(j => maybeGroundContactPoints[j])
         if (noOtherLegLower(otherFootTips, normal, height)) {
-            return [normal, height]
+            return { normal, height }
         }
     }
 
-    return [null, null]
+    return null
 }
 
 const computeLegsOnGround = (legs, normal, height, tol = 1) => {
