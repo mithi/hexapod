@@ -1,7 +1,7 @@
 import CASE1 from "./cases/linkage/case1"
 import CASE2 from "./cases/linkage/case2"
 import Linkage from "../hexapod/Linkage"
-import { POSITION_ID_MAP } from "../hexapod/constants"
+import { POSITION_NAME_TO_ID_MAP } from "../hexapod/constants"
 import { expectToBeEqualPoints } from "./helpers"
 const CASES = [CASE1, CASE2]
 
@@ -16,7 +16,7 @@ test.each(CASES)("Should Initialize Linkage: %p", thisCase => {
 
     const { pointsMap, allPointsList } = linkage
 
-    expect(linkage.id).toBe(POSITION_ID_MAP[params.position])
+    expect(linkage.id).toBe(POSITION_NAME_TO_ID_MAP[params.position])
     expect(linkage.name).toBe(params.position + "Leg")
     expect(pointsMap.bodyContactPoint).toBe(allPointsList[0])
     expect(pointsMap.coxiaPoint).toBe(allPointsList[1])

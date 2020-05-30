@@ -1,5 +1,5 @@
 import Linkage from "../hexapod/Linkage"
-import { NUMBER_OF_LEGS, POSITION_LIST } from "../hexapod/constants"
+import { NUMBER_OF_LEGS, POSITION_NAMES_LIST } from "../hexapod/constants"
 import * as specificOSolver from "../hexapod/solvers/orientationSolverSpecific"
 import CASE1 from "./cases/orientationSolverSpecific/case1"
 import CASE2 from "./cases/orientationSolverSpecific/case2"
@@ -19,7 +19,7 @@ test.each(CASES)("Should return the correct orientation properties %p", thisCase
         i =>
             new Linkage(
                 legDimensions,
-                POSITION_LIST[i],
+                POSITION_NAMES_LIST[i],
                 bodyContactPoints[i],
                 legPoses[i]
             )

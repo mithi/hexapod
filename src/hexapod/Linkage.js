@@ -52,7 +52,7 @@
 
   {} this.dimensions: { coxia, femur, tibia }
   {} this.pose: { alpha, beta, gamma }
-  "" this.position: "rightMiddle" from POSITION_LIST or "linkage-position-not-defined"
+  "" this.position: "rightMiddle" from POSITION_NAMES_LIST or "linkage-position-not-defined"
 
   {} this.pointsMap, a map of
       e.g. if position is "rightBack" then the pointMap is
@@ -80,9 +80,9 @@
 import { multiply } from "mathjs"
 import { tRotYmatrix, tRotZmatrix } from "./geometry"
 import {
-    LEG_POINT_TYPES,
-    POSITION_ID_MAP,
-    LOCAL_X_AXIS_ANGLE_MAP,
+    LEG_POINT_TYPES_LIST,
+    POSITION_NAME_TO_ID_MAP,
+    POSITION_NAME_TO_AXIS_ANGLE_MAP,
 } from "./constants"
 import Vector from "./Vector"
 
@@ -106,7 +106,7 @@ class Linkage {
     }
 
     get id() {
-        return POSITION_ID_MAP[this.position]
+        return POSITION_NAME_TO_ID_MAP[this.position]
     }
 
     get name() {
@@ -124,7 +124,7 @@ class Linkage {
     }
 
     get allPointsList() {
-        return LEG_POINT_TYPES.reduce(
+        return LEG_POINT_TYPES_LIST.reduce(
             (acc, pointType) => [...acc, this.pointsMap[pointType]],
             []
         )
@@ -146,7 +146,7 @@ class Linkage {
      * and again be translated by tx, ty, tz
      * */
     cloneTrotShift(transformMatrix, tx = 0, ty = 0, tz = 0) {
-        const pointsMap = LEG_POINT_TYPES.reduce((acc, pointType) => {
+        const pointsMap = LEG_POINT_TYPES_LIST.reduce((acc, pointType) => {
             const oldPoint = this.pointsMap[pointType]
             const newPoint = oldPoint.cloneTrotShift(transformMatrix, tx, ty, tz)
             acc[pointType] = newPoint
@@ -184,7 +184,7 @@ class Linkage {
     })
 
     _buildPointNameIdMap = () =>
-        LEG_POINT_TYPES.reduce((acc, pointType, index) => {
+        LEG_POINT_TYPES_LIST.reduce((acc, pointType, index) => {
             acc[pointType] = this._buildNameId(pointType, index)
             return acc
         }, {})
@@ -230,13 +230,13 @@ class Linkage {
      * */
     _computePointsWrtHexapodCog(localPointsMap, alpha, pointNameIdMap, originPoint) {
         const twistMatrix = tRotZmatrix(
-            LOCAL_X_AXIS_ANGLE_MAP[this.position] + alpha,
+            POSITION_NAME_TO_AXIS_ANGLE_MAP[this.position] + alpha,
             originPoint.x,
             originPoint.y,
             originPoint.z
         )
 
-        const pointsMap = LEG_POINT_TYPES.reduce((acc, pointType) => {
+        const pointsMap = LEG_POINT_TYPES_LIST.reduce((acc, pointType) => {
             const point = localPointsMap[pointType].newTrot(
                 twistMatrix,
                 pointNameIdMap[pointType].name,

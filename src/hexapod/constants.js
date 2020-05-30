@@ -1,11 +1,11 @@
-const LEG_POINT_TYPES = [
+const LEG_POINT_TYPES_LIST = [
     "bodyContactPoint",
     "coxiaPoint",
     "femurPoint",
     "footTipPoint",
 ]
 
-const POSITION_ID_MAP = {
+const POSITION_NAME_TO_ID_MAP = {
     rightMiddle: 0,
     rightFront: 1,
     leftFront: 2,
@@ -14,7 +14,7 @@ const POSITION_ID_MAP = {
     rightBack: 5,
 }
 
-const POSITION_LIST = [
+const POSITION_NAMES_LIST = [
     "rightMiddle",
     "rightFront",
     "leftFront",
@@ -23,7 +23,7 @@ const POSITION_LIST = [
     "rightBack",
 ]
 
-const LOCAL_X_AXIS_ANGLE_MAP = {
+const POSITION_NAME_TO_AXIS_ANGLE_MAP = {
     rightMiddle: 0,
     rightFront: 45,
     leftFront: 135,
@@ -35,9 +35,9 @@ const LOCAL_X_AXIS_ANGLE_MAP = {
 const NUMBER_OF_LEGS = 6
 
 export {
-    LEG_POINT_TYPES,
-    POSITION_ID_MAP,
-    LOCAL_X_AXIS_ANGLE_MAP,
-    POSITION_LIST,
+    LEG_POINT_TYPES_LIST,
+    POSITION_NAME_TO_ID_MAP,
+    POSITION_NAME_TO_AXIS_ANGLE_MAP,
+    POSITION_NAMES_LIST,
     NUMBER_OF_LEGS,
 }

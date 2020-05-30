@@ -2,7 +2,7 @@ import { identity } from "mathjs"
 import Linkage from "./Linkage"
 import * as oSolver1 from "./solvers/orientationSolverSpecific"
 import Hexagon from "./Hexagon"
-import { POSITION_LIST } from "./constants"
+import { POSITION_NAMES_LIST } from "./constants"
 import { matrixToAlignVectorAtoB, tRotZmatrix } from "./geometry"
 import Vector from "./Vector"
 
@@ -144,7 +144,9 @@ class VirtualHexapod {
         // .................
         const transformMatrix = matrixToAlignVectorAtoB(nAxis, WORLD_AXES.zAxis)
 
-        this.legs = legsNoGravity.map(leg => leg.cloneTrotShift(transformMatrix, 0, 0, height))
+        this.legs = legsNoGravity.map(leg =>
+            leg.cloneTrotShift(transformMatrix, 0, 0, height)
+        )
         this.body = flatHexagon.cloneTrotShift(transformMatrix, 0, 0, height)
         this.localAxes = computeLocalAxes(transformMatrix)
 
@@ -191,7 +193,7 @@ class VirtualHexapod {
     }
 
     _computeLegsList = verticesList =>
-        POSITION_LIST.map(
+        POSITION_NAMES_LIST.map(
             (position, index) =>
                 new Linkage(
                     this.legDimensions,
@@ -227,7 +229,9 @@ class VirtualHexapod {
         const transformMatrix = identity(4)
         const height = this.legDimensions.tibia * 2
         this.body = body.cloneTrotShift(transformMatrix, 0, 0, height)
-        this.legs = legs.map(leg => leg.cloneTrotShift(transformMatrix, 0, 0, height))
+        this.legs = legs.map(leg =>
+            leg.cloneTrotShift(transformMatrix, 0, 0, height)
+        )
         this.localAxes = computeLocalAxes(transformMatrix)
         this.groundContactPoints = []
     }

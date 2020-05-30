@@ -41,7 +41,7 @@
  *         x4           x5
  *
  * * */
-import { POSITION_LIST } from "./constants"
+import { POSITION_NAMES_LIST } from "./constants"
 import Vector from "./Vector"
 
 class Hexagon {
@@ -56,7 +56,7 @@ class Hexagon {
         const vertexX = [middle, front, -front, -middle, -front, front]
         const vertexY = [0, side, side, 0, -side, -side]
 
-        this.verticesList = POSITION_LIST.map(
+        this.verticesList = POSITION_NAMES_LIST.map(
             (position, i) =>
                 new Vector(vertexX[i], vertexY[i], 0, `${position}Vertex`, i)
         )
@@ -71,7 +71,7 @@ class Hexagon {
     get vertices() {
         // a hash mapping the position ie(right middle) to the vertex point
         return this.verticesList.reduce(
-            (acc, vertex) => ({ ...acc, [POSITION_LIST[vertex.id]]: vertex }),
+            (acc, vertex) => ({ ...acc, [POSITION_NAMES_LIST[vertex.id]]: vertex }),
             {}
         )
     }

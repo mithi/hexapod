@@ -2,7 +2,7 @@
 // corresponding to those values for the legs in positions
 // ['rightMiddle', 'rightFront', 'leftFront', 'leftMiddle', 'leftBack', 'righBack']
 // and in that order
-import { POSITION_LIST } from "../../../hexapod/constants"
+import { POSITION_NAMES_LIST } from "../../../hexapod/constants"
 
 const LEG_DIMENSIONS = { coxia: 54, femur: 145, tibia: 136 }
 const BODY_CONTACT_POINTS = [
@@ -47,7 +47,7 @@ const NORMAL_VECTOR = { x: -0.14, y: 0.03, z: 0.99 }
 const HEIGHT = 90.0728766827425
 
 // All LEGS
-const LEGS_ON_GROUND_POSITIONS = POSITION_LIST
+const LEGS_ON_GROUND_POSITIONS = POSITION_NAMES_LIST
 
 const CASE = {
     params: {

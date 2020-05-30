@@ -1,10 +1,10 @@
 import { atan2 } from "mathjs"
 import Linkage from "./Linkage"
-import { POSITION_LIST } from "./constants"
+import { POSITION_NAMES_LIST } from "./constants"
 import { POSE } from "../templates/hexapodParams"
 
 const computeLegsList = (legDimensions, verticesList, pose = POSE) =>
-    POSITION_LIST.map(
+    POSITION_NAMES_LIST.map(
         (position, index) =>
             new Linkage(legDimensions, position, verticesList[index], pose[position])
     )

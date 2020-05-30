@@ -1,4 +1,4 @@
-import { POSITION_LIST, NUMBER_OF_LEGS } from "../../../hexapod/constants"
+import { POSITION_NAMES_LIST, NUMBER_OF_LEGS } from "../../../hexapod/constants"
 
 const LEG_DIMENSIONS = { coxia: 73, femur: 122, tibia: 91 }
 
@@ -22,7 +22,7 @@ const NORMAL_VECTOR = { x: 0, y: 0, z: 1 }
 const HEIGHT = 0
 
 // All LEGS
-const LEGS_ON_GROUND_POSITIONS = POSITION_LIST
+const LEGS_ON_GROUND_POSITIONS = POSITION_NAMES_LIST
 
 const CASE = {
     params: {
