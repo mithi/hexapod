@@ -43,6 +43,7 @@
  * * */
 import { POSITION_NAMES_LIST } from "./constants"
 import Vector from "./Vector"
+import { tRotXYZmatrix } from "./geometry"
 
 class Hexagon {
     constructor(dimensions, flags = { hasNoPoints: false }) {
@@ -95,6 +96,25 @@ class Hexagon {
 
     cloneTrot(transformMatrix) {
         return this.cloneTrotShift(transformMatrix, 0, 0, 0)
+    }
+
+    cloneRotXYZshift(thetaX, thetaY, thetaZ, tx, ty, tz) {
+        const transformMatrix = tRotXYZmatrix(thetaX, thetaY, thetaZ)
+        return this.cloneTrotShift(transformMatrix, tx, ty, tz)
+    }
+
+    cloneRotXYZ(thetaX, thetaY, thetaZ) {
+        return this.cloneRotXYZshift(thetaX, thetaY, thetaZ, 0, 0, 0)
+    }
+
+    cloneShift(tx, ty, tz) {
+        let clone = new Hexagon(this.dimensions, { hasNoPoints: true })
+        clone.cog = this.cog.cloneShift(tx, ty, tz)
+        clone.head = this.head.cloneShift(tx, ty, tz)
+        clone.verticesList = this.verticesList.map(point =>
+            point.cloneShift(tx, ty, tz)
+        )
+        return clone
     }
 }
 
