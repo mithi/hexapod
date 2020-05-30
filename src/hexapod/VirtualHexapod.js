@@ -2,7 +2,6 @@ import Linkage from "./Linkage"
 import * as oSolver1 from "./solvers/orientationSolverSpecific"
 import Hexagon from "./Hexagon"
 import { POSITION_LIST } from "./constants"
-import { DEFAULT_POSE, DEFAULT_DIMENSIONS } from "../templates/hexapodParams"
 import { frameToAlignVectorAtoB, tRotZframe } from "./utilities/geometry"
 import Vector from "./Vector"
 
@@ -120,16 +119,17 @@ Property types:
  * * */
 class VirtualHexapod {
     constructor(
-        dimensions = DEFAULT_DIMENSIONS,
-        pose = DEFAULT_POSE,
-        noGravity = false
+        dimensions,
+        pose,
+        flags = { noGravity: false }
     ) {
         this._storeInitialProperties(dimensions, pose)
 
         const flatHexagon = new Hexagon(this.bodyDimensions)
         const legsNoGravity = this._computeLegsList(flatHexagon.verticesList)
 
-        if (noGravity) {
+        console.log(flags.noGravity)
+        if (flags.noGravity) {
             this._rawHexapod(flatHexagon, legsNoGravity)
             return
         }
