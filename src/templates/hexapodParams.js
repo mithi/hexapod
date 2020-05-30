@@ -10,8 +10,12 @@ const DEFAULT_LEG_DIMENSIONS = {
 }
 
 const DEFAULT_DIMENSIONS = {
-    ...DEFAULT_BODY_DIMENSIONS,
-    ...DEFAULT_LEG_DIMENSIONS,
+    front: 100,
+    side: 100,
+    middle: 100,
+    coxia: 100,
+    femur: 100,
+    tibia: 100,
 }
 
 const DEFAULT_POSE = {
