@@ -117,14 +117,14 @@ Property types:
 
  * * */
 class VirtualHexapod {
-    constructor(dimensions, pose, flags = { noGravity: false }) {
+    constructor(dimensions, pose, flags = { noGravity: false, shiftedUp: false }) {
         this._storeInitialProperties(dimensions, pose)
 
         const flatHexagon = new Hexagon(this.bodyDimensions)
         const legsNoGravity = this._computeLegsList(flatHexagon.verticesList)
 
         if (flags.noGravity) {
-            this._rawHexapod(flatHexagon, legsNoGravity)
+            this._danglingHexapod(flatHexagon, legsNoGravity, flags.shiftedUp)
             return
         }
         // .................
@@ -212,8 +212,8 @@ class VirtualHexapod {
 
     _twist() {
         const twistMatrix = tRotZmatrix(this.twistAngle)
-        this.legs = this.legs.map(leg => leg.cloneTrotShift(twistMatrix))
-        this.body = this.body.cloneTrotShift(twistMatrix)
+        this.legs = this.legs.map(leg => leg.cloneTrot(twistMatrix))
+        this.body = this.body.cloneTrot(twistMatrix)
         this.groundContactPoints = this.groundContactPoints.map(point =>
             point.cloneTrot(twistMatrix)
         )
@@ -232,18 +232,25 @@ class VirtualHexapod {
         this.twistAngle = 0
     }
 
-    _rawHexapod(body, legs) {
+
+    _danglingHexapod(body, legs, shiftedUp) {
         const transformMatrix = identity(4)
+        this.localAxes = computeLocalAxes(transformMatrix)
+        this.groundContactPoints = []
+
+        if (!shiftedUp) {
+            [this.body, this.legs] = [body, legs]
+            return
+        }
+
         const height = Object.values(this.legDimensions).reduce(
             (height, dim) => height + dim,
             0
         )
-        this.body = body.cloneTrotShift(transformMatrix, 0, 0, height)
+        this.body = body.cloneTrotShift(identity(4), 0, 0, height)
         this.legs = legs.map(leg =>
-            leg.cloneTrotShift(transformMatrix, 0, 0, height)
+            leg.cloneTrotShift(identity(4), 0, 0, height)
         )
-        this.localAxes = computeLocalAxes(transformMatrix)
-        this.groundContactPoints = []
     }
 
     // getDetachedHexagon
