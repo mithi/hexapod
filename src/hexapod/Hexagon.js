@@ -71,7 +71,10 @@ class Hexagon {
     get vertices() {
         // a hash mapping the position ie(right middle) to the vertex point
         return this.verticesList.reduce(
-            (acc, vertex) => ({ ...acc, [POSITION_NAMES_LIST[vertex.id]]: vertex }),
+            (verticesMap, vertex) => ({
+                ...verticesMap,
+                [POSITION_NAMES_LIST[vertex.id]]: vertex,
+            }),
             {}
         )
     }

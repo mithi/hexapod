@@ -101,8 +101,9 @@ class Linkage {
         if (flags.hasNoPoints) {
             return
         }
-        const pointNameIdMap = this._buildPointNameIdMap()
-        this.pointsMap = this._computePoints(pose, pointNameIdMap, originPoint)
+        // pointsMap maps position to actual point i.e
+        // pointsMap["femurPoint"] = Vector(x, y, z, "rightMiddle-femurPoint", "0-2")
+        this.pointsMap = this._computePoints(pose, originPoint)
     }
 
     get id() {
@@ -114,9 +115,9 @@ class Linkage {
     }
 
     get maybeGroundContactPoint() {
-        const reversedPointList = this.allPointsList.slice().reverse()
-        const testPoint = reversedPointList[0]
-        const maybeGroundContactPoint = reversedPointList.reduce(
+        const reversedList = this.allPointsList.slice().reverse()
+        const testPoint = reversedList[0]
+        const maybeGroundContactPoint = reversedList.reduce(
             (testPoint, point) => (point.z < testPoint.z ? point : testPoint),
             testPoint
         )
@@ -125,7 +126,7 @@ class Linkage {
 
     get allPointsList() {
         return LEG_POINT_TYPES_LIST.reduce(
-            (acc, pointType) => [...acc, this.pointsMap[pointType]],
+            (pointsList, pointType) => [...pointsList, this.pointsMap[pointType]],
             []
         )
     }
@@ -146,11 +147,11 @@ class Linkage {
      * and again be translated by tx, ty, tz
      * */
     cloneTrotShift(transformMatrix, tx = 0, ty = 0, tz = 0) {
-        const pointsMap = LEG_POINT_TYPES_LIST.reduce((acc, pointType) => {
+        const pointsMap = LEG_POINT_TYPES_LIST.reduce((pointsMap, pointType) => {
             const oldPoint = this.pointsMap[pointType]
             const newPoint = oldPoint.cloneTrotShift(transformMatrix, tx, ty, tz)
-            acc[pointType] = newPoint
-            return acc
+            pointsMap[pointType] = newPoint
+            return pointsMap
         }, {})
 
         let clone = new Linkage(
@@ -184,9 +185,9 @@ class Linkage {
     })
 
     _buildPointNameIdMap = () =>
-        LEG_POINT_TYPES_LIST.reduce((acc, pointType, index) => {
-            acc[pointType] = this._buildNameId(pointType, index)
-            return acc
+        LEG_POINT_TYPES_LIST.reduce((PointNameIdMap, pointType, index) => {
+            PointNameIdMap[pointType] = this._buildNameId(pointType, index)
+            return PointNameIdMap
         }, {})
 
     /* *
@@ -228,7 +229,7 @@ class Linkage {
      *   find local points wrt hexapod's center of gravity (0, 0, 0)
      * ................
      * */
-    _computePointsWrtHexapodCog(localPointsMap, alpha, pointNameIdMap, originPoint) {
+    _computePointsWrtHexapodCog(alpha, originPoint, localPointsMap, pointNameIdMap) {
         const twistMatrix = tRotZmatrix(
             POSITION_NAME_TO_AXIS_ANGLE_MAP[this.position] + alpha,
             originPoint.x,
@@ -236,27 +237,36 @@ class Linkage {
             originPoint.z
         )
 
-        const pointsMap = LEG_POINT_TYPES_LIST.reduce((acc, pointType) => {
+        const pointsMap = LEG_POINT_TYPES_LIST.reduce((pointsMap, pointType) => {
             const point = localPointsMap[pointType].newTrot(
                 twistMatrix,
                 pointNameIdMap[pointType].name,
                 pointNameIdMap[pointType].id
             )
-            acc[pointType] = point
-            return acc
+            pointsMap[pointType] = point
+            return pointsMap
         }, {})
 
         return pointsMap
     }
 
-    _computePoints(pose, pointNameIdMap, originPoint) {
+    /* *
+    *  Example of pointsMap: {
+    *     bodyContactPoint: {x, y, z, id: "5-0", name: "rightBack-bodyContactPoint"}
+    *     coxiaPoint: {x, y, z, id: "5-1", name: "rightBack-coxiaPoint"}
+    *     femurPoint: {x, y, z, id: "5-2", name: "rightBack-femurPoint"}
+    *     footTipPoint: {x, y, z, id: "5-3", name: "rightBack-footTipPoint"}
+    * }
+    * */
+    _computePoints(pose, originPoint) {
         const { alpha, beta, gamma } = pose
+        const pointNameIdMap = this._buildPointNameIdMap()
         const localPointsMap = this._computePointsWrtBodyContact(beta, gamma)
         const pointsMap = this._computePointsWrtHexapodCog(
-            localPointsMap,
             alpha,
-            pointNameIdMap,
-            originPoint
+            originPoint,
+            localPointsMap,
+            pointNameIdMap
         )
         return pointsMap
     }
