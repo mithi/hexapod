@@ -47,6 +47,15 @@ function tRotZmatrix(theta, tx = 0, ty = 0, tz = 0) {
     ])
 }
 
+const tRotXYZmatrix = (xTheta, yTheta, zTheta) => {
+    const rx = tRotXmatrix(xTheta)
+    const ry = tRotYmatrix(yTheta)
+    const rz = tRotZmatrix(zTheta)
+    const rxy = multiply(rx, ry)
+    const rxyz = multiply(rxy, rz)
+    return rxyz
+}
+
 const cross = (a, b) => {
     const x = a.y * b.z - a.z * b.y
     const y = a.z * b.x - a.x * b.z
@@ -105,6 +114,7 @@ export {
     tRotXmatrix,
     tRotYmatrix,
     tRotZmatrix,
+    tRotXYZmatrix,
     matrixToAlignVectorAtoB,
     dot,
     cross,
