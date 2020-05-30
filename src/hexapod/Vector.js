@@ -9,14 +9,15 @@ class Vector {
         this.id = id
     }
 
-    newTrot(referenceFrame, name = "unnamed-point", id = "no-id") {
-        // given point `point` location wrt a local frame
-        // find point in a global frame
-        // where the local frame wrt the global frame is defined by
-        // parameter `referenceFrame`
+    newTrot(transformMatrix, name = "unnamed-point", id = "no-id") {
+        // given point `point` location wrt a local axes
+        // coordinate frame
+        // find point in a global axes coordinate frame
+        // where the local axes wrt the global frame is defined by
+        // parameter transformMatrix
         const givenPointVector = transpose([[this.x, this.y, this.z, 1]])
         const resultPointVector = transpose(
-            multiply(referenceFrame, givenPointVector)
+            multiply(transformMatrix, givenPointVector)
         )
         return new Vector(
             resultPointVector.subset(index(0, 0)),
@@ -27,16 +28,16 @@ class Vector {
         )
     }
 
-    cloneTrot(referenceFrame) {
-        return this.newTrot(referenceFrame, this.name, this.id)
+    cloneTrot(transformMatrix) {
+        return this.newTrot(transformMatrix, this.name, this.id)
     }
 
     cloneShift(tx = 0, ty = 0, tz = 0) {
         return new Vector(this.x + tx, this.y + ty, this.z + tz, this.name, this.id)
     }
 
-    cloneTrotShift(referenceFrame, tx, ty, tz) {
-        return this.cloneTrot(referenceFrame).cloneShift(tx, ty, tz)
+    cloneTrotShift(transformMatrix, tx, ty, tz) {
+        return this.cloneTrot(transformMatrix).cloneShift(tx, ty, tz)
     }
 }
 

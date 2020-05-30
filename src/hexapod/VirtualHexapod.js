@@ -1,11 +1,10 @@
+import { identity } from "mathjs"
 import Linkage from "./Linkage"
 import * as oSolver1 from "./solvers/orientationSolverSpecific"
 import Hexagon from "./Hexagon"
 import { POSITION_LIST } from "./constants"
-import { frameToAlignVectorAtoB, tRotZframe } from "./utilities/geometry"
+import { matrixToAlignVectorAtoB, tRotZmatrix } from "./utilities/geometry"
 import Vector from "./Vector"
-
-import { identity } from "mathjs"
 
 const WORLD_AXES = {
     xAxis: new Vector(1, 0, 0, "worldXaxis"),
@@ -13,10 +12,10 @@ const WORLD_AXES = {
     zAxis: new Vector(0, 0, 1, "worldZaxis"),
 }
 
-const computeLocalAxes = frame => ({
-    xAxis: WORLD_AXES.xAxis.newTrot(frame, "hexapodXaxis"),
-    yAxis: WORLD_AXES.yAxis.newTrot(frame, "hexapodYaxis"),
-    zAxis: WORLD_AXES.zAxis.newTrot(frame, "hexapodZaxis"),
+const computeLocalAxes = transformMatrix => ({
+    xAxis: WORLD_AXES.xAxis.newTrot(transformMatrix, "hexapodXaxis"),
+    yAxis: WORLD_AXES.yAxis.newTrot(transformMatrix, "hexapodYaxis"),
+    zAxis: WORLD_AXES.zAxis.newTrot(transformMatrix, "hexapodZaxis"),
 })
 
 const simpleTwist = legsOnGroundWithoutGravity => {
@@ -143,14 +142,14 @@ class VirtualHexapod {
         // .................
         // STEP 2: Rotate and shift legs and body to this orientation
         // .................
-        const frame = frameToAlignVectorAtoB(nAxis, WORLD_AXES.zAxis)
+        const transformMatrix = matrixToAlignVectorAtoB(nAxis, WORLD_AXES.zAxis)
 
-        this.legs = legsNoGravity.map(leg => leg.cloneTrotShift(frame, 0, 0, height))
-        this.body = flatHexagon.cloneTrotShift(frame, 0, 0, height)
-        this.localAxes = computeLocalAxes(frame)
+        this.legs = legsNoGravity.map(leg => leg.cloneTrotShift(transformMatrix, 0, 0, height))
+        this.body = flatHexagon.cloneTrotShift(transformMatrix, 0, 0, height)
+        this.localAxes = computeLocalAxes(transformMatrix)
 
         this.groundContactPoints = groundLegsNoGravity.map(leg =>
-            leg.maybeGroundContactPoint.cloneTrotShift(frame, 0, 0, height)
+            leg.maybeGroundContactPoint.cloneTrotShift(transformMatrix, 0, 0, height)
         )
 
         if (this.legs.every(leg => leg.pose.alpha === 0)) {
@@ -203,18 +202,18 @@ class VirtualHexapod {
         )
 
     _twist() {
-        const twistFrame = tRotZframe(this.twistAngle)
-        this.legs = this.legs.map(leg => leg.cloneTrotShift(twistFrame))
-        this.body = this.body.cloneTrotShift(twistFrame)
+        const twistMatrix = tRotZmatrix(this.twistAngle)
+        this.legs = this.legs.map(leg => leg.cloneTrotShift(twistMatrix))
+        this.body = this.body.cloneTrotShift(twistMatrix)
         this.groundContactPoints = this.groundContactPoints.map(point =>
-            point.cloneTrot(twistFrame)
+            point.cloneTrot(twistMatrix)
         )
 
         const { xAxis, yAxis, zAxis } = this.localAxes
         this.localAxes = {
-            xAxis: xAxis.cloneTrot(twistFrame),
-            yAxis: yAxis.cloneTrot(twistFrame),
-            zAxis: zAxis.cloneTrot(twistFrame),
+            xAxis: xAxis.cloneTrot(twistMatrix),
+            yAxis: yAxis.cloneTrot(twistMatrix),
+            zAxis: zAxis.cloneTrot(twistMatrix),
         }
     }
 
@@ -225,11 +224,11 @@ class VirtualHexapod {
     }
 
     _rawHexapod(body, legs) {
-        const frame = identity(4)
+        const transformMatrix = identity(4)
         const height = this.legDimensions.tibia * 2
-        this.body = body.cloneTrotShift(frame, 0, 0, height)
-        this.legs = legs.map(leg => leg.cloneTrotShift(frame, 0, 0, height))
-        this.localAxes = computeLocalAxes(frame)
+        this.body = body.cloneTrotShift(transformMatrix, 0, 0, height)
+        this.legs = legs.map(leg => leg.cloneTrotShift(transformMatrix, 0, 0, height))
+        this.localAxes = computeLocalAxes(transformMatrix)
         this.groundContactPoints = []
     }
 

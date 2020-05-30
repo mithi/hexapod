@@ -78,7 +78,7 @@
 
   * * * * */
 import { multiply } from "mathjs"
-import { tRotYframe, tRotZframe } from "./utilities/geometry"
+import { tRotYmatrix, tRotZmatrix } from "./utilities/geometry"
 import {
     LEG_POINT_TYPES,
     POSITION_ID_MAP,
@@ -135,20 +135,20 @@ class Linkage {
      * .............
      *
      * params type:
-     *   frame:  4x4 matrix
+     *   matrix:  4x4 matrix
      *   tx, ty, tz: numbers
      *
      * Return a copy of the leg with the same properties
      * except all the points are rotated and shifted
-     * given the reference frame (4x4 matrix) and tx, ty, tz
-     * Note: The reference frame can translate the leg
+     * given the transformation matrix (4x4 matrix) and tx, ty, tz
+     * Note: The transformation matrix can translate the leg
      * if the last column of of the matrix have non-zero elements
      * and again be translated by tx, ty, tz
      * */
-    cloneTrotShift(frame, tx = 0, ty = 0, tz = 0) {
+    cloneTrotShift(transformMatrix, tx = 0, ty = 0, tz = 0) {
         const pointsMap = LEG_POINT_TYPES.reduce((acc, pointType) => {
             const oldPoint = this.pointsMap[pointType]
-            const newPoint = oldPoint.cloneTrotShift(frame, tx, ty, tz)
+            const newPoint = oldPoint.cloneTrotShift(transformMatrix, tx, ty, tz)
             acc[pointType] = newPoint
             return acc
         }, {})
@@ -195,25 +195,28 @@ class Linkage {
      *   find points wrt body contact point
      * ................
      * NOTE:
-     * frame_ab is the pose of frame_b wrt frame_a
-     * where pa is the origin of frame_a
-     * and pb is the origin of frame_b wrt pa
+     * matrix_ab is the matrix which defines the
+     * pose of that coordinate system defined by
+     * matrix_b wrt the coordinate system defined by matrix_a
+     * matrix_ab is the pose of matrix_b wrt matrix_a
+     * where pa is the origin of matrix_a
+     * and pb is the origin of matrix_b wrt pa
      *
      * */
     _computePointsWrtBodyContact(beta, gamma) {
-        const frame01 = tRotYframe(-beta, this.dimensions.coxia, 0, 0)
-        const frame12 = tRotYframe(90 - gamma, this.dimensions.femur, 0, 0)
-        const frame23 = tRotYframe(0, this.dimensions.tibia, 0, 0)
-        const frame02 = multiply(frame01, frame12)
-        const frame03 = multiply(frame02, frame23)
+        const matrix01 = tRotYmatrix(-beta, this.dimensions.coxia, 0, 0)
+        const matrix12 = tRotYmatrix(90 - gamma, this.dimensions.femur, 0, 0)
+        const matrix23 = tRotYmatrix(0, this.dimensions.tibia, 0, 0)
+        const matrix02 = multiply(matrix01, matrix12)
+        const matrix03 = multiply(matrix02, matrix23)
 
         const originPoint = new Vector(0, 0, 0)
 
         const localPointsMap = {
             bodyContactPoint: originPoint,
-            coxiaPoint: originPoint.cloneTrot(frame01),
-            femurPoint: originPoint.cloneTrot(frame02),
-            footTipPoint: originPoint.cloneTrot(frame03),
+            coxiaPoint: originPoint.cloneTrot(matrix01),
+            femurPoint: originPoint.cloneTrot(matrix02),
+            footTipPoint: originPoint.cloneTrot(matrix03),
         }
 
         return localPointsMap
@@ -226,7 +229,7 @@ class Linkage {
      * ................
      * */
     _computePointsWrtHexapodCog(localPointsMap, alpha, pointNameIdMap, originPoint) {
-        const twistFrame = tRotZframe(
+        const twistMatrix = tRotZmatrix(
             LOCAL_X_AXIS_ANGLE_MAP[this.position] + alpha,
             originPoint.x,
             originPoint.y,
@@ -235,7 +238,7 @@ class Linkage {
 
         const pointsMap = LEG_POINT_TYPES.reduce((acc, pointType) => {
             const point = localPointsMap[pointType].newTrot(
-                twistFrame,
+                twistMatrix,
                 pointNameIdMap[pointType].name,
                 pointNameIdMap[pointType].id
             )

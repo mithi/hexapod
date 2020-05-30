@@ -17,7 +17,7 @@ function getSinCos(theta) {
     return [sin(unit(theta, "deg")), cos(unit(theta, "deg"))]
 }
 
-function tRotXframe(theta, tx = 0, ty = 0, tz = 0) {
+function tRotXmatrix(theta, tx = 0, ty = 0, tz = 0) {
     const [s, c] = getSinCos(theta)
     return matrix([
         [1, 0, 0, tx],
@@ -27,7 +27,7 @@ function tRotXframe(theta, tx = 0, ty = 0, tz = 0) {
     ])
 }
 
-function tRotYframe(theta, tx = 0, ty = 0, tz = 0) {
+function tRotYmatrix(theta, tx = 0, ty = 0, tz = 0) {
     const [s, c] = getSinCos(theta)
     return matrix([
         [c, 0, s, tx],
@@ -37,7 +37,7 @@ function tRotYframe(theta, tx = 0, ty = 0, tz = 0) {
     ])
 }
 
-function tRotZframe(theta, tx = 0, ty = 0, tz = 0) {
+function tRotZmatrix(theta, tx = 0, ty = 0, tz = 0) {
     const [s, c] = getSinCos(theta)
     return matrix([
         [c, -s, 0, tx],
@@ -81,7 +81,7 @@ const skew = p =>
 
 // https://math.stackexchange.com/questions/180418/
 // calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d
-const frameToAlignVectorAtoB = (a, b) => {
+const matrixToAlignVectorAtoB = (a, b) => {
     const v = cross(a, b)
     const s = vectorLength(v)
     // When angle between a and b is zero or 180 degrees
@@ -97,15 +97,15 @@ const frameToAlignVectorAtoB = (a, b) => {
     const dvx2 = dotMultiply(vx2, multiply(ones(3, 3), d))
     const r = add(add(identity(3), vx), dvx2)
     const r_ = concat(r, [[0, 0, 0]], 0)
-    const frame = concat(r_, transpose([[0, 0, 0, 1]]), 1)
-    return frame
+    const transformMatrix = concat(r_, transpose([[0, 0, 0, 1]]), 1)
+    return transformMatrix
 }
 
 export {
-    tRotXframe,
-    tRotYframe,
-    tRotZframe,
-    frameToAlignVectorAtoB,
+    tRotXmatrix,
+    tRotYmatrix,
+    tRotZmatrix,
+    matrixToAlignVectorAtoB,
     dot,
     cross,
     skew,

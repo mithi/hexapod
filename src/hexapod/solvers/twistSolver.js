@@ -27,7 +27,7 @@ const mightTwist = legsOnGround => {
     return didTwistCount >= 3
 }
 
-const computeTwistFrame = (oldGroundContactPoints, newGroundContactPoints) => {
+const computeTwistAngle = (oldGroundContactPoints, newGroundContactPoints) => {
     // Because we are ALWAYS starting at a pose where
     // all alphas are zero and ground contacts are foot tips,
     // let's find atleast one point that are the same before and after
@@ -70,7 +70,7 @@ const complexTwist = (legsOnGroundWithoutGravity, verticesList) => {
         verticesList
     )
 
-    return computeTwistFrame(oldGroundContactPoints, newGroundContactPoints)
+    return computeTwistAngle(oldGroundContactPoints, newGroundContactPoints)
 }
 
 export { complexTwist, mightTwist }
