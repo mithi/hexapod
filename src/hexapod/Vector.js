@@ -15,14 +15,12 @@ class Vector {
         // find point in a global axes coordinate frame
         // where the local axes wrt the global frame is defined by
         // parameter transformMatrix
-        const givenPointVector = transpose([[this.x, this.y, this.z, 1]])
-        const resultPointVector = transpose(
-            multiply(transformMatrix, givenPointVector)
-        )
+        const givenPointColumn = transpose([[this.x, this.y, this.z, 1]])
+        const resultPointColumn = multiply(transformMatrix, givenPointColumn)
         return new Vector(
-            resultPointVector.subset(index(0, 0)),
-            resultPointVector.subset(index(0, 1)),
-            resultPointVector.subset(index(0, 2)),
+            resultPointColumn.subset(index(0, 0)),
+            resultPointColumn.subset(index(1, 0)),
+            resultPointColumn.subset(index(2, 0)),
             name,
             id
         )

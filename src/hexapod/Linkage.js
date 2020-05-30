@@ -251,13 +251,13 @@ class Linkage {
     }
 
     /* *
-    *  Example of pointsMap: {
-    *     bodyContactPoint: {x, y, z, id: "5-0", name: "rightBack-bodyContactPoint"}
-    *     coxiaPoint: {x, y, z, id: "5-1", name: "rightBack-coxiaPoint"}
-    *     femurPoint: {x, y, z, id: "5-2", name: "rightBack-femurPoint"}
-    *     footTipPoint: {x, y, z, id: "5-3", name: "rightBack-footTipPoint"}
-    * }
-    * */
+     *  Example of pointsMap: {
+     *     bodyContactPoint: {x, y, z, id: "5-0", name: "rightBack-bodyContactPoint"}
+     *     coxiaPoint: {x, y, z, id: "5-1", name: "rightBack-coxiaPoint"}
+     *     femurPoint: {x, y, z, id: "5-2", name: "rightBack-femurPoint"}
+     *     footTipPoint: {x, y, z, id: "5-3", name: "rightBack-footTipPoint"}
+     * }
+     * */
     _computePoints(pose, originPoint) {
         const { alpha, beta, gamma } = pose
         const pointNameIdMap = this._buildPointNameIdMap()

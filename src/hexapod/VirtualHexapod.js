@@ -227,7 +227,10 @@ class VirtualHexapod {
 
     _rawHexapod(body, legs) {
         const transformMatrix = identity(4)
-        const height = this.legDimensions.tibia * 2
+        const height = Object.values(this.legDimensions).reduce(
+            (height, dim) => height + dim,
+            0
+        )
         this.body = body.cloneTrotShift(transformMatrix, 0, 0, height)
         this.legs = legs.map(leg =>
             leg.cloneTrotShift(transformMatrix, 0, 0, height)
