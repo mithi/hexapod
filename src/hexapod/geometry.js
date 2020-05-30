@@ -11,7 +11,7 @@ import {
     ones,
     add,
 } from "mathjs"
-import Vector from "../Vector"
+import Vector from "./Vector"
 
 function getSinCos(theta) {
     return [sin(unit(theta, "deg")), cos(unit(theta, "deg"))]

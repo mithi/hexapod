@@ -3,7 +3,7 @@ import Linkage from "./Linkage"
 import * as oSolver1 from "./solvers/orientationSolverSpecific"
 import Hexagon from "./Hexagon"
 import { POSITION_LIST } from "./constants"
-import { matrixToAlignVectorAtoB, tRotZmatrix } from "./utilities/geometry"
+import { matrixToAlignVectorAtoB, tRotZmatrix } from "./geometry"
 import Vector from "./Vector"
 
 const WORLD_AXES = {

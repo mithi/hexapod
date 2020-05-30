@@ -78,7 +78,7 @@
 
   * * * * */
 import { multiply } from "mathjs"
-import { tRotYmatrix, tRotZmatrix } from "./utilities/geometry"
+import { tRotYmatrix, tRotZmatrix } from "./geometry"
 import {
     LEG_POINT_TYPES,
     POSITION_ID_MAP,

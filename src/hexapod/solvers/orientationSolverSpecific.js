@@ -4,7 +4,7 @@ import {
     vectorFromTo,
     getNormalofThreePoints,
     Vector,
-} from "../utilities/geometry"
+} from "../geometry"
 
 const SOME_LEG_ID_TRIOS = [
     [0, 1, 3],
