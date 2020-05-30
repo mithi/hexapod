@@ -146,7 +146,7 @@ class Linkage {
      * if the last column of of the matrix have non-zero elements
      * and again be translated by tx, ty, tz
      * */
-    cloneTrotShift(transformMatrix, tx = 0, ty = 0, tz = 0) {
+    cloneTrotShift(transformMatrix, tx, ty, tz) {
         const pointsMap = LEG_POINT_TYPES_LIST.reduce((pointsMap, pointType) => {
             const oldPoint = this.pointsMap[pointType]
             const newPoint = oldPoint.cloneTrotShift(transformMatrix, tx, ty, tz)
@@ -165,6 +165,10 @@ class Linkage {
         // override pointsMap of clone
         clone.pointsMap = pointsMap
         return clone
+    }
+
+    cloneTrot(transformMatrix) {
+        return this.cloneTrotShift(transformMatrix, 0, 0, 0)
     }
     /* *
      * .............

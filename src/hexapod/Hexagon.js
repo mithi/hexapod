@@ -83,7 +83,7 @@ class Hexagon {
         return [...this.verticesList, this.cog, this.head]
     }
 
-    cloneTrotShift(transformMatrix, tx = 0, ty = 0, tz = 0) {
+    cloneTrotShift(transformMatrix, tx, ty, tz) {
         let clone = new Hexagon(this.dimensions, { hasNoPoints: true })
         clone.cog = this.cog.cloneTrotShift(transformMatrix, tx, ty, tz)
         clone.head = this.head.cloneTrotShift(transformMatrix, tx, ty, tz)
@@ -91,6 +91,10 @@ class Hexagon {
             point.cloneTrotShift(transformMatrix, tx, ty, tz)
         )
         return clone
+    }
+
+    cloneTrot(transformMatrix) {
+        return this.cloneTrotShift(transformMatrix, 0, 0, 0)
     }
 }
 
