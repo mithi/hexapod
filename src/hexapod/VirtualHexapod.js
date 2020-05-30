@@ -7,16 +7,16 @@ import Vector from "./Vector"
 
 import { identity } from "mathjs"
 
-const WORLD_FRAME = {
+const WORLD_AXES = {
     xAxis: new Vector(1, 0, 0, "worldXaxis"),
     yAxis: new Vector(0, 1, 0, "worldYaxis"),
     zAxis: new Vector(0, 0, 1, "worldZaxis"),
 }
 
-const computeLocalFrame = frame => ({
-    xAxis: WORLD_FRAME.xAxis.newTrot(frame, "hexapodXaxis"),
-    yAxis: WORLD_FRAME.yAxis.newTrot(frame, "hexapodYaxis"),
-    zAxis: WORLD_FRAME.zAxis.newTrot(frame, "hexapodZaxis"),
+const computeLocalAxes = frame => ({
+    xAxis: WORLD_AXES.xAxis.newTrot(frame, "hexapodXaxis"),
+    yAxis: WORLD_AXES.yAxis.newTrot(frame, "hexapodYaxis"),
+    zAxis: WORLD_AXES.zAxis.newTrot(frame, "hexapodZaxis"),
 })
 
 const simpleTwist = legsOnGroundWithoutGravity => {
@@ -82,7 +82,7 @@ Property types:
     as well as other properties pertaining it (see Linkage class)
 
 
-{} this.localFrame: A hash containing three vectors defining the local
+{} this.localAxes: A hash containing three vectors defining the local
     coordinate frame of the hexapod wrt the world coordinate frame
     i.e. {
         xAxis: {x, y, z, name="hexapodXaxis", id="no-id"},
@@ -124,7 +124,6 @@ class VirtualHexapod {
         const flatHexagon = new Hexagon(this.bodyDimensions)
         const legsNoGravity = this._computeLegsList(flatHexagon.verticesList)
 
-        console.log(flags.noGravity)
         if (flags.noGravity) {
             this._rawHexapod(flatHexagon, legsNoGravity)
             return
@@ -144,11 +143,11 @@ class VirtualHexapod {
         // .................
         // STEP 2: Rotate and shift legs and body to this orientation
         // .................
-        const frame = frameToAlignVectorAtoB(nAxis, WORLD_FRAME.zAxis)
+        const frame = frameToAlignVectorAtoB(nAxis, WORLD_AXES.zAxis)
 
         this.legs = legsNoGravity.map(leg => leg.cloneTrotShift(frame, 0, 0, height))
         this.body = flatHexagon.cloneTrotShift(frame, 0, 0, height)
-        this.localFrame = computeLocalFrame(frame)
+        this.localAxes = computeLocalAxes(frame)
 
         this.groundContactPoints = groundLegsNoGravity.map(leg =>
             leg.maybeGroundContactPoint.cloneTrotShift(frame, 0, 0, height)
@@ -211,8 +210,8 @@ class VirtualHexapod {
             point.cloneTrot(twistFrame)
         )
 
-        const { xAxis, yAxis, zAxis } = this.localFrame
-        this.localFrame = {
+        const { xAxis, yAxis, zAxis } = this.localAxes
+        this.localAxes = {
             xAxis: xAxis.cloneTrot(twistFrame),
             yAxis: yAxis.cloneTrot(twistFrame),
             zAxis: zAxis.cloneTrot(twistFrame),
@@ -230,7 +229,7 @@ class VirtualHexapod {
         const height = this.legDimensions.tibia * 2
         this.body = body.cloneTrotShift(frame, 0, 0, height)
         this.legs = legs.map(leg => leg.cloneTrotShift(frame, 0, 0, height))
-        this.localFrame = computeLocalFrame(frame)
+        this.localAxes = computeLocalAxes(frame)
         this.groundContactPoints = []
     }
 

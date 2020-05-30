@@ -12,7 +12,7 @@
         {alpha: 19, beta: 98, gamma: -21}
       b: all femur point on ground, but coxia point also on ground
         { alpha: -45, beta: 0, gamma: 162 }
-    3. all alpha == 0 will NOT twist on all cases
+    3. all alpha == 0 will NOT twist on ALL cases
 
     All alphas are the same when using the patterns page, we need a separate test suite
     for the kinematics and inverse kinematics page, where each leg angles can be set individualy
@@ -38,11 +38,8 @@ test.each(CASES)("Should twist or not twist hexapod appropriately: %p", thisCase
     virtualHexapod.groundContactPoints.forEach((point, index) =>
         expectToBeEqualPoints(point, result.groundContactPointsList[index])
     )
-    Object.keys(virtualHexapod.localFrame).forEach(axis =>
-        expectToBeEqualPoints(
-            virtualHexapod.localFrame[axis],
-            result.localFrame[axis]
-        )
+    Object.keys(virtualHexapod.localAxes).forEach(axis =>
+        expectToBeEqualPoints(virtualHexapod.localAxes[axis], result.localAxes[axis])
     )
 
     expect(virtualHexapod.twistedAngle).toBe(result.twistedAngle)

@@ -61,7 +61,7 @@ const _drawHexapod = hexapod => {
     }
 
     const axisScale = hexapod.body.dimensions.front / 2
-    const { xAxis, yAxis, zAxis } = hexapod.localFrame
+    const { xAxis, yAxis, zAxis } = hexapod.localAxes
     const hXaxis = {
         ...DATA[12],
         x: [cog.x, cog.x + axisScale * xAxis.x],
