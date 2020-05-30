@@ -1,5 +1,5 @@
 import Linkage from "./Linkage"
-import * as specificOSolver from "./solvers/orientationSolverSpecific"
+import * as oSolver1 from "./solvers/orientationSolverSpecific"
 import Hexagon from "./Hexagon"
 import { POSITION_LIST } from "./constants"
 import { DEFAULT_POSE, DEFAULT_DIMENSIONS } from "../templates/hexapodParams"
@@ -19,12 +19,6 @@ const computeLocalFrame = frame => ({
     yAxis: WORLD_FRAME.yAxis.newTrot(frame, "hexapodYaxis"),
     zAxis: WORLD_FRAME.zAxis.newTrot(frame, "hexapodZaxis"),
 })
-
-const computeLegsList = (legDimensions, verticesList, pose = DEFAULT_POSE) =>
-    POSITION_LIST.map(
-        (position, index) =>
-            new Linkage(legDimensions, position, verticesList[index], pose[position])
-    )
 
 const simpleTwist = legsOnGroundWithoutGravity => {
     // we twist in the condition that
@@ -126,28 +120,19 @@ Property types:
  * * */
 class VirtualHexapod {
     constructor(dimensions = DEFAULT_DIMENSIONS, pose = DEFAULT_POSE) {
-        // IMPORTANT: why is moving sum of dimensions to a helper messing thing up?
         this._storeInitialProperties(dimensions, pose)
 
-        const neutralHexagon = new Hexagon(this.bodyDimensions)
-        const legsWithoutGravity = computeLegsList(
-            this.legDimensions,
-            neutralHexagon.verticesList,
-            pose
-        )
+        const flatHexagon = new Hexagon(this.bodyDimensions)
+        const legsNoGravity = this._computeLegsList(flatHexagon.verticesList)
 
         // .................
         // STEP 1: Find new orientation of the body (new normal / nAxis).
         // .................
-        const [
-            nAxis,
-            height,
-            legsOnGroundWithoutGravity,
-        ] = specificOSolver.computeOrientationProperties(legsWithoutGravity)
+        const result = oSolver1.computeOrientationProperties(legsNoGravity)
+        const [nAxis, height, groundLegsNoGravity] = result
 
-        if (nAxis == null || isNaN(nAxis.x) || isNaN(nAxis.y) || isNaN(nAxis.z)) {
-            console.log("unstable pose")
-            this._rawHexapod(neutralHexagon, legsWithoutGravity)
+        if (nAxis == null) {
+            this._rawHexapod(flatHexagon, legsNoGravity) //unstable pose
             return
         }
 
@@ -156,13 +141,11 @@ class VirtualHexapod {
         // .................
         const frame = frameToAlignVectorAtoB(nAxis, WORLD_FRAME.zAxis)
 
-        this.legs = legsWithoutGravity.map(leg =>
-            leg.cloneTrotShift(frame, 0, 0, height)
-        )
-
-        this.body = neutralHexagon.cloneTrotShift(frame, 0, 0, height)
+        this.legs = legsNoGravity.map(leg => leg.cloneTrotShift(frame, 0, 0, height))
+        this.body = flatHexagon.cloneTrotShift(frame, 0, 0, height)
         this.localFrame = computeLocalFrame(frame)
-        this.groundContactPoints = legsOnGroundWithoutGravity.map(leg =>
+
+        this.groundContactPoints = groundLegsNoGravity.map(leg =>
             leg.maybeGroundContactPoint.cloneTrotShift(frame, 0, 0, height)
         )
 
@@ -172,7 +155,7 @@ class VirtualHexapod {
         }
 
         // handles the case were all alpha angles uniformly twist
-        this.twistAngle = simpleTwist(legsOnGroundWithoutGravity)
+        this.twistAngle = simpleTwist(groundLegsNoGravity)
         this._twist()
         // we'll handle more complex types of list soon...
     }
@@ -204,6 +187,17 @@ class VirtualHexapod {
         return { coxia, femur, tibia }
     }
 
+    _computeLegsList = verticesList =>
+        POSITION_LIST.map(
+            (position, index) =>
+                new Linkage(
+                    this.legDimensions,
+                    position,
+                    verticesList[index],
+                    this.pose[position]
+                )
+        )
+
     _twist() {
         const twistFrame = tRotZframe(this.twistAngle)
         this.legs = this.legs.map(leg => leg.cloneTrotShift(twistFrame))
@@ -211,10 +205,12 @@ class VirtualHexapod {
         this.groundContactPoints = this.groundContactPoints.map(point =>
             point.cloneTrot(twistFrame)
         )
+
+        const { xAxis, yAxis, zAxis } = this.localFrame
         this.localFrame = {
-            xAxis: this.localFrame.xAxis.cloneTrot(twistFrame),
-            yAxis: this.localFrame.yAxis.cloneTrot(twistFrame),
-            zAxis: this.localFrame.zAxis.cloneTrot(twistFrame),
+            xAxis: xAxis.cloneTrot(twistFrame),
+            yAxis: yAxis.cloneTrot(twistFrame),
+            zAxis: zAxis.cloneTrot(twistFrame),
         }
     }
 
