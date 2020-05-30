@@ -45,8 +45,11 @@ import { POSITION_LIST } from "./constants"
 import Vector from "./Vector"
 
 class Hexagon {
-    constructor(dimensions) {
+    constructor(dimensions, flags = { hasNoPoints: false }) {
         this.dimensions = dimensions
+
+        if (flags.hasNoPoints) { return }
+
         const { front, middle, side } = this.dimensions
         const vertexX = [middle, front, -front, -middle, -front, front]
         const vertexY = [0, side, side, 0, -side, -side]
@@ -76,7 +79,7 @@ class Hexagon {
     }
 
     cloneTrotShift(frame, tx = 0, ty = 0, tz = 0) {
-        let clone = new Hexagon(this.dimensions)
+        let clone = new Hexagon(this.dimensions, { hasNoPoints: true })
         clone.cog = this.cog.cloneTrotShift(frame, tx, ty, tz)
         clone.head = this.head.cloneTrotShift(frame, tx, ty, tz)
         clone.verticesList = this.verticesList.map(point =>

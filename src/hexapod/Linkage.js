@@ -88,14 +88,17 @@ import Vector from "./Vector"
 
 class Linkage {
     constructor(
-        dimensions = { coxia: 100, femur: 100, tibia: 100 },
-        position = "linkage-position-not-defined",
+        dimensions,
+        position,
         originPoint = { x: 0, y: 0, z: 0 },
-        pose = { alpha: 0, beta: 0, gamma: 0 }
+        pose = { alpha: 0, beta: 0, gamma: 0 },
+        flags = { hasNoPoints: false }
     ) {
         this.dimensions = dimensions
         this.pose = pose
         this.position = position
+
+        if (flags.hasNoPoints) { return }
         const pointNameIdMap = this._buildPointNameIdMap()
         this.pointsMap = this._computePoints(pose, pointNameIdMap, originPoint)
     }
@@ -152,7 +155,8 @@ class Linkage {
             this.dimensions,
             this.position,
             this.bodyContactPoint,
-            this.pose
+            this.pose,
+            { hasNoPoints: true }
         )
 
         // override pointsMap of clone
