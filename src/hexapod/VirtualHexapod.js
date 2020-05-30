@@ -119,12 +119,20 @@ Property types:
 
  * * */
 class VirtualHexapod {
-    constructor(dimensions = DEFAULT_DIMENSIONS, pose = DEFAULT_POSE) {
+    constructor(
+        dimensions = DEFAULT_DIMENSIONS,
+        pose = DEFAULT_POSE,
+        noGravity = false
+    ) {
         this._storeInitialProperties(dimensions, pose)
 
         const flatHexagon = new Hexagon(this.bodyDimensions)
         const legsNoGravity = this._computeLegsList(flatHexagon.verticesList)
 
+        if (noGravity) {
+            this._rawHexapod(flatHexagon, legsNoGravity)
+            return
+        }
         // .................
         // STEP 1: Find new orientation of the body (new normal / nAxis).
         // .................
@@ -132,7 +140,8 @@ class VirtualHexapod {
         const [nAxis, height, groundLegsNoGravity] = result
 
         if (nAxis == null) {
-            this._rawHexapod(flatHexagon, legsNoGravity) //unstable pose
+            //unstable pose, or specified
+            this._rawHexapod(flatHexagon, legsNoGravity)
             return
         }
 
@@ -221,9 +230,11 @@ class VirtualHexapod {
     }
 
     _rawHexapod(body, legs) {
-        this.body = body
-        this.legs = legs
-        this.localFrame = computeLocalFrame(identity(4))
+        const frame = identity(4)
+        const height = this.legDimensions.tibia * 2
+        this.body = body.cloneTrotShift(frame, 0, 0, height)
+        this.legs = legs.map(leg => leg.cloneTrotShift(frame, 0, 0, height))
+        this.localFrame = computeLocalFrame(frame)
         this.groundContactPoints = []
     }
 
