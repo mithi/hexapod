@@ -134,7 +134,7 @@ class VirtualHexapod {
 
         if (solved === null) {
             //unstable pose
-            this._rawHexapod(flatHexagon, legsNoGravity)
+            this._danglingHexapod(flatHexagon, legsNoGravity, flags.shiftedUp)
             return
         }
 
@@ -232,14 +232,13 @@ class VirtualHexapod {
         this.twistAngle = 0
     }
 
-
     _danglingHexapod(body, legs, shiftedUp) {
         const transformMatrix = identity(4)
         this.localAxes = computeLocalAxes(transformMatrix)
         this.groundContactPoints = []
 
         if (!shiftedUp) {
-            [this.body, this.legs] = [body, legs]
+            ;[this.body, this.legs] = [body, legs]
             return
         }
 
@@ -248,9 +247,7 @@ class VirtualHexapod {
             0
         )
         this.body = body.cloneTrotShift(identity(4), 0, 0, height)
-        this.legs = legs.map(leg =>
-            leg.cloneTrotShift(identity(4), 0, 0, height)
-        )
+        this.legs = legs.map(leg => leg.cloneTrotShift(identity(4), 0, 0, height))
     }
 
     // getDetachedHexagon
