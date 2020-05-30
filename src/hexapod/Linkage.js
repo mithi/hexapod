@@ -98,7 +98,9 @@ class Linkage {
         this.pose = pose
         this.position = position
 
-        if (flags.hasNoPoints) { return }
+        if (flags.hasNoPoints) {
+            return
+        }
         const pointNameIdMap = this._buildPointNameIdMap()
         this.pointsMap = this._computePoints(pose, pointNameIdMap, originPoint)
     }

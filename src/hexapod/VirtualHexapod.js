@@ -118,11 +118,7 @@ Property types:
 
  * * */
 class VirtualHexapod {
-    constructor(
-        dimensions,
-        pose,
-        flags = { noGravity: false }
-    ) {
+    constructor(dimensions, pose, flags = { noGravity: false }) {
         this._storeInitialProperties(dimensions, pose)
 
         const flatHexagon = new Hexagon(this.bodyDimensions)

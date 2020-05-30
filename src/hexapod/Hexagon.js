@@ -48,7 +48,9 @@ class Hexagon {
     constructor(dimensions, flags = { hasNoPoints: false }) {
         this.dimensions = dimensions
 
-        if (flags.hasNoPoints) { return }
+        if (flags.hasNoPoints) {
+            return
+        }
 
         const { front, middle, side } = this.dimensions
         const vertexX = [middle, front, -front, -middle, -front, front]
