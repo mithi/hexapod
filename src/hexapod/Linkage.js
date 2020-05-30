@@ -90,23 +90,14 @@ class Linkage {
     constructor(
         dimensions = { coxia: 100, femur: 100, tibia: 100 },
         position = "linkage-position-not-defined",
-        bodyContactPoint = { x: 0, y: 0, z: 0 },
+        originPoint = { x: 0, y: 0, z: 0 },
         pose = { alpha: 0, beta: 0, gamma: 0 }
     ) {
         this.dimensions = dimensions
         this.pose = pose
         this.position = position
         const pointNameIdMap = this._buildPointNameIdMap()
-        const givenBodyContactPoint = {
-            ...bodyContactPoint,
-            name: pointNameIdMap.bodyContactPoint.name,
-            id: pointNameIdMap.bodyContactPoint.id,
-        }
-        this.pointsMap = this._computePoints(
-            pose,
-            pointNameIdMap,
-            givenBodyContactPoint
-        )
+        this.pointsMap = this._computePoints(pose, pointNameIdMap, originPoint)
     }
 
     get id() {
@@ -118,7 +109,13 @@ class Linkage {
     }
 
     get maybeGroundContactPoint() {
-        return this._computeMaybeGroundContactPoint()
+        const reversedPointList = this.allPointsList.slice().reverse()
+        const testPoint = reversedPointList[0]
+        const maybeGroundContactPoint = reversedPointList.reduce(
+            (testPoint, point) => (point.z < testPoint.z ? point : testPoint),
+            testPoint
+        )
+        return maybeGroundContactPoint
     }
 
     get allPointsList() {
@@ -129,7 +126,7 @@ class Linkage {
     }
     /* *
      * .............
-     * clone (translate) rotate shift
+     * clone (translate) rotate shift cloneTrotShift
      * .............
      *
      * params type:
@@ -222,17 +219,12 @@ class Linkage {
      *   find local points wrt hexapod's center of gravity (0, 0, 0)
      * ................
      * */
-    _computePointsWrtHexapodsCog(
-        localPointsMap,
-        alpha,
-        pointNameIdMap,
-        givenBodyContactPoint
-    ) {
+    _computePointsWrtHexapodCog(localPointsMap, alpha, pointNameIdMap, originPoint) {
         const twistFrame = tRotZframe(
             LOCAL_X_AXIS_ANGLE_MAP[this.position] + alpha,
-            givenBodyContactPoint.x,
-            givenBodyContactPoint.y,
-            givenBodyContactPoint.z
+            originPoint.x,
+            originPoint.y,
+            originPoint.z
         )
 
         const pointsMap = LEG_POINT_TYPES.reduce((acc, pointType) => {
@@ -248,26 +240,16 @@ class Linkage {
         return pointsMap
     }
 
-    _computePoints(pose, pointNameIdMap, givenBodyContactPoint) {
+    _computePoints(pose, pointNameIdMap, originPoint) {
         const { alpha, beta, gamma } = pose
         const localPointsMap = this._computePointsWrtBodyContact(beta, gamma)
-        const pointsMap = this._computePointsWrtHexapodsCog(
+        const pointsMap = this._computePointsWrtHexapodCog(
             localPointsMap,
             alpha,
             pointNameIdMap,
-            givenBodyContactPoint
+            originPoint
         )
         return pointsMap
-    }
-
-    _computeMaybeGroundContactPoint() {
-        const reversedPointList = this.allPointsList.slice().reverse()
-        const testPoint = reversedPointList[0]
-        const maybeGroundContactPoint = reversedPointList.reduce(
-            (testPoint, point) => (point.z < testPoint.z ? point : testPoint),
-            testPoint
-        )
-        return maybeGroundContactPoint
     }
 }
 
