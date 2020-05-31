@@ -13,6 +13,56 @@ import {
 } from "mathjs"
 import Vector from "./Vector"
 
+const dot = (a, b) => a.x * b.x + a.y * b.y + a.z * b.z
+
+const vectorFromTo = (a, b) => new Vector(b.x - a.x, b.y - a.y, b.z - a.z)
+
+const scaleVector = (v, d) => new Vector(d * v.x, d * v.y, d * v.z)
+
+const vectorLength = v => Math.sqrt(dot(v, v))
+
+const getUnitVector = v => scaleVector(v, 1 / vectorLength(v))
+
+const cross = (a, b) => {
+    const x = a.y * b.z - a.z * b.y
+    const y = a.z * b.x - a.x * b.z
+    const z = a.x * b.y - a.y * b.x
+    return new Vector(x, y, z)
+}
+
+const getNormalofThreePoints = (a, b, c) => {
+    const ab = vectorFromTo(a, b)
+    const ac = vectorFromTo(a, c)
+    const n = cross(ab, ac)
+    const len_n = vectorLength(n)
+    const unit_n = scaleVector(n, 1 / len_n)
+
+    return unit_n
+}
+
+const angleBetween = (a, b) => {
+    if (vectorLength(a) === 0 || vectorLength(b) === 0) {
+        return 0
+    }
+
+    const cos_theta = dot(a, b) / Math.sqrt(dot(a, a) * dot(b, b))
+    const thetaRadians = Math.acos(cos_theta)
+
+    if (isNaN(thetaRadians)) {
+        return 0
+    }
+
+    const thetaDegrees = (thetaRadians * 180) / Math.PI
+    return thetaDegrees
+}
+
+// u is the vector, n is the plane normal
+const projectedVectorOntoPlane = (u, n) => {
+    const s = dot(u, n) / dot(n, n)
+    const tempVector = scaleVector(n, s)
+    return vectorFromTo(tempVector, u)
+}
+
 function getSinCos(theta) {
     return [sin(unit(theta, "deg")), cos(unit(theta, "deg"))]
 }
@@ -56,31 +106,6 @@ const tRotXYZmatrix = (xTheta, yTheta, zTheta) => {
     return rxyz
 }
 
-const cross = (a, b) => {
-    const x = a.y * b.z - a.z * b.y
-    const y = a.z * b.x - a.x * b.z
-    const z = a.x * b.y - a.y * b.x
-    return new Vector(x, y, z)
-}
-
-const dot = (a, b) => a.x * b.x + a.y * b.y + a.z * b.z
-
-const vectorFromTo = (a, b) => new Vector(b.x - a.x, b.y - a.y, b.z - a.z)
-
-const scaleVector = (v, d) => new Vector(d * v.x, d * v.y, d * v.z)
-
-const vectorLength = v => Math.sqrt(dot(v, v))
-
-const getNormalofThreePoints = (a, b, c) => {
-    const ab = vectorFromTo(a, b)
-    const ac = vectorFromTo(a, c)
-    const n = cross(ab, ac)
-    const len_n = vectorLength(n)
-    const unit_n = scaleVector(n, 1 / len_n)
-
-    return unit_n
-}
-
 const skew = p =>
     matrix([
         [0, -p.z, p.y],
@@ -88,8 +113,6 @@ const skew = p =>
         [-p.y, p.x, 0],
     ])
 
-// https://math.stackexchange.com/questions/180418/
-// calculate-rotation-matrix-to-align-vector-a-to-vector-b-in-3d
 const matrixToAlignVectorAtoB = (a, b) => {
     const v = cross(a, b)
     const s = vectorLength(v)
@@ -123,5 +146,7 @@ export {
     scaleVector,
     vectorFromTo,
     vectorLength,
-    Vector,
+    angleBetween,
+    getUnitVector,
+    projectedVectorOntoPlane,
 }
