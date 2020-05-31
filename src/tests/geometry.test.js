@@ -1,7 +1,13 @@
-import ANGLE_BETWEEN_CASES from "./cases/geometry/angleBetween/cases"
-import PROJECTED_VECTOR_CASES from "./cases/geometry/projectedVectorOntoPlane/cases"
-import { angleBetween, projectedVectorOntoPlane } from "../hexapod/geometry"
+import {
+    angleBetween,
+    projectedVectorOntoPlane,
+} from "../hexapod/geometry"
 import { expectVectorsToHaveSameXYZ } from "./helpers"
+import {
+    ANGLE_BETWEEN_CASES,
+    PROJECTED_VECTOR_CASES,
+} from "./cases/geometry"
+
 
 test.each(ANGLE_BETWEEN_CASES)(
     "Should yield correct results for angleBetween %p",
