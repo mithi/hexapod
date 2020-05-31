@@ -21,6 +21,28 @@ const scaleVector = (v, d) => new Vector(d * v.x, d * v.y, d * v.z)
 
 const vectorLength = v => Math.sqrt(dot(v, v))
 
+const isCounterClockwise = (a, b, n) => dot(a, cross(b, n)) > 0
+
+const acosDegrees = ratio => {
+    const thetaRadians = Math.acos(ratio)
+
+    // mimicks behavior of python numpy acos
+    if (isNaN(thetaRadians)) {
+        return 0
+    }
+    const thetaDegrees = (thetaRadians * 180) / Math.PI
+    return thetaDegrees
+}
+
+const angleOppositeOfLastSide = (a, b, c) => {
+    if (a === 0 || b === 0) {
+        return null
+    }
+
+    const cosTheta = (a * a + b * b - c * c) / (2 * a * b)
+    return acosDegrees(cosTheta)
+}
+
 const getUnitVector = v => scaleVector(v, 1 / vectorLength(v))
 
 const cross = (a, b) => {
@@ -45,15 +67,8 @@ const angleBetween = (a, b) => {
         return 0
     }
 
-    const cos_theta = dot(a, b) / Math.sqrt(dot(a, a) * dot(b, b))
-    const thetaRadians = Math.acos(cos_theta)
-
-    if (isNaN(thetaRadians)) {
-        return 0
-    }
-
-    const thetaDegrees = (thetaRadians * 180) / Math.PI
-    return thetaDegrees
+    const cosTheta = dot(a, b) / Math.sqrt(dot(a, a) * dot(b, b))
+    return acosDegrees(cosTheta)
 }
 
 // u is the vector, n is the plane normal
@@ -134,19 +149,21 @@ const matrixToAlignVectorAtoB = (a, b) => {
 }
 
 export {
+    dot,
+    cross,
+    getNormalofThreePoints,
+    scaleVector,
+    vectorFromTo,
+    getUnitVector,
+    projectedVectorOntoPlane,
+    vectorLength,
+    angleBetween,
+    angleOppositeOfLastSide,
+    isCounterClockwise,
     tRotXmatrix,
     tRotYmatrix,
     tRotZmatrix,
     tRotXYZmatrix,
-    matrixToAlignVectorAtoB,
-    dot,
-    cross,
     skew,
-    getNormalofThreePoints,
-    scaleVector,
-    vectorFromTo,
-    vectorLength,
-    angleBetween,
-    getUnitVector,
-    projectedVectorOntoPlane,
+    matrixToAlignVectorAtoB,
 }
