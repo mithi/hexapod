@@ -60,8 +60,6 @@ const computeDefaultGroundContactPoints = (legDimensions, verticesList) =>
     )
 
 const complexTwist = (legsOnGroundWithoutGravity, verticesList) => {
-    // since we known the previous pose is the when
-    // all the angles === 0, then the old contacts are the foot tips
     const newGroundContactPoints = legsOnGroundWithoutGravity.map(
         leg => leg.maybeGroundContactPoint
     )

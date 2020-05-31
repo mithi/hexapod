@@ -1,10 +1,5 @@
-import {
-    dot,
-    cross,
-    vectorFromTo,
-    getNormalofThreePoints,
-    Vector,
-} from "../geometry"
+import { dot, cross, vectorFromTo, getNormalofThreePoints } from "../geometry"
+import Vector from "../Vector"
 
 const SOME_LEG_ID_TRIOS = [
     [0, 1, 3],

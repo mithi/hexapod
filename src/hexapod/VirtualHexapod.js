@@ -255,4 +255,5 @@ class VirtualHexapod {
     // getStancedHexapod
 }
 
+export { computeLocalAxes }
 export default VirtualHexapod

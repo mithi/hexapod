@@ -30,7 +30,7 @@ class Vector {
         return this.newTrot(transformMatrix, this.name, this.id)
     }
 
-    cloneShift(tx = 0, ty = 0, tz = 0) {
+    cloneShift(tx, ty, tz) {
         return new Vector(this.x + tx, this.y + ty, this.z + tz, this.name, this.id)
     }
 
