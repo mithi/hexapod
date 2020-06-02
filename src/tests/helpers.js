@@ -1,3 +1,5 @@
+import { POSITION_NAMES_LIST } from "../hexapod/constants"
+
 const expectToBeEqualPoints = (point1, point2) => {
     expect(point1.id).toBe(point2.id)
     expect(point1.name).toBe(point2.name)
@@ -10,4 +12,20 @@ const expectVectorsToHaveSameXYZ = (point1, point2) => {
     expect(point1.z).toBeCloseTo(point2.z)
 }
 
-export { expectToBeEqualPoints, expectVectorsToHaveSameXYZ }
+const expectToBeEqualPose = (receivedPose, expectedPose) => {
+    const angles = ["alpha", "beta", "gamma"]
+
+    POSITION_NAMES_LIST.forEach(legPosition => {
+        angles.forEach(angleName => {
+            const receivedValue = Number(
+                receivedPose[legPosition][angleName].toFixed(2)
+            )
+            const expectedValue = Number(
+                expectedPose[legPosition][angleName].toFixed(2)
+            )
+            expect(receivedValue).toBeCloseTo(expectedValue)
+        })
+    })
+}
+
+export { expectToBeEqualPoints, expectVectorsToHaveSameXYZ, expectToBeEqualPose }
