@@ -1,8 +1,8 @@
 import Linkage from "../hexapod/Linkage"
 import { NUMBER_OF_LEGS, POSITION_NAMES_LIST } from "../hexapod/constants"
-import * as specificOSolver from "../hexapod/solvers/orientationSolverSpecific"
-import CASE1 from "./cases/orientationSolverSpecific/case1"
-import CASE2 from "./cases/orientationSolverSpecific/case2"
+import * as specificOSolver from "../hexapod/solvers/orientSolverSpecific"
+import CASE1 from "./cases/orientSolverSpecific/case1"
+import CASE2 from "./cases/orientSolverSpecific/case2"
 
 const CASES = [CASE1, CASE2]
 

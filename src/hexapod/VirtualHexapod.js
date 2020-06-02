@@ -1,6 +1,6 @@
 import { identity } from "mathjs"
 import Linkage from "./Linkage"
-import * as oSolver1 from "./solvers/orientationSolverSpecific"
+import * as oSolver1 from "./solvers/orientSolverSpecific"
 import { simpleTwist } from "./solvers/twistSolver"
 import Hexagon from "./Hexagon"
 import { POSITION_NAMES_LIST } from "./constants"
