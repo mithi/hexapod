@@ -21,6 +21,7 @@ import {
 
 import VirtualHexapod from "./hexapod/VirtualHexapod"
 import getNewPlotParams from "./hexapod/plotter"
+import solveInverseKinematics from "./hexapod/solvers/iKSolver"
 
 class App extends React.Component {
     state = {
@@ -82,8 +83,17 @@ class App extends React.Component {
     }
 
     updateIkParams = (name, value) => {
+        const newIkParams = { ...this.state.ikParams, [name]: value }
+
+        const { dimensions } = this.state.hexapod
+        const result = solveInverseKinematics(dimensions, newIkParams)
+
+        if (result.obtainedSolution) {
+            this.updatePlot(dimensions, result.pose)
+        }
+
         this.setState({
-            ikParams: { ...this.state.ikParams, [name]: value },
+            ikParams: newIkParams,
         })
     }
 
