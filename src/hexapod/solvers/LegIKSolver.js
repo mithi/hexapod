@@ -67,7 +67,6 @@ class LinkageIKSolver {
         if (isTriangle(this.pars, this.femur, this.tibia)) {
             this._handleCaseTriangleCanForm()
         } else {
-            console.log("edgecase")
             this._handleEdgeCase()
         }
     }

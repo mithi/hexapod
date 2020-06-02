@@ -1,7 +1,7 @@
 import { identity } from "mathjs"
 import Linkage from "./Linkage"
 import * as oSolver1 from "./solvers/orientationSolverSpecific"
-import { simpleTwist} from "./solvers/twistSolver"
+import { simpleTwist } from "./solvers/twistSolver"
 import Hexagon from "./Hexagon"
 import { POSITION_NAMES_LIST } from "./constants"
 import { matrixToAlignVectorAtoB, tRotZmatrix } from "./geometry"
