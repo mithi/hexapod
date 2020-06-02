@@ -32,6 +32,15 @@ const POSITION_NAME_TO_AXIS_ANGLE_MAP = {
     rightBack: 315,
 }
 
+const POSITION_NAME_TO_IS_LEFT_MAP = {
+    rightMiddle: false,
+    rightFront: false,
+    leftFront: true,
+    leftMiddle: true,
+    leftBack: true,
+    rightBack: false,
+}
+
 const NUMBER_OF_LEGS = 6
 
 export {
@@ -40,4 +49,5 @@ export {
     POSITION_NAME_TO_AXIS_ANGLE_MAP,
     POSITION_NAMES_LIST,
     NUMBER_OF_LEGS,
+    POSITION_NAME_TO_IS_LEFT_MAP,
 }

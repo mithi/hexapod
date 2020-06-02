@@ -13,6 +13,12 @@ import {
 } from "mathjs"
 import Vector from "./Vector"
 
+const degrees = thetaRadians => (thetaRadians * 180) / Math.PI
+
+const radians = thetaDegrees => (thetaDegrees * Math.PI) / 180
+
+const isTriangle = (a, b, c) => a + b > c && a + c > b && b + c > a
+
 const dot = (a, b) => a.x * b.x + a.y * b.y + a.z * b.z
 
 const vectorFromTo = (a, b) => new Vector(b.x - a.x, b.y - a.y, b.z - a.z)
@@ -30,8 +36,8 @@ const acosDegrees = ratio => {
     if (isNaN(thetaRadians)) {
         return 0
     }
-    const thetaDegrees = (thetaRadians * 180) / Math.PI
-    return thetaDegrees
+
+    return degrees(thetaRadians)
 }
 
 const angleOppositeOfLastSide = (a, b, c) => {
@@ -149,6 +155,9 @@ const matrixToAlignVectorAtoB = (a, b) => {
 }
 
 export {
+    degrees,
+    radians,
+    isTriangle,
     dot,
     cross,
     getNormalofThreePoints,
