@@ -21,13 +21,34 @@ const isTriangle = (a, b, c) => a + b > c && a + c > b && b + c > a
 
 const dot = (a, b) => a.x * b.x + a.y * b.y + a.z * b.z
 
+const vectorLength = v => Math.sqrt(dot(v, v))
+
+const isCounterClockwise = (a, b, n) => dot(a, cross(b, n)) > 0
+
 const vectorFromTo = (a, b) => new Vector(b.x - a.x, b.y - a.y, b.z - a.z)
 
 const scaleVector = (v, d) => new Vector(d * v.x, d * v.y, d * v.z)
 
-const vectorLength = v => Math.sqrt(dot(v, v))
+const addVectors = (a, b) => new Vector(a.x + b.x, a.y + b.y, a.z + b.z)
 
-const isCounterClockwise = (a, b, n) => dot(a, cross(b, n)) > 0
+const getUnitVector = v => scaleVector(v, 1 / vectorLength(v))
+
+const cross = (a, b) => {
+    const x = a.y * b.z - a.z * b.y
+    const y = a.z * b.x - a.x * b.z
+    const z = a.x * b.y - a.y * b.x
+    return new Vector(x, y, z)
+}
+
+const getNormalofThreePoints = (a, b, c) => {
+    const ab = vectorFromTo(a, b)
+    const ac = vectorFromTo(a, c)
+    const n = cross(ab, ac)
+    const len_n = vectorLength(n)
+    const unit_n = scaleVector(n, 1 / len_n)
+
+    return unit_n
+}
 
 const acosDegrees = ratio => {
     const thetaRadians = Math.acos(ratio)
@@ -47,25 +68,6 @@ const angleOppositeOfLastSide = (a, b, c) => {
 
     const cosTheta = (a * a + b * b - c * c) / (2 * a * b)
     return acosDegrees(cosTheta)
-}
-
-const getUnitVector = v => scaleVector(v, 1 / vectorLength(v))
-
-const cross = (a, b) => {
-    const x = a.y * b.z - a.z * b.y
-    const y = a.z * b.x - a.x * b.z
-    const z = a.x * b.y - a.y * b.x
-    return new Vector(x, y, z)
-}
-
-const getNormalofThreePoints = (a, b, c) => {
-    const ab = vectorFromTo(a, b)
-    const ac = vectorFromTo(a, c)
-    const n = cross(ab, ac)
-    const len_n = vectorLength(n)
-    const unit_n = scaleVector(n, 1 / len_n)
-
-    return unit_n
 }
 
 const angleBetween = (a, b) => {
@@ -163,6 +165,7 @@ export {
     getNormalofThreePoints,
     scaleVector,
     vectorFromTo,
+    addVectors,
     getUnitVector,
     projectedVectorOntoPlane,
     vectorLength,
