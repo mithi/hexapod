@@ -21,7 +21,7 @@ import {
 
 import VirtualHexapod from "./hexapod/VirtualHexapod"
 import getNewPlotParams from "./hexapod/plotter"
-import solveInverseKinematics from "./hexapod/solvers/iKSolver"
+import solveInverseKinematics from "./hexapod/solvers/ikSolver"
 
 class App extends React.Component {
     state = {

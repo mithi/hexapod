@@ -112,9 +112,6 @@ const solveInverseKinematics = (dimensions, ikParams) => {
         Number(ikParams.legStance)
     )
 
-    console.log("dimensions", dimensions)
-    console.log("starting pose", startingPose)
-
     const hexapod = new VirtualHexapod(dimensions, startingPose)
 
     const rotationMatrix = tRotXYZmatrix(rx, ry, rz)
