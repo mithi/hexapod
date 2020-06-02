@@ -1,7 +1,7 @@
 import { atan2 } from "mathjs"
-import Linkage from "./Linkage"
-import { POSITION_NAMES_LIST } from "./constants"
-import { POSE } from "../templates/hexapodParams"
+import Linkage from "../Linkage"
+import { POSITION_NAMES_LIST } from "../constants"
+import { POSE } from "../../templates/hexapodParams"
 
 const computeLegsList = (legDimensions, verticesList, pose = POSE) =>
     POSITION_NAMES_LIST.map(
@@ -71,4 +71,34 @@ const complexTwist = (legsOnGroundWithoutGravity, verticesList) => {
     return computeTwistAngle(oldGroundContactPoints, newGroundContactPoints)
 }
 
-export { complexTwist, mightTwist }
+const simpleTwist = legsOnGroundWithoutGravity => {
+    // we twist in the condition that
+    // 1. all the legs pose has same alpha
+    // 2. the ground contact points are either all femurPoints or all footTipPoints
+    //    if all femurPoints on ground, make sure bodyContactPoint.z != femurPoint.z
+    //     (ie  if hexapod body is not on the ground we should not twist)
+    const firstAlpha = legsOnGroundWithoutGravity[0].pose.alpha
+    const shouldTwist = legsOnGroundWithoutGravity.every(leg => {
+        if (leg.pose.alpha !== firstAlpha) {
+            return false
+        }
+
+        const pointType = leg.maybeGroundContactPoint.name.split("-")[1]
+
+        if (pointType === "footTipPoint") {
+            return true
+        }
+
+        if (pointType === "femurPoint") {
+            const hexapodBodyPlaneOnGround =
+                leg.pointsMap["bodyContactPoint"].z === leg.pointsMap["femurPoint"].z
+            return hexapodBodyPlaneOnGround ? false : true
+        }
+
+        return false
+    })
+
+    return !shouldTwist ? 0 : -firstAlpha
+}
+
+export { complexTwist, mightTwist, simpleTwist }

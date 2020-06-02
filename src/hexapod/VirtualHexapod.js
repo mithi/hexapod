@@ -1,6 +1,7 @@
 import { identity } from "mathjs"
 import Linkage from "./Linkage"
 import * as oSolver1 from "./solvers/orientationSolverSpecific"
+import { simpleTwist} from "./solvers/twistSolver"
 import Hexagon from "./Hexagon"
 import { POSITION_NAMES_LIST } from "./constants"
 import { matrixToAlignVectorAtoB, tRotZmatrix } from "./geometry"
@@ -17,36 +18,6 @@ const computeLocalAxes = transformMatrix => ({
     yAxis: WORLD_AXES.yAxis.newTrot(transformMatrix, "hexapodYaxis"),
     zAxis: WORLD_AXES.zAxis.newTrot(transformMatrix, "hexapodZaxis"),
 })
-
-const simpleTwist = legsOnGroundWithoutGravity => {
-    // we twist in the condition that
-    // 1. all the legs pose has same alpha
-    // 2. the ground contact points are either all femurPoints or all footTipPoints
-    //    if all femurPoints on ground, make sure bodyContactPoint.z != femurPoint.z
-    //     (ie  if hexapod body is not on the ground we should not twist)
-    const firstAlpha = legsOnGroundWithoutGravity[0].pose.alpha
-    const shouldTwist = legsOnGroundWithoutGravity.every(leg => {
-        if (leg.pose.alpha !== firstAlpha) {
-            return false
-        }
-
-        const pointType = leg.maybeGroundContactPoint.name.split("-")[1]
-
-        if (pointType === "footTipPoint") {
-            return true
-        }
-
-        if (pointType === "femurPoint") {
-            const hexapodBodyPlaneOnGround =
-                leg.pointsMap["bodyContactPoint"].z === leg.pointsMap["femurPoint"].z
-            return hexapodBodyPlaneOnGround ? false : true
-        }
-
-        return false
-    })
-
-    return !shouldTwist ? 0 : -firstAlpha
-}
 
 /* * *
 
