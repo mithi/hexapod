@@ -1,5 +1,5 @@
-import CASE1 from "./cases/linkage/case1"
-import CASE2 from "./cases/linkage/case2"
+import CASE1 from "./cases/Linkage/case1"
+import CASE2 from "./cases/Linkage/case2"
 import Linkage from "../hexapod/Linkage"
 import { POSITION_NAME_TO_ID_MAP } from "../hexapod/constants"
 import { expectToBeEqualPoints } from "./helpers"
