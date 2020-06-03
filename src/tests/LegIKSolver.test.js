@@ -21,14 +21,12 @@ test.each(CAN_REACH_TARGET_CASES)(
     "Leg IK Solver when it is not an edge case %p",
     thisCase => {
         const { coxia, femur, tibia, summa, rho } = thisCase.params
-        const solved = new LegIKSolver(
-            "noLegPositionSpecified",
-            coxia,
-            femur,
-            tibia,
-            summa,
-            rho
+
+        // prettier-ignore
+        const solved = new LegIKSolver("NoPositionSpecified").solve(
+            coxia, femur, tibia, summa, rho
         )
+
         expect(solved.beta).toBeCloseTo(thisCase.result.beta)
         expect(solved.gamma).toBeCloseTo(thisCase.result.gamma)
         expect(solved.obtainedSolution).toBe(thisCase.result.reachedTarget)

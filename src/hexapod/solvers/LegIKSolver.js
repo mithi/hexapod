@@ -49,8 +49,12 @@ import {
 } from "../geometry"
 
 class LinkageIKSolver {
-    constructor(legPosition, coxia, femur, tibia, summa, rho) {
-        Object.assign(this, { legPosition, coxia, femur, tibia, summa, rho })
+    constructor(legPosition) {
+        this.legPosition = legPosition
+    }
+
+    solve(coxia, femur, tibia, summa, rho) {
+        Object.assign(this, { coxia, femur, tibia, summa, rho })
 
         this.legXaxis = new Vector(1, 0, 0, "legXaxis")
         this.p0 = new Vector(0, 0, 0, "localBodyContact")
@@ -62,6 +66,8 @@ class LinkageIKSolver {
         isTriangle(this.pars, this.femur, this.tibia)
             ? this._handleCaseTriangleCanForm()
             : this._handleEdgeCase()
+
+        return this
     }
 
     _computeLocalFootTip() {
