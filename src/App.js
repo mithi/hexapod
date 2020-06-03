@@ -1,16 +1,17 @@
 import React from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 
-import { DATA, LAYOUT, CAMERA_VIEW } from "./templates/plotParams"
 import {
     DEFAULT_DIMENSIONS,
     DEFAULT_POSE,
     DEFAULT_IK_PARAMS,
-} from "./templates/hexapodParams"
+    DATA,
+    LAYOUT,
+    CAMERA_VIEW,
+} from "./templates"
 
-import { NavBar, NavFooter } from "./components/Nav"
-import HexapodPlot from "./components/HexapodPlot"
-import DimensionsWidget from "./components/DimensionsWidget"
+import { VirtualHexapod, getNewPlotParams, solveInverseKinematics } from "./hexapod"
+import { NavBar, NavFooter, HexapodPlot, DimensionsWidget } from "./components"
 
 import {
     ForwardKinematicsPage,
@@ -19,9 +20,6 @@ import {
     LegPatternPage,
 } from "./components/pages"
 
-import VirtualHexapod from "./hexapod/VirtualHexapod"
-import getNewPlotParams from "./hexapod/plotter"
-import solveInverseKinematics from "./hexapod/solvers/ikSolver"
 
 class App extends React.Component {
     state = {
@@ -92,9 +90,7 @@ class App extends React.Component {
             this.updatePlot(dimensions, result.pose)
         }
 
-        this.setState({
-            ikParams: newIkParams,
-        })
+        this.setState({ ikParams: newIkParams })
     }
 
     updatePose = (name, angle, value) => {
