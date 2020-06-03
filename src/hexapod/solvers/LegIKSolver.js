@@ -50,12 +50,7 @@ import {
 
 class LinkageIKSolver {
     constructor(legPosition, coxia, femur, tibia, summa, rho) {
-        this.legPosition = legPosition
-        this.coxia = coxia
-        this.femur = femur
-        this.tibia = tibia
-        this.summa = summa
-        this.rho = rho
+        Object.assign(this, { legPosition, coxia, femur, tibia, summa, rho })
 
         this.legXaxis = new Vector(1, 0, 0, "legXaxis")
         this.p0 = new Vector(0, 0, 0, "localBodyContact")
@@ -64,11 +59,9 @@ class LinkageIKSolver {
 
         this.parsVector = vectorFromTo(this.p1, this.targetP3)
         this.pars = vectorLength(this.parsVector)
-        if (isTriangle(this.pars, this.femur, this.tibia)) {
-            this._handleCaseTriangleCanForm()
-        } else {
-            this._handleEdgeCase()
-        }
+        isTriangle(this.pars, this.femur, this.tibia)
+            ? this._handleCaseTriangleCanForm()
+            : this._handleEdgeCase()
     }
 
     _computeLocalFootTip() {
@@ -81,8 +74,7 @@ class LinkageIKSolver {
         this.theta = angleOppositeOfLastSide(this.femur, this.pars, this.tibia)
 
         this.phi = angleBetween(this.parsVector, this.legXaxis)
-        this.beta =
-            this.targetP3.z < 0 ? this.theta - this.phi : this.theta + this.phi
+        this.beta = this.targetP3.z < 0 ? this.theta - this.phi : this.theta + this.phi
 
         this.epsi = angleOppositeOfLastSide(this.femur, this.tibia, this.pars)
 
@@ -130,7 +122,7 @@ class LinkageIKSolver {
         this.beta = -angleBetween(this.parsVector, this.legXaxis)
         this.obtainedSolution = true
         this.reachedTarget = false
-        this.message = `${this.legName} | Successfule! But leg is stretched towards target ground point`
+        this.message = `${this.legName} | Successful! But leg is stretched towards target ground point`
     }
 }
 
