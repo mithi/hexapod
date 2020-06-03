@@ -2,6 +2,7 @@ import {
     POSITION_NAME_TO_IS_LEFT_MAP,
     POSITION_NAME_TO_AXIS_ANGLE_MAP,
     POSITION_NAMES_LIST,
+    NUMBER_OF_LEGS,
 } from "../constants"
 import VirtualHexapod from "../VirtualHexapod"
 import { computeLocalAxes } from "../VirtualHexapod"
@@ -67,11 +68,11 @@ const hexapodNoSupport = legsNamesoffGround => {
         legPosition => POSITION_NAME_TO_IS_LEFT_MAP[legPosition]
     )
 
-    if (legLeftOrRight.every(isLeft => isLeft === false)) {
+    if (legLeftOrRight.every(isLeft => !isLeft)) {
         return [true, "All right legs are off the floor"]
     }
 
-    if (legLeftOrRight.every(isLeft => isLeft === false)) {
+    if (legLeftOrRight.every(isLeft => isLeft)) {
         return [true, "All left legs are off the floor"]
     }
 
@@ -97,13 +98,17 @@ const badCoxiaPointReturnObject = (legPosition, coxiaPoint) =>
         obtainedSolution: false,
     })
 
-const someLegsOffGroundReturnObject = (pose, legPositionOffGround) =>
-    IKreturnObject({
+const someLegsOffGroundReturnObject = (pose, legPositionOffGround) => {
+    const message = legPositionOffGround.reduce(
+        (message, legPosition) => message + `${legPosition}\n\n`,
+        "Successful! These legs are off the ground: \n\n"
+    )
+    return IKreturnObject({
         pose,
-        message: `Successful! These legs are off the ground: ${legPositionOffGround}`,
+        message,
         someLegsOff: true,
     })
-
+}
 function IKreturnObject(options) {
     const pose = options.pose || null
     const obtainedSolution =
@@ -161,8 +166,9 @@ const solveInverseKinematics = (dimensions, rawIKParams) => {
     const { coxia, femur, tibia } = dimensions
     let [legPositionsOffGround, pose] = [[], {}]
 
-    hexapod.legs.forEach((leg, index) => {
-        const vertex = hexagon.verticesList[index]
+    for (let i = 0; i < NUMBER_OF_LEGS; i++) {
+        const leg = hexapod.legs[i]
+        const vertex = hexagon.verticesList[i]
         const footTip = leg.maybeGroundContactPoint
         const known = computeInitialLegProperties(vertex, footTip, zAxis)
 
@@ -178,7 +184,6 @@ const solveInverseKinematics = (dimensions, rawIKParams) => {
         // compute beta and gamma angles given known geometric parameters
         // prettier-ignore
         // if there no solution found, return why
-
         const solvedLeg = new LegIKSolver(leg.position)
             .solve(coxia, femur, tibia, known.summa, known.rho)
 
@@ -198,13 +203,13 @@ const solveInverseKinematics = (dimensions, rawIKParams) => {
 
         // we have successfully solved for this particular leg's pose
         pose[leg.position] = { alpha, beta: solvedLeg.beta, gamma: solvedLeg.gamma }
-    })
+    }
 
     // Return the hexapod pose we have solved
     // remember to indicate if some legs are off the ground
     return legPositionsOffGround.length === 0
         ? IKreturnObject({ pose })
-        : someLegsOffGroundReturnObject({ pose, someLegsOff: true })
+        : someLegsOffGroundReturnObject(pose, legPositionsOffGround)
 }
 
 export default solveInverseKinematics
