@@ -1,6 +1,6 @@
 import React from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-
+import { VirtualHexapod, getNewPlotParams, solveInverseKinematics } from "./hexapod"
 import {
     DEFAULT_DIMENSIONS,
     DEFAULT_POSE,
@@ -9,9 +9,13 @@ import {
     LAYOUT,
     CAMERA_VIEW,
 } from "./templates"
-
-import { VirtualHexapod, getNewPlotParams, solveInverseKinematics } from "./hexapod"
-import { NavBar, NavFooter, HexapodPlot, DimensionsWidget } from "./components"
+import {
+    NavBar,
+    NavFooter,
+    HexapodPlot,
+    DimensionsWidget,
+    MessageBox,
+} from "./components"
 
 import {
     ForwardKinematicsPage,
@@ -20,13 +24,12 @@ import {
     LegPatternPage,
 } from "./components/pages"
 
-
 class App extends React.Component {
     state = {
         currentPage: "Root",
         shouldDisplayDimensionsAndPlot: false,
         alerts: "",
-        messages: "",
+        messages: "No message",
         ikParams: DEFAULT_IK_PARAMS,
         patternParams: { alpha: 0, beta: 0, gamma: 0 },
         hexapod: {
@@ -90,7 +93,7 @@ class App extends React.Component {
             this.updatePlot(dimensions, result.pose)
         }
 
-        this.setState({ ikParams: newIkParams })
+        this.setState({ ikParams: newIkParams, message: result.message })
     }
 
     updatePose = (name, angle, value) => {
@@ -183,6 +186,7 @@ class App extends React.Component {
                         {this.mightShowDimensions()}
                         {this.showPage()}
                     </div>
+                    <MessageBox message={this.state.message} />
                     <NavFooter />
                 </div>
                 {this.mightShowPlot()}
