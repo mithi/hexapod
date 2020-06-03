@@ -89,7 +89,7 @@ Property types:
  * * */
 class VirtualHexapod {
     constructor(dimensions, pose, flags = { noGravity: false, shiftedUp: false }) {
-        this._storeInitialProperties(dimensions, pose)
+        Object.assign(this, { dimensions, pose, twistAngle: 0 })
 
         const flatHexagon = new Hexagon(this.bodyDimensions)
         const legsNoGravity = this._computeLegsList(flatHexagon.verticesList)
@@ -112,10 +112,7 @@ class VirtualHexapod {
         // .................
         // STEP 2: Rotate and shift legs and body to this orientation
         // .................
-        const transformMatrix = matrixToAlignVectorAtoB(
-            solved.nAxis,
-            WORLD_AXES.zAxis
-        )
+        const transformMatrix = matrixToAlignVectorAtoB(solved.nAxis, WORLD_AXES.zAxis)
 
         this.legs = legsNoGravity.map(leg =>
             leg.cloneTrotShift(transformMatrix, 0, 0, solved.height)
@@ -124,11 +121,9 @@ class VirtualHexapod {
         this.localAxes = computeLocalAxes(transformMatrix)
 
         this.groundContactPoints = solved.groundLegsNoGravity.map(leg =>
+            // prettier-ignore
             leg.maybeGroundContactPoint.cloneTrotShift(
-                transformMatrix,
-                0,
-                0,
-                solved.height
+                transformMatrix, 0, 0, solved.height
             )
         )
 
@@ -137,10 +132,10 @@ class VirtualHexapod {
             return
         }
 
-        // handles the case were all alpha angles uniformly twist
+        // handles the case where all alpha angles uniformly twist
         this.twistAngle = simpleTwist(solved.groundLegsNoGravity)
         this._twist()
-        // we'll handle more complex types of list soon...
+        // we'll handle more complex types of twists soon...
     }
 
     get distanceFromGround() {
@@ -197,12 +192,6 @@ class VirtualHexapod {
         }
     }
 
-    _storeInitialProperties(dimensions, pose) {
-        this.dimensions = dimensions
-        this.pose = pose
-        this.twistAngle = 0
-    }
-
     _danglingHexapod(body, legs, shiftedUp) {
         const transformMatrix = identity(4)
         this.localAxes = computeLocalAxes(transformMatrix)
@@ -220,10 +209,6 @@ class VirtualHexapod {
         this.body = body.cloneTrotShift(identity(4), 0, 0, height)
         this.legs = legs.map(leg => leg.cloneTrotShift(identity(4), 0, 0, height))
     }
-
-    // getDetachedHexagon
-    // getTranslatedHexapod
-    // getStancedHexapod
 }
 
 export { computeLocalAxes }
