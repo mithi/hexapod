@@ -58,8 +58,7 @@ class Hexagon {
         const vertexY = [0, side, side, 0, -side, -side]
 
         this.verticesList = POSITION_NAMES_LIST.map(
-            (position, i) =>
-                new Vector(vertexX[i], vertexY[i], 0, `${position}Vertex`, i)
+            (position, i) => new Vector(vertexX[i], vertexY[i], 0, `${position}Vertex`, i)
         )
         this.head = new Vector(0, side, 0, "headPoint", 7)
         this.cog = new Vector(0, 0, 0, "centerOfGravityPoint", 6)
@@ -111,9 +110,7 @@ class Hexagon {
         let clone = new Hexagon(this.dimensions, { hasNoPoints: true })
         clone.cog = this.cog.cloneShift(tx, ty, tz)
         clone.head = this.head.cloneShift(tx, ty, tz)
-        clone.verticesList = this.verticesList.map(point =>
-            point.cloneShift(tx, ty, tz)
-        )
+        clone.verticesList = this.verticesList.map(point => point.cloneShift(tx, ty, tz))
         return clone
     }
 }

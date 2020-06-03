@@ -9,6 +9,8 @@ test.each(CASES)(
     thisCase => {
         const { rx, ry, rz, tx, ty, tz } = thisCase.params.transformParams
         const startHexagon = new Hexagon(thisCase.params.dimensions)
+
+        // prettier-ignore
         const testPoints = startHexagon
             .cloneShift(tx, ty, tz)
             .cloneRotXYZ(rx, ry, rz).allPointsList

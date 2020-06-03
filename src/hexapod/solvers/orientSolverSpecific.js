@@ -115,8 +115,7 @@ const noOtherLegLower = (normal, height, otherFootTips) => {
     return true
 }
 
-const isLower = (point, normal, height, tol = 0.001) =>
-    -dot(normal, point) > height + tol
+const isLower = (point, normal, height, tol = 0.001) => -dot(normal, point) > height + tol
 
 /* *
  * Determines stability of the pose.

@@ -15,7 +15,7 @@
     3. all alpha == 0 will NOT twist on ALL cases
 
     All alphas are the same when using the patterns page, we need a separate test suite
-    for the kinematics and inverse kinematics page, where each leg angles can be set individualy
+    for the kinematics and inverse kinematics page, where each leg angles can be set individually
  * * * */
 import VirtualHexapod from "../hexapod/VirtualHexapod"
 import { POSITION_NAMES_LIST } from "../hexapod/constants"

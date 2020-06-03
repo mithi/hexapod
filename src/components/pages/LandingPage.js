@@ -31,8 +31,8 @@ class LandingPage extends React.Component {
                 of this app in action.
             </p>
             <p>
-                I'm also working on bare-minimum visualizations for stuff like
-                Quadrupeds, Manipulators, Drones, Cars. If you like this, consider
+                I'm also working on bare-minimum visualizations for stuff like Quadrupeds,
+                Manipulators, Drones, Cars. If you like this, consider
                 <BasicLink
                     path="react.js"
                     klass="text"
@@ -47,8 +47,7 @@ class LandingPage extends React.Component {
                 or submit bug reports if you like.
             </p>
             <p>
-                Love,{" "}
-                <BasicLink path="react.js" klass="text" symbol="💖💕 M i t h i" />
+                Love, <BasicLink path="react.js" klass="text" symbol="💖💕 M i t h i" />
             </p>
         </>
     )

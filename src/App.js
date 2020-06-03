@@ -137,9 +137,7 @@ class App extends React.Component {
     mightShowPlot = () => (
         <div
             className={
-                this.state.shouldDisplayDimensionsAndPlot
-                    ? "plot border"
-                    : "no-display"
+                this.state.shouldDisplayDimensionsAndPlot ? "plot border" : "no-display"
             }
         >
             <HexapodPlot

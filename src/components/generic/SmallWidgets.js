@@ -12,9 +12,7 @@ const ToggleSwitch = ({ value, handleChange, showLabel, labelTop }) => (
         <label className="switch">
             <input type="checkbox" value={value} onChange={handleChange} />
             <span className="toggle-switch-widget round"></span>
-            {showLabel && !labelTop ? (
-                <label className="label">{value}</label>
-            ) : null}
+            {showLabel && !labelTop ? <label className="label">{value}</label> : null}
         </label>
     </div>
 )

@@ -17,12 +17,8 @@ const expectToBeEqualPose = (receivedPose, expectedPose) => {
 
     POSITION_NAMES_LIST.forEach(legPosition => {
         angles.forEach(angleName => {
-            const receivedValue = Number(
-                receivedPose[legPosition][angleName].toFixed(2)
-            )
-            const expectedValue = Number(
-                expectedPose[legPosition][angleName].toFixed(2)
-            )
+            const receivedValue = Number(receivedPose[legPosition][angleName].toFixed(2))
+            const expectedValue = Number(expectedPose[legPosition][angleName].toFixed(2))
             expect(receivedValue).toBeCloseTo(expectedValue)
         })
     })

@@ -55,9 +55,7 @@ const computeTwistAngle = (oldGroundContactPoints, newGroundContactPoints) => {
 // Which point on each leg contacts the ground
 // when all angles are equal to zero
 const computeDefaultGroundContactPoints = (legDimensions, verticesList) =>
-    computeLegsList(legDimensions, verticesList).map(
-        leg => leg.maybeGroundContactPoint
-    )
+    computeLegsList(legDimensions, verticesList).map(leg => leg.maybeGroundContactPoint)
 
 const complexTwist = (legsOnGroundWithoutGravity, verticesList) => {
     const newGroundContactPoints = legsOnGroundWithoutGravity.map(

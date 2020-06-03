@@ -9,11 +9,7 @@ class InverseKinematicsPage extends Component {
     }
 
     render() {
-        const translateSliders = sliderList(
-            ["tx", "ty", "tz"],
-            [-1, 1, 0.01],
-            this.props
-        )
+        const translateSliders = sliderList(["tx", "ty", "tz"], [-1, 1, 0.01], this.props)
 
         const rotateSliders = sliderList(
             ["rx", "ry", "rz", "hipStance", "legStance"],

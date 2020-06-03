@@ -26,12 +26,7 @@ const PATHS = [PATH_ROOT, PATH_FK, PATH_IK, PATH_LP]
 const LINK_TXTS = [ROOT_LINK_TXT, FK_LINK_TXT, IK_LINK_TXT, LP_LINK_TXT]
 
 const PAGE_LINKS = PATHS.map((path, index) => (
-    <PageLink
-        key={path}
-        path={path}
-        symbol={LINK_TXTS[index]}
-        klass="nav-footer-link"
-    />
+    <PageLink key={path} path={path} symbol={LINK_TXTS[index]} klass="nav-footer-link" />
 ))
 
 const BASIC_LINKS = URLS.map((path, index) => (
