@@ -31,29 +31,6 @@ const makeStartingPose = (hipStance, legStance) => {
     return pose
 }
 
-const computeInitialLegProperties = (
-    bodyContactPoint,
-    groundContactPoint,
-    zAxis,
-    coxia
-) => {
-    const bodyToFootVector = vectorFromTo(bodyContactPoint, groundContactPoint)
-    const coxiaDirectionVector = projectedVectorOntoPlane(bodyToFootVector, zAxis)
-    const coxiaUnitVector = getUnitVector(coxiaDirectionVector)
-    const coxiaVector = scaleVector(coxiaUnitVector, coxia)
-    const coxiaPoint = addVectors(bodyContactPoint, coxiaVector)
-    const rho = angleBetween(coxiaUnitVector, bodyToFootVector)
-    const summa = vectorLength(bodyToFootVector)
-
-    return {
-        coxiaUnitVector,
-        coxiaVector,
-        coxiaPoint,
-        rho,
-        summa,
-    }
-}
-
 const hexapodNoSupport = legsNamesoffGround => {
     if (legsNamesoffGround.length < 3) {
         return [false, "Not enough information"]
@@ -92,9 +69,9 @@ const computeAlpha = (coxiaVector, legXaxisAngle, xAxis, zAxis) => {
     return alpha
 }
 
-const badCoxiaPointReturnObject = (legPosition, coxiaPoint) =>
+const badPointReturnObject = (legPosition, badPoint) =>
     IKreturnObject({
-        message: `[${legPosition}] Impossible! Atleast one coxia point ${coxiaPoint} would be shoved on ground.`,
+        message: `[${legPosition}] Impossible! Atleast one point ${badPoint} would be shoved on ground.`,
         obtainedSolution: false,
     })
 
@@ -109,6 +86,7 @@ const someLegsOffGroundReturnObject = (pose, legPositionOffGround) => {
         someLegsOff: true,
     })
 }
+
 function IKreturnObject(options) {
     const pose = options.pose || null
     const obtainedSolution =
@@ -130,18 +108,13 @@ const getTranslationValues = (dimensions, ikParams) => {
     return [tx, ty, tz]
 }
 
-const solveInverseKinematics = (dimensions, rawIKParams) => {
+const solveInitialHexapodProperties = (dimensions, rawIKParams) => {
     // Make sure all parameter values are numbers
     const ikParams = Object.entries(rawIKParams).reduce(
         (params, [key, val]) => ({ ...params, [key]: Number(val) }),
         {}
     )
 
-    // ......................
-    // [STEP ONE]: Compute for
-    //   - target body contacts [hexagon.vertices]
-    //   - get ground contact points [groundContactPoint of hexapod.legs]
-    // ......................
     const startingPose = makeStartingPose(ikParams.hipStance, ikParams.legStance)
     const hexapod = new VirtualHexapod(dimensions, startingPose)
 
@@ -152,61 +125,93 @@ const solveInverseKinematics = (dimensions, rawIKParams) => {
     const [tx, ty, tz] = getTranslationValues(dimensions, ikParams)
     const hexagon = hexapod.body.cloneShift(tx, ty, tz).cloneTrot(rotationMatrix)
 
-    hexagon.verticesList.forEach(vertex => {
+    const bodyContactPoints = hexagon.verticesList
+    const groundContactPoints = hexapod.legs.map(leg => leg.maybeGroundContactPoint)
+    return { bodyContactPoints, groundContactPoints, xAxis, zAxis }
+}
+
+const computeInitialLegProperties = (
+    bodyContactPoint,
+    groundContactPoint,
+    zAxis,
+    coxia
+) => {
+    const bodyToFootVector = vectorFromTo(bodyContactPoint, groundContactPoint)
+    const coxiaDirectionVector = projectedVectorOntoPlane(bodyToFootVector, zAxis)
+    const coxiaUnitVector = getUnitVector(coxiaDirectionVector)
+    const coxiaVector = scaleVector(coxiaUnitVector, coxia)
+    const coxiaPoint = addVectors(bodyContactPoint, coxiaVector)
+    const rho = angleBetween(coxiaUnitVector, bodyToFootVector)
+    const summa = vectorLength(bodyToFootVector)
+
+    return {
+        coxiaUnitVector,
+        coxiaVector,
+        coxiaPoint,
+        rho,
+        summa,
+    }
+}
+
+const solveInverseKinematics = (dimensions, rawIKParams) => {
+    // ......................
+    // [STEP ONE]: Compute for
+    //   - target body contacts [hexagon.vertices]
+    //   - get ground contact points [groundContactPoint of hexapod.legs]
+    //   - xAxis and zAxis of the new hexapod body coordinate frame
+    // ......................
+    const hexapodParams = solveInitialHexapodProperties(dimensions, rawIKParams)
+    const { groundContactPoints, bodyContactPoints, xAxis, zAxis } = hexapodParams
+
+    for (let i = 0; i < NUMBER_OF_LEGS; i++) {
+        const vertex = bodyContactPoints[i]
         if (vertex.z < 0) {
-            const message = `Impossible! Atleast one vertex would be shoved on ground. ${vertex.name}`
-            return IKreturnObject({ obtainedSolution: false, message })
+            return badPointReturnObject(vertex.name, vertex)
         }
-    })
+    }
 
     // ......................
     // [STEP TWO]: Compute for
     //   - pose of each leg position { alpha, beta, gamma }
+    //   - if we can't meet criteria, return why
     // ......................
     const { coxia, femur, tibia } = dimensions
     let [legPositionsOffGround, pose] = [[], {}]
 
     for (let i = 0; i < NUMBER_OF_LEGS; i++) {
-        const leg = hexapod.legs[i]
-        const vertex = hexagon.verticesList[i]
-        const footTip = leg.maybeGroundContactPoint
-        const known = computeInitialLegProperties(vertex, footTip, zAxis)
+        const legPosition = POSITION_NAMES_LIST[i]
 
-        // if a coxia point would be on the ground, return
+        // prettier-ignore
+        const known = computeInitialLegProperties(
+            bodyContactPoints[i], groundContactPoints[i], zAxis
+        )
+
         if (known.coxiaPoint.z < 0) {
-            return badCoxiaPointReturnObject(leg.position, known.coxiaPoint)
+            return badPointReturnObject(legPosition, known.coxiaPoint)
         }
 
-        // compute alpha angle
-        const legXaxisAngle = POSITION_NAME_TO_AXIS_ANGLE_MAP[leg.position]
+        const legXaxisAngle = POSITION_NAME_TO_AXIS_ANGLE_MAP[legPosition]
         const alpha = computeAlpha(known.coxiaUnitVector, legXaxisAngle, xAxis, zAxis)
 
-        // compute beta and gamma angles given known geometric parameters
         // prettier-ignore
-        // if there no solution found, return why
-        const solvedLeg = new LegIKSolver(leg.position)
+        const solvedLeg = new LegIKSolver(legPosition)
             .solve(coxia, femur, tibia, known.summa, known.rho)
 
         if (!solvedLeg.obtainedSolution) {
             return IKreturnObject({ obtainedSolution: false, message: solvedLeg.message })
         }
 
-        // make sure that hexapod can maintain its position and orientation
-        // given that some legs known to be off the ground, else return
         if (!solvedLeg.reachedTarget) {
-            legPositionsOffGround.push(leg.position)
+            legPositionsOffGround.push(legPosition)
             const [noSupport, message] = hexapodNoSupport(legPositionsOffGround)
             if (noSupport) {
                 return IKreturnObject({ obtainedSolution: false, message })
             }
         }
 
-        // we have successfully solved for this particular leg's pose
-        pose[leg.position] = { alpha, beta: solvedLeg.beta, gamma: solvedLeg.gamma }
+        pose[legPosition] = { alpha, beta: solvedLeg.beta, gamma: solvedLeg.gamma }
     }
 
-    // Return the hexapod pose we have solved
-    // remember to indicate if some legs are off the ground
     return legPositionsOffGround.length === 0
         ? IKreturnObject({ pose })
         : someLegsOffGroundReturnObject(pose, legPositionsOffGround)
