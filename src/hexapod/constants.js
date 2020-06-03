@@ -23,6 +23,8 @@ const POSITION_NAMES_LIST = [
     "rightBack",
 ]
 
+const ANGLE_NAMES_LIST = ["alpha", "beta", "gamma"]
+
 const POSITION_NAME_TO_AXIS_ANGLE_MAP = {
     rightMiddle: 0,
     rightFront: 45,
@@ -44,6 +46,7 @@ const POSITION_NAME_TO_IS_LEFT_MAP = {
 const NUMBER_OF_LEGS = 6
 
 export {
+    ANGLE_NAMES_LIST,
     LEG_POINT_TYPES_LIST,
     POSITION_NAME_TO_ID_MAP,
     POSITION_NAME_TO_AXIS_ANGLE_MAP,

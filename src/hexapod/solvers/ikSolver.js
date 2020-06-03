@@ -150,7 +150,7 @@ const solveInverseKinematics = (dimensions, rawIKParams) => {
     hexagon.verticesList.forEach(vertex => {
         if (vertex.z < 0) {
             const message = `Impossible! Atleast one vertex would be shoved on ground. ${vertex.name}`
-            return IKreturnObject(false, message, {})
+            return IKreturnObject({ obtainedSolution: false, message })
         }
     })
 
