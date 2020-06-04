@@ -145,7 +145,7 @@ class LinkageIKSolver {
         //
         //              * targetp3
         //
-        this.gamma =90
+        this.gamma = 90
         // 90 to stretch
         // 0 to curl up
         this.beta = -angleBetween(this.parsVector, this.legXaxis)

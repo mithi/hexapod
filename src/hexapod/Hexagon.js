@@ -46,6 +46,10 @@ import Vector from "./Vector"
 import { tRotXYZmatrix } from "./geometry"
 
 class Hexagon {
+    dimensions
+    verticesList
+    head
+    cog
     constructor(dimensions, flags = { hasNoPoints: false }) {
         this.dimensions = dimensions
 

@@ -40,7 +40,9 @@ class Vector {
 
     toStringHTML() {
         return `Vector (
-            ${this.x.toFixed(2)}, ${this.y.toFixed(2)}, ${this.z.toFixed(2)}, ${this.name}, ${this.id}
+            ${this.x.toFixed(2)}, ${this.y.toFixed(2)}, ${this.z.toFixed(2)}, ${
+            this.name
+        }, ${this.id}
         )`
     }
 }
