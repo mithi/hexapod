@@ -165,7 +165,7 @@ class IKSolver {
 
     _handleBadPoint(point) {
         this._finalizeFailure(
-            `Impossible! Atleast one point ${point} would be shoved on ground.`
+            `Impossible! Atleast one point: \n${point.toStringHTML()}\n would be shoved on the ground.`
         )
     }
 
@@ -194,7 +194,7 @@ class IKSolver {
             return
         }
 
-        this.message = this.legPositionOffGround.reduce(
+        this.message = this.legPositionsOffGround.reduce(
             (message, legPosition) => message + `${legPosition}\n\n`,
             "Successful! These legs are off the ground: \n\n"
         )

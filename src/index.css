@@ -104,6 +104,12 @@ p {
     padding: 0;
 }
 
+p.sub-message {
+    font-size: 0.6rem;
+    margin: 1px;
+    padding: 1px;
+}
+
 input {
     font-size: 0.6rem;
     text-align: justify;

@@ -37,6 +37,12 @@ class Vector {
     cloneTrotShift(transformMatrix, tx, ty, tz) {
         return this.cloneTrot(transformMatrix).cloneShift(tx, ty, tz)
     }
+
+    toStringHTML() {
+        return `Vector (
+            ${this.x.toFixed(2)}, ${this.y.toFixed(2)}, ${this.z.toFixed(2)}, ${this.name}, ${this.id}
+        )`
+    }
 }
 
 export default Vector

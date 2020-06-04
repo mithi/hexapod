@@ -141,15 +141,17 @@ class LinkageIKSolver {
         //         \
         //          * p2
         //           \
-        //            * p3 (actual)
-        //             .
+        //            * p3 (actual when stretched)
+        //
         //              * targetp3
         //
-        this.gamma = 90 // or 0 if you want it to curl up
+        this.gamma =90
+        // 90 to stretch
+        // 0 to curl up
         this.beta = -angleBetween(this.parsVector, this.legXaxis)
         this.obtainedSolution = true
         this.reachedTarget = false
-        this.message = `${this.legName} | Successful! But the leg is stretched towards target ground point`
+        this.message = `${this.legName} | Successful! But this leg won't reach the target ground point`
     }
 }
 
