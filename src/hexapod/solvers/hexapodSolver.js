@@ -86,6 +86,7 @@ const solveInverseKinematics = (dimensions, rawIKparams) => {
     } else {
         return {
             pose: null,
+            obtainedSolution: false,
             message: solvedHexapodParams.message,
         }
     }
