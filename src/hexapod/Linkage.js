@@ -77,7 +77,7 @@
   "" this.id : a number from 0 to 5 corresponding to a particular position
 
   * * * * */
-import { multiply } from "mathjs"
+import { multiply, identity } from "mathjs"
 import { tRotYmatrix, tRotZmatrix } from "./geometry"
 import {
     LEG_POINT_TYPES_LIST,
@@ -94,9 +94,7 @@ class Linkage {
         pose = { alpha: 0, beta: 0, gamma: 0 },
         flags = { hasNoPoints: false }
     ) {
-        this.dimensions = dimensions
-        this.pose = pose
-        this.position = position
+        Object.assign(this, { dimensions, pose, position })
 
         if (flags.hasNoPoints) {
             return
@@ -104,6 +102,22 @@ class Linkage {
         // pointsMap maps position to actual point i.e
         // pointsMap["femurPoint"] = Vector(x, y, z, "rightMiddle-femurPoint", "0-2")
         this.pointsMap = this._computePoints(pose, originPoint)
+    }
+
+    get femurPoint() {
+        return this.pointsMap.femurPoint
+    }
+
+    get coxiaPoint() {
+        return this.pointsMap.coxiaPoint
+    }
+
+    get bodyContactPoint() {
+        return this.pointsMap.bodyContactPoint
+    }
+
+    get footTipPoint() {
+        return this.pointsMap.footTipPoint
     }
 
     get id() {
@@ -170,6 +184,11 @@ class Linkage {
     cloneTrot(transformMatrix) {
         return this.cloneTrotShift(transformMatrix, 0, 0, 0)
     }
+
+    cloneShift(tx, ty, tz) {
+        return this.cloneTrotShift(identity(4), tx, ty, tz)
+    }
+
     /* *
      * .............
      * structure of pointNameIdMap
