@@ -78,6 +78,22 @@ class App extends React.Component {
         })
     }
 
+    updatePlotWithHexapod = hexapod => {
+        const [data, layout] = getNewPlotParams(hexapod, this.state.plot.latestCameraView)
+        this.setState({
+            plot: {
+                ...this.state.plot,
+                data,
+                layout,
+                revisionCounter: this.state.plot.revisionCounter + 1,
+            },
+            hexapod: {
+                ...this.state.hexapod,
+                dimensions: hexapod.dimensions,
+                pose: hexapod.pose,
+            },
+        })
+    }
     updateDimensions = (name, value) => {
         const dimensions = { ...this.state.hexapod.dimensions, [name]: value }
         this.updatePlot(dimensions, this.state.hexapod.pose)
@@ -90,7 +106,7 @@ class App extends React.Component {
         const result = solveInverseKinematics(dimensions, newIkParams)
 
         if (result.obtainedSolution) {
-            this.updatePlot(dimensions, result.pose)
+            this.updatePlotWithHexapod(result.hexapod)
         }
 
         this.setState({ ikParams: newIkParams, message: result.message })
