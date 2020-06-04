@@ -1,36 +1,59 @@
 import { atan2 } from "mathjs"
-import Linkage from "../Linkage"
-import { POSITION_NAMES_LIST } from "../constants"
-import { DEFAULT_POSE } from "../../templates/hexapodParams"
+import { degrees } from "../geometry"
 
-const computeLegsList = (legDimensions, verticesList, pose = DEFAULT_POSE) =>
-    POSITION_NAMES_LIST.map(
-        (position, index) =>
-            new Linkage(legDimensions, position, verticesList[index], pose[position])
-    )
+/**
 
+mightTwist(legsOnGround)
+    params: list of legs that are known to touch the ground
+    returns: boolean
+        false if we are sure it won't twist
+        true if there's a possibility that it might twist
+
+given the starting pose is such that:
+    - all alphas are zero
+    - all foot tips are touching the ground
+
+then the hexapod will only twist if:
+    - ATLEAST three alphas of the legs touching the ground
+    - the point of contact of these legs are foot tips
+    - All the twist must be only in one directions
+      ie: the threes alphas are either all positive or all negative
+      (NOT a mix of both)
+
+It will definitely not twist if:
+    - If only two or less of the legs has an alpha !== 0
+    - less than three alphas are twisting towards one direction
+
+ **/
 const mightTwist = legsOnGround => {
-    // Because we are ALWAYS starting at a pose where
-    // all alphas are zero and
-    // all foot tips are touching the ground, then
-    // Hexapod will twist if three more alphas are non-zero
-    // and the corresponding legs have foot tips are on the ground
-    // The hexapod will only definitely NOT twist
-    // if only two or lest of the legs that's
-    // currently on the ground has alpha != 0
-    const didTwistCount = legsOnGround.reduce((didTwistCount, leg) => {
+    let negativeAlphaCount = 0
+    let positiveAlphaCount = 0
+
+    for (let i = 0; i < legsOnGround.length; i++) {
+        const leg = legsOnGround[i]
         const pointType = leg.maybeGroundContactPoint.name.split("-")[1]
-        const footTipOnGround = pointType !== "bodyContactPoint"
+
+        const footTipIsOnGround = pointType === "footTipPoint"
         const changedAlpha = leg.pose.alpha !== 0
-        return footTipOnGround && changedAlpha ? didTwistCount + 1 : didTwistCount
-    }, 0)
-    return didTwistCount >= 3
+
+        if (footTipIsOnGround && changedAlpha) {
+            leg.pose.alpha > 0 ? positiveAlphaCount++ : negativeAlphaCount++
+        }
+    }
+
+    return positiveAlphaCount >= 3 || negativeAlphaCount >= 3
 }
 
-const computeTwistAngle = (oldGroundContactPoints, newGroundContactPoints) => {
-    // Because we are ALWAYS starting at a pose where
-    // all alphas are zero and ground contacts are foot tips,
-    // let's find atleast one point that are the same before and after
+/* *
+
+complexTwist()
+
+Because we are ALWAYS starting at a pose where
+all alphas are zero and ground contacts are foot tips,
+let's find atleast one point that are the same before and after
+
+ * */
+const complexTwist = (oldGroundContactPoints, newGroundContactPoints) => {
     const newSamePoint = newGroundContactPoints.find(point => {
         const pointType = point.name.split("-")[1]
         return pointType === "footTipPoint"
@@ -48,55 +71,64 @@ const computeTwistAngle = (oldGroundContactPoints, newGroundContactPoints) => {
 
     const thetaRadians =
         atan2(oldSamePoint.y, oldSamePoint.x) - atan2(newSamePoint.y, newSamePoint.x)
-    const thetaDegrees = (thetaRadians * 180) / Math.PI
-    return thetaDegrees
+
+    return degrees(thetaRadians)
 }
 
-// Which point on each leg contacts the ground
-// when all angles are equal to zero
-const computeDefaultGroundContactPoints = (legDimensions, verticesList) =>
-    computeLegsList(legDimensions, verticesList).map(leg => leg.maybeGroundContactPoint)
+/**
 
-const complexTwist = (legsOnGroundWithoutGravity, verticesList) => {
-    const newGroundContactPoints = legsOnGroundWithoutGravity.map(
-        leg => leg.maybeGroundContactPoint
+simpleTwist()
+
+We twist in the condition that:
+  - All the legs pose has same alpha
+  - the ground contact points are either all femurPoints or all footTipPoints
+   if all femurPoints on ground, make sure bodyContactPoint.z != femurPoint.z
+    (ie  if hexapod body is not on the ground we should not twist)
+
+**/
+const simpleTwist = groundLegsNoGravity => {
+    const firstLeg = groundLegsNoGravity[0]
+
+    let mightTwist = groundLegsNoGravity.every(
+        leg => leg.pose.alpha === firstLeg.pose.alpha
     )
-    const oldGroundContactPoints = computeDefaultGroundContactPoints(
-        this.legDimensions,
-        verticesList
+
+    if (!mightTwist) {
+        return 0
+    }
+
+    const allPointTypes = groundLegsNoGravity.map(
+        leg => leg.maybeGroundContactPoint.name.split("-")[1]
     )
 
-    return computeTwistAngle(oldGroundContactPoints, newGroundContactPoints)
-}
+    const firstPointType = allPointTypes[0]
 
-const simpleTwist = legsOnGroundWithoutGravity => {
-    // we twist in the condition that
-    // 1. all the legs pose has same alpha
-    // 2. the ground contact points are either all femurPoints or all footTipPoints
-    //    if all femurPoints on ground, make sure bodyContactPoint.z != femurPoint.z
-    //     (ie  if hexapod body is not on the ground we should not twist)
-    const firstAlpha = legsOnGroundWithoutGravity[0].pose.alpha
-    const shouldTwist = legsOnGroundWithoutGravity.every(leg => {
-        if (leg.pose.alpha !== firstAlpha) {
-            return false
-        }
-
-        const pointType = leg.maybeGroundContactPoint.name.split("-")[1]
-
-        if (pointType === "footTipPoint") {
-            return true
-        }
-
-        if (pointType === "femurPoint") {
-            const hexapodBodyPlaneOnGround =
-                leg.pointsMap["bodyContactPoint"].z === leg.pointsMap["femurPoint"].z
-            return hexapodBodyPlaneOnGround ? false : true
-        }
-
-        return false
+    // if not all ground points are of the same type
+    mightTwist = allPointTypes.every(pointType => {
+        return pointType === firstPointType
     })
 
-    return !shouldTwist ? 0 : -firstAlpha
+    if (!mightTwist) {
+        return 0
+    }
+
+    // at this point, all ground points are of the same type
+    if (["coxiaPoint", "bodyContactPoint"].includes(firstPointType)) {
+        return 0
+    }
+
+    // at this point, all ground points are either ALL femurPoint or ALL footTipPoint
+    if (firstPointType === "femurPoint") {
+        const hexapodBodyPlaneOnGround =
+            firstLeg.pointsMap["bodyContactPoint"].z ===
+            firstLeg.pointsMap["femurPoint"].z
+
+        if (hexapodBodyPlaneOnGround) {
+            return 0
+        }
+    }
+
+    return -firstLeg.pose.alpha
 }
 
 export { complexTwist, mightTwist, simpleTwist }

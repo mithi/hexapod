@@ -1,11 +1,12 @@
 import { identity } from "mathjs"
 import Linkage from "./Linkage"
 import * as oSolver1 from "./solvers/orientSolverSpecific"
-import { simpleTwist } from "./solvers/twistSolver"
+import { simpleTwist, mightTwist, complexTwist } from "./solvers/twistSolver"
 import Hexagon from "./Hexagon"
 import { POSITION_NAMES_LIST } from "./constants"
 import { matrixToAlignVectorAtoB, tRotZmatrix } from "./geometry"
 import Vector from "./Vector"
+import { DEFAULT_POSE } from "../templates"
 
 const WORLD_AXES = {
     xAxis: new Vector(1, 0, 0, "worldXaxis"),
@@ -92,7 +93,7 @@ class VirtualHexapod {
         Object.assign(this, { dimensions, pose, twistAngle: 0 })
 
         const flatHexagon = new Hexagon(this.bodyDimensions)
-        const legsNoGravity = this._computeLegsList(flatHexagon.verticesList)
+        const legsNoGravity = this._computeLegsList(flatHexagon.verticesList, this.pose)
 
         if (flags.noGravity) {
             this._danglingHexapod(flatHexagon, legsNoGravity, flags.shiftedUp)
@@ -132,10 +133,26 @@ class VirtualHexapod {
             return
         }
 
-        // handles the case where all alpha angles uniformly twist
+        // .................
+        // STEP 3: Twist around the zAxis if you have to
+        // .................
         this.twistAngle = simpleTwist(solved.groundLegsNoGravity)
-        this._twist()
-        // we'll handle more complex types of twists soon...
+        if (this.twistAngle !== 0) {
+            this._twist()
+        }
+
+        if (mightTwist(solved.groundLegsNoGravity)) {
+            const oldPoints = this._computeLegsList(
+                flatHexagon.verticesList,
+                DEFAULT_POSE
+            ).map(leg => leg.maybeGroundContactPoint)
+            const newPoints = solved.groundLegsNoGravity.map(
+                leg => leg.maybeGroundContactPoint
+            )
+
+            this.twistAngle = complexTwist(oldPoints, newPoints)
+            this._twist()
+        }
     }
 
     get distanceFromGround() {
@@ -165,14 +182,14 @@ class VirtualHexapod {
         return { coxia, femur, tibia }
     }
 
-    _computeLegsList = verticesList =>
+    _computeLegsList = (verticesList, pose) =>
         POSITION_NAMES_LIST.map(
             (position, index) =>
                 new Linkage(
                     this.legDimensions,
                     position,
                     verticesList[index],
-                    this.pose[position]
+                    pose[position]
                 )
         )
 
