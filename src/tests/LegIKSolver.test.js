@@ -1,5 +1,5 @@
-import LegIKSolver from "../hexapod/solvers/LegIKSolver"
-import CAN_REACH_TARGET_CASES from "./cases/LegIKSolver/casesReachedTarget"
+import LinkageIKSolver from "../hexapod/solvers/LinkageIKSolver"
+import CAN_REACH_TARGET_CASES from "./cases/LinkageIKSolver/casesReachedTarget"
 
 /**
 
@@ -23,7 +23,7 @@ test.each(CAN_REACH_TARGET_CASES)(
         const { coxia, femur, tibia, summa, rho } = thisCase.params
 
         // prettier-ignore
-        const solved = new LegIKSolver("NoPositionSpecified").solve(
+        const solved = new LinkageIKSolver("NoPositionSpecified").solve(
             coxia, femur, tibia, summa, rho
         )
 

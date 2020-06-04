@@ -1,4 +1,11 @@
 /* *
+
+ALIASES:
+    p0: bodyContactPoint (local)
+    p1: coxaPoint (local)
+    p2: femurPoint (local)
+    p3: footTipPoint (local)
+
            p2x'
            /
           /          GIVEN:
@@ -49,19 +56,32 @@ import {
 } from "../geometry"
 
 class LinkageIKSolver {
+    legXaxis = new Vector(1, 0, 0, "legXaxis")
+    bodyContactPoint = new Vector(0, 0, 0, "localBodyContact")
+    coxia
+    femur
+    tibia
+    summa
+    rho
+    p1
+    targetFootTipPoint
+    parsVector
+    pars
+    beta
+    gamma
+    obtainedSolution
+    reachedTarget
+    message
     constructor(legPosition) {
         this.legPosition = legPosition
     }
 
     solve(coxia, femur, tibia, summa, rho) {
         Object.assign(this, { coxia, femur, tibia, summa, rho })
+        this.coxiaPoint = new Vector(coxia, 0, 0, "localCoxiaPoint")
+        this.targetFootTipPoint = this._computeTargetFootTipPoint()
 
-        this.legXaxis = new Vector(1, 0, 0, "legXaxis")
-        this.p0 = new Vector(0, 0, 0, "localBodyContact")
-        this.p1 = new Vector(coxia, 0, 0, "localCoxiaPoint")
-        this.targetP3 = this._computeLocalFootTip()
-
-        this.parsVector = vectorFromTo(this.p1, this.targetP3)
+        this.parsVector = vectorFromTo(this.coxiaPoint, this.targetFootTipPoint)
         this.pars = vectorLength(this.parsVector)
         isTriangle(this.pars, this.femur, this.tibia)
             ? this._handleCaseTriangleCanForm()
@@ -70,23 +90,24 @@ class LinkageIKSolver {
         return this
     }
 
-    _computeLocalFootTip() {
+    _computeTargetFootTipPoint() {
         const px = this.summa * Math.cos(radians(this.rho))
         const pz = -this.summa * Math.sin(radians(this.rho))
-        return new Vector(px, 0, pz, "TargetLocalFootTipPoint")
+        return new Vector(px, 0, pz, "targetLocalFootTipPoint")
     }
 
     _handleCaseTriangleCanForm() {
         this.theta = angleOppositeOfLastSide(this.femur, this.pars, this.tibia)
 
         this.phi = angleBetween(this.parsVector, this.legXaxis)
-        this.beta = this.targetP3.z < 0 ? this.theta - this.phi : this.theta + this.phi
+        this.beta =
+            this.targetFootTipPoint.z < 0 ? this.theta - this.phi : this.theta + this.phi
 
         this.epsi = angleOppositeOfLastSide(this.femur, this.tibia, this.pars)
 
-        const p2z = this.femur * Math.sin(radians(this.beta))
+        const femurPointZ = this.femur * Math.sin(radians(this.beta))
 
-        if (this.targetP3.z > p2z) {
+        if (this.targetFootTipPoint.z > femurPointZ) {
             this.obtainedSolution = false
             this.message = `${this.legPosition} | Impossible! Ground is blocking the path.`
             return
@@ -124,11 +145,11 @@ class LinkageIKSolver {
         //             .
         //              * targetp3
         //
-        this.gamma = 0
+        this.gamma = 90 // or 0 if you want it to curl up
         this.beta = -angleBetween(this.parsVector, this.legXaxis)
         this.obtainedSolution = true
         this.reachedTarget = false
-        this.message = `${this.legName} | Successful! But leg is stretched towards target ground point`
+        this.message = `${this.legName} | Successful! But the leg is stretched towards target ground point`
     }
 }
 
