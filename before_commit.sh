@@ -1,2 +1,3 @@
 prettier --config ./.prettierrc.yaml --write .
-yarn test --watchAll
+prettier --config ./.prettierrc.yaml --check .
+yarn test --watchAll=false
