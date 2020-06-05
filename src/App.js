@@ -63,19 +63,7 @@ class App extends React.Component {
 
     updatePlot = (dimensions, pose) => {
         const newHexapodModel = new VirtualHexapod(dimensions, pose)
-        const [data, layout] = getNewPlotParams(
-            newHexapodModel,
-            this.state.plot.latestCameraView
-        )
-        this.setState({
-            plot: {
-                ...this.state.plot,
-                data,
-                layout,
-                revisionCounter: this.state.plot.revisionCounter + 1,
-            },
-            hexapod: { ...this.state.hexapod, dimensions, pose },
-        })
+        this.updatePlotWithHexapod(newHexapodModel)
     }
 
     updatePlotWithHexapod = hexapod => {
