@@ -1,9 +1,10 @@
 import { atan2 } from "mathjs"
 import { degrees } from "../geometry"
+import { POSITION_NAME_TO_ID_MAP } from "../constants"
 
 /**
 
-mightTwist(legsOnGround)
+mightTwist()
     params: list of legs that are known to touch the ground
     returns: boolean
         false if we are sure it won't twist
@@ -48,29 +49,59 @@ const mightTwist = legsOnGround => {
 
 complexTwist()
 
-Because we are ALWAYS starting at a pose where
-all alphas are zero and ground contacts are foot tips,
-let's find atleast one point that are the same before and after
+Params:
 
+defaultPoints:
+    This is the list of the six points which are on the ground
+    when a hexapod of the same dimensions has the default pose
+    (all angles == 0 ), because it is that pose all of these points
+    are of type footTipPoint
+
+currentPoints:
+    This are the list of points (NOT necessarily six and
+    NOT necessarily footTipPoints) that will be on the ground
+    when a hexapod of this dimensions is on a specified pose
+    BUT is NOT rotated twisted along the zAxis
+
+Find:
+    The angle about the zAxis that the hexapod would rotate
+    assuming that the hexapod will start with the
+    default pose (which the defaultPoints would be the ground
+    contact points)
+    and will end at the specified pose (which would
+    result the currentPoints as the ground contact points
+    if the hexapod is not twisted about the zAxis).
+
+Algorithm:
+    Find a point that is on the ground at
+    the current pose, and at the default pose.
+    (samePointPosition)
+
+    Find the angle to align that currentPoint
+    to the defaultPoint.
+
+    (this means that the hexapod would have twisted about its zAxis
+    so that the point in the ground in this legPosition
+    is the same before (default pose) and after
+    (current pose) moving to the current pose)
  * */
-const complexTwist = (oldGroundContactPoints, newGroundContactPoints) => {
-    const newSamePoint = newGroundContactPoints.find(point => {
+const complexTwist = (currentPoints, defaultPoints) => {
+    const currentSamePoint = currentPoints.find(point => {
         const pointType = point.name.split("-")[1]
         return pointType === "footTipPoint"
     })
 
-    if (newSamePoint === undefined) {
+    if (currentSamePoint === undefined) {
         return 0
     }
 
-    const newPointPosition = newSamePoint.name.split("-")[0]
-    const oldSamePoint = oldGroundContactPoints.find(point => {
-        const oldPointPosition = point.name.split("-")[0]
-        return newPointPosition === oldPointPosition
-    })
+    const samePointPosition = currentSamePoint.name.split("-")[0]
+    const samePointIndex = POSITION_NAME_TO_ID_MAP[samePointPosition]
+    const defaultSamePoint = defaultPoints[samePointIndex]
 
     const thetaRadians =
-        atan2(oldSamePoint.y, oldSamePoint.x) - atan2(newSamePoint.y, newSamePoint.x)
+        atan2(defaultSamePoint.y, defaultSamePoint.x) -
+        atan2(defaultSamePoint.y, defaultSamePoint.x)
 
     return degrees(thetaRadians)
 }
