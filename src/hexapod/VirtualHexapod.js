@@ -38,14 +38,14 @@ const buildLegsList = (verticesList, pose, legDimensions) =>
 ............................
 
 Property types:
-{}: hash / object / dictionary
+{}: hash map / object / dictionary
 []: array / list
 ##: number
 "": string
 
 {} this.dimensions: {front, side, middle, coxia, femur, tibia}
 
-{} this.pose: A hash mapping the position name to a hash of three angles
+{} this.pose: A hash mapping the position name to a hash map of three angles
     which define the pose of the hexapod
     i.e. { rightMiddle: {alpha, beta, gamma },
            leftBack: { alpha, betam gamma },
@@ -62,8 +62,8 @@ Property types:
     Each leg contains the points that define that leg
     as well as other properties pertaining it (see Linkage class)
 
-[] this.legPositionsOnGround: A list of the leg positions that are known to be
-         in contact with the ground
+[] this.legPositionsOnGround: A list of the leg positions (strings)
+    that are known to be in contact with the ground
 
 {} this.localAxes: A hash containing three vectors defining the local
     coordinate frame of the hexapod wrt the world coordinate frame
@@ -72,7 +72,6 @@ Property types:
         yAxis: {x, y, z, name="hexapodYaxis", id="no-id"},
         zAxis: {x, y, z, name="hexapodZaxis", id="no-id"},
     }
-
 
 ## this.twistAngle: the angle the hexapod twist about its own z axis
 
@@ -99,7 +98,6 @@ Property types:
         { x, y, z, name="leftBack-footTipPoint", id=4-3},
          ...
     ]
-
 
  * * */
 class VirtualHexapod {
@@ -164,20 +162,7 @@ class VirtualHexapod {
         }
 
         if (mightTwist(solved.groundLegsNoGravity)) {
-            // These are the ground contact points when the hexapod
-            // is at default pose (ie all angles are zero)
-            // prettier-ignore
-            const defaultLegs = buildLegsList(
-                flatHexagon.verticesList, DEFAULT_POSE, this.legDimensions
-            )
-            const defaultPoints = defaultLegs.map(
-                leg => leg.cloneShift(0, 0, this.dimensions.tibia).maybeGroundContactPoint
-            )
-
-            this.twistAngle = complexTwist(this.groundContactPoints, defaultPoints)
-            if (this.twistAngle !== 0) {
-                this._twist()
-            }
+            this._handleComplexTwist(flatHexagon.verticesList)
         }
     }
 
@@ -233,6 +218,31 @@ class VirtualHexapod {
         clone.localAxes = this.localAxes
         clone.legPositionsOnGround = this.legPositionsOnGround
         return clone
+    }
+
+    _handleComplexTwist(verticesList) {
+        // prettier-ignore
+        const defaultLegs = buildLegsList(
+            verticesList, DEFAULT_POSE, this.legDimensions
+        )
+
+        // DefaultLegs: The list of legs when a hexapod
+        // of these dimensions is at the default pose
+        // (ie all angles are zero)
+        // DefaultPoints: the corresponding ground contact
+        // points of defaultLegs
+        const defaultPoints = defaultLegs.map(
+            leg => leg.cloneShift(0, 0, this.dimensions.tibia).maybeGroundContactPoint
+        )
+
+        // currentPoints: Where the ground contact points are currently
+        // given all the transformations we have done so far
+        const currentPoints = this.groundContactPoints
+        this.twistAngle = complexTwist(currentPoints, defaultPoints)
+
+        if (this.twistAngle !== 0) {
+            this._twist()
+        }
     }
 
     _twist() {
