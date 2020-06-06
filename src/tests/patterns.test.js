@@ -19,7 +19,7 @@
  * * * */
 import VirtualHexapod from "../hexapod/VirtualHexapod"
 import { POSITION_NAMES_LIST } from "../hexapod/constants"
-import { expectToBeEqualPoints } from "./helpers"
+import { expectToBeEqualPoints, expectVectorsToHaveSameXYZ } from "./helpers"
 import CASE1 from "./cases/VirtualHexapod/patterns/case1"
 
 const CASES = [CASE1]
@@ -39,7 +39,7 @@ test.each(CASES)("Should twist or not twist hexapod appropriately: %p", thisCase
         expectToBeEqualPoints(point, result.groundContactPointsList[index])
     )
     Object.keys(virtualHexapod.localAxes).forEach(axis =>
-        expectToBeEqualPoints(virtualHexapod.localAxes[axis], result.localAxes[axis])
+      expectVectorsToHaveSameXYZ(virtualHexapod.localAxes[axis], result.localAxes[axis])
     )
 
     expect(virtualHexapod.twistedAngle).toBe(result.twistedAngle)
