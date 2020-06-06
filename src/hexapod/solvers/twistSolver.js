@@ -120,11 +120,11 @@ We twist in the condition that:
 const simpleTwist = groundLegsNoGravity => {
     const firstLeg = groundLegsNoGravity[0]
 
-    let mightTwist = groundLegsNoGravity.every(
+    const allSameAlpha = groundLegsNoGravity.every(
         leg => leg.pose.alpha === firstLeg.pose.alpha
     )
 
-    if (!mightTwist) {
+    if (!allSameAlpha) {
         return 0
     }
 
@@ -134,12 +134,11 @@ const simpleTwist = groundLegsNoGravity => {
 
     const firstPointType = allPointTypes[0]
 
-    // if not all ground points are of the same type
-    mightTwist = allPointTypes.every(pointType => {
+    const allPointsSameType = allPointTypes.every(pointType => {
         return pointType === firstPointType
     })
 
-    if (!mightTwist) {
+    if (!allPointsSameType) {
         return 0
     }
 
@@ -151,8 +150,7 @@ const simpleTwist = groundLegsNoGravity => {
     // at this point, all ground points are either ALL femurPoint or ALL footTipPoint
     if (firstPointType === "femurPoint") {
         const hexapodBodyPlaneOnGround =
-            firstLeg.pointsMap["bodyContactPoint"].z ===
-            firstLeg.pointsMap["femurPoint"].z
+            firstLeg.bodyContactPoint.z === firstLeg.femurPoint.z
 
         if (hexapodBodyPlaneOnGround) {
             return 0

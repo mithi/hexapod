@@ -36,11 +36,9 @@ const solveInverseKinematics = (dimensions, rawIKparams) => {
     // How the hexapod looks like if the center of gravity is at (0, 0, _)
     const currentHexapod = new VirtualHexapod(dimensions, solvedHexapodParams.pose)
     const excludedPositions = solvedHexapodParams.legPositionsOffGround
-    //fixed
-    const currentGroundContactPoints = currentHexapod.groundContactPoints
 
     const pivots = findTwoPivotPoints(
-        currentGroundContactPoints,
+        currentHexapod.groundContactPoints,
         targets.groundContactPoints,
         excludedPositions
     )
@@ -227,17 +225,14 @@ const findTwoPivotPoints = (currentPoints, targetPoints, excludedPositions) => {
     }
 
     if (currentPoint2 === null) {
-        return {
-            foundTwoPoints: false
-        }
-    }
-    const pivots = {
-        points1: { target: targetPoint1, current: currentPoint1 },
-        points2: { target: targetPoint2, current: currentPoint2 },
-        foundTwoPoints: true
+        return { foundTwoPoints: false }
     }
 
-    return pivots
+    return {
+        points1: { target: targetPoint1, current: currentPoint1 },
+        points2: { target: targetPoint2, current: currentPoint2 },
+        foundTwoPoints: true,
+    }
 }
 
 export default solveInverseKinematics

@@ -30,18 +30,19 @@ const ADJACENT_LEG_ID_TRIOS = [
 const LEG_ID_TRIOS = [...SOME_LEG_ID_TRIOS, ...ADJACENT_LEG_ID_TRIOS]
 
 /* *
- * .................
- * COMPUTE ORIENTATION PROPERTIES (TYPE: SPECIFIC)
- * .................
- * Given: 1. A list of legs with known pose and
- *           its points wrt the hexapod body is known
- *        2. The legs which are in contact with the ground
- *           is known
- * Find: 1. Normal vector of the plane defined by foot tip of
- *          legs on the ground wrt the hexapod body plane
- *       2. Distance of the hexapod body plane to the plane
- *          defined by the foot tips on the ground
- *       3. Which legs are on the ground
+  .................
+  COMPUTE ORIENTATION PROPERTIES (TYPE: SPECIFIC)
+  .................
+
+  Given: 1. A list of legs with known pose and
+            its points wrt the hexapod body is known
+         2. The legs which are in contact with the ground
+            is known
+  Find: 1. Normal vector of the plane defined by foot tip of
+           legs on the ground wrt the hexapod body plane
+        2. Distance of the hexapod body plane to the plane
+           defined by the foot tips on the ground
+        3. Which legs are on the ground
  * */
 const computeOrientationProperties = legsNoGravity => {
     const result = computePlaneProperties(legsNoGravity)

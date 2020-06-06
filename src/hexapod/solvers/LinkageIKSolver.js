@@ -148,6 +148,7 @@ class LinkageIKSolver {
         this.gamma = 90
         // 90 to stretch
         // 0 to curl up
+        // 180 to face the sky
         this.beta = -angleBetween(this.parsVector, this.legXaxis)
         this.obtainedSolution = true
         this.reachedTarget = false
