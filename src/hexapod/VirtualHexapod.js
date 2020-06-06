@@ -110,11 +110,16 @@ class VirtualHexapod {
     twistAngle
     foundSolution
     constructor(dimensions, pose, flags = { hasNoPoints: false }) {
-        Object.assign(this, { dimensions, pose, twistAngle: 0 })
+        Object.assign(this, { dimensions, pose, twistAngle: 0, foundSolution: false})
 
         if (flags.hasNoPoints) {
             return
         }
+
+        // .................
+        // STEP 1: Build a flatHexagon and 'dangling' linkages
+        // then find new orientation of the body (new normal / nAxis)
+        // .................
 
         const flatHexagon = new Hexagon(this.bodyDimensions)
         // prettier-ignore
@@ -122,16 +127,15 @@ class VirtualHexapod {
             flatHexagon.verticesList, this.pose, this.legDimensions
         )
 
-        // .................
-        // STEP 1: Find new orientation of the body (new normal / nAxis).
-        // .................
+        // legsNoGravity are linkages have the correct pose but
+        // are not correctly oriented wrt the world
         const solved = oSolver1.computeOrientationProperties(legsNoGravity)
 
         if (solved === null) {
-            this.foundSolution = false // unstable pose
             this._danglingHexapod(flatHexagon, legsNoGravity)
             return
         }
+
         this.foundSolution = true
 
         // .................
@@ -147,20 +151,23 @@ class VirtualHexapod {
 
         this.legPositionsOnGround = solved.groundLegsNoGravity.map(leg => leg.position)
 
-        if (this.legs.every(leg => leg.pose.alpha === 0)) {
-            // hexapod will not twist about z axis
-            return
-        }
-
         // .................
         // STEP 3: Twist around the zAxis if you have to
         // .................
+
+        // case 1: hexapod will not twist about z axis
+        if (this.legs.every(leg => leg.pose.alpha === 0)) {
+            return
+        }
+
+        // case 2: When all alpha angles are the same for all legs
         this.twistAngle = simpleTwist(solved.groundLegsNoGravity)
         if (this.twistAngle !== 0) {
             this._twist()
             return
         }
 
+        // case 3: All other cases
         if (mightTwist(solved.groundLegsNoGravity)) {
             this._handleComplexTwist(flatHexagon.verticesList)
         }
@@ -201,23 +208,33 @@ class VirtualHexapod {
     }
 
     cloneTrot(transformMatrix) {
-        let clone = new VirtualHexapod(this.dimensions, this.pose, { hasNoPoints: true })
-        clone.body = this.body.cloneTrot(transformMatrix)
-        clone.legs = this.legs.map(leg => leg.cloneTrot(transformMatrix))
-        clone.legPositionsOnGround = this.legPositionsOnGround
-
-        // Note: Assumes that the transform matrix is a rotation transform only
-        clone.localAxes = transformLocalAxes(this.localAxes, transformMatrix)
-        return clone
+        // Note: transform matrix passed should be purely rotational
+        const body = this.body.cloneTrot(transformMatrix)
+        const legs = this.legs.map(leg => leg.cloneTrot(transformMatrix))
+        const localAxes = transformLocalAxes(this.localAxes, transformMatrix)
+        return this._buildClone(body, legs, localAxes)
     }
 
     cloneShift(tx, ty, tz) {
+        const body = this.body.cloneShift(tx, ty, tz)
+        const legs = this.legs.map(leg => leg.cloneShift(tx, ty, tz))
+        return this._buildClone(body, legs, this.localAxes)
+    }
+
+    _buildClone(body, legs, localAxes) {
+        // NOTE: Potential problem, after shifting and rotating the hexapod
+        // what if the hexapod and it's no longer have the same legPositionsOnGround?
+        // must handle this soon
         let clone = new VirtualHexapod(this.dimensions, this.pose, { hasNoPoints: true })
-        clone.body = this.body.cloneShift(tx, ty, tz)
-        clone.legs = this.legs.map(leg => leg.cloneShift(tx, ty, tz))
-        clone.localAxes = this.localAxes
-        clone.legPositionsOnGround = this.legPositionsOnGround
+        Object.assign(clone, {
+            body,
+            legs,
+            localAxes,
+            legPositionsOnGround: this.legPositionsOnGround,
+            foundSolution: this.foundSolution,
+        })
         return clone
+
     }
 
     _handleComplexTwist(verticesList) {
