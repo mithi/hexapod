@@ -62,7 +62,7 @@ Property types:
     Each leg contains the points that define that leg
     as well as other properties pertaining it (see Linkage class)
 
-[] this.legsPositionsOnGround: A list of the leg positions that are known to be
+[] this.legPositionsOnGround: A list of the leg positions that are known to be
          in contact with the ground
 
 {} this.localAxes: A hash containing three vectors defining the local
@@ -107,7 +107,7 @@ class VirtualHexapod {
     pose
     body
     legs
-    legsPositionsOnGround
+    legPositionsOnGround
     localAxes
     twistAngle
     foundSolution
@@ -147,7 +147,7 @@ class VirtualHexapod {
         this.body = flatHexagon.cloneTrotShift(transformMatrix, 0, 0, solved.height)
         this.localAxes = computeLocalAxes(transformMatrix)
 
-        this.legsPositionsOnGround = solved.groundLegsNoGravity.map(leg => leg.position)
+        this.legPositionsOnGround = solved.groundLegsNoGravity.map(leg => leg.position)
 
         if (this.legs.every(leg => leg.pose.alpha === 0)) {
             // hexapod will not twist about z axis
@@ -167,16 +167,17 @@ class VirtualHexapod {
             // These are the ground contact points when the hexapod
             // is at default pose (ie all angles are zero)
             // prettier-ignore
-
-            const defaultPoints = buildLegsList(
+            const defaultLegs = buildLegsList(
                 flatHexagon.verticesList, DEFAULT_POSE, this.legDimensions
-            ).map(
+            )
+            const defaultPoints = defaultLegs.map(
                 leg => leg.cloneShift(0, 0, this.dimensions.tibia).maybeGroundContactPoint
             )
 
-            const currentPoints = this.groundContactPoints
-            this.twistAngle = complexTwist(currentPoints, defaultPoints)
-            this._twist()
+            this.twistAngle = complexTwist(this.groundContactPoints, defaultPoints)
+            if (this.twistAngle !== 0) {
+                this._twist()
+            }
         }
     }
 
@@ -208,7 +209,7 @@ class VirtualHexapod {
     }
 
     get groundContactPoints() {
-        return this.legsPositionsOnGround.map(position => {
+        return this.legPositionsOnGround.map(position => {
             const index = POSITION_NAME_TO_ID_MAP[position]
             return this.legs[index].maybeGroundContactPoint
         })
@@ -218,7 +219,7 @@ class VirtualHexapod {
         let clone = new VirtualHexapod(this.dimensions, this.pose, { hasNoPoints: true })
         clone.body = this.body.cloneTrot(transformMatrix)
         clone.legs = this.legs.map(leg => leg.cloneTrot(transformMatrix))
-        clone.legsPositionsOnGround = this.legsPositionsOnGround
+        clone.legPositionsOnGround = this.legPositionsOnGround
 
         // Note: Assumes that the transform matrix is a rotation transform only
         clone.localAxes = transformLocalAxes(this.localAxes, transformMatrix)
@@ -230,7 +231,7 @@ class VirtualHexapod {
         clone.body = this.body.cloneShift(tx, ty, tz)
         clone.legs = this.legs.map(leg => leg.cloneShift(tx, ty, tz))
         clone.localAxes = this.localAxes
-        clone.legsPositionsOnGround = this.legsPositionsOnGround
+        clone.legPositionsOnGround = this.legPositionsOnGround
         return clone
     }
 
@@ -249,8 +250,7 @@ class VirtualHexapod {
             yAxis: new Vector(0, 1, 0, "hexapodYaxis"),
             zAxis: new Vector(0, 0, 1, "hexapodZaxis"),
         }
-       this.legsPositionsOnGround = []
-
+        this.legPositionsOnGround = []
     }
 }
 
