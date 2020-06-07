@@ -17,6 +17,7 @@ body {
     font-family: Consolas, Monaco, "Courier New", Menlo, monospace;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    margin-left: 0.3rem;
 }
 
 a {
@@ -58,15 +59,10 @@ p {
     font-weight: lighter;
 }
 
-.app {
-    display: flex;
-}
-
 .sidebar {
     min-width: 350px;
-    max-width: 375px;
     flex: 1;
-    height: 600px;
+    height: 625px;
     margin-right: 15px;
     box-sizing: border-box;
 }
@@ -81,15 +77,11 @@ p {
 
 .main {
     display: flex;
-    margin: 0 15px 0 15px;
-}
-
-.nav-footer {
-    min-height: 95px; /* A HACK for SAFARI*/
+    margin: 0 10px 0 10px;
 }
 
 .link-icon {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     margin: 0.2rem;
 }
 
@@ -98,10 +90,14 @@ p {
     font-size: 0.6rem;
 }
 
-.nav-footer-link {
-    font-size: 0.6rem;
-    margin: 1px;
-    padding: 0;
+.nav {
+    margin: 5px;
+    margin-bottom: 5px;
+}
+
+.footer {
+    background-color: rgb(34, 47, 62);
+    display: none;
 }
 
 p.sub-message {
@@ -145,8 +141,8 @@ input[type="number"] {
 }
 
 .border {
-    margin: 10px;
-    padding: 10px;
+    margin: 5px;
+    padding: 5px;
     border: 1px solid rgb(41, 128, 185);
     border-radius: 10px;
 }
@@ -314,17 +310,42 @@ input:checked + .toggle-switch-widget:before {
     .page-content {
         flex-grow: 0;
     }
+}
 
-    .nav-footer {
-        flex-direction: column;
-    }
-
-    .navbar {
-        display: none;
+@media screen and (max-height: 736px) {
+    .link-icon {
+        margin: 0.5rem;
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (orientation: portrait) {
+    .input {
+        font-size: 1rem;
+    }
+
+    .main {
+        flex-direction: column;
+        margin: 0;
+    }
+
+    .sidebar {
+        max-width: 600px;
+        width: 100%;
+        order: 1;
+        margin-right: 0;
+    }
+
+    .plot {
+        width: 100%;
+        height: 400px;
+        order: 0;
+        box-sizing: border-box;
+        margin: 0;
+    }
+
+}
+
+@media screen and (max-width: 667px) and (orientation: landscape) {
     .sidebar {
         max-width: 225px;
         min-width: 225px;
@@ -340,40 +361,12 @@ input:checked + .toggle-switch-widget:before {
         flex-grow: 0;
     }
 
-    .nav-footer {
-        flex-direction: column;
-    }
-}
-
-@media screen and (max-width: 550px) {
-    .input {
-        font-size: 1rem;
+    .footer {
+        display: flex;
+        margin-top: 2rem;
     }
 
-    .main {
-        flex-direction: column;
-    }
-
-    .sidebar {
-        width: 100%;
-        order: 1;
-        max-width: 550px;
-        margin-right: 0;
-    }
-
-    .plot {
-        width: 100%;
-        height: 400px;
-        order: 0;
-        box-sizing: border-box;
-        margin: 0;
-    }
-
-    .main {
-        margin: 0;
-    }
-
-    h2 {
-        font-size: 1.5rem;
+    .nav {
+        display: none;
     }
 }

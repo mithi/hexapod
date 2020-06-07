@@ -9,13 +9,7 @@ import {
     LAYOUT,
     CAMERA_VIEW,
 } from "./templates"
-import {
-    NavBar,
-    NavFooter,
-    HexapodPlot,
-    DimensionsWidget,
-    MessageBox,
-} from "./components"
+import { Nav, NavFooter, HexapodPlot, DimensionsWidget, MessageBox } from "./components"
 
 import {
     ForwardKinematicsPage,
@@ -182,19 +176,17 @@ class App extends React.Component {
     )
 
     render = () => (
-        <Router className="app">
-            <NavBar />
-            <div className="main">
+        <Router>
+            <Nav />
+            <div className="main content">
                 <div className="sidebar column-container cell">
-                    <div className="page-content">
-                        {this.mightShowDimensions()}
-                        {this.showPage()}
-                    </div>
+                    {this.mightShowDimensions()}
+                    {this.showPage()}
                     <MessageBox message={this.state.message} />
-                    <NavFooter />
                 </div>
                 {this.mightShowPlot()}
             </div>
+            <NavFooter />
         </Router>
     )
 }
