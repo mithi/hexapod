@@ -9,7 +9,14 @@ import {
     LAYOUT,
     CAMERA_VIEW,
 } from "./templates"
-import { Nav, NavDetailed, HexapodPlot, DimensionsWidget, MessageBox } from "./components"
+import {
+    PoseTable,
+    Nav,
+    NavDetailed,
+    HexapodPlot,
+    DimensionsWidget,
+    MessageBox,
+} from "./components"
 
 import {
     ForwardKinematicsPage,
@@ -137,6 +144,9 @@ class App extends React.Component {
 
     mightShowDetailedNav = () => (this.state.inHexapodPage ? <NavDetailed /> : null)
 
+    mightShowPoseTable = () =>
+        this.state.currentPage === "Inverse Kinematics" ? <PoseTable /> : null
+
     mightShowPlot = () => (
         <div className={this.state.inHexapodPage ? "plot border" : "no-display"}>
             <HexapodPlot
@@ -184,6 +194,7 @@ class App extends React.Component {
                 <div className="sidebar column-container cell">
                     {this.mightShowDimensions()}
                     {this.showPage()}
+                    {this.mightShowPoseTable()}
                 </div>
                 {this.mightShowPlot()}
             </div>
