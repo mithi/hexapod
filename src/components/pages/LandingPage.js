@@ -9,19 +9,20 @@ const landingPageMessage = `
 
 Solve (and visualize) [forward][1] and [inverse][2] kinematics purely on your browser!
 Built with [React][3], [Plotly][7], and [MathJS][4].
-This is a complete rewrite of the [original][6] one I wrote in Python 🐍. Since
-this has zero server-side computations (which means no round trip) it should be extremely fast!
+It's complete rewrite of the [one][6] I wrote in Python 🐍. Having
+zero server-side computations (no round trip), it should be extremely fast!
 
-I've been thinking of adding gait simulators and building more visualizers
-for other types of robot configurations (arms, drones, quadrupeds, and cars)
-and other robotics algorithms (model predictive control, kalman filters, path planning etc).
+I've been thinking of adding gaits and building more visualizers
+for other robot configurations (drones, quadrupeds etc)
+and robotics algorithms (mpc, ekf, etc).
 Consider buying me a [couple cups of coffee 🍵 🍵 🍵][5] to help me get
 motivated!
 
-If you have ideas on how to make the source code quality better, I'd love to hear it! 💙
-I only learned Javascript, css, and React to make this project,
-so I'm not yet that familiar with best practices. Algorithm optimizations, test additions,
-and bug fixes (big or small) would also be extremely appreciated. [Submit an issue or pull request][6].
+Algorithm optimizations, test additions, and bug fixes are welcome. [Submit an issue or pull request][6].
+Any contribution (big or small) particularly on improving the
+source code quality will be extremely appreciated. I only learned Javascript, css,
+and React to make this project, so I'm not yet that familiar with all the 
+best practices.
 
 ## Love, Mithi 💙
 
@@ -45,7 +46,9 @@ class LandingPage extends React.Component {
             <PageLink path="./inverse-kinematics/">
                 <div className="hexapod-img" />{" "}
             </PageLink>
-            <ReactMarkdown source={landingPageMessage} />
+            <div style={{ width: "100%" }}>
+                <ReactMarkdown source={landingPageMessage} />
+            </div>
             <NavDetailed />
         </>
     )

@@ -143,7 +143,7 @@ class VirtualHexapod {
         // .................
         // STEP 2: Rotate and shift legs and body given what we've solved
         // .................
-         // prettier-ignore
+        // prettier-ignore
         const transformMatrix = matrixToAlignVectorAtoB(
             solved.nAxis, DEFAULT_LOCAL_AXES.zAxis
         )

@@ -27,7 +27,7 @@ const Card = props => (
 const BasicLink = props => (
     <a
         href={props.path}
-        className={`link-icon ${props.className}`}
+        className={`link-icon ${props.className || ""}`}
         style={props.style}
         target="_blank"
         rel="noopener noreferrer"
@@ -37,7 +37,11 @@ const BasicLink = props => (
 )
 
 const PageLink = props => (
-    <Link to={props.path} className={`link-icon ${props.className}`} style={props.style}>
+    <Link
+        to={props.path}
+        className={`link-icon ${props.className || ""}`}
+        style={props.style}
+    >
         <span>{props.children}</span>
     </Link>
 )

@@ -18,7 +18,7 @@ const PATHS = [
 ]
 
 const NavContent = () => (
-    <ul className="row-container no-bullet">
+    <ul className="row-container no-bullet top-bar">
         <li key={URL_KOFI}>
             <BasicLink path={URL_KOFI}>{ICON_KOFI}</BasicLink>
         </li>
@@ -39,7 +39,7 @@ const NavContent = () => (
 )
 
 const NavDetailed = () => (
-    <ul className="column-container no-bullet">
+    <ul className="column-container no-bullet" id="nav">
         <li key={URL_KOFI}>
             <BasicLink path={URL_KOFI} className="text-link">
                 {ICON_KOFI} {URL_NAME_KOFI}
