@@ -11,6 +11,7 @@
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-icons": "^3.10.0",
+        "react-markdown": "^4.3.1",
         "react-plotly.js": "^2.4.0",
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",
