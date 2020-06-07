@@ -1,10 +1,10 @@
+import LinkageIKSolver from "./LinkageIKSolver"
 import {
     POSITION_NAMES_LIST,
     NUMBER_OF_LEGS,
     POSITION_NAME_TO_IS_LEFT_MAP,
     POSITION_NAME_TO_AXIS_ANGLE_MAP,
 } from "../constants"
-
 import {
     vectorFromTo,
     projectedVectorOntoPlane,
@@ -15,7 +15,6 @@ import {
     vectorLength,
     isCounterClockwise,
 } from "../geometry"
-import LinkageIKSolver from "./LinkageIKSolver"
 
 const hexapodNoSupport = legsNamesoffGround => {
     if (legsNamesoffGround.length < 3) {

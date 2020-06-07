@@ -39,7 +39,7 @@ test.each(CASES)("Should twist or not twist hexapod appropriately: %p", thisCase
         expectToBeEqualPoints(point, result.groundContactPointsList[index])
     )
     Object.keys(virtualHexapod.localAxes).forEach(axis =>
-      expectVectorsToHaveSameXYZ(virtualHexapod.localAxes[axis], result.localAxes[axis])
+        expectVectorsToHaveSameXYZ(virtualHexapod.localAxes[axis], result.localAxes[axis])
     )
 
     expect(virtualHexapod.twistedAngle).toBe(result.twistedAngle)

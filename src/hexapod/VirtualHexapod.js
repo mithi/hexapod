@@ -27,13 +27,8 @@ const transformLocalAxes = (localAxes, twistMatrix) => ({
 const buildLegsList = (bodyContactPoints, pose, legDimensions) =>
     POSITION_NAMES_LIST.map(
         (position, index) =>
-            new Linkage(
-                legDimensions,
-                position,
-                bodyContactPoints[index],
-                pose[position]
-            )
-        )
+            new Linkage(legDimensions, position, bodyContactPoints[index], pose[position])
+    )
 
 /* * *
 
@@ -130,6 +125,11 @@ class VirtualHexapod {
         const legsNoGravity = buildLegsList(
             flatHexagon.verticesList, this.pose, this.legDimensions
         )
+
+        // `solved` has:
+        // - new orientation of the body (nAxis)
+        // - which legs are on the ground (groundLegsNoGravity)
+        // - distance of center of gravity to the ground (height)
         const solved = oSolver1.computeOrientationProperties(legsNoGravity)
 
         if (solved === null) {
@@ -137,25 +137,22 @@ class VirtualHexapod {
             return
         }
 
-        // `solved` has:
-        // - new orientation of the body (nAxis)
-        // - which legs are on the ground (groundLegsNoGravity)
-        // - distance of center of gravity to the ground (height)
         this.foundSolution = true
+        this.legPositionsOnGround = solved.groundLegsNoGravity.map(leg => leg.position)
 
         // .................
         // STEP 2: Rotate and shift legs and body given what we've solved
         // .................
-
-        const transformMatrix = matrixToAlignVectorAtoB(solved.nAxis, DEFAULT_LOCAL_AXES.zAxis)
+         // prettier-ignore
+        const transformMatrix = matrixToAlignVectorAtoB(
+            solved.nAxis, DEFAULT_LOCAL_AXES.zAxis
+        )
 
         this.legs = legsNoGravity.map(leg =>
             leg.cloneTrotShift(transformMatrix, 0, 0, solved.height)
         )
         this.body = flatHexagon.cloneTrotShift(transformMatrix, 0, 0, solved.height)
         this.localAxes = transformLocalAxes(DEFAULT_LOCAL_AXES, transformMatrix)
-
-        this.legPositionsOnGround = solved.groundLegsNoGravity.map(leg => leg.position)
 
         // .................
         // STEP 3: Twist around the zAxis if you have to
@@ -224,9 +221,9 @@ class VirtualHexapod {
     }
 
     _buildClone(body, legs, localAxes) {
-        // IMPORTANT: Potential problem, after shifting and rotating the hexapod
-        // what if the hexapod and it's no longer have the same legPositionsOnGround?
-        // must handle this soon
+        // FIXME:: After shifting and/or rotating the hexapod
+        // We can no longer guarrantee that the legPositionsOnGround
+        // is the same as before must handle this soon
         let clone = new VirtualHexapod(this.dimensions, this.pose, { hasNoPoints: true })
         Object.assign(clone, {
             body,
@@ -276,7 +273,6 @@ class VirtualHexapod {
         this.localAxes = DEFAULT_LOCAL_AXES
         this.legPositionsOnGround = []
     }
-
 }
 
 export default VirtualHexapod
