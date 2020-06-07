@@ -21,7 +21,7 @@ import {
 class App extends React.Component {
     state = {
         currentPage: "Root",
-        shouldDisplayDimensionsAndPlot: false,
+        inHexapodPage: false,
         alerts: "",
         messages: "No message",
         ikParams: DEFAULT_IK_PARAMS,
@@ -41,12 +41,12 @@ class App extends React.Component {
 
     onPageLoad = pageName => {
         if (pageName === "Root") {
-            this.setState({ shouldDisplayDimensionsAndPlot: false })
+            this.setState({ inHexapodPage: false })
             return
         }
 
         this.setState({
-            shouldDisplayDimensionsAndPlot: true,
+            inHexapodPage: true,
             currentPage: pageName,
             ikParams: DEFAULT_IK_PARAMS,
             hexapod: { ...this.state.hexapod, pose: DEFAULT_POSE },
@@ -76,6 +76,7 @@ class App extends React.Component {
             },
         })
     }
+
     updateDimensions = (name, value) => {
         const dimensions = { ...this.state.hexapod.dimensions, [name]: value }
         this.updatePlot(dimensions, this.state.hexapod.pose)
@@ -124,19 +125,20 @@ class App extends React.Component {
     }
 
     mightShowDimensions = () =>
-        this.state.shouldDisplayDimensionsAndPlot ? (
+        this.state.inHexapodPage ? (
             <DimensionsWidget
                 dimensions={this.state.hexapod.dimensions}
                 onUpdate={this.updateDimensions}
             />
         ) : null
 
+    mightShowMessage = () =>
+        this.state.inHexapodPage ? <MessageBox message={this.state.message} /> : null
+
+    mightShowDetailedNav = () => (this.state.inHexapodPage ? <NavDetailed /> : null)
+
     mightShowPlot = () => (
-        <div
-            className={
-                this.state.shouldDisplayDimensionsAndPlot ? "plot border" : "no-display"
-            }
-        >
+        <div className={this.state.inHexapodPage ? "plot border" : "no-display"}>
             <HexapodPlot
                 data={this.state.plot.data}
                 layout={this.state.plot.layout}
@@ -182,11 +184,10 @@ class App extends React.Component {
                 <div className="sidebar column-container cell">
                     {this.mightShowDimensions()}
                     {this.showPage()}
-                    <MessageBox message={this.state.message} />
                 </div>
                 {this.mightShowPlot()}
             </div>
-            <NavDetailed />
+            {this.mightShowDetailedNav()}
         </Router>
     )
 }
