@@ -1,45 +1,66 @@
 import React from "react"
-import { BasicLink, PageLink } from "./generic/SmallWidgets"
+import { BasicLink, PageLink } from "./generic"
+import { FaGithubAlt } from "react-icons/fa"
+import { GrStatusGoodSmall } from "react-icons/gr"
 
 const URL_KOFI = "https://ko-fi.com/minimithi"
-const URL_SRC = "https://github.com/mithi/hexapod-robot-simulator"
-
+const URL_SRC = "https://github.com/mithi/hexapod"
 const ICON_KOFI = "🍵"
-const PATH_IK = "inverse-kinematics"
-const PATH_FK = "forward-kinematics"
-const PATH_LP = "leg-patterns"
-const PATH_ROOT = "/"
 
-const ICONS = ["🍵", "👾"]
-const URLS = [URL_KOFI, URL_SRC]
-const PATHS = [PATH_ROOT, PATH_FK, PATH_IK, PATH_LP]
+const URL_NAME_KOFI = "Buy me Ko-Fi"
+const URL_NAME_SRC = "Source Code"
+
+const PATHS = [
+    { path: "inverse-kinematics", name: "Inverse kinematics" },
+    { path: "forward-kinematics", name: "Forward kinematics" },
+    { path: "leg-patterns", name: "Leg Patterns" },
+    { path: "/", name: "Root" },
+]
 
 const NavContent = () => (
-    <>
-        {URLS.map((path, index) => (
-            <BasicLink
-                className="link-icon"
-                key={URL_KOFI}
-                path={path}
-                symbol={ICONS[index]}
-            />
+    <ul className="row-container no-bullet">
+        <li key={URL_KOFI}>
+            <BasicLink path={URL_KOFI}>{ICON_KOFI}</BasicLink>
+        </li>
+        <li key={URL_SRC}>
+            <BasicLink path={URL_SRC}>
+                <FaGithubAlt className="vertical-align" />
+            </BasicLink>
+        </li>
+
+        {PATHS.map((path, index) => (
+            <li key={index}>
+                <PageLink path={path.path}>
+                    <GrStatusGoodSmall className="small-icon" />
+                </PageLink>
+            </li>
         ))}
-        {PATHS.map(path => (
-            <PageLink key={path} path={path} symbol="●" />
+    </ul>
+)
+
+const NavDetailed = () => (
+    <ul className="column-container no-bullet">
+        <li key={URL_KOFI}>
+            <BasicLink path={URL_KOFI} className="text-link">
+                {ICON_KOFI} {URL_NAME_KOFI}
+            </BasicLink>
+        </li>
+        <li key={URL_SRC}>
+            <BasicLink path={URL_SRC} className="text-link">
+                <FaGithubAlt className="vertical-align" /> {URL_NAME_SRC}
+            </BasicLink>
+        </li>
+
+        {PATHS.map((path, index) => (
+            <li key={index}>
+                <PageLink path={path.path} className="text-link">
+                    <GrStatusGoodSmall className="small-icon" /> {path.name}
+                </PageLink>
+            </li>
         ))}
-    </>
+    </ul>
 )
 
-const NavFooter = () => (
-    <footer class="footer">
-        <NavContent />
-    </footer>
-)
+const Nav = () => <NavContent />
 
-const Nav = () => (
-    <div class="nav">
-        <NavContent />
-    </div>
-)
-
-export { Nav, NavFooter }
+export { Nav, NavDetailed }

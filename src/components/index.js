@@ -1,6 +1,6 @@
-import { Nav, NavFooter } from "./Nav"
+import { Nav, NavDetailed } from "./Nav"
 import HexapodPlot from "./HexapodPlot"
 import DimensionsWidget from "./DimensionsWidget"
 import MessageBox from "./generic/MessageBox"
 
-export { Nav, MessageBox, NavFooter, HexapodPlot, DimensionsWidget }
+export { Nav, NavDetailed, MessageBox, HexapodPlot, DimensionsWidget }

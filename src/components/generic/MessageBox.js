@@ -6,7 +6,7 @@ const MessageBox = props => {
             {item}
         </p>
     ))
-    return <div className="column-container border text">{newText}</div>
+    return <div className="message-box">{newText}</div>
 }
 
 export default MessageBox

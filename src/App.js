@@ -9,7 +9,7 @@ import {
     LAYOUT,
     CAMERA_VIEW,
 } from "./templates"
-import { Nav, NavFooter, HexapodPlot, DimensionsWidget, MessageBox } from "./components"
+import { Nav, NavDetailed, HexapodPlot, DimensionsWidget, MessageBox } from "./components"
 
 import {
     ForwardKinematicsPage,
@@ -186,7 +186,7 @@ class App extends React.Component {
                 </div>
                 {this.mightShowPlot()}
             </div>
-            <NavFooter />
+            <NavDetailed />
         </Router>
     )
 }
