@@ -1,4 +1,5 @@
 import Hexagon from "../hexapod/Hexagon"
+import { tRotXYZmatrix } from "../hexapod/geometry"
 import { expectToBeEqualPoints } from "./helpers"
 import CASE1 from "./cases/Hexagon/case1"
 
@@ -9,11 +10,11 @@ test.each(CASES)(
     thisCase => {
         const { rx, ry, rz, tx, ty, tz } = thisCase.params.transformParams
         const startHexagon = new Hexagon(thisCase.params.dimensions)
-
+        const transformMatrix = tRotXYZmatrix(rx, ry, rz)
         // prettier-ignore
         const testPoints = startHexagon
             .cloneShift(tx, ty, tz)
-            .cloneRotXYZ(rx, ry, rz).allPointsList
+            .cloneTrot(transformMatrix).allPointsList
 
         thisCase.result.points.forEach((expectedPoint, index) => {
             expectToBeEqualPoints(testPoints[index], expectedPoint)
