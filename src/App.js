@@ -49,7 +49,7 @@ class App extends React.Component {
 
     onPageLoad = pageName => {
         if (pageName === "Root") {
-            this.setState({ inHexapodPage: false })
+            this.setState({ inHexapodPage: false, currentPage: pageName })
             return
         }
 
