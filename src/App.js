@@ -29,8 +29,9 @@ class App extends React.Component {
     state = {
         currentPage: "Root",
         inHexapodPage: false,
+        showPoseMessage: true,
         alerts: "",
-        messages: "No message",
+        message: "No message",
         ikParams: DEFAULT_IK_PARAMS,
         patternParams: { alpha: 0, beta: 0, gamma: 0 },
         hexapod: {
@@ -97,6 +98,9 @@ class App extends React.Component {
 
         if (result.obtainedSolution) {
             this.updatePlotWithHexapod(result.hexapod)
+            this.setState({ showPoseMessage: true })
+        } else {
+            this.setState({ showPoseMessage: false })
         }
 
         this.setState({ ikParams: newIkParams, message: result.message })
@@ -131,6 +135,21 @@ class App extends React.Component {
         this.setState({ ...this.state, plot: plot })
     }
 
+    mightShowMessage = () =>
+        this.state.inHexapodPage ? <MessageBox message={this.state.message} /> : null
+
+    mightShowDetailedNav = () => (this.state.inHexapodPage ? <NavDetailed /> : null)
+
+    mightShowPoseTable = () => {
+        if (this.state.currentPage !== "Inverse Kinematics") {
+            return null
+        }
+
+        if (this.state.showPoseMessage) {
+            return <PoseTable pose={this.state.hexapod.pose} />
+        }
+    }
+
     mightShowDimensions = () =>
         this.state.inHexapodPage ? (
             <DimensionsWidget
@@ -138,14 +157,6 @@ class App extends React.Component {
                 onUpdate={this.updateDimensions}
             />
         ) : null
-
-    mightShowMessage = () =>
-        this.state.inHexapodPage ? <MessageBox message={this.state.message} /> : null
-
-    mightShowDetailedNav = () => (this.state.inHexapodPage ? <NavDetailed /> : null)
-
-    mightShowPoseTable = () =>
-        this.state.currentPage === "Inverse Kinematics" ? <PoseTable /> : null
 
     mightShowPlot = () => (
         <div className={this.state.inHexapodPage ? "plot border" : "no-display"}>
