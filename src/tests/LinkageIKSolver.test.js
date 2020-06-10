@@ -29,7 +29,7 @@ test.each(CAN_REACH_TARGET_CASES)(
 
         expect(solved.beta).toBeCloseTo(thisCase.result.beta)
         expect(solved.gamma).toBeCloseTo(thisCase.result.gamma)
-        expect(solved.obtainedSolution).toBe(thisCase.result.reachedTarget)
+        expect(solved.obtainedSolution).toBe(thisCase.result.obtainedSolution)
         expect(solved.reachedTarget).toBe(thisCase.result.reachedTarget)
     }
 )

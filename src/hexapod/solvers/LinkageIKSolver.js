@@ -55,87 +55,139 @@ import {
     isTriangle,
 } from "../geometry"
 
+
 class LinkageIKSolver {
-    legXaxis = new Vector(1, 0, 0, "legXaxis")
-    bodyContactPoint = new Vector(0, 0, 0, "localBodyContact")
-    coxia
-    femur
-    tibia
-    summa
-    rho
-    p1
-    targetFootTipPoint
-    parsVector
-    pars
-    beta
-    gamma
-    obtainedSolution
-    reachedTarget
-    message
+    vectors = {
+        legXaxis: new Vector(1, 0, 0, "legXaxis"),
+        parsVector: null,
+    }
+    points = {
+        bodyContactPoint: null,
+        coxiaPoint: null,
+        targetFootTipPoint: null,
+    }
+    dimensions = {
+        coxia: 0,
+        femur: 0,
+        tibia: 0,
+        summa: 0,
+        pars: 0,
+    }
+    angles = {
+        beta: null,
+        gamma: null,
+        rho: null,
+    }
+
+    info = {
+        legPosition: null,
+        obtainedSolution: false,
+        reachedTarget: false,
+        message: "Haven't solved anything yet",
+    }
+
     constructor(legPosition) {
-        this.legPosition = legPosition
+        this.info.legPosition = legPosition
     }
 
     solve(coxia, femur, tibia, summa, rho) {
-        Object.assign(this, { coxia, femur, tibia, summa, rho })
-        this.coxiaPoint = new Vector(coxia, 0, 0, "localCoxiaPoint")
-        this.targetFootTipPoint = this._computeTargetFootTipPoint()
+        this.angles.rho = rho
+        this.dimensions = { coxia, femur, tibia, summa }
+        const coxiaPoint = new Vector(coxia, 0, 0, "coxiaPoint")
+        const targetFootTipPoint = this._computeTargetFootTipPoint()
 
-        this.parsVector = vectorFromTo(this.coxiaPoint, this.targetFootTipPoint)
-        this.pars = vectorLength(this.parsVector)
-        isTriangle(this.pars, this.femur, this.tibia)
+        const parsVector = vectorFromTo(coxiaPoint, targetFootTipPoint)
+        const pars = vectorLength(parsVector)
+
+        this.dimensions.pars = pars
+        this.points = { ...this.points, coxiaPoint, targetFootTipPoint }
+        this.vectors = {...this.vectors, parsVector}
+
+        isTriangle(pars, femur, tibia)
             ? this._handleCaseTriangleCanForm()
             : this._handleEdgeCase()
 
         return this
     }
 
+    get legPosition() {
+        return this.info.legPosition
+    }
+
+    get beta() {
+        return this.angles.beta
+    }
+
+    get gamma() {
+        return this.angles.gamma
+    }
+
+    get obtainedSolution() {
+        return this.info.obtainedSolution
+    }
+
+    get reachedTarget() {
+        return this.info.reachedTarget
+    }
+
+    get message() {
+        return this.info.message
+    }
+
+    _buildInfo({obtainedSolution, reachedTarget, message}) {
+        this.info ={ obtainedSolution, reachedTarget, message }
+    }
     _computeTargetFootTipPoint() {
-        const px = this.summa * Math.cos(radians(this.rho))
-        const pz = -this.summa * Math.sin(radians(this.rho))
+        const [summa, rho] = [this.dimensions.summa, this.angles.rho]
+        const px = summa * Math.cos(radians(rho))
+        const pz = -summa * Math.sin(radians(rho))
         return new Vector(px, 0, pz, "targetLocalFootTipPoint")
     }
 
     _handleCaseTriangleCanForm() {
-        this.theta = angleOppositeOfLastSide(this.femur, this.pars, this.tibia)
+        const { femur, pars, tibia } = this.dimensions
+        const {parsVector, legXaxis} = this.vectors
+        const { targetFootTipPoint } = this.points
 
-        this.phi = angleBetween(this.parsVector, this.legXaxis)
-        this.beta =
-            this.targetFootTipPoint.z < 0 ? this.theta - this.phi : this.theta + this.phi
+        const theta = angleOppositeOfLastSide(femur, pars, tibia)
+        const phi = angleBetween(parsVector, legXaxis)
+        const beta = targetFootTipPoint.z < 0 ? theta - phi : theta + phi
 
-        this.epsi = angleOppositeOfLastSide(this.femur, this.tibia, this.pars)
+        const epsi = angleOppositeOfLastSide(femur, tibia, pars)
+        const femurPointZ = femur * Math.sin(radians(beta))
 
-        const femurPointZ = this.femur * Math.sin(radians(this.beta))
+        this.angles.beta = beta
 
-        if (this.targetFootTipPoint.z > femurPointZ) {
-            this.obtainedSolution = false
-            this.message = `${this.legPosition} | Impossible! Ground is blocking the path.`
+        if (targetFootTipPoint.z > femurPointZ) {
+            const message = `${this.legPosition} | Impossible! Ground is blocking the path. (can only reach it by digging in the ground)`
+            this._buildInfo({ obtainedSolution: false, reachedTarget: true, message})
             return
         }
 
-        this.gamma = this.epsi - 90
-        this.obtainedSolution = true
-        this.reachedTarget = true
-        this.message = "Successful!"
+        this.angles.gamma = epsi - 90
+
+        this._buildInfo({ obtainedSolution: true, reachedTarget: true, message: "Successful!"})
     }
 
     _handleEdgeCase() {
-        this.reachedTarget = false
+        const reachedTarget = false
+        const { pars, tibia, femur } = this.dimensions
 
-        if (this.pars + this.tibia < this.femur) {
-            this.obtainedSolution = false
-            this.message = `${this.legPosition} | Impossible! Femur is too long. `
+        if (pars + tibia < femur) {
+            const message = `${this.legPosition} | Impossible! Femur is too long. `
+            this._buildInfo({ obtainedSolution: false, reachedTarget, message })
             return
         }
 
-        if (this.pars + this.femur < this.tibia) {
-            this.obtainedSolution = false
-            this.message = `${this.legPosition} | Impossible! Tibia is too long. `
+        if (pars + femur < tibia) {
+            const message = `${this.legPosition} | Impossible! Tibia is too long.`
+            this._buildInfo({ obtainedSolution: false, reachedTarget, message })
             return
         }
 
-        // then this.femur + this.tibia < this.pars
+        // then femur + tibia < pars
         // stretch to try to reach it
+        // gamma => 90: stretch, 0: curl down, 180: curl up
         //
         // p0 *---* p1
         //         \
@@ -145,14 +197,16 @@ class LinkageIKSolver {
         //
         //              * targetp3
         //
-        this.gamma = 90
-        // 90 to stretch
-        // 0 to curl up
-        // 180 to face the sky
-        this.beta = -angleBetween(this.parsVector, this.legXaxis)
-        this.obtainedSolution = true
-        this.reachedTarget = false
-        this.message = `${this.legName} | Successful! But this leg won't reach the target ground point`
+
+        const { parsVector, legXaxis } = this.vectors
+        this.angles = {
+            ...this.angles,
+            beta:  -angleBetween(parsVector, legXaxis),
+            gamma: 0,
+        }
+
+        const message = `${this.legPosition} | Successful! But this leg won't reach the target ground point`
+        this._buildInfo({ obtainedSolution: true, reachedTarget, message })
     }
 }
 
