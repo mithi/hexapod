@@ -38,6 +38,7 @@ const LEG_ID_TRIOS = [...SOME_LEG_ID_TRIOS, ...ADJACENT_LEG_ID_TRIOS]
             its points wrt the hexapod body is known
          2. The legs which are in contact with the ground
             is known
+
   Find: 1. Normal vector of the plane defined by foot tip of
            legs on the ground wrt the hexapod body plane
         2. Distance of the hexapod body plane to the plane
@@ -55,6 +56,7 @@ const computeOrientationProperties = legsNoGravity => {
         result.normal,
         result.height
     )
+
     return { nAxis: result.normal, height: result.height, groundLegsNoGravity }
 }
 
@@ -98,16 +100,17 @@ const computeLegsOnGround = (legs, normal, height, tol = 1) => {
         const reversedPoints = legs[i].allPointsList.slice(1).reverse()
         for (let j = 0; j < reversedPoints.length; j++) {
             const _height = -dot(normal, reversedPoints[j])
-            if (Math.abs(height - _height) <= 2) {
+            if (Math.abs(height - _height) <= tol) {
                 legsOnGround.push(legs[i])
                 break
             }
         }
     }
+
     return legsOnGround
 }
 
-const noOtherLegLower = (normal, height, otherFootTips) => {
+const noOtherLegLower = (otherFootTips, normal, height) => {
     for (let i = 0; i < otherFootTips.length; i++) {
         if (isLower(otherFootTips[i], normal, height)) {
             return false
@@ -116,7 +119,7 @@ const noOtherLegLower = (normal, height, otherFootTips) => {
     return true
 }
 
-const isLower = (point, normal, height, tol = 0.001) => -dot(normal, point) > height + tol
+const isLower = (point, normal, height, tol = 1) => -dot(normal, point) > height + tol
 
 /* *
  * Determines stability of the pose.
