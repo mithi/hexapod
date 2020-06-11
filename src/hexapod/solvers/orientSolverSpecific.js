@@ -51,7 +51,7 @@ const computeOrientationProperties = legsNoGravity => {
     if (result === null) {
         return null
     }
-    const groundLegsNoGravity = computeLegsOnGround(
+    const groundLegsNoGravity = findLegsOnGround(
         legsNoGravity,
         result.normal,
         result.height
@@ -76,10 +76,25 @@ const computePlaneProperties = legs => {
             continue
         }
         const normal = getNormalofThreePoints(p0, p1, p2, "normalVector")
+
+        /* * *
+         *
+         *  cog *   ^ (normal_vector) ----
+         *       \  |                  |
+         *        \ |               -height
+         *         \|                  |
+         *          V p0 (foot_tip) ---v--
+         *
+         *  using p0, p1 or p2 should yield the same result
+         *
+         * * */
         const height = -dot(normal, p0)
         const otherTrio = [...Array(6).keys()].filter(j => !legTrio.includes(j))
         const otherFootTips = otherTrio.map(j => maybeGroundContactPoints[j])
-        if (noOtherLegLower(otherFootTips, normal, height)) {
+        const noOtherLegLower = otherFootTips.every(
+            footTip => !isLower(footTip, normal, height)
+        )
+        if (noOtherLegLower) {
             return { normal, height }
         }
     }
@@ -87,39 +102,30 @@ const computePlaneProperties = legs => {
     return null
 }
 
-const computeLegsOnGround = (legs, normal, height, tol = 1) => {
-    /* *
-     * each leg has four points (footTip, femurPoint, coxiaPoint, bodyContact)
-     * if one point of leg is at the same distance as the ground is
-     * from the hexapod's center of gravity, then this leg is on the ground
-     * */
-    let legsOnGround = []
-    for (let i = 0; i < legs.length; i++) {
-        // we check starting from the footTip to the bodyContact because
-        // the footTip is the one most likely to be on the ground
-        const reversedPoints = legs[i].allPointsList.slice(1).reverse()
-        for (let j = 0; j < reversedPoints.length; j++) {
-            const _height = -dot(normal, reversedPoints[j])
-            if (Math.abs(height - _height) <= tol) {
-                legsOnGround.push(legs[i])
-                break
-            }
-        }
-    }
-
-    return legsOnGround
-}
-
-const noOtherLegLower = (otherFootTips, normal, height) => {
-    for (let i = 0; i < otherFootTips.length; i++) {
-        if (isLower(otherFootTips[i], normal, height)) {
-            return false
-        }
-    }
-    return true
-}
-
 const isLower = (point, normal, height, tol = 1) => -dot(normal, point) > height + tol
+
+/* *
+
+   Each leg has four points (footTip, femurPoint, coxiaPoint, bodyContact).
+   If one point of leg is at the same distance as the ground is
+   from the hexapod's center of gravity, then this leg is on the ground.
+
+   Note: we check starting from the footTip to the bodyContact because
+   the footTip is the one most likely to be on the ground
+
+ * */
+const findLegsOnGround = (legs, normal, height) => {
+    return legs.reduce((legsOnGround, leg) => {
+        const reversedPoints = leg.allPointsList.slice(1).reverse()
+        const onGround = reversedPoints.some(point => sameHeight(point, normal, height))
+        return onGround ? [...legsOnGround, leg] : legsOnGround
+    }, [])
+}
+
+const sameHeight = (point, normal, height, tol = 1) => {
+    const _height = -dot(normal, point)
+    return Math.abs(height - _height) <= tol
+}
 
 /* *
  * Determines stability of the pose.
