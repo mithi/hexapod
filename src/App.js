@@ -30,8 +30,8 @@ class App extends React.Component {
         currentPage: "Root",
         inHexapodPage: false,
         showPoseMessage: true,
-        alerts: "",
-        message: "No message",
+        showInfo: false,
+        info: {},
         ikParams: DEFAULT_IK_PARAMS,
         patternParams: { alpha: 0, beta: 0, gamma: 0 },
         hexapod: {
@@ -49,9 +49,17 @@ class App extends React.Component {
 
     onPageLoad = pageName => {
         if (pageName === "Root") {
-            this.setState({ inHexapodPage: false, currentPage: pageName })
+            this.setState({
+                inHexapodPage: false,
+                currentPage: pageName,
+                showInfo: false,
+            })
             return
         }
+
+        pageName === "Inverse Kinematics"
+            ? this.setState({ showInfo: true })
+            : this.setState({ showInfo: false })
 
         this.setState({
             inHexapodPage: true,
@@ -98,12 +106,18 @@ class App extends React.Component {
 
         if (result.obtainedSolution) {
             this.updatePlotWithHexapod(result.hexapod)
-            this.setState({ showPoseMessage: true })
+            this.setState({
+                showPoseMessage: true,
+                info: { ...result.message, isAlert: false },
+            })
         } else {
-            this.setState({ showPoseMessage: false })
+            this.setState({
+                showPoseMessage: false,
+                info: { ...result.message, isAlert: true },
+            })
         }
 
-        this.setState({ ikParams: newIkParams, message: result.message })
+        this.setState({ ikParams: newIkParams })
     }
 
     updatePose = (name, angle, value) => {
@@ -136,7 +150,7 @@ class App extends React.Component {
     }
 
     mightShowMessage = () =>
-        this.state.inHexapodPage ? <MessageBox message={this.state.message} /> : null
+        this.state.showInfo ? <MessageBox info={this.state.info} /> : null
 
     mightShowDetailedNav = () => (this.state.inHexapodPage ? <NavDetailed /> : null)
 
@@ -206,6 +220,7 @@ class App extends React.Component {
                     {this.mightShowDimensions()}
                     {this.showPage()}
                     {this.mightShowPoseTable()}
+                    {this.mightShowMessage()}
                 </div>
                 {this.mightShowPlot()}
             </div>
