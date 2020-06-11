@@ -38,12 +38,12 @@ class Vector {
         return this.cloneTrot(transformMatrix).cloneShift(tx, ty, tz)
     }
 
-    toStringHTML() {
-        return `Vector (
-            ${this.x.toFixed(2)}, ${this.y.toFixed(2)}, ${this.z.toFixed(2)}, ${
-            this.name
-        }, ${this.id}
-        )`
+    toMarkdownString() {
+        const x = this.x.toFixed(2)
+        const y = this.y.toFixed(2)
+        const z = this.z.toFixed(2)
+        const markdownString = `${this.name}\n\n(x: ${x}, y: ${y}, z: ${z})`
+        return markdownString
     }
 }
 
