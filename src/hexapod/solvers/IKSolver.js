@@ -1,8 +1,9 @@
 import LinkageIKSolver from "./LinkageIKSolver"
+import HexapodSupportCheck from "./HexapodSupportCheck"
+import { IKMessage } from "./IKInfo"
 import {
     POSITION_NAMES_LIST,
     NUMBER_OF_LEGS,
-    POSITION_NAME_TO_IS_LEFT_MAP,
     POSITION_NAME_TO_AXIS_ANGLE_MAP,
 } from "../constants"
 import {
@@ -16,80 +17,14 @@ import {
     isCounterClockwise,
 } from "../geometry"
 
-const hexapodNoSupport = legsNamesoffGround => {
-    if (legsNamesoffGround.length < 3) {
-        return [false, "Not enough information"]
-    }
-
-    if (legsNamesoffGround.length >= 4) {
-        return [true, "too many legs off the floor"]
-    }
-
-    // leg count is exactly 3
-    const legLeftOrRight = legsNamesoffGround.map(
-        legPosition => POSITION_NAME_TO_IS_LEFT_MAP[legPosition]
-    )
-
-    if (legLeftOrRight.every(isLeft => !isLeft)) {
-        return [true, "All right legs are off the floor"]
-    }
-
-    if (legLeftOrRight.every(isLeft => isLeft)) {
-        return [true, "All left legs are off the floor"]
-    }
-
-    return [false, "Not enough information"]
-}
-
-const computeAlpha = (coxiaVector, legXaxisAngle, xAxis, zAxis) => {
-    const sign = isCounterClockwise(coxiaVector, xAxis, zAxis) ? -1 : 1
-    const alphaWrtHexapod = sign * angleBetween(coxiaVector, xAxis)
-    const alpha = (alphaWrtHexapod - legXaxisAngle) % 360
-    if (alpha > 180) {
-        return alpha - 360
-    }
-    if (alpha < -180) {
-        return alpha + 360
-    }
-    return alpha
-}
-
-const computeInitialLegProperties = (
-    bodyContactPoint,
-    groundContactPoint,
-    zAxis,
-    coxia
-) => {
-    const bodyToFootVector = vectorFromTo(bodyContactPoint, groundContactPoint)
-    const coxiaDirectionVector = projectedVectorOntoPlane(bodyToFootVector, zAxis)
-    const coxiaUnitVector = getUnitVector(coxiaDirectionVector)
-    const coxiaVector = scaleVector(coxiaUnitVector, coxia)
-    const coxiaPoint = addVectors(bodyContactPoint, coxiaVector)
-    const rho = angleBetween(coxiaUnitVector, bodyToFootVector)
-    const summa = vectorLength(bodyToFootVector)
-
-    return {
-        coxiaUnitVector,
-        coxiaVector,
-        coxiaPoint,
-        rho,
-        summa,
-    }
-}
 
 class IKSolver {
-    params
-    partialPose
-    pose
-    foundSolution
-    legPositionsOffGround
-    message
-    constructor() {
-        this.message = "Has not solved for anything yet."
-        this.foundSolution = null
-        this.legPositionsOffGround = []
-        this.partialPose = {}
-    }
+    params = {}
+    partialPose = {}
+    pose = {}
+    foundSolution = false
+    legPositionsOffGround = []
+    message = IKMessage.initialized
 
     solve(legDimensions, bodyContactPoints, groundContactPoints, axes) {
         // prettier-ignore
@@ -154,18 +89,18 @@ class IKSolver {
 
     _hasNoMoreSupport(legPosition) {
         this.legPositionsOffGround.push(legPosition)
-        const [noSupport, message] = hexapodNoSupport(this.legPositionsOffGround)
+        const [noSupport, reason] = HexapodSupportCheck.checkSupport(
+            this.legPositionsOffGround
+        )
         if (noSupport) {
-            this._finalizeFailure(message)
+            this._finalizeFailure(IKMessage.noSupport(reason, this.legPositionsOffGround))
             return true
         }
         return false
     }
 
     _handleBadPoint(point) {
-        this._finalizeFailure(
-            `Impossible! Atleast one point: \n${point.toStringHTML()}\n would be shoved on the ground.`
-        )
+        this._finalizeFailure(IKMessage.badPoint(point))
     }
 
     _hasBadVertex(bodyContactPoints) {
@@ -187,16 +122,48 @@ class IKSolver {
     _finalizeSuccess() {
         this.pose = this.partialPose
         this.foundSolution = true
-
         if (!this.hasLegsOffGround) {
-            this.message = "Success!"
+            this.message = IKMessage.success
             return
         }
 
-        this.message = this.legPositionsOffGround.reduce(
-            (message, legPosition) => message + `${legPosition}\n\n`,
-            "Successful! These legs are off the ground: \n\n"
-        )
+        this.message = IKMessage.successLegsOnAir(this.legPositionsOffGround)
+    }
+}
+
+const computeAlpha = (coxiaVector, legXaxisAngle, xAxis, zAxis) => {
+    const sign = isCounterClockwise(coxiaVector, xAxis, zAxis) ? -1 : 1
+    const alphaWrtHexapod = sign * angleBetween(coxiaVector, xAxis)
+    const alpha = (alphaWrtHexapod - legXaxisAngle) % 360
+    if (alpha > 180) {
+        return alpha - 360
+    }
+    if (alpha < -180) {
+        return alpha + 360
+    }
+    return alpha
+}
+
+const computeInitialLegProperties = (
+    bodyContactPoint,
+    groundContactPoint,
+    zAxis,
+    coxia
+) => {
+    const bodyToFootVector = vectorFromTo(bodyContactPoint, groundContactPoint)
+    const coxiaDirectionVector = projectedVectorOntoPlane(bodyToFootVector, zAxis)
+    const coxiaUnitVector = getUnitVector(coxiaDirectionVector)
+    const coxiaVector = scaleVector(coxiaUnitVector, coxia)
+    const coxiaPoint = addVectors(bodyContactPoint, coxiaVector)
+    const rho = angleBetween(coxiaUnitVector, bodyToFootVector)
+    const summa = vectorLength(bodyToFootVector)
+
+    return {
+        coxiaUnitVector,
+        coxiaVector,
+        coxiaPoint,
+        rho,
+        summa,
     }
 }
 

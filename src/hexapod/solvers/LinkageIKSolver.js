@@ -54,9 +54,10 @@ import {
     angleOppositeOfLastSide,
     isTriangle,
 } from "../geometry"
-
+import { LegIKInfo } from "./IKInfo"
 
 class LinkageIKSolver {
+    info // { legPosition, obtainedSolution, reachedTarget, message }
     vectors = {
         legXaxis: new Vector(1, 0, 0, "legXaxis"),
         parsVector: null,
@@ -79,15 +80,8 @@ class LinkageIKSolver {
         rho: null,
     }
 
-    info = {
-        legPosition: null,
-        obtainedSolution: false,
-        reachedTarget: false,
-        message: "Haven't solved anything yet",
-    }
-
     constructor(legPosition) {
-        this.info.legPosition = legPosition
+        this.info = LegIKInfo.initialized(legPosition)
     }
 
     solve(coxia, femur, tibia, summa, rho) {
@@ -101,7 +95,7 @@ class LinkageIKSolver {
 
         this.dimensions.pars = pars
         this.points = { ...this.points, coxiaPoint, targetFootTipPoint }
-        this.vectors = {...this.vectors, parsVector}
+        this.vectors = { ...this.vectors, parsVector }
 
         isTriangle(pars, femur, tibia)
             ? this._handleCaseTriangleCanForm()
@@ -134,9 +128,6 @@ class LinkageIKSolver {
         return this.info.message
     }
 
-    _buildInfo({obtainedSolution, reachedTarget, message}) {
-        this.info ={ obtainedSolution, reachedTarget, message }
-    }
     _computeTargetFootTipPoint() {
         const [summa, rho] = [this.dimensions.summa, this.angles.rho]
         const px = summa * Math.cos(radians(rho))
@@ -146,7 +137,7 @@ class LinkageIKSolver {
 
     _handleCaseTriangleCanForm() {
         const { femur, pars, tibia } = this.dimensions
-        const {parsVector, legXaxis} = this.vectors
+        const { parsVector, legXaxis } = this.vectors
         const { targetFootTipPoint } = this.points
 
         const theta = angleOppositeOfLastSide(femur, pars, tibia)
@@ -159,39 +150,32 @@ class LinkageIKSolver {
         this.angles.beta = beta
 
         if (targetFootTipPoint.z > femurPointZ) {
-            const message = `${this.legPosition} | Impossible! Ground is blocking the path. (can only reach it by digging in the ground)`
-            this._buildInfo({ obtainedSolution: false, reachedTarget: true, message})
+            this.info = LegIKInfo.blocked(this.legPosition)
             return
         }
 
         this.angles.gamma = epsi - 90
-
-        this._buildInfo({ obtainedSolution: true, reachedTarget: true, message: "Successful!"})
+        this.info = LegIKInfo.targetReached(this.legPosition)
     }
 
     _handleEdgeCase() {
-        const reachedTarget = false
         const { pars, tibia, femur } = this.dimensions
 
         if (pars + tibia < femur) {
-            const message = `${this.legPosition} | Impossible! Femur is too long. `
-            this._buildInfo({ obtainedSolution: false, reachedTarget, message })
+            this.info = LegIKInfo.femurTooLong(this.legPosition)
             return
         }
 
         if (pars + femur < tibia) {
-            const message = `${this.legPosition} | Impossible! Tibia is too long.`
-            this._buildInfo({ obtainedSolution: false, reachedTarget, message })
+            this.info = LegIKInfo.tibiaTooLong(this.legPosition)
             return
         }
 
         // then femur + tibia < pars
-        // stretch to try to reach it
-        // gamma => 90: stretch, 0: curl down, 180: curl up
         //
-        // p0 *---* p1
-        //         \
-        //          * p2
+        // p0 *---* p1     * stretch to try to reach target
+        //         \       * gamma:
+        //          * p2      => 90: stretch, 0: curl down, 180: curl up
         //           \
         //            * p3 (actual when stretched)
         //
@@ -201,12 +185,11 @@ class LinkageIKSolver {
         const { parsVector, legXaxis } = this.vectors
         this.angles = {
             ...this.angles,
-            beta:  -angleBetween(parsVector, legXaxis),
+            beta: -angleBetween(parsVector, legXaxis),
             gamma: 0,
         }
 
-        const message = `${this.legPosition} | Successful! But this leg won't reach the target ground point`
-        this._buildInfo({ obtainedSolution: true, reachedTarget, message })
+        this.info = LegIKInfo.targetNotReached(this.legPosition)
     }
 }
 
