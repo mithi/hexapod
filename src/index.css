@@ -56,11 +56,9 @@ h3 {
 
 p {
     font-size: 0.8rem;
-    line-height: 1.4rem;
+    line-height: 1.3rem;
     margin: 10px;
     font-weight: lighter;
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
 }
 
 ul.no-bullet {
@@ -71,6 +69,12 @@ ul.no-bullet {
 
 li {
     margin-top: 5px;
+    font-size: 0.75rem;
+}
+
+code {
+    font-size: 0.8rem;
+    font-family: Consolas, Monaco, "Courier New", Menlo, monospace;
 }
 
 table {
@@ -154,10 +158,17 @@ tr:hover {
     font-size: 0.75rem;
 }
 
-.sub-message {
-    font-size: 0.8rem;
-    margin: 1px;
-    padding: 1px;
+.message p {
+    margin: 0px;
+    font-size: 0.7rem;
+}
+
+.blue {
+    color: #00bcd4;
+}
+
+.red {
+    color: #e74c3c;
 }
 
 input {
