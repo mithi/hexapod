@@ -1,5 +1,4 @@
 import React from "react"
-import numeral from "numeral"
 import ReactMarkdown from "react-markdown"
 import { POSITION_NAMES_LIST } from "../hexapod"
 
@@ -17,9 +16,9 @@ const formatPose = pose =>
         const alias = POSITION_ALIAS[position]
         const { alpha, beta, gamma } = pose[position]
         formattedPose[alias] = {
-            alpha: numeral(alpha).format("+000.00"),
-            beta: numeral(beta).format("+000.00"),
-            gamma: numeral(gamma).format("+000.00"),
+            alpha: Number(alpha).toFixed(2),
+            beta: Number(beta).toFixed(2),
+            gamma: Number(gamma).toFixed(2),
         }
         return formattedPose
     }, {})
@@ -40,9 +39,7 @@ const poseMessage = ({ rm, rf, lf, lm, lb, rb }) => `
 const poseTable = ({ pose }) => {
     const formattedPose = formatPose(pose)
     const { rm, rf, lf, lm, lb, rb } = formattedPose
-    console.log(formattedPose)
     const markdownMessage = poseMessage({ rm, rf, lf, lm, lb, rb })
-    console.log(markdownMessage)
     return (
         <div className="table-container">
             <div className="cell" style={{}}>
