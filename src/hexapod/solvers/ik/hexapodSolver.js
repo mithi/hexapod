@@ -1,13 +1,13 @@
-import { POSITION_NAMES_LIST } from "../constants"
+import { POSITION_NAMES_LIST } from "../../constants"
 import {
     tRotZmatrix,
     tRotXYZmatrix,
     vectorFromTo,
     angleBetween,
     isCounterClockwise,
-} from "../geometry"
-import Vector from "../Vector"
-import VirtualHexapod from "../VirtualHexapod"
+} from "../../geometry"
+import Vector from "../../Vector"
+import VirtualHexapod from "../../VirtualHexapod"
 import IKSolver from "./IKSolver"
 
 const solveInverseKinematics = (dimensions, rawIKparams) => {

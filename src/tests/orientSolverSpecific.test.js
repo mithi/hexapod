@@ -1,6 +1,6 @@
 import Linkage from "../hexapod/Linkage"
 import { NUMBER_OF_LEGS, POSITION_NAMES_LIST } from "../hexapod/constants"
-import * as specificOSolver from "../hexapod/solvers/orientSolverSpecific"
+import * as specificOSolver from "../hexapod/solvers/orient/orientSolverSpecific"
 import CASE1 from "./cases/orientSolverSpecific/case1"
 import CASE2 from "./cases/orientSolverSpecific/case2"
 

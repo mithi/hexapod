@@ -1,4 +1,4 @@
-import LinkageIKSolver from "../hexapod/solvers/LinkageIKSolver"
+import LinkageIKSolver from "../hexapod/solvers/ik/LinkageIKSolver"
 import CAN_REACH_TARGET_CASES from "./cases/LinkageIKSolver/casesReachedTarget"
 
 /**

@@ -5,7 +5,7 @@ import {
     POSITION_NAMES_LIST,
     NUMBER_OF_LEGS,
     POSITION_NAME_TO_AXIS_ANGLE_MAP,
-} from "../constants"
+} from "../../constants"
 import {
     vectorFromTo,
     projectedVectorOntoPlane,
@@ -15,7 +15,7 @@ import {
     angleBetween,
     vectorLength,
     isCounterClockwise,
-} from "../geometry"
+} from "../../geometry"
 
 /* * *
 

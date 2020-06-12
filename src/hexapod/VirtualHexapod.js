@@ -1,5 +1,5 @@
 import Linkage from "./Linkage"
-import * as oSolver1 from "./solvers/orientSolverSpecific"
+import * as oSolver1 from "./solvers/orient/orientSolverSpecific"
 import { simpleTwist, mightTwist, complexTwist } from "./solvers/twistSolver"
 import Hexagon from "./Hexagon"
 import { POSITION_NAMES_LIST, POSITION_NAME_TO_ID_MAP } from "./constants"

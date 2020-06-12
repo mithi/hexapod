@@ -1,4 +1,4 @@
-import { dot, getNormalofThreePoints } from "../geometry"
+import { dot, getNormalofThreePoints } from "../../geometry"
 import {
     SOME_LEG_ID_TRIOS,
     ADJACENT_LEG_ID_TRIOS,
