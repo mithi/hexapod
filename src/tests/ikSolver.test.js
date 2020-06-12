@@ -1,4 +1,4 @@
-import solveInverseKinematics from "../hexapod/solvers/hexapodSolver"
+import solveInverseKinematics from "../hexapod/solvers/ik/hexapodSolver"
 import CASE1 from "./cases/ikSolver/case1"
 import { expectToBeEqualPose } from "./helpers"
 

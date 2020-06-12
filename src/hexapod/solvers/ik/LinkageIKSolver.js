@@ -45,7 +45,7 @@ p0   p1   p2   p3
           V p3z'
 
  * */
-import Vector from "../Vector"
+import Vector from "../../Vector"
 import {
     vectorFromTo,
     angleBetween,
@@ -53,7 +53,7 @@ import {
     vectorLength,
     angleOppositeOfLastSide,
     isTriangle,
-} from "../geometry"
+} from "../../geometry"
 import { LegIKInfo } from "./IKInfo"
 
 class LinkageIKSolver {

@@ -1,4 +1,4 @@
-import { isStable } from "../hexapod/solvers/orientSolverHelpers"
+import { isStable } from "../hexapod/solvers/orient/orientSolverHelpers"
 
 const cases = [
     {

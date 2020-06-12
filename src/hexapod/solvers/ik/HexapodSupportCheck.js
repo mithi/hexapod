@@ -1,4 +1,4 @@
-import { POSITION_NAME_TO_IS_LEFT_MAP } from "../constants"
+import { POSITION_NAME_TO_IS_LEFT_MAP } from "../../constants"
 
 class HexapodSupportCheck {
     static reason = {

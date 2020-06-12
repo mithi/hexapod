@@ -1,5 +1,5 @@
-import { dot, cross, vectorFromTo } from "../geometry"
-import Vector from "../Vector"
+import { dot, cross, vectorFromTo } from "../../geometry"
+import Vector from "../../Vector"
 
 const isLower = (point, normal, height, tol = 1) => -dot(normal, point) > height + tol
 
