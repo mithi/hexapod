@@ -29,6 +29,11 @@ class IKMessage {
         body: message,
     })
 
+    static alphaNotInRange = (position, alpha, maxAngle) => ({
+        subject: `Failure: Alpha not within range`,
+        body: `The alpha (${alpha}) computed for ${position} leg is not within -${maxAngle} < alpha < ${maxAngle}`,
+    })
+
     static initialized = {
         subject: "Initialized",
         body: "Has not solved for anything yet.",

@@ -25,6 +25,12 @@ const POSITION_NAMES_LIST = [
 
 const ANGLE_NAMES_LIST = ["alpha", "beta", "gamma"]
 
+const MAX_ANGLES = {
+    alpha: 90,
+    beta: 180,
+    gamma: 180,
+}
+
 /*
 
    hexapodYaxis
@@ -81,4 +87,5 @@ export {
     POSITION_NAMES_LIST,
     NUMBER_OF_LEGS,
     POSITION_NAME_TO_IS_LEFT_MAP,
+    MAX_ANGLES,
 }
