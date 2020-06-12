@@ -167,6 +167,7 @@ class LinkageIKSolver {
         }
 
         if (pars + femur < tibia) {
+            console.log(this.info.legPosition)
             this.info = LegIKInfo.tibiaTooLong(this.legPosition)
             return
         }

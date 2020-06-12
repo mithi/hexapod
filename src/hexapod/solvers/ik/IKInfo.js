@@ -24,8 +24,8 @@ class IKMessage {
     static bulletPoints = elements =>
         elements.reduce((msg, position) => msg + ` - ${position}\n`, "")
 
-    static badLeg = (position, message) => ({
-        subject: `Failure: Bad leg. ${position}`,
+    static badLeg = message => ({
+        subject: `Failure: Bad leg.`,
         body: message,
     })
 
@@ -72,7 +72,7 @@ class LegIKInfo {
     })
 
     static initialized = position => ({
-        legPosition: null,
+        legPosition: position,
         obtainedSolution: false,
         reachedTarget: false,
         message: `Haven't solved anything yet. (${position})`,
