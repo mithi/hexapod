@@ -221,9 +221,11 @@ class VirtualHexapod {
     }
 
     _buildClone(body, legs, localAxes) {
-        // FIXME:: After shifting and/or rotating the hexapod
+        // FIXME:
+        // After shifting and/or rotating the hexapod
         // We can no longer guarrantee that the legPositionsOnGround
-        // is the same as before must handle this soon
+        // is the same as before
+        // must handle this soon!!
         let clone = new VirtualHexapod(this.dimensions, this.pose, { hasNoPoints: true })
         Object.assign(clone, {
             body,

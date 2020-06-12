@@ -1,45 +1,38 @@
 /* * *
- * ..................
- *  Hexagon
- * ..................
- *
- *        |-f-|
- *        *---*---*--------   * f - front
- *       /    |    \     |    * s - side
- *      /     |     \    s    * m - middle
- *     /      |      \   |
- *    *------cog------* ---
- *     \      |      /|
- *      \     |     / |
- *       \    |    /  |
- *        *---*---*   |
- *            |       |
- *            |---m---|
- *
- *     y axis
- *     ^
- *     |
- *     |
- *     *-----> x axis
- *   (cog)
- *
- *
- *  Relative x-axis, for each attached linkage
- *
- *          x2          x1
- *           \   head  /
- *            *---*---*
- *           /    |    \
- *          /     |     \
- *         /      |      \
- *   x3 --*------cog------*-- x0
- *         \      |      /
- *          \     |     /
- *           \    |    /
- *            *---*---*
- *           /         \
- *         x4           x5
- *
+  ..................
+   Hexagon
+  ..................
+
+         |-f-|
+         *---*---*--------   * f - front
+        /    |    \     |    * s - side
+       /     |     \    s    * m - middle
+      /      |      \   |
+     *------cog------* ---
+      \      |      /|
+       \     |     / |
+        \    |    /  |
+         *---*---*   |
+             |       |
+             |---m---|
+
+
+      (leftFront)     (rightFront)
+           v2          v1
+            \   head  /
+             *---*---*
+            /    |    \
+  (left    /     |     \
+  Middle) /      |      \
+    v3 --*------cog------*-- v0 (rightMiddle)
+          \      |      /
+           \     |     /
+            \    |    /
+             *---*---*
+            /         \
+          v4           v5
+       (leftBack)   (rightBack)
+
  * * */
 import { POSITION_NAMES_LIST } from "./constants"
 import Vector from "./Vector"
