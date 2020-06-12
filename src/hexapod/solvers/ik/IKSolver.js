@@ -132,7 +132,8 @@ class IKSolver {
                 .solve(coxia, femur, tibia, known.summa, known.rho)
 
             if (!solvedLegParams.obtainedSolution) {
-                this._finalizeFailure(solvedLegParams.message)
+                const message = IKMessage.badLeg(solvedLegParams.message)
+                this._finalizeFailure(message)
                 return this
             }
 
@@ -162,7 +163,8 @@ class IKSolver {
             this.legPositionsOffGround
         )
         if (noSupport) {
-            this._finalizeFailure(IKMessage.noSupport(reason, this.legPositionsOffGround))
+            const message = IKMessage.noSupport(reason, this.legPositionsOffGround)
+            this._finalizeFailure(message)
             return true
         }
         return false
