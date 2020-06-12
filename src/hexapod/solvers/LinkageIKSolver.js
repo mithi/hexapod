@@ -27,7 +27,7 @@ legZaxis              * (pars) distance from p1 to p3
                       * epsi: angle between
                             -> p2 to p1 and p2 to p3
 
-FIND: (counter clockwise is  positive)
+FIND: (counter clockwise is positive)
   * beta: Angle betweenlegXaxis and p1 to p2
           beta > 0 if p1 to p2 is above legXaxis
           beta < 0 if p1 to p2 is below the legXaxis

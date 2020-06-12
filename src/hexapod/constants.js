@@ -25,6 +25,34 @@ const POSITION_NAMES_LIST = [
 
 const ANGLE_NAMES_LIST = ["alpha", "beta", "gamma"]
 
+/*
+
+   hexapodYaxis
+       ^
+       |
+       |
+       *-----> hexapodXaxis
+      / (cog)
+     /
+  hexapodZaxis
+
+  Relative x-axis, for each attached linkage
+
+  (+135)  x2          x1 (+45)
+           \   head  /
+            *---*---*
+           /    |    \
+          /     |     \
+ (+180)  /      |      \
+   x3 --*------cog------*-- x0 (+0)
+         \      |      /
+          \     |     /
+           \    |    /
+            *---*---*
+           /         \
+         x4           x5
+      (+225)        (+315)
+ */
 const POSITION_NAME_TO_AXIS_ANGLE_MAP = {
     rightMiddle: 0,
     rightFront: 45,
