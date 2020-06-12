@@ -1,16 +1,18 @@
-import Linkage from "./Linkage"
-import * as oSolver1 from "./solvers/orient/orientSolverSpecific"
-import { simpleTwist, mightTwist, complexTwist } from "./solvers/twistSolver"
-import Hexagon from "./Hexagon"
 import { POSITION_NAMES_LIST, POSITION_NAME_TO_ID_MAP } from "./constants"
 import { matrixToAlignVectorAtoB, tRotZmatrix } from "./geometry"
-import Vector from "./Vector"
 import { DEFAULT_POSE } from "../templates"
 
+import Vector from "./Vector"
+import Hexagon from "./Hexagon"
+import Linkage from "./Linkage"
+
+import * as oSolver1 from "./solvers/orient/orientSolverSpecific"
+import { simpleTwist, mightTwist, complexTwist } from "./solvers/twistSolver"
+
 const DEFAULT_LOCAL_AXES = {
-    xAxis: new Vector(1, 0, 0, "worldXaxis"),
-    yAxis: new Vector(0, 1, 0, "worldYaxis"),
-    zAxis: new Vector(0, 0, 1, "worldZaxis"),
+    xAxis: new Vector(1, 0, 0, "hexapodXaxis"),
+    yAxis: new Vector(0, 1, 0, "hexapodYaxis"),
+    zAxis: new Vector(0, 0, 1, "hexapodZaxis"),
 }
 
 const transformLocalAxes = (localAxes, twistMatrix) => ({
@@ -143,6 +145,7 @@ class VirtualHexapod {
         // .................
         // STEP 2: Rotate and shift legs and body given what we've solved
         // .................
+
         // prettier-ignore
         const transformMatrix = matrixToAlignVectorAtoB(
             solved.nAxis, DEFAULT_LOCAL_AXES.zAxis
