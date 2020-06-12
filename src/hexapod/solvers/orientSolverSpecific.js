@@ -26,7 +26,6 @@ const ADJACENT_LEG_ID_TRIOS = [
     [0, 4, 5],
     [0, 1, 5],
 ]
-
 const LEG_ID_TRIOS = [...SOME_LEG_ID_TRIOS, ...ADJACENT_LEG_ID_TRIOS]
 
 /* *
@@ -85,15 +84,18 @@ const computePlaneProperties = legs => {
          *         \|                  |
          *          V p0 (foot_tip) ---v--
          *
-         *  using p0, p1 or p2 should yield the same result
+         *  using p0, p1 or p2 should yield the same height
          *
          * * */
         const height = -dot(normal, p0)
+
         const otherTrio = [...Array(6).keys()].filter(j => !legTrio.includes(j))
         const otherFootTips = otherTrio.map(j => maybeGroundContactPoints[j])
+
         const noOtherLegLower = otherFootTips.every(
             footTip => !isLower(footTip, normal, height)
         )
+
         if (noOtherLegLower) {
             return { normal, height }
         }
@@ -138,7 +140,7 @@ const isStable = (p0, p1, p2, tol = 0.001) => {
 
     const u = vectorFromTo(p0, p1)
     const v = vectorFromTo(p0, p2)
-    const w = vectorFromTo(p1, cog)
+    const w = vectorFromTo(p0, cog)
     const n = cross(u, v)
     const n2 = dot(n, n)
 
@@ -146,14 +148,15 @@ const isStable = (p0, p1, p2, tol = 0.001) => {
     // cogProjected = alpha * p0 + beta * p1 + gamma * p2
 
     const beta = dot(cross(u, w), n) / n2
-    const gamma = dot(cross(u, v), n) / n2
+    const gamma = dot(cross(w, v), n) / n2
     const alpha = 1 - beta - gamma
 
     const minVal = -tol
     const maxVal = 1 + tol
-    const cond0 = minVal <= alpha <= maxVal
-    const cond1 = minVal <= beta <= maxVal
-    const cond2 = minVal <= gamma <= maxVal
+
+    const cond0 = minVal <= alpha && alpha <= maxVal
+    const cond1 = minVal <= beta && beta <= maxVal
+    const cond2 = minVal <= gamma && gamma <= maxVal
 
     return cond0 && cond1 && cond2
 }
