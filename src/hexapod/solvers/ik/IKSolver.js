@@ -5,6 +5,7 @@ import {
     POSITION_NAMES_LIST,
     NUMBER_OF_LEGS,
     POSITION_NAME_TO_AXIS_ANGLE_MAP,
+    MAX_ANGLES,
 } from "../../constants"
 import {
     vectorFromTo,
@@ -127,13 +128,16 @@ class IKSolver {
                 known.coxiaUnitVector, legXaxisAngle, axes.xAxis, axes.zAxis
             )
 
+            if (Math.abs(alpha) > MAX_ANGLES.alpha) {
+                this._finalizeFailure(IKMessage.alphaNotInRange(alpha, MAX_ANGLES.alpha))
+            }
+
             // prettier-ignore
             const solvedLegParams = new LinkageIKSolver(legPosition)
                 .solve(coxia, femur, tibia, known.summa, known.rho)
 
             if (!solvedLegParams.obtainedSolution) {
-                const message = IKMessage.badLeg(solvedLegParams.message)
-                this._finalizeFailure(message)
+                this._finalizeFailure(IKMessage.badLeg(solvedLegParams.message))
                 return this
             }
 
