@@ -57,9 +57,7 @@ class App extends React.Component {
             return
         }
 
-        pageName === "Inverse Kinematics"
-            ? this.setState({ showInfo: true })
-            : this.setState({ showInfo: false })
+        this.setState({ showInfo: false })
 
         this.setState({
             inHexapodPage: true,
@@ -108,11 +106,13 @@ class App extends React.Component {
             this.updatePlotWithHexapod(result.hexapod)
             this.setState({
                 showPoseMessage: true,
+                showInfo: false,
                 info: { ...result.message, isAlert: false },
             })
         } else {
             this.setState({
                 showPoseMessage: false,
+                showInfo: true,
                 info: { ...result.message, isAlert: true },
             })
         }
