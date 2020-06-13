@@ -27,6 +27,7 @@ import {
 
 class App extends React.Component {
     state = {
+
         currentPage: "Root",
         inHexapodPage: false,
         showPoseMessage: true,
@@ -140,7 +141,7 @@ class App extends React.Component {
     mightShowDimensions = () =>
         this.state.inHexapodPage ? (
             <DimensionsWidget
-                params={{ dimensions: this.state.hexapodParams.dimensions }}
+                dimensions={this.state.hexapodParams.dimensions}
                 onUpdate={this.updateDimensions}
             />
         ) : null
@@ -163,7 +164,7 @@ class App extends React.Component {
             </Route>
             <Route path="/forward-kinematics">
                 <ForwardKinematicsPage
-                    params={{ pose: this.state.hexapodParams.pose }}
+                    params={this.state.hexapodParams.pose}
                     onUpdate={this.updatePose}
                     onMount={this.onPageLoad}
                 />
@@ -180,7 +181,7 @@ class App extends React.Component {
             </Route>
             <Route path="/leg-patterns">
                 <LegPatternPage
-                    params={{ patternPose: this.state.patternParams }}
+                    params={this.state.patternParams}
                     onUpdate={this.updatePatternPose}
                     onMount={this.onPageLoad}
                 />
