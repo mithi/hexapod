@@ -69,6 +69,12 @@ class App extends React.Component {
         this.updatePlot(this.state.hexapod.dimensions, DEFAULT_POSE)
     }
 
+    reset = name => {
+        if (name === "Dimensions") {
+            this.updatePlot(DEFAULT_DIMENSIONS, this.state.hexapod.pose)
+        }
+    }
+
     /* * * * * * * * * * * * * *
      * Handle plot update
      * * * * * * * * * * * * * */
@@ -105,6 +111,11 @@ class App extends React.Component {
      * Handle individual input fields update
      * * * * * * * * * * * * * */
 
+    updateDimensions = (name, value) => {
+        const dimensions = { ...this.state.hexapod.dimensions, [name]: value }
+        this.updatePlot(dimensions, this.state.hexapod.pose)
+    }
+
     updateIkParams = (name, value) => {
         const newIkParams = { ...this.state.ikParams, [name]: value }
 
@@ -128,8 +139,6 @@ class App extends React.Component {
 
         this.setState({ ikParams: newIkParams })
     }
-
-    updateDimensions = dimensions => this.updatePlot(dimensions, this.state.hexapod.pose)
 
     updatePose = pose => this.updatePlot(this.state.hexapod.dimensions, pose)
 
