@@ -4,6 +4,7 @@ import { VirtualHexapod, getNewPlotParams } from "./hexapod"
 import {
     DEFAULT_DIMENSIONS,
     DEFAULT_POSE,
+    DEFAULT_PATTERN_PARAMS,
     DEFAULT_IK_PARAMS,
     DATA,
     LAYOUT,
@@ -34,7 +35,7 @@ class App extends React.Component {
         info: {},
 
         ikParams: DEFAULT_IK_PARAMS,
-        patternParams: { alpha: 0, beta: 0, gamma: 0 },
+        patternParams: DEFAULT_PATTERN_PARAMS,
 
         hexapodParams: {
             dimensions: DEFAULT_DIMENSIONS,
@@ -48,6 +49,10 @@ class App extends React.Component {
             revisionCounter: 0,
         },
     }
+
+    /* * * * * * * * * * * * * *
+     * Handle page load
+     * * * * * * * * * * * * * */
 
     onPageLoad = pageName => {
         if (pageName === "Root") {
@@ -66,7 +71,7 @@ class App extends React.Component {
             showInfo: false,
             showPoseMessage: false,
             ikParams: DEFAULT_IK_PARAMS,
-            patternParams: { alpha: 0, beta: 0, gamma: 0 },
+            patternParams: DEFAULT_PATTERN_PARAMS,
             hexapodParams: { ...this.state.hexapodParams, pose: DEFAULT_POSE },
         })
         this.updatePlot(this.state.hexapodParams.dimensions, DEFAULT_POSE)
@@ -127,6 +132,7 @@ class App extends React.Component {
     /* * * * * * * * * * * * * *
      * Control display of widgets
      * * * * * * * * * * * * * */
+
     mightShowMessage = () =>
         this.state.showInfo ? <MessageBox info={this.state.info} /> : null
 
@@ -138,13 +144,14 @@ class App extends React.Component {
         }
     }
 
-    mightShowDimensions = () =>
-        this.state.inHexapodPage ? (
-            <DimensionsWidget
+    mightShowDimensions = () => {
+        if (this.state.inHexapodPage) {
+            return <DimensionsWidget
                 params={{ dimensions: this.state.hexapodParams.dimensions }}
                 onUpdate={this.updateDimensions}
             />
-        ) : null
+        }
+    }
 
     mightShowPlot = () => (
         <div className={this.state.inHexapodPage ? "plot border" : "no-display"}>
@@ -156,6 +163,10 @@ class App extends React.Component {
             />
         </div>
     )
+
+    /* * * * * * * * * * * * * *
+     * Pages
+     * * * * * * * * * * * * * */
 
     showPage = () => (
         <Switch>
@@ -188,6 +199,10 @@ class App extends React.Component {
             </Route>
         </Switch>
     )
+
+    /* * * * * * * * * * * * * *
+     * Layout
+     * * * * * * * * * * * * * */
 
     render = () => (
         <Router>

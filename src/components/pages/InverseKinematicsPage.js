@@ -1,6 +1,21 @@
 import React, { Component } from "react"
-import { sliderList, Card } from "../generic"
+import { sliderList, Card, BasicButton } from "../generic"
 import { solveInverseKinematics } from "../../hexapod"
+import { DEFAULT_IK_PARAMS } from "../../templates"
+
+const _updatedStateParamsUnsolved = (ikParams, message) => ({
+    ikParams,
+    showPoseMessage: false,
+    showInfo: true,
+    info: { ...message, isAlert: true },
+})
+
+const _updatedStateParamsSolved = (ikParams, message) => ({
+    ikParams,
+    showPoseMessage: true,
+    showInfo: false,
+    info: { ...message, isAlert: false },
+})
 
 class InverseKinematicsPage extends Component {
     pageName = "Inverse Kinematics"
@@ -11,29 +26,28 @@ class InverseKinematicsPage extends Component {
 
     updateIkParams = (name, value) => {
         const ikParams = { ...this.props.params.ikParams, [name]: value }
-
         const result = solveInverseKinematics(this.props.params.dimensions, ikParams)
 
         if (!result.obtainedSolution) {
-            const updatedStateParams = {
-                ikParams,
-                showPoseMessage: false,
-                showInfo: true,
-                info: { ...result.message, isAlert: true },
-            }
-
-            this.props.onUpdate(null, updatedStateParams)
+            const stateParams = _updatedStateParamsUnsolved(ikParams, result.message)
+            this.props.onUpdate(null, stateParams)
             return
         }
 
-        const updatedStateParams = {
-            ikParams,
-            showPoseMessage: true,
-            showInfo: false,
-            info: { ...result.message, isAlert: false },
-        }
+        const stateParams = _updatedStateParamsSolved(ikParams, result.message)
+        this.props.onUpdate(result.hexapod, stateParams)
+    }
 
-        this.props.onUpdate(result.hexapod, updatedStateParams)
+    reset = () => {
+        const dimensions = this.props.params.dimensions
+        const result = solveInverseKinematics(dimensions, DEFAULT_IK_PARAMS)
+
+        const stateParams = _updatedStateParamsSolved(DEFAULT_IK_PARAMS, result.message)
+        this.props.onUpdate(result.hexapod, stateParams)
+    }
+
+    get resetButton() {
+        return <BasicButton handleClick={this.reset}>Reset</BasicButton>
     }
 
     render() {
@@ -67,6 +81,7 @@ class InverseKinematicsPage extends Component {
                 <div className="row-container">{translateSliders}</div>
                 <div className="row-container">{rotateSliders.slice(0, 3)}</div>
                 <div className="row-container">{rotateSliders.slice(3)}</div>
+                {this.resetButton}
             </Card>
         )
     }

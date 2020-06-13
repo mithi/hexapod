@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import LegPoseWidget from "./LegPoseWidgets"
-import { Card, ToggleSwitch, InputField, Slider } from "../generic"
+import { Card, ToggleSwitch, BasicButton, InputField, Slider } from "../generic"
+import { DEFAULT_POSE } from "../../templates"
 
 const renderTwoColumns = cells => (
     <>
@@ -28,6 +29,14 @@ class ForwardKinematicsPage extends Component {
 
     state = { modeBool: false, widgetType: "InputField" }
 
+    componentDidMount() {
+        this.props.onMount(this.pageName)
+    }
+
+    reset = () => {
+        this.props.onUpdate(DEFAULT_POSE)
+    }
+
     updatePose = (name, angle, value) => {
         const pose = this.props.params.pose
         const newPose = {
@@ -37,16 +46,26 @@ class ForwardKinematicsPage extends Component {
         this.props.onUpdate(newPose)
     }
 
-    componentDidMount() {
-        this.props.onMount(this.pageName)
-    }
-
     toggleMode = () => {
         const newModeBool = !this.state.modeBool
         this.setState({
             modeBool: newModeBool,
             widgetType: newModeBool ? "Slider" : "InputField",
         })
+    }
+
+    get resetButton() {
+        return <BasicButton handleClick={this.reset}>Reset</BasicButton>
+    }
+
+    get toggleSwitch() {
+        return (
+            <ToggleSwitch
+                value={this.state.widgetType}
+                handleChange={this.toggleMode}
+                showLabel={false}
+            />
+        )
     }
 
     makeCell = name => (
@@ -73,16 +92,13 @@ class ForwardKinematicsPage extends Component {
         const header = () => (
             <div className="row-container flex-wrap">
                 <h2>{this.pageName}</h2>
-                <ToggleSwitch
-                    value={this.state.widgetType}
-                    handleChange={this.toggleMode}
-                    showLabel={false}
-                />
+                {this.toggleSwitch}
             </div>
         )
         return (
             <Card title={header()} h="div">
                 {renderTwoColumns(cells)}
+                {this.resetButton}
             </Card>
         )
     }

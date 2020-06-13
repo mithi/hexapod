@@ -1,17 +1,9 @@
 import React, { Component } from "react"
 import InputField from "./generic/InputField"
-import { Card } from "./generic/SmallWidgets"
+import { Card, BasicButton } from "./generic/SmallWidgets"
 import { DEFAULT_DIMENSIONS } from "../templates"
 
-const BasicButton = ({ handleClick, children }) => (
-    <button type="button" className="button" onClick={handleClick}>
-        {children}
-    </button>
-)
-
 class DimensionsWidget extends Component {
-    resetLabel = "Reset"
-
     reset = () => {
         const dimensions = DEFAULT_DIMENSIONS
         this.props.onUpdate(dimensions)
@@ -26,8 +18,8 @@ class DimensionsWidget extends Component {
         this.updateDimensions(name, Math.round(value))
     }
 
-    inputFields = () =>
-        Object.keys(this.props.params.dimensions).map(name => (
+    get inputFields() {
+        return Object.keys(this.props.params.dimensions).map(name => (
             <InputField
                 key={name}
                 name={name}
@@ -36,13 +28,16 @@ class DimensionsWidget extends Component {
                 handleChange={this.updateFieldState}
             />
         ))
+    }
+
+    get resetButton() {
+        return <BasicButton handleClick={this.reset}>Reset</BasicButton>
+    }
 
     render = () => (
         <Card title="Dimensions" h="h2">
-            <div className="row-container flex-wrap">{this.inputFields()}</div>
-            <BasicButton handleClick={this.reset} widgetName="dimensions">
-                {this.resetLabel}
-            </BasicButton>
+            <div className="row-container flex-wrap">{this.inputFields}</div>
+            {this.resetButton}
         </Card>
     )
 }
