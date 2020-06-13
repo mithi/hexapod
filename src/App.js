@@ -1,6 +1,6 @@
 import React from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-import { VirtualHexapod, getNewPlotParams } from "./hexapod"
+import { VirtualHexapod, getNewPlotParams, solveInverseKinematics } from "./hexapod"
 import {
     DEFAULT_DIMENSIONS,
     DEFAULT_POSE,
@@ -105,11 +105,28 @@ class App extends React.Component {
      * Handle individual input fields update
      * * * * * * * * * * * * * */
 
-    updateIkParams = (hexapod, updatedStateParams) => {
-        if (hexapod !== null) {
-            this.updatePlotWithHexapod(hexapod)
+    updateIkParams = (name, value) => {
+        const newIkParams = { ...this.state.ikParams, [name]: value }
+
+        const { dimensions } = this.state.hexapod
+        const result = solveInverseKinematics(dimensions, newIkParams)
+
+        if (result.obtainedSolution) {
+            this.updatePlotWithHexapod(result.hexapod)
+            this.setState({
+                showPoseMessage: true,
+                showInfo: false,
+                info: { ...result.message, isAlert: false },
+            })
+        } else {
+            this.setState({
+                showPoseMessage: false,
+                showInfo: true,
+                info: { ...result.message, isAlert: true },
+            })
         }
-        this.setState({ ...updatedStateParams })
+
+        this.setState({ ikParams: newIkParams })
     }
 
     updateDimensions = dimensions => this.updatePlot(dimensions, this.state.hexapod.pose)
@@ -130,6 +147,10 @@ class App extends React.Component {
     mightShowDetailedNav = () => (this.state.inHexapodPage ? <NavDetailed /> : null)
 
     mightShowPoseTable = () => {
+        if (this.state.currentPage !== "Inverse Kinematics") {
+            return null
+        }
+
         if (this.state.showPoseMessage) {
             return <PoseTable pose={this.state.hexapod.pose} />
         }
@@ -169,10 +190,7 @@ class App extends React.Component {
             </Route>
             <Route path="/inverse-kinematics">
                 <InverseKinematicsPage
-                    params={{
-                        dimensions: this.state.hexapod.dimensions,
-                        ikParams: this.state.ikParams,
-                    }}
+                    params={this.state.ikParams}
                     onUpdate={this.updateIkParams}
                     onMount={this.onPageLoad}
                 />
