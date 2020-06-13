@@ -24,6 +24,12 @@ const Card = props => (
     </div>
 )
 
+const BasicButton = ({ handleClick, children }) => (
+    <button type="button" className="button" onClick={handleClick}>
+        {children}
+    </button>
+)
+
 const BasicLink = props => (
     <a
         href={props.path}
@@ -46,4 +52,4 @@ const PageLink = props => (
     </Link>
 )
 
-export { BasicLink, PageLink, Card, ToggleSwitch }
+export { BasicLink, PageLink, Card, ToggleSwitch, BasicButton }

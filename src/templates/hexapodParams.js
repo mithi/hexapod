@@ -27,6 +27,8 @@ const DEFAULT_POSE = {
     rightBack: { alpha: 0, beta: 0, gamma: 0 },
 }
 
+const DEFAULT_PATTERN_PARAMS = { alpha: 0, beta: 0, gamma: 0 }
+
 const DEFAULT_IK_PARAMS = {
     tx: 0,
     ty: 0,
@@ -44,4 +46,5 @@ export {
     DEFAULT_BODY_DIMENSIONS,
     DEFAULT_POSE,
     DEFAULT_IK_PARAMS,
+    DEFAULT_PATTERN_PARAMS,
 }
