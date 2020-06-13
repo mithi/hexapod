@@ -1,6 +1,6 @@
 import React from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-import { VirtualHexapod, getNewPlotParams, solveInverseKinematics } from "./hexapod"
+import { VirtualHexapod, getNewPlotParams } from "./hexapod"
 import {
     DEFAULT_DIMENSIONS,
     DEFAULT_POSE,
@@ -32,13 +32,15 @@ class App extends React.Component {
         showPoseMessage: true,
         showInfo: false,
         info: {},
+
         ikParams: DEFAULT_IK_PARAMS,
         patternParams: { alpha: 0, beta: 0, gamma: 0 },
-        hexapod: {
+
+        hexapodParams: {
             dimensions: DEFAULT_DIMENSIONS,
             pose: DEFAULT_POSE,
-            points: {},
         },
+
         plot: {
             data: DATA,
             layout: LAYOUT,
@@ -50,29 +52,24 @@ class App extends React.Component {
     onPageLoad = pageName => {
         if (pageName === "Root") {
             this.setState({
-                inHexapodPage: false,
                 currentPage: pageName,
+                inHexapodPage: false,
                 showInfo: false,
+                showPoseMessage: false,
             })
             return
         }
 
-        this.setState({ showInfo: false })
-
         this.setState({
-            inHexapodPage: true,
             currentPage: pageName,
+            inHexapodPage: true,
+            showInfo: false,
+            showPoseMessage: false,
             ikParams: DEFAULT_IK_PARAMS,
-            hexapod: { ...this.state.hexapod, pose: DEFAULT_POSE },
             patternParams: { alpha: 0, beta: 0, gamma: 0 },
+            hexapodParams: { ...this.state.hexapodParams, pose: DEFAULT_POSE },
         })
-        this.updatePlot(this.state.hexapod.dimensions, DEFAULT_POSE)
-    }
-
-    reset = name => {
-        if (name === "Dimensions") {
-            this.updatePlot(DEFAULT_DIMENSIONS, this.state.hexapod.pose)
-        }
+        this.updatePlot(this.state.hexapodParams.dimensions, DEFAULT_POSE)
     }
 
     /* * * * * * * * * * * * * *
@@ -93,8 +90,7 @@ class App extends React.Component {
                 layout,
                 revisionCounter: this.state.plot.revisionCounter + 1,
             },
-            hexapod: {
-                ...this.state.hexapod,
+            hexapodParams: {
                 dimensions: hexapod.dimensions,
                 pose: hexapod.pose,
             },
@@ -111,56 +107,21 @@ class App extends React.Component {
      * Handle individual input fields update
      * * * * * * * * * * * * * */
 
-    updateDimensions = (name, value) => {
-        const dimensions = { ...this.state.hexapod.dimensions, [name]: value }
-        this.updatePlot(dimensions, this.state.hexapod.pose)
+    updateIkParams = (hexapod, updatedStateParams) => {
+        if (hexapod !== null) {
+            this.updatePlotWithHexapod(hexapod)
+        }
+        this.setState({ ...updatedStateParams })
     }
 
-    updateIkParams = (name, value) => {
-        const newIkParams = { ...this.state.ikParams, [name]: value }
+    updateDimensions = dimensions =>
+        this.updatePlot(dimensions, this.state.hexapodParams.pose)
 
-        const { dimensions } = this.state.hexapod
-        const result = solveInverseKinematics(dimensions, newIkParams)
+    updatePose = pose => this.updatePlot(this.state.hexapodParams.dimensions, pose)
 
-        if (result.obtainedSolution) {
-            this.updatePlotWithHexapod(result.hexapod)
-            this.setState({
-                showPoseMessage: true,
-                showInfo: false,
-                info: { ...result.message, isAlert: false },
-            })
-        } else {
-            this.setState({
-                showPoseMessage: false,
-                showInfo: true,
-                info: { ...result.message, isAlert: true },
-            })
-        }
-
-        this.setState({ ikParams: newIkParams })
-    }
-
-    updatePose = (name, angle, value) => {
-        const { pose, dimensions } = this.state.hexapod
-        const newPose = {
-            ...pose,
-            [name]: { ...pose[name], [angle]: value },
-        }
-        this.updatePlot(dimensions, newPose)
-    }
-
-    updatePatternPose = (name, value) => {
-        const { pose, dimensions } = this.state.hexapod
-        let newPose = {}
-
-        for (const leg in pose) {
-            newPose[leg] = { ...pose[leg], [name]: Number(value) }
-        }
-
-        this.setState({
-            patternParams: { ...this.state.patternParams, [name]: value },
-        })
-        this.updatePlot(dimensions, newPose)
+    updatePatternPose = (pose, patternParams) => {
+        this.updatePlot(this.state.hexapodParams.dimensions, pose)
+        this.setState({ patternParams })
     }
 
     /* * * * * * * * * * * * * *
@@ -172,21 +133,16 @@ class App extends React.Component {
     mightShowDetailedNav = () => (this.state.inHexapodPage ? <NavDetailed /> : null)
 
     mightShowPoseTable = () => {
-        if (this.state.currentPage !== "Inverse Kinematics") {
-            return null
-        }
-
         if (this.state.showPoseMessage) {
-            return <PoseTable pose={this.state.hexapod.pose} />
+            return <PoseTable pose={this.state.hexapodParams.pose} />
         }
     }
 
     mightShowDimensions = () =>
         this.state.inHexapodPage ? (
             <DimensionsWidget
-                dimensions={this.state.hexapod.dimensions}
+                params={{ dimensions: this.state.hexapodParams.dimensions }}
                 onUpdate={this.updateDimensions}
-                onReset={this.reset}
             />
         ) : null
 
@@ -208,21 +164,24 @@ class App extends React.Component {
             </Route>
             <Route path="/forward-kinematics">
                 <ForwardKinematicsPage
-                    params={this.state.hexapod.pose}
+                    params={{ pose: this.state.hexapodParams.pose }}
                     onUpdate={this.updatePose}
                     onMount={this.onPageLoad}
                 />
             </Route>
             <Route path="/inverse-kinematics">
                 <InverseKinematicsPage
-                    params={this.state.ikParams}
+                    params={{
+                        dimensions: this.state.hexapodParams.dimensions,
+                        ikParams: this.state.ikParams,
+                    }}
                     onUpdate={this.updateIkParams}
                     onMount={this.onPageLoad}
                 />
             </Route>
             <Route path="/leg-patterns">
                 <LegPatternPage
-                    params={this.state.patternParams}
+                    params={{ patternParams: this.state.patternParams }}
                     onUpdate={this.updatePatternPose}
                     onMount={this.onPageLoad}
                 />
