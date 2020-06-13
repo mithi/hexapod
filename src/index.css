@@ -145,6 +145,20 @@ tr:hover {
     margin-top: 20px;
 }
 
+.button {
+    color: #ef5777;
+    background-color: rgb(34, 47, 62);
+    border: none;
+    font-family: Monaco, "Courier New", Menlo, Consolas, monospace;
+    font-size: 0.6rem;
+    font-weight: bold;
+}
+
+.button:hover {
+    color: #ffa801;
+    font-weight: bold;
+}
+
 .react-icons {
     vertical-align: middle;
 }

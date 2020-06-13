@@ -2,9 +2,20 @@ import React, { Component } from "react"
 import InputField from "./generic/InputField"
 import { Card } from "./generic/SmallWidgets"
 
+const ResetButton = ({reset, children }) => (
+    <button type="button" class="button" onClick={reset}>
+        {children}
+    </button>
+)
+
 class DimensionsWidget extends Component {
+    resetLabel = "Reset"
+
+    reset = () => {
+        this.props.onReset("Dimensions")
+    }
+
     updateFieldState = (name, value) => {
-        value = value > 0 ? value : 0
         this.props.onUpdate(name, Math.round(value))
     }
 
@@ -22,6 +33,9 @@ class DimensionsWidget extends Component {
     render = () => (
         <Card title="Dimensions" h="h2">
             <div className="row-container flex-wrap">{this.inputFields()}</div>
+            <ResetButton reset={this.reset} widgetName="dimensions">
+                {this.resetLabel}
+            </ResetButton>
         </Card>
     )
 }
