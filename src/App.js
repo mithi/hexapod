@@ -69,6 +69,16 @@ class App extends React.Component {
         this.updatePlot(this.state.hexapod.dimensions, DEFAULT_POSE)
     }
 
+    reset = name => {
+        if (name === "Dimensions") {
+            this.updatePlot(DEFAULT_DIMENSIONS, this.state.hexapod.pose)
+        }
+    }
+
+    /* * * * * * * * * * * * * *
+     * Handle plot update
+     * * * * * * * * * * * * * */
+
     updatePlot = (dimensions, pose) => {
         const newHexapodModel = new VirtualHexapod(dimensions, pose)
         this.updatePlotWithHexapod(newHexapodModel)
@@ -90,6 +100,16 @@ class App extends React.Component {
             },
         })
     }
+
+    logCameraView = relayoutData => {
+        const newCameraView = relayoutData["scene.camera"]
+        const plot = { ...this.state.plot, latestCameraView: newCameraView }
+        this.setState({ ...this.state, plot: plot })
+    }
+
+    /* * * * * * * * * * * * * *
+     * Handle individual input fields update
+     * * * * * * * * * * * * * */
 
     updateDimensions = (name, value) => {
         const dimensions = { ...this.state.hexapod.dimensions, [name]: value }
@@ -143,12 +163,9 @@ class App extends React.Component {
         this.updatePlot(dimensions, newPose)
     }
 
-    logCameraView = relayoutData => {
-        const newCameraView = relayoutData["scene.camera"]
-        const plot = { ...this.state.plot, latestCameraView: newCameraView }
-        this.setState({ ...this.state, plot: plot })
-    }
-
+    /* * * * * * * * * * * * * *
+     * Control display of widgets
+     * * * * * * * * * * * * * */
     mightShowMessage = () =>
         this.state.showInfo ? <MessageBox info={this.state.info} /> : null
 
@@ -169,6 +186,7 @@ class App extends React.Component {
             <DimensionsWidget
                 dimensions={this.state.hexapod.dimensions}
                 onUpdate={this.updateDimensions}
+                onReset={this.reset}
             />
         ) : null
 
