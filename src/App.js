@@ -140,7 +140,6 @@ class App extends React.Component {
             <DimensionsWidget
                 dimensions={this.state.hexapod.dimensions}
                 onUpdate={this.updateDimensions}
-                onReset={this.reset}
             />
         ) : null
 
