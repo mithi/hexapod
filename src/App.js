@@ -140,7 +140,14 @@ class App extends React.Component {
         this.setState({ ikParams: newIkParams })
     }
 
-    updatePose = pose => this.updatePlot(this.state.hexapod.dimensions, pose)
+    updatePose = (name, angle, value) => {
+        const { pose, dimensions } = this.state.hexapod
+        const newPose = {
+            ...pose,
+            [name]: { ...pose[name], [angle]: value },
+        }
+        this.updatePlot(dimensions, newPose)
+    }
 
     updatePatternPose = (name, value) => {
         const { pose, dimensions } = this.state.hexapod
