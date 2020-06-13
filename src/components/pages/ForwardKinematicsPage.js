@@ -28,6 +28,15 @@ class ForwardKinematicsPage extends Component {
 
     state = { modeBool: false, widgetType: "InputField" }
 
+    updatePose = (name, angle, value) => {
+        const pose = this.props.params.pose
+        const newPose = {
+            ...pose,
+            [name]: { ...pose[name], [angle]: value },
+        }
+        this.props.onUpdate(newPose)
+    }
+
     componentDidMount() {
         this.props.onMount(this.pageName)
     }
@@ -44,8 +53,8 @@ class ForwardKinematicsPage extends Component {
         <LegPoseWidget
             key={name}
             name={name}
-            pose={this.props.params[name]}
-            onUpdate={this.props.onUpdate}
+            pose={this.props.params.pose[name]}
+            onUpdate={this.updatePose}
             WidgetType={this.widgetTypes[this.state.widgetType]}
             renderStacked={this.state.modeBool}
         />
