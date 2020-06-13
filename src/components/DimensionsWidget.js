@@ -1,8 +1,9 @@
 import React, { Component } from "react"
 import InputField from "./generic/InputField"
 import { Card } from "./generic/SmallWidgets"
+import { DEFAULT_DIMENSIONS } from "../templates"
 
-const ResetButton = ({reset, children }) => (
+const ResetButton = ({ reset, children }) => (
     <button type="button" class="button" onClick={reset}>
         {children}
     </button>
@@ -12,7 +13,13 @@ class DimensionsWidget extends Component {
     resetLabel = "Reset"
 
     reset = () => {
-        this.props.onReset("Dimensions")
+        const dimensions = { DEFAULT_DIMENSIONS }
+        this.props.onUpdate(dimensions)
+    }
+
+    updateDimensions = (name, value) => {
+        const dimensions = { ...this.props.dimensions, [name]: value }
+        this.props.onUpdate(dimensions)
     }
 
     updateFieldState = (name, value) => {
