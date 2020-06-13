@@ -7,32 +7,25 @@ const landingPageMessage = `
 
 # Mithi's Bare Minimum Hexapod Robot Simulator
 
-Solve (and visualize) [forward][1] and [inverse][2] kinematics purely on your browser!
-Built with [React][3], [Plotly][7], and [MathJS][4].
-It's complete rewrite of the [one][6] I wrote in Python 🐍. Having
-zero server-side computations (no round trip), it should be extremely fast!
+- Solve (and visualize) [forward][1] and [inverse][2] kinematics purely on your browser!
+It's a complete rewrite of the [one][3] I wrote in Python 🐍.
+No more server-side computations!
 
-I've been thinking of adding gaits and building more visualizers
-for other robot configurations (drones, quadrupeds etc)
-and robotics algorithms (mpc, ekf, etc).
-Consider buying me a [couple cups of coffee 🍵 🍵 🍵][5] to help me get
-motivated!
+- Consider buying me a [couple cups of coffee 🍵 🍵 🍵][4] to motivate me
+to build other robotics related visualizers. (Quadrotors?!)
 
-Algorithm optimizations, test additions, and bug fixes are welcome. [Submit an issue or pull request][6].
-Any contribution (big or small) particularly on improving the
-source code quality will be extremely appreciated. I only learned Javascript, css,
-and React to make this project, so I'm not yet that familiar with all the 
-best practices.
+- Any contribution to improve the source code will be extremely appreciated. 💙
+Anything from fixing typographical errors to completely changing the page design ... or even rewriting
+modules to follow better software practices. [How you can help][5].
 
-## Love, Mithi 💙
+## Love, Mithi
 
 [1]: /forward-kinematics
 [2]: /inverse-kinematics
-[3]: https://reactjs.org/
-[4]: https://mathjs.org/
-[5]: https://ko-fi.com/minimithi
-[6]: https://github.com/mithi/hexapod-robot-simulator
-[7]: https://plot.ly/
+[3]: https://github.com/mithi/hexapod-robot-simulator
+[4]: https://ko-fi.com/minimithi
+[5]: https://github.com/mithi/hexapod/wiki/Types-of-(code)-Contributions
+
 `
 
 class LandingPage extends React.Component {
@@ -46,7 +39,7 @@ class LandingPage extends React.Component {
             <PageLink path="./inverse-kinematics/">
                 <div className="hexapod-img" />{" "}
             </PageLink>
-            <div style={{ width: "100%" }}>
+            <div id="landing">
                 <ReactMarkdown source={landingPageMessage} />
             </div>
             <NavDetailed />
