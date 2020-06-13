@@ -27,18 +27,21 @@ import {
 
 class App extends React.Component {
     state = {
+
         currentPage: "Root",
         inHexapodPage: false,
         showPoseMessage: true,
         showInfo: false,
         info: {},
+
         ikParams: DEFAULT_IK_PARAMS,
         patternParams: { alpha: 0, beta: 0, gamma: 0 },
-        hexapod: {
+
+        hexapodParams: {
             dimensions: DEFAULT_DIMENSIONS,
             pose: DEFAULT_POSE,
-            points: {},
         },
+
         plot: {
             data: DATA,
             layout: LAYOUT,
@@ -63,10 +66,10 @@ class App extends React.Component {
             inHexapodPage: true,
             currentPage: pageName,
             ikParams: DEFAULT_IK_PARAMS,
-            hexapod: { ...this.state.hexapod, pose: DEFAULT_POSE },
+            hexapodParams: { ...this.state.hexapodParams, pose: DEFAULT_POSE },
             patternParams: { alpha: 0, beta: 0, gamma: 0 },
         })
-        this.updatePlot(this.state.hexapod.dimensions, DEFAULT_POSE)
+        this.updatePlot(this.state.hexapodParams.dimensions, DEFAULT_POSE)
     }
 
     /* * * * * * * * * * * * * *
@@ -87,8 +90,7 @@ class App extends React.Component {
                 layout,
                 revisionCounter: this.state.plot.revisionCounter + 1,
             },
-            hexapod: {
-                ...this.state.hexapod,
+            hexapodParams: {
                 dimensions: hexapod.dimensions,
                 pose: hexapod.pose,
             },
@@ -112,12 +114,13 @@ class App extends React.Component {
         this.setState({ ...updatedStateParams })
     }
 
-    updateDimensions = dimensions => this.updatePlot(dimensions, this.state.hexapod.pose)
+    updateDimensions = dimensions =>
+        this.updatePlot(dimensions, this.state.hexapodParams.pose)
 
-    updatePose = pose => this.updatePlot(this.state.hexapod.dimensions, pose)
+    updatePose = pose => this.updatePlot(this.state.hexapodParams.dimensions, pose)
 
     updatePatternPose = (pose, patternParams) => {
-        this.updatePlot(this.state.hexapod.dimensions, pose)
+        this.updatePlot(this.state.hexapodParams.dimensions, pose)
         this.setState({ patternParams })
     }
 
@@ -131,14 +134,14 @@ class App extends React.Component {
 
     mightShowPoseTable = () => {
         if (this.state.showPoseMessage) {
-            return <PoseTable pose={this.state.hexapod.pose} />
+            return <PoseTable pose={this.state.hexapodParams.pose} />
         }
     }
 
     mightShowDimensions = () =>
         this.state.inHexapodPage ? (
             <DimensionsWidget
-                dimensions={this.state.hexapod.dimensions}
+                dimensions={this.state.hexapodParams.dimensions}
                 onUpdate={this.updateDimensions}
             />
         ) : null
@@ -161,7 +164,7 @@ class App extends React.Component {
             </Route>
             <Route path="/forward-kinematics">
                 <ForwardKinematicsPage
-                    params={this.state.hexapod.pose}
+                    params={this.state.hexapodParams.pose}
                     onUpdate={this.updatePose}
                     onMount={this.onPageLoad}
                 />
@@ -169,7 +172,7 @@ class App extends React.Component {
             <Route path="/inverse-kinematics">
                 <InverseKinematicsPage
                     params={{
-                        dimensions: this.state.hexapod.dimensions,
+                        dimensions: this.state.hexapodParams.dimensions,
                         ikParams: this.state.ikParams,
                     }}
                     onUpdate={this.updateIkParams}
