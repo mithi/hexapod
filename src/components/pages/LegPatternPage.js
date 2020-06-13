@@ -16,14 +16,14 @@ class LegPatternPage extends Component {
             newPose[leg] = { ...DEFAULT_POSE[leg], [name]: Number(value) }
         }
 
-        const patternParams = { ...this.props.params, [name]: value }
+        const patternParams = { ...this.props.params.patternParams, [name]: value }
         this.props.onUpdate(newPose, patternParams)
     }
 
     rotateSliders = () =>
         sliderList(["alpha", "beta", "gamma"], [-180, 180, 1], {
             onUpdate: this.updatePatternPose,
-            params: this.props.params,
+            params: this.props.params.patternParams,
         })
 
     render = () => (
