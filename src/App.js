@@ -146,10 +146,12 @@ class App extends React.Component {
 
     mightShowDimensions = () => {
         if (this.state.inHexapodPage) {
-            return <DimensionsWidget
-                params={{ dimensions: this.state.hexapodParams.dimensions }}
-                onUpdate={this.updateDimensions}
-            />
+            return (
+                <DimensionsWidget
+                    params={{ dimensions: this.state.hexapodParams.dimensions }}
+                    onUpdate={this.updateDimensions}
+                />
+            )
         }
     }
 
