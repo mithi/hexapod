@@ -7,7 +7,7 @@ const URL_KOFI = "https://ko-fi.com/minimithi"
 const URL_SRC = "https://github.com/mithi/hexapod"
 const ICON_KOFI = "🍵"
 
-const URL_NAME_KOFI = "Buy me Ko-Fi"
+const URL_NAME_KOFI = "Buy Mithi Ko-Fi 🍵"
 const URL_NAME_SRC = "Source Code"
 
 const PATHS = [

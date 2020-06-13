@@ -42,7 +42,7 @@ h3 {
     margin-bottom: 5px;
     margin-left: 5px;
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 2.0rem;
 }
 
 h2 {
@@ -143,6 +143,10 @@ tr:hover {
 
 #nav {
     margin-top: 20px;
+}
+
+#landing {
+    width: 100%;
 }
 
 .button {
@@ -383,7 +387,6 @@ input:checked + .toggle-switch-widget:before {
     }
 
     .sidebar {
-        max-width: 275px;
         min-width: 275px;
     }
 
@@ -434,7 +437,6 @@ input:checked + .toggle-switch-widget:before {
 
 @media screen and (max-width: 667px) and (orientation: landscape) {
     .sidebar {
-        max-width: 225px;
         min-width: 225px;
     }
 
