@@ -50,24 +50,9 @@ class InverseKinematicsPage extends Component {
         return <BasicButton handleClick={this.reset}>Reset</BasicButton>
     }
 
-    render() {
-        const {
-            rx,
-            ry,
-            rz,
-            tx,
-            ty,
-            tz,
-            hipStance,
-            legStance,
-        } = this.props.params.ikParams
-
-        const translateSliders = sliderList(["tx", "ty", "tz"], [-1, 1, 0.01], {
-            onUpdate: this.updateIkParams,
-            params: { tx, ty, tz },
-        })
-
-        const rotateSliders = sliderList(
+    get rotateSliders() {
+        const { rx, ry, rz, hipStance, legStance } = this.props.params.ikParams
+        return sliderList(
             ["rx", "ry", "rz", "hipStance", "legStance"],
             [-45, 45, 0.01],
             {
@@ -75,10 +60,22 @@ class InverseKinematicsPage extends Component {
                 params: { rx, ry, rz, hipStance, legStance },
             }
         )
+    }
+
+    get translateSliders() {
+        const { tx, ty, tz } = this.props.params.ikParams
+        return sliderList(["tx", "ty", "tz"], [-1, 1, 0.01], {
+            onUpdate: this.updateIkParams,
+            params: { tx, ty, tz },
+        })
+    }
+
+    render() {
+        const rotateSliders = this.rotateSliders
 
         return (
             <Card title={this.pageName} h="h2">
-                <div className="row-container">{translateSliders}</div>
+                <div className="row-container">{this.translateSliders}</div>
                 <div className="row-container">{rotateSliders.slice(0, 3)}</div>
                 <div className="row-container">{rotateSliders.slice(3)}</div>
                 {this.resetButton}
