@@ -142,9 +142,18 @@ class App extends React.Component {
 
     updatePose = pose => this.updatePlot(this.state.hexapod.dimensions, pose)
 
-    updatePatternPose = (pose, patternParams) => {
-        this.updatePlot(this.state.hexapod.dimensions, pose)
-        this.setState({ patternParams })
+    updatePatternPose = (name, value) => {
+        const { pose, dimensions } = this.state.hexapod
+        let newPose = {}
+
+        for (const leg in pose) {
+            newPose[leg] = { ...pose[leg], [name]: Number(value) }
+        }
+
+        this.setState({
+            patternParams: { ...this.state.patternParams, [name]: value },
+        })
+        this.updatePlot(dimensions, newPose)
     }
 
     /* * * * * * * * * * * * * *
