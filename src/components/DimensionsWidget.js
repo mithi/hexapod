@@ -18,7 +18,7 @@ class DimensionsWidget extends Component {
     }
 
     updateDimensions = (name, value) => {
-        const dimensions = { ...this.props.dimensions, [name]: value }
+        const dimensions = { ...this.props.params.dimensions, [name]: value }
         this.props.onUpdate(dimensions)
     }
 
@@ -27,12 +27,12 @@ class DimensionsWidget extends Component {
     }
 
     inputFields = () =>
-        Object.keys(this.props.dimensions).map(name => (
+        Object.keys(this.props.params.dimensions).map(name => (
             <InputField
                 key={name}
                 name={name}
                 params={[0, Infinity, 1]}
-                value={this.props.dimensions[name]}
+                value={this.props.params.dimensions[name]}
                 handleChange={this.updateFieldState}
             />
         ))
