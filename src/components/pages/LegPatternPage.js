@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { sliderList, Card } from "../generic"
-import { DEFAULT_POSE } from "../../templates"
+import { DEFAULT_POSE } from "../templates"
 
 class LegPatternPage extends Component {
     pageName = "Leg Patterns"
