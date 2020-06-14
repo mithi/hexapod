@@ -59,9 +59,9 @@ import { dot, getNormalofThreePoints } from "../../geometry"
 
 const makeJointIndexTrios = () => {
     let jointIdTrios = []
-    for (let i = 3; i >= 0; i--) {
-        for (let j = 3; j >= 0; j--) {
-            for (let k = 3; k >= 0; k--) {
+    for (let i = 3; i > 0; i--) {
+        for (let j = 3; j > 0; j--) {
+            for (let k = 3; k > 0; k--) {
                 jointIdTrios.push([i, j, k])
             }
         }
@@ -79,12 +79,12 @@ const shuffleArray = array => {
 
 const JOINT_INDEX_TRIOS = makeJointIndexTrios()
 
-const computeOrientationProperties = legsNoGravity => {
-    const shuffledLegTrios = shuffleArray(SOME_LEG_ID_TRIOS.slice(0))
-    const legIndexTrios = [...shuffledLegTrios, ...ADJACENT_LEG_ID_TRIOS]
+const computeOrientationProperties = (legsNoGravity, flags = { shuffle: false }) => {
+    const someLegTrios = flags.shuffle
+        ? shuffleArray(SOME_LEG_ID_TRIOS.slice(0))
+        : SOME_LEG_ID_TRIOS
 
-    //const legIndexTrios = [...SOME_LEG_ID_TRIOS, ...ADJACENT_LEG_ID_TRIOS]
-    //console.log("start.")
+    const legIndexTrios = [...someLegTrios, ...ADJACENT_LEG_ID_TRIOS]
 
     for (let i = 0; i < legIndexTrios.length; i++) {
         const threeLegIndices = legIndexTrios[i]
@@ -95,12 +95,10 @@ const computeOrientationProperties = legsNoGravity => {
 
         for (let j = 0; j < JOINT_INDEX_TRIOS.length; j++) {
             const threeJointIndices = JOINT_INDEX_TRIOS[j]
-            //console.log("leg-joint: ", i, j, threeLegIndices, threeJointIndices)
 
             const [p0, p1, p2] = getThreePoints(threeLegs, threeJointIndices)
 
             if (!isStable(p0, p1, p2)) {
-                //console.log("not stable, break")
                 continue
             }
 
@@ -110,16 +108,13 @@ const computeOrientationProperties = legsNoGravity => {
             if (
                 anotherPointOfSameLegIsLower(threeLegs, threeJointIndices, normal, height)
             ) {
-                //console.log("same leg break")
                 continue
             }
 
             if (anotherPointofOtherLegsIsLower(otherThreeLegs, normal, height)) {
-                //console.log("other leg break")
                 continue
             }
 
-            //console.log("found", threeLegIndices)
             const groundLegsNoGravity = findLegsOnGround(legsNoGravity, normal, height)
             return { nAxis: normal, height, groundLegsNoGravity }
         }
@@ -137,7 +132,7 @@ const getThreePoints = (threeLegs, threeJointIndices) =>
 const getTwoLegSets = (threeLegIndices, sixLegs) => {
     const threeLegs = threeLegIndices.map(n => sixLegs[n])
     const otherThreeLegIndices = [...Array(6).keys()].filter(
-        n => !threeLegIndices.includes[n]
+        n => !threeLegIndices.includes(n)
     )
     const otherThreeLegs = otherThreeLegIndices.map(n => sixLegs[n])
     return { threeLegs, otherThreeLegs }
@@ -163,7 +158,10 @@ const anotherPointOfSameLegIsLower = (threeLegs, threeJointIndices, normal, heig
 const anotherPointofOtherLegsIsLower = (otherThreeLegs, normal, height) => {
     for (let i = 0; i < 3; i++) {
         const leg = otherThreeLegs[i]
-        const hasLower = leg.allPointsList.some(point => isLower(point, normal, height))
+        const hasLower = leg.allPointsList
+            .slice(1)
+            .some(point => isLower(point, normal, height))
+
         if (hasLower) {
             return true
         }
