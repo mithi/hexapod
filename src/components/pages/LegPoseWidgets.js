@@ -3,13 +3,10 @@ import { Card } from "../generic"
 
 class LegPoseWidget extends Component {
     updateFieldState = (angle, value) => {
-        if (value === "") {
-            value = -1
-        } else {
-            value = Math.round(value * 100) / 100
-            value = Math.min(Math.max(value, -180), 180)
+        const numberValue = Number(value)
+        if (!isNaN(numberValue)) {
+            this.props.onUpdate(this.props.name, angle, numberValue)
         }
-        this.props.onUpdate(this.props.name, angle, value)
     }
 
     inputFields = Component =>
@@ -19,7 +16,7 @@ class LegPoseWidget extends Component {
                 name={name}
                 id={`${this.props.name}-${name}`}
                 params={[-180, 180, 0.01]}
-                value={this.props.pose[name].toFixed(2).toString().padEnd(7, "0")}
+                value={this.props.pose[name]}
                 handleChange={this.updateFieldState}
             />
         ))
