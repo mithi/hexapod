@@ -6,7 +6,9 @@ import Vector from "./Vector"
 import Hexagon from "./Hexagon"
 import Linkage from "./Linkage"
 
-import * as oSolver1 from "./solvers/orient/orientSolverSpecific"
+import * as oSolverGeneral from "./solvers/orient/orientSolverGeneral"
+import * as oSolverSpecific from "./solvers/orient/orientSolverSpecific"
+
 import { simpleTwist, mightTwist, complexTwist } from "./solvers/twistSolver"
 
 const DEFAULT_LOCAL_AXES = {
@@ -31,6 +33,18 @@ const buildLegsList = (bodyContactPoints, pose, legDimensions) =>
         (position, index) =>
             new Linkage(legDimensions, position, bodyContactPoints[index], pose[position])
     )
+
+const hexapodErrorInfo = () => ({
+    isAlert: true,
+    subject: "Unstable position.",
+    body: "error in solving for orientation ",
+})
+
+const hexapodSuccessInfo = () => ({
+    isAlert: false,
+    subject: "Success!",
+    body: "Stable orientation found.",
+})
 
 /* * *
 
@@ -107,9 +121,12 @@ class VirtualHexapod {
     legPositionsOnGround
     localAxes
     foundSolution
-    constructor(dimensions, pose, flags = { hasNoPoints: false }) {
-        Object.assign(this, { dimensions, pose, foundSolution: false })
-
+    constructor(
+        dimensions,
+        pose,
+        flags = { hasNoPoints: false, assumeKnownGroundPoints: false }
+    ) {
+        Object.assign(this, { dimensions, pose })
         if (flags.hasNoPoints) {
             return
         }
@@ -132,10 +149,12 @@ class VirtualHexapod {
         // - new orientation of the body (nAxis)
         // - which legs are on the ground (groundLegsNoGravity)
         // - distance of center of gravity to the ground (height)
-        const solved = oSolver1.computeOrientationProperties(legsNoGravity)
+        const solved = flags.assumeKnownGroundPoints
+            ? oSolverSpecific.computeOrientationProperties(legsNoGravity)
+            : oSolverGeneral.computeOrientationProperties(legsNoGravity)
 
         if (solved === null) {
-            this._danglingHexapod(flatHexagon, legsNoGravity)
+            this.foundSolution = false
             return
         }
 
@@ -190,6 +209,10 @@ class VirtualHexapod {
             0,
             "centerOfGravityProjectionPoint"
         )
+    }
+
+    get info() {
+        return this.foundSolution ? hexapodSuccessInfo() : hexapodErrorInfo()
     }
 
     get bodyDimensions() {
