@@ -28,7 +28,7 @@ class DimensionsWidget extends Component {
     }
 
     updateFieldState = (name, value) => {
-        this.updateDimensions(name, Math.round(value))
+        this.updateDimensions(name, value)
     }
 
     get toggleSwitch() {
