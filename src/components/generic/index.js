@@ -1,4 +1,4 @@
-import InputField from "./InputField"
+import NumberInputField from "./NumberInputField"
 import { BasicLink, PageLink, BasicButton, Card, ToggleSwitch } from "./SmallWidgets"
 import { Slider, sliderList } from "./Slider"
 export {
@@ -7,7 +7,7 @@ export {
     BasicButton,
     Card,
     ToggleSwitch,
-    InputField,
+    NumberInputField,
     Slider,
     sliderList,
 }

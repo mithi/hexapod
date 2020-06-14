@@ -9,7 +9,7 @@ class LegPoseWidget extends Component {
         }
     }
 
-    inputFields = Component =>
+    fields = Component =>
         Object.keys(this.props.pose).map(name => (
             <Component
                 key={name}
@@ -24,7 +24,7 @@ class LegPoseWidget extends Component {
     render = () => (
         <Card title={this.props.name} h="h3" className="column-container">
             <div className={this.props.renderStacked ? "" : "row-container flex-wrap"}>
-                {this.inputFields(this.props.WidgetType)}
+                {this.fields(this.props.WidgetType)}
             </div>
         </Card>
     )

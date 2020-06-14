@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import InputField from "./generic/InputField"
+import NumberInputField from "./generic/NumberInputField"
 import { Card, BasicButton, ToggleSwitch } from "./generic/SmallWidgets"
 import { DEFAULT_DIMENSIONS } from "../templates"
 
@@ -42,9 +42,9 @@ class DimensionsWidget extends Component {
         )
     }
 
-    get inputFields() {
+    get NumberInputFields() {
         return Object.keys(this.props.params.dimensions).map(name => (
-            <InputField
+            <NumberInputField
                 key={name}
                 name={name}
                 params={[0, Infinity, this.state.granularity]}
@@ -68,7 +68,7 @@ class DimensionsWidget extends Component {
     }
     render = () => (
         <Card title={this.header} h="div">
-            <div className="row-container flex-wrap">{this.inputFields}</div>
+            <div className="row-container flex-wrap">{this.NumberInputFields}</div>
             {this.resetButton}
         </Card>
     )

@@ -156,7 +156,7 @@ tr:hover {
     font-family: Monaco, "Courier New", Menlo, Consolas, monospace;
     font-size: 0.6rem;
     font-weight: bold;
-    padding: 5px;
+    padding-top: 5px;
 }
 
 .button:hover {
