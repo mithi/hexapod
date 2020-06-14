@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import LegPoseWidget from "./LegPoseWidgets"
-import { Card, ToggleSwitch, BasicButton, InputField, Slider } from "../generic"
+import { Card, ToggleSwitch, BasicButton, NumberInputField, Slider } from "../generic"
 import { DEFAULT_POSE } from "../../templates"
 
 const renderTwoColumns = cells => (
@@ -24,10 +24,10 @@ class ForwardKinematicsPage extends Component {
     pageName = "Forward Kinematics"
     widgetTypes = {
         Slider: Slider,
-        InputField: InputField,
+        NumberInputField: NumberInputField,
     }
 
-    state = { modeBool: false, widgetType: "InputField" }
+    state = { modeBool: false, widgetType: "NumberInputField" }
 
     componentDidMount() {
         this.props.onMount(this.pageName)
@@ -50,7 +50,7 @@ class ForwardKinematicsPage extends Component {
         const newModeBool = !this.state.modeBool
         this.setState({
             modeBool: newModeBool,
-            widgetType: newModeBool ? "Slider" : "InputField",
+            widgetType: newModeBool ? "Slider" : "NumberInputField",
         })
     }
 
