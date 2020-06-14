@@ -10,11 +10,18 @@ import Vector from "../../Vector"
 import VirtualHexapod from "../../VirtualHexapod"
 import IKSolver from "./IKSolver"
 
-const solveInverseKinematics = (dimensions, rawIKparams) => {
+const solveInverseKinematics = (
+    dimensions,
+    rawIKparams,
+    flags = { rotateThenShift: true }
+) => {
     const { tVec, rotMatrix, startPose } = convertIKparams(dimensions, rawIKparams)
     const startHexapod = new VirtualHexapod(dimensions, startPose)
 
-    const targets = buildHexapodTargets(startHexapod, rotMatrix, tVec)
+    const rotateThenShift = flags.rotateThenShift
+    const targets = buildHexapodTargets(startHexapod, rotMatrix, tVec, {
+        rotateThenShift,
+    })
 
     // Solve for the pose of the hexapod if it exists
     const solvedHexapodParams = new IKSolver().solve(
@@ -139,11 +146,13 @@ for the hexapod's inverse kinematics
 see IKSolver() class for details.
 
  * * */
-const buildHexapodTargets = (hexapod, rotMatrix, tVec) => {
+const buildHexapodTargets = (hexapod, rotMatrix, tVec, { rotateThenShift }) => {
     const groundContactPoints = hexapod.legs.map(leg => leg.maybeGroundContactPoint)
-    const bodyContactPoints = hexapod.body
-        .cloneShift(tVec.x, tVec.y, tVec.z)
-        .cloneTrot(rotMatrix).verticesList
+    const bodyContactPoints = rotateThenShift
+        ? hexapod.body.cloneTrot(rotMatrix).cloneShift(tVec.x, tVec.y, tVec.z)
+              .verticesList
+        : hexapod.body.cloneShift(tVec.x, tVec.y, tVec.z).cloneTrot(rotMatrix)
+              .verticesList
 
     const axes = {
         xAxis: new Vector(1, 0, 0).cloneTrot(rotMatrix),
