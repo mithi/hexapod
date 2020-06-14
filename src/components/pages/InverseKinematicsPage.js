@@ -52,14 +52,10 @@ class InverseKinematicsPage extends Component {
 
     get rotateSliders() {
         const { rx, ry, rz, hipStance, legStance } = this.props.params.ikParams
-        return sliderList(
-            ["rx", "ry", "rz", "hipStance", "legStance"],
-            [-45, 45, 0.01],
-            {
-                onUpdate: this.updateIkParams,
-                params: { rx, ry, rz, hipStance, legStance },
-            }
-        )
+        return sliderList(["rx", "ry", "rz", "hipStance", "legStance"], [-45, 45, 0.01], {
+            onUpdate: this.updateIkParams,
+            params: { rx, ry, rz, hipStance, legStance },
+        })
     }
 
     get translateSliders() {
