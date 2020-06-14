@@ -84,7 +84,7 @@ table {
 }
 
 th {
-    font-family: "Permanent Marker", "Bungee", monospace;
+    font-family: "Permanent Marker", "Bungee", Consolas, Monaco, monospace;
 }
 
 th,
@@ -156,6 +156,7 @@ tr:hover {
     font-family: Monaco, "Courier New", Menlo, Consolas, monospace;
     font-size: 0.6rem;
     font-weight: bold;
+    padding: 5px;
 }
 
 .button:hover {

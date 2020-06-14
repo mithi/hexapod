@@ -69,14 +69,16 @@ class ForwardKinematicsPage extends Component {
     }
 
     makeCell = name => (
-        <LegPoseWidget
-            key={name}
-            name={name}
-            pose={this.props.params.pose[name]}
-            onUpdate={this.updatePose}
-            WidgetType={this.widgetTypes[this.state.widgetType]}
-            renderStacked={this.state.modeBool}
-        />
+        <div className="cell">
+            <LegPoseWidget
+                key={name}
+                name={name}
+                pose={this.props.params.pose[name]}
+                onUpdate={this.updatePose}
+                WidgetType={this.widgetTypes[this.state.widgetType]}
+                renderStacked={this.state.modeBool}
+            />
+        </div>
     )
 
     render = () => {
