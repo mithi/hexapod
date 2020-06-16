@@ -7,8 +7,7 @@
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
         "mathjs": "^7.0.0",
-        "numeral": "^2.0.6",
-        "plotly.js": "^1.54.1",
+        "plotly.js-gl3d-dist-min": "^1.54.2",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-icons": "^3.10.0",
@@ -16,9 +15,11 @@
         "react-plotly.js": "^2.4.0",
         "react-router": "^5.2.0",
         "react-router-dom": "^5.2.0",
-        "react-scripts": "3.4.1"
+        "react-scripts": "3.4.1",
+        "source-map-explorer": "^2.4.2"
     },
     "scripts": {
+        "analyze": "source-map-explorer 'build/static/js/*.js'",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
