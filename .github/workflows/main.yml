@@ -45,7 +45,7 @@ jobs:
      # Yarn is included in the list of software installed on the GitHub-hosted Ubuntu
      # so there's no need to include a step install Yarn.
     - name: Add prettier
-      run: yarn global add prettier
+      run: npm install -g prettier
 
     - name: Check code style
       run: prettier --config ./.prettierrc.yaml --check  ./src/*
