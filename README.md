@@ -10,17 +10,15 @@
   
 <img src="https://mithi.github.io/robotics-blog/v2-hexapod-1.gif" alt="drawing" width="200" align="right" />
 
-- 🚧 Under heavy construction. This project is still a buggy 🐞🐞🐞 work in progress. See: https://hexapod.netlify.app/
-
-- Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero more server-side computations!
+- Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero server-side computations!
 
 - Consider buying me [a couple cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics related visualizers. (Quadrotors?!)
+
+- 🚧 Under heavy construction. This project is still a buggy 🐞🐞🐞 work in progress. See: https://hexapod.netlify.app
 
 ## Contributions Welcome!
 - Any contribution to improve the source code will be extremely appreciated. 💙 Anything from fixing typographical errors... to adding tests... to completely changing the page design ... or even rewriting modules to follow better software practices...
 - This is my first time coding in Javascript and this is also my first react app, so I'm sure there is a lot of room for improvement. See: [Types of code contributions](https://github.com/mithi/hexapod/wiki/Types-of-(code)-Contributions).
-
-
 
 ## [☕](https://ko-fi.com/minimithi) Other statistics 
 ![](https://img.shields.io/codeclimate/maintainability-percentage/mithi/hexapod)
