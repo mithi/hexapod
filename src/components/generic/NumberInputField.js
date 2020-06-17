@@ -19,7 +19,7 @@ class InputField extends Component {
     }
 
     handleChange(value) {
-        const [minValue, maxValue, stepValue] = this.props.params
+        const [minValue, maxValue, stepValue] = this.props.attributes
         const validity = this.myRef.current.validity
 
         if (validity.badInput) {
@@ -53,9 +53,9 @@ class InputField extends Component {
     }
 
     render() {
-        const { name, params, id, value } = this.props
+        const { name, attributes, id, value } = this.props
         const newId = id || name
-        const [minValue, maxValue, stepValue] = params
+        const [minValue, maxValue, stepValue] = attributes
 
         return (
             <div className="cell">
