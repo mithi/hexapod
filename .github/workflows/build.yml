@@ -1,6 +1,4 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
+name: build
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -44,6 +42,7 @@ jobs:
     
      # Yarn is included in the list of software installed on the GitHub-hosted Ubuntu
      # so there's no need to include a step install Yarn.
+ 
     - name: Add prettier
       run: yarn add prettier --dev
 
