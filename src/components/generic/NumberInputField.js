@@ -72,7 +72,7 @@ class InputField extends Component {
                     type="number"
                     pattern="[0-9]*"
                     inputmode="numeric"
-                    id={id}
+                    id={newId}
                     ref={this.myRef}
                     value={value}
                     onChange={e => this.handleChange(e.target.value)}
