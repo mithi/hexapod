@@ -3,9 +3,6 @@
 [![](https://img.shields.io/codeclimate/tech-debt/mithi/hexapod)](https://codeclimate.com/github/mithi/hexapod/trends/technical_debt) 
 [![codecov](https://codecov.io/gh/mithi/hexapod/branch/update-readdme/graph/badge.svg)](https://codecov.io/gh/mithi/hexapod)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier)
-[![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg?style=flat)](https://opensource.org/licenses/Apache-2.0)
-[![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blueviolet.svg?style=flat)](https://www.firsttimersonly.com/)
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/mithi/hexapod/wiki/Types-of-(code)-Contributions)
 [![](https://img.shields.io/badge/Buy%20me%20-coffee!-orange.svg?logo=buy-me-a-coffee&color=795548)](https://ko-fi.com/minimithi)
 
 
@@ -21,7 +18,8 @@ _(in Javascript!)_
 - 🚧 Under heavy construction. This project is still a buggy 🐞 work in progress. 
 - See: https://hexapod.netlify.app
 
-## Contributions Welcome!
+## Contributions Welcome! [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blueviolet.svg?style=flat)](https://www.firsttimersonly.com/) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/mithi/hexapod/wiki/Types-of-(code)-Contributions)
+
 - Any contribution to improve the source code will be extremely appreciated. 💙 Anything from fixing typographical errors... to adding tests... to improving user experience ... or even rewriting modules to follow better software practices...
 - This is my first time coding in Javascript and this is also my first react app, so I'm sure there is a lot of room for improvement. See: [Types of code contributions](https://github.com/mithi/hexapod/wiki/Types-of-(code)-Contributions).
 
@@ -33,8 +31,9 @@ _(in Javascript!)_
 | . | . |
 
 
-## [☕](https://ko-fi.com/minimithi) Other statistics 
+## [☕](https://ko-fi.com/minimithi) I Love Badges! (Don't we all?)  
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg?style=flat)](https://opensource.org/licenses/Apache-2.0)
 ![](https://img.shields.io/codeclimate/maintainability-percentage/mithi/hexapod)
 ![](https://img.shields.io/codeclimate/maintainability/mithi/hexapod)
 [![HitCount](http://hits.dwyl.com/mithi/hexapod.svg)](http://hits.dwyl.com/mithi/hexapod)
