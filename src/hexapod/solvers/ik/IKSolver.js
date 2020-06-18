@@ -129,7 +129,11 @@ class IKSolver {
             )
 
             if (Math.abs(alpha) > MAX_ANGLES.alpha) {
-                this._finalizeFailure(IKMessage.alphaNotInRange(alpha, MAX_ANGLES.alpha))
+                // prettier-ignore
+                this._finalizeFailure(
+                    IKMessage.alphaNotInRange(legPosition, alpha, MAX_ANGLES.alpha)
+                )
+                return this
             }
 
             // prettier-ignore
