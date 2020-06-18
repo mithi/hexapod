@@ -7,7 +7,7 @@
 [![](https://img.shields.io/badge/Buy%20me%20-coffee!-orange.svg?logo=buy-me-a-coffee&color=795548)](https://ko-fi.com/minimithi)
 
 
-# Mithi's Bare Minimum Hexapod Simulator (in Javascript)
+# Mithi's Bare-Minimum Hexapod Robot Simulator (in Javascript!)
   
 <img src="https://mithi.github.io/robotics-blog/v2-hexapod-1.gif" alt="drawing" width="200" align="right" />
 
