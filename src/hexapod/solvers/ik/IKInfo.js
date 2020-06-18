@@ -11,9 +11,9 @@ class IKMessage {
         )}`,
     })
 
-    static noSupport = (reason, legs) => ({
+    static noSupport = (reason, legs, flags = { listLegs: false }) => ({
         subject: "Failure: No Support.",
-        body: `${reason}\n\nLegs in the air:\n${IKMessage.bulletPoints(legs)}`,
+        body: `${reason}\n${flags.listLegs ? IKMessage.bulletPoints(legs) : ""}`,
     })
 
     static badPoint = point => ({
