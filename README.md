@@ -1,26 +1,43 @@
 ![](https://github.com/mithi/hexapod/workflows/build/badge.svg)
 [![Code Climate](https://codeclimate.com/github/mithi/hexapod/badges/gpa.svg)](https://codeclimate.com/github/mithi/hexapod)
-[![](https://img.shields.io/codeclimate/tech-debt/mithi/hexapod)](https://codeclimate.com/github/mithi/hexapod/trends/technical_debt) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier)
-[![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg?style=flat)](https://opensource.org/licenses/Apache-2.0)
-[![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blueviolet.svg?style=flat)](https://www.firsttimersonly.com/)
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/mithi/hexapod/wiki/Types-of-(code)-Contributions)
-[![](https://img.shields.io/badge/Buy%20me%20-coffee!-orange)](https://ko-fi.com/minimithi)
+[![](https://img.shields.io/codeclimate/tech-debt/mithi/hexapod)](https://codeclimate.com/github/mithi/hexapod/trends/technical_debt) 
+[![codecov](https://codecov.io/gh/mithi/hexapod/branch/master/graph/badge.svg)](https://codecov.io/gh/mithi/hexapod)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier)
+[![](https://img.shields.io/badge/Buy%20me%20-coffee!-orange.svg?logo=buy-me-a-coffee&color=795548)](https://ko-fi.com/minimithi)
 
-# Mithi's Bare Minimum Hexapod Simulator (in Javascript)
+
+# Mithi's Bare-Minimum Hexapod Robot Simulator Rewrite
+_(in Javascript!)_
   
 <img src="https://mithi.github.io/robotics-blog/v2-hexapod-1.gif" alt="drawing" width="200" align="right" />
 
 - Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero server-side computations!
 
-- Consider buying me [a couple cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics related visualizers. (Quadrotors?!)
+- Consider buying me [a couple cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
 
-- 🚧 Under heavy construction. This project is still a buggy 🐞🐞🐞 work in progress. See: https://hexapod.netlify.app
+- 🚧 Under heavy construction. This project is still a buggy 🐞🐛 work in progress. 
+- See: https://hexapod.netlify.app
 
-## Contributions Welcome!
-- Any contribution to improve the source code will be extremely appreciated. 💙 Anything from fixing typographical errors... to adding tests... to completely changing the page design ... or even rewriting modules to follow better software practices...
-- This is my first time coding in Javascript and this is also my first react app, so I'm sure there is a lot of room for improvement. See: [Types of code contributions](https://github.com/mithi/hexapod/wiki/Types-of-(code)-Contributions).
+## Contributions Welcome! [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blueviolet.svg?style=flat)](https://www.firsttimersonly.com/) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](./CONTRIBUTING.md) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://www.contributor-covenant.org/) 
 
-## [☕](https://ko-fi.com/minimithi) Other statistics 
+- Any contribution to improve the source code will be extremely appreciated. 💙 Anything. Anything at all. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement.
+- A couple of examples from the top of my head: 
+  - Adding more (and better) tests and test cases (Current code coverage isn't so pretty)
+  - Improving the page layout for enhanced user experience
+  - Suggesting refactors and better software development practices in general
+- See [./CONTRIBUTING.md](./CONTRIBUTING.md)
+
+
+![](./public/img/screenshot2.png)
+
+| <img src="./public/img/screenshot1.png" alt="drawing" width="600" /> | <img src="./public/img/screenshot3.png" alt="drawing" width="305" /> |
+|---|---|
+| . | . |
+
+
+## [☕](https://ko-fi.com/minimithi) I love badges! (Don't we all?)  
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg?style=flat)](https://opensource.org/licenses/Apache-2.0)
 ![](https://img.shields.io/codeclimate/maintainability-percentage/mithi/hexapod)
 ![](https://img.shields.io/codeclimate/maintainability/mithi/hexapod)
 [![HitCount](http://hits.dwyl.com/mithi/hexapod.svg)](http://hits.dwyl.com/mithi/hexapod)

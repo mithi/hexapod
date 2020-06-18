@@ -56,5 +56,10 @@ jobs:
     - name: Build project
       run: yarn build         
     
-    - name: Run tests 
-      run: yarn test --watchAll=false
+    - name: Test and generate coverage report
+      run: yarn test --watchAll=false --coverage
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        name: codecov-umbrella
