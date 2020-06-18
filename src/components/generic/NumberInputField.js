@@ -70,6 +70,8 @@ class InputField extends Component {
                 </label>
                 <input
                     type="number"
+                    pattern="[0-9]*"
+                    inputmode="numeric"
                     id={id}
                     ref={this.myRef}
                     value={value}

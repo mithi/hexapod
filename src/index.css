@@ -20,6 +20,8 @@ body {
     -moz-osx-font-smoothing: grayscale;
     margin-left: 0.3rem;
     margin-top: 5px;
+    touch-action: pan-x pan-y;
+    height: 100% ,
 }
 
 a {
@@ -470,5 +472,15 @@ input:checked + .toggle-switch-widget:before {
     .top-bar {
         display: none;
         height: 10px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"] {
+      font-size: 16px;
     }
 }
