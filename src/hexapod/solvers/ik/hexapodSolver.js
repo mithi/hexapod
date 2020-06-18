@@ -148,6 +148,7 @@ see IKSolver() class for details.
  * * */
 const buildHexapodTargets = (hexapod, rotMatrix, tVec, { rotateThenShift }) => {
     const groundContactPoints = hexapod.legs.map(leg => leg.maybeGroundContactPoint)
+
     const bodyContactPoints = rotateThenShift
         ? hexapod.body.cloneTrot(rotMatrix).cloneShift(tVec.x, tVec.y, tVec.z)
               .verticesList

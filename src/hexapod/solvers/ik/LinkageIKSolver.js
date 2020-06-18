@@ -187,7 +187,7 @@ class LinkageIKSolver {
         this.angles = {
             ...this.angles,
             beta: -angleBetween(parsVector, legXaxis),
-            gamma: 0,
+            gamma: 90,
         }
 
         this.info = LegIKInfo.targetNotReached(this.legPosition)
