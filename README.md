@@ -21,8 +21,7 @@ _(in Javascript!)_
 ## Contributions Welcome! [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blueviolet.svg?style=flat)](https://www.firsttimersonly.com/) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/mithi/hexapod/wiki/Types-of-(code)-Contributions) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://www.contributor-covenant.org/) 
 
 - Any contribution to improve the source code will be extremely appreciated. 💙 Anything. Anything at all. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement.
-Examples: 
-  - Fixing typographical errors
+- A couple of examples from the top of my head: 
   - Adding tests
   - Improving the page layout for enhanced user experience
   - Rewriting modules to follow better software practices
