@@ -13,15 +13,20 @@ _(in Javascript!)_
 
 - Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero server-side computations!
 
-- Consider buying me [a couple cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics related visualizers. (Quadrotors?!)
+- Consider buying me [a couple cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
 
 - 🚧 Under heavy construction. This project is still a buggy 🐞 work in progress. 
 - See: https://hexapod.netlify.app
 
 ## Contributions Welcome! [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blueviolet.svg?style=flat)](https://www.firsttimersonly.com/) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/mithi/hexapod/wiki/Types-of-(code)-Contributions) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://www.contributor-covenant.org/) 
 
-- Any contribution to improve the source code will be extremely appreciated. 💙 Anything from fixing typographical errors... to adding tests... to improving user experience ... or even rewriting modules to follow better software practices...
-- This is my first time coding in Javascript and this is also my first react app, so I'm sure there is a lot of room for improvement. See: [Types of code contributions](https://github.com/mithi/hexapod/wiki/Types-of-(code)-Contributions).
+- Any contribution to improve the source code will be extremely appreciated. 💙 Anything. Anything at all. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement.
+Examples: 
+  - Fixing typographical errors
+  - Adding tests
+  - Improving the page layout for enhanced user experience
+  - Rewriting modules to follow better software practices
+  - See: [Types of code contributions](https://github.com/mithi/hexapod/wiki/Types-of-(code)-Contributions) for more ideas.
 
 
 ![](./public/img/screenshot2.png)
@@ -31,7 +36,7 @@ _(in Javascript!)_
 | . | . |
 
 
-## [☕](https://ko-fi.com/minimithi) I Love Badges! (Don't we all?)  
+## [☕](https://ko-fi.com/minimithi) I love Badges! (Don't we all?)  
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg?style=flat)](https://opensource.org/licenses/Apache-2.0)
 ![](https://img.shields.io/codeclimate/maintainability-percentage/mithi/hexapod)
