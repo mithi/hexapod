@@ -35,7 +35,7 @@ _(in Javascript!)_
 | . | . |
 
 
-## [☕](https://ko-fi.com/minimithi) I love Badges! (Don't we all?)  
+## [☕](https://ko-fi.com/minimithi) I love badges! (Don't we all?)  
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg?style=flat)](https://opensource.org/licenses/Apache-2.0)
 ![](https://img.shields.io/codeclimate/maintainability-percentage/mithi/hexapod)
