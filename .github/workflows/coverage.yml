@@ -4,7 +4,7 @@ name: build
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [ master, update-readdme ]
   pull_request:
     branches: [ master ]
 
@@ -58,3 +58,12 @@ jobs:
     
     - name: Run tests 
       run: yarn test --watchAll=false
+
+    - name: Generate coverage report
+      run: yarn test --watchAll=false --coverage
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        name: codecov-umbrella
+        fail_ci_if_error: true
