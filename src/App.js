@@ -83,7 +83,10 @@ class App extends React.Component {
 
     updatePlot = (dimensions, pose) => {
         const newHexapodModel = new VirtualHexapod(dimensions, pose)
-        this.updatePlotWithHexapod(newHexapodModel)
+
+        if (newHexapodModel.foundSolution) {
+            this.updatePlotWithHexapod(newHexapodModel)
+        }
     }
 
     updatePlotWithHexapod = hexapod => {

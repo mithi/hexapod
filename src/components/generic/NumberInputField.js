@@ -48,6 +48,12 @@ class InputField extends Component {
         }
 
         const numberValue = parseFloat(value)
+
+        if (isNaN(numberValue)) {
+            this.setState({ message: "NaN" })
+            return
+        }
+
         this.setState({ message: null })
         this.props.handleChange(this.props.name, numberValue)
     }
