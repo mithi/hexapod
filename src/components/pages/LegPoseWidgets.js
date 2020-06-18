@@ -15,7 +15,7 @@ class LegPoseWidget extends Component {
                 key={name}
                 name={name}
                 id={`${this.props.name}-${name}`}
-                params={[-180, 180, 0.01]}
+                attributes={[-180, 180, 0.01]}
                 value={this.props.pose[name]}
                 handleChange={this.updateFieldState}
             />

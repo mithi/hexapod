@@ -47,7 +47,7 @@ class DimensionsWidget extends Component {
             <NumberInputField
                 key={name}
                 name={name}
-                params={[0, Infinity, this.state.granularity]}
+                attributes={[0, Infinity, this.state.granularity]}
                 value={this.props.params.dimensions[name]}
                 handleChange={this.updateFieldState}
             />
