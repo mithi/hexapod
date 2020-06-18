@@ -4,7 +4,8 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg?style=flat)](https://opensource.org/licenses/Apache-2.0)
 [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blueviolet.svg?style=flat)](https://www.firsttimersonly.com/)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/mithi/hexapod/wiki/Types-of-(code)-Contributions)
-[![](https://img.shields.io/badge/Buy%20me%20-coffee!-orange)](https://ko-fi.com/minimithi)
+[![](https://img.shields.io/badge/Buy%20me%20-coffee!-orange.svg?logo=buy-me-a-coffee&color=795548)](https://ko-fi.com/minimithi)
+
 
 # Mithi's Bare Minimum Hexapod Simulator (in Javascript)
   
