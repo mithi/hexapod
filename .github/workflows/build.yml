@@ -4,7 +4,7 @@ name: build
 # events but only for the master branch
 on:
   push:
-    branches: [ master, update-readdme ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
