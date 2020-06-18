@@ -6,7 +6,7 @@
 [![](https://img.shields.io/badge/Buy%20me%20-coffee!-orange.svg?logo=buy-me-a-coffee&color=795548)](https://ko-fi.com/minimithi)
 
 
-# Mithi's Bare-Minimum Hexapod Robot Simulator 2
+# Mithi's Bare-Minimum Hexapod Robot Simulator Rewrite
 _(in Javascript!)_
   
 <img src="https://mithi.github.io/robotics-blog/v2-hexapod-1.gif" alt="drawing" width="200" align="right" />
@@ -18,7 +18,7 @@ _(in Javascript!)_
 - 🚧 Under heavy construction. This project is still a buggy 🐞 work in progress. 
 - See: https://hexapod.netlify.app
 
-## Contributions Welcome! [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blueviolet.svg?style=flat)](https://www.firsttimersonly.com/) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/mithi/hexapod/wiki/Types-of-(code)-Contributions)
+## Contributions Welcome! [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blueviolet.svg?style=flat)](https://www.firsttimersonly.com/) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/mithi/hexapod/wiki/Types-of-(code)-Contributions) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://www.contributor-covenant.org/) 
 
 - Any contribution to improve the source code will be extremely appreciated. 💙 Anything from fixing typographical errors... to adding tests... to improving user experience ... or even rewriting modules to follow better software practices...
 - This is my first time coding in Javascript and this is also my first react app, so I'm sure there is a lot of room for improvement. See: [Types of code contributions](https://github.com/mithi/hexapod/wiki/Types-of-(code)-Contributions).
