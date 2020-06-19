@@ -9,7 +9,7 @@
 # Mithi's Bare-Minimum Hexapod Robot Simulator Rewrite
 _(in Javascript!)_
   
-<img src="https://mithi.github.io/robotics-blog/v2-hexapod-1.gif" alt="drawing" width="200" align="right" />
+<img src="https://mithi.github.io/robotics-blog/v2-hexapod-1.gif" alt="drawing" width="300" align="right" />
 
 - Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero server-side computations!
 
