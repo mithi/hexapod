@@ -8,7 +8,7 @@ All types of contributions are welcome, no matter how big or small.
 - I use automated code formatters ([prettier][prettier_link] for Javascript, [black][black_link] for Python for example) to format my code.
 - I use [code climate][code_climate_link] to check for code smells.
 - Please read [the commit style guide][commit_style_guide_link], the guide which I try to adhere to when wording my commit messages. These are not rules, just a guide.
-- I prefer PRs with fewer commits. [Squash the commits and push force][rewriting_git_history_link] if you need to. But of course, it's better if all the changes in one commit are logically connected. For whatever purpose it may serve, here's [a simple git workflow][git_workflow_link] I try to stick to.
+- I prefer PRs with fewer commits. [Squash the commits and push force][rewriting_git_history_link] if you need to. But of course, it's better if all the changes in one commit are logically connected. For whatever purpose it may serve, here's [a simple git workflow][git_workflow_link] I try to stick to. Adding tests in your PR is also recommended.
 - Thoughtfully-written explanations and the rationale of the pull request is always appreciated! Explain what your PR is solving, why, and how. [Allow project maintainers to edit your pull request][how_to_allow_pr_edits_link].
 - Of course, Be a nice person :) [![Contributor Covenant][contributor_covenant_badge]](./CODE_OF_CONDUCT.md)
 
