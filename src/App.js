@@ -99,7 +99,7 @@ class App extends React.Component {
             info: {
                 isAlert: false,
                 subject: "DebugWrongPoint",
-                body: `${bodyVertex}\n\n ${bodyContact}\n\n`,
+                body: `${bodyVertex}\n\n ${bodyContact}\n\n ${hexapod.debugString}`,
             },
         })
 

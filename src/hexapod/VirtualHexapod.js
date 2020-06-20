@@ -121,12 +121,15 @@ class VirtualHexapod {
     legPositionsOnGround
     localAxes
     foundSolution
+    debugArray
     constructor(
         dimensions,
         pose,
         flags = { hasNoPoints: false, assumeKnownGroundPoints: false }
     ) {
         Object.assign(this, { dimensions, pose })
+        this.debugString = "startDebug \n"
+
         if (flags.hasNoPoints) {
             return
         }
@@ -260,6 +263,12 @@ class VirtualHexapod {
             legPositionsOnGround: this.legPositionsOnGround,
             foundSolution: this.foundSolution,
         })
+
+        const vx = clone.body.verticesList[0].x.toFixed(2)
+        const lx = clone.legs[0].bodyContactPoint.x.toFixed(2)
+        clone.debugString =
+            this.debugString + `\n\n buildClone: body ${vx} leg: ${lx} |\n\n`
+
         return clone
     }
 

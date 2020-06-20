@@ -102,6 +102,17 @@ class Linkage {
         // pointsMap maps position to actual point i.e
         // pointsMap["femurPoint"] = Vector(x, y, z, "rightMiddle-femurPoint", "0-2")
         this.pointsMap = this._computePoints(pose, originPoint)
+        /*
+        const [name, id] = [this.pointsMap.bodyContactPoint.name, this.pointsMap.bodyContactPoint.id]
+
+        this.pointsMap.bodyContactPoint = new Vector (
+            originPoint.x,
+            originPoint.y,
+            originPoint.z,
+            name,
+            id,
+        )
+        */
     }
 
     get femurPoint() {
