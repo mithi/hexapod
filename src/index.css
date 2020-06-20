@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Source+Code+Pro&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anonymous+Pro&family=Permanent+Marker&display=swap");
 
 .hexapod-img {
     background: url("https://mithi.github.io/robotics-blog/v2-hexapod-1.gif");
@@ -15,7 +15,7 @@ body {
     background-color: rgb(34, 47, 62);
     color: rgb(50, 255, 126);
     font-size: 3px;
-    font-family: Consolas, Monaco, Menlo, "Source Code Pro", monospace;
+    font-family: Consolas, Monaco, Menlo, "Anonymous Pro", monospace;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin-left: 0.3rem;
@@ -39,7 +39,7 @@ a:active {
 h1,
 h2,
 h3 {
-    font-family: "Permanent Marker", Consolas, Monaco, Menlo, "Source Code Pro", monospace;
+    font-family: "Permanent Marker", Consolas, Monaco, Menlo, "Anonymous Pro", monospace;
     margin-top: 5px;
     margin-bottom: 5px;
     margin-left: 5px;
@@ -76,7 +76,7 @@ li {
 
 code {
     font-size: 0.8rem;
-    font-family: Consolas, Monaco, Menlo, "Source Code Pro", monospace;
+    font-family: Consolas, Monaco, Menlo, "Anonymous Pro", monospace;
 }
 
 table {
@@ -86,7 +86,7 @@ table {
 }
 
 th {
-    font-family: "Permanent Marker", Consolas, Monaco, Menlo, "Source Code Pro", monospace;
+    font-family: "Permanent Marker", Consolas, Monaco, Menlo, "Anonymous Pro", monospace;
 }
 
 th,
@@ -155,7 +155,7 @@ tr:hover {
     color: #ef5777;
     background-color: rgb(34, 47, 62);
     border: none;
-    font-family: Consolas, Monaco, Menlo, "Source Code Pro", monospace;
+    font-family: Consolas, Monaco, Menlo, "Anonymous Pro", monospace;
     font-size: 0.6rem;
     font-weight: bold;
     padding-top: 5px;
@@ -204,7 +204,7 @@ input {
     border: 1px solid rgb(41, 128, 185);
     background-color: rgb(44, 62, 80);
     color: rgb(46, 204, 113);
-    font-family: Consolas, Monaco, Menlo, "Source Code Pro", monospace;
+    font-family: Consolas, Monaco, Menlo, "Anonymous Pro", monospace;
     box-sizing: border-box;
     padding-right: 7px;
     text-align: right;
