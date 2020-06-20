@@ -91,28 +91,17 @@ class App extends React.Component {
             return
         }
 
-        const bodyVertices = hexapod.body.verticesList
-        const bodyContacts = hexapod.legs.map(leg => leg.bodyContactPoint)
-        const wrongPoint = bodyVertices.find((vertex, index) => {
-            const b = bodyContacts[index]
-            const { x, y, z } = vertex
-            return (
-                Math.round(x) !== Math.round(b.x) ||
-                Math.round(y) !== Math.round(b.y) ||
-                Math.round(z) !== Math.round(b.z)
-            )
-        })
+        const bodyVertex = hexapod.body.verticesList[0].toMarkdownString()
+        const bodyContact = hexapod.legs[0].bodyContactPoint.toMarkdownString()
 
-        if (wrongPoint !== undefined) {
-            this.setState({
-                showInfo: true,
-                info: {
-                    isAlert: true,
-                    subject: "DebugWrongPoint",
-                    body: `${wrongPoint.name}`,
-                },
-            })
-        }
+        this.setState({
+            showInfo: true,
+            info: {
+                isAlert: false,
+                subject: "DebugWrongPoint",
+                body: `${bodyVertex}\n\n ${bodyContact}\n\n`,
+            },
+        })
 
         const [data, layout] = getNewPlotParams(hexapod, this.state.plot.latestCameraView)
         this.setState({
@@ -140,9 +129,9 @@ class App extends React.Component {
      * * * * * * * * * * * * * */
 
     updateIkParams = (hexapod, updatedStateParams) => {
-        this.updatePlotWithHexapod(hexapod)
         this.setState({ ...updatedStateParams })
-        this.setState({ showPoseMessage: false })
+        this.setState({ showPoseMessage: false, showInfo: true })
+        this.updatePlotWithHexapod(hexapod)
     }
 
     updateDimensions = dimensions =>
