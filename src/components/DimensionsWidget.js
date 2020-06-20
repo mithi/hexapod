@@ -43,7 +43,8 @@ class DimensionsWidget extends Component {
     }
 
     get NumberInputFields() {
-        return Object.keys(this.props.params.dimensions).map(name => (
+        const dimensionNames = ["front", "side", "middle", "coxia", "femur", "tibia"]
+        return dimensionNames.map(name => (
             <NumberInputField
                 key={name}
                 name={name}

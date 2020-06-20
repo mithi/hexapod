@@ -9,17 +9,22 @@ class LegPoseWidget extends Component {
         }
     }
 
-    fields = Component =>
-        Object.keys(this.props.pose).map(name => (
-            <Component
-                key={name}
-                name={name}
-                id={`${this.props.name}-${name}`}
-                attributes={[-180, 180, 0.01]}
-                value={this.props.pose[name]}
-                handleChange={this.updateFieldState}
-            />
-        ))
+    fields = Component => {
+        const angleNames = ["alpha", "beta", "gamma"]
+        return angleNames.map(name => {
+            const newId = `${this.props.name}-${name}`
+            return (
+                <Component
+                    key={newId}
+                    name={name}
+                    id={newId}
+                    attributes={[-180, 180, 0.01]}
+                    value={this.props.pose[name]}
+                    handleChange={this.updateFieldState}
+                />
+            )
+        })
+    }
 
     render = () => (
         <Card title={this.props.name} h="h3" className="column-container">
