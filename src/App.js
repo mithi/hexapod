@@ -91,6 +91,29 @@ class App extends React.Component {
             return
         }
 
+        const bodyVertices = hexapod.body.verticesList
+        const bodyContacts = hexapod.legs.map(leg => leg.bodyContactPoint)
+        const wrongPoint = bodyVertices.find((vertex, index) => {
+            const b = bodyContacts[index]
+            const { x, y, z } = vertex
+            return (
+                Math.round(x) !== Math.round(b.x) ||
+                Math.round(y) !== Math.round(b.y) ||
+                Math.round(z) !== Math.round(b.z)
+            )
+        })
+
+        if (wrongPoint !== undefined) {
+            this.setState({
+                showInfo: true,
+                info: {
+                    isAlert: true,
+                    subject: "DebugWrongPoint",
+                    body: `${wrongPoint.name}`,
+                },
+            })
+        }
+
         const [data, layout] = getNewPlotParams(hexapod, this.state.plot.latestCameraView)
         this.setState({
             plot: {
@@ -119,6 +142,7 @@ class App extends React.Component {
     updateIkParams = (hexapod, updatedStateParams) => {
         this.updatePlotWithHexapod(hexapod)
         this.setState({ ...updatedStateParams })
+        this.setState({ showPoseMessage: false })
     }
 
     updateDimensions = dimensions =>
@@ -215,8 +239,8 @@ class App extends React.Component {
                 <div className="sidebar column-container cell">
                     {this.mightShowDimensions()}
                     {this.showPage()}
-                    {this.mightShowPoseTable()}
                     {this.mightShowMessage()}
+                    {this.mightShowPoseTable()}
                 </div>
                 {this.mightShowPlot()}
             </div>
