@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Bungee&family=Permanent+Marker&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anonymous+Pro&family=Permanent+Marker&display=swap");
 
 .hexapod-img {
     background: url("https://mithi.github.io/robotics-blog/v2-hexapod-1.gif");
@@ -15,11 +15,13 @@ body {
     background-color: rgb(34, 47, 62);
     color: rgb(50, 255, 126);
     font-size: 3px;
-    font-family: Consolas, Monaco, "Courier New", Menlo, monospace;
+    font-family: Consolas, Monaco, "Anonymous Pro", Menlo, monospace;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin-left: 0.3rem;
     margin-top: 5px;
+    touch-action: pan-x pan-y;
+    height: 100%;
 }
 
 a {
@@ -37,7 +39,7 @@ a:active {
 h1,
 h2,
 h3 {
-    font-family: "Permanent Marker", "Bungee", monospace;
+    font-family: "Permanent Marker", Consolas, Monaco, "Anonymous Pro", Menlo, monospace;
     margin-top: 5px;
     margin-bottom: 5px;
     margin-left: 5px;
@@ -74,7 +76,7 @@ li {
 
 code {
     font-size: 0.8rem;
-    font-family: Consolas, Monaco, "Courier New", Menlo, monospace;
+    font-family: Consolas, Monaco, "Anonymous Pro", Menlo, monospace;
 }
 
 table {
@@ -84,7 +86,7 @@ table {
 }
 
 th {
-    font-family: "Permanent Marker", "Bungee", Consolas, Monaco, monospace;
+    font-family: "Permanent Marker", Consolas, Monaco, "Anonymous Pro", Menlo, monospace;
 }
 
 th,
@@ -153,7 +155,7 @@ tr:hover {
     color: #ef5777;
     background-color: rgb(34, 47, 62);
     border: none;
-    font-family: Monaco, "Courier New", Menlo, Consolas, monospace;
+    font-family: Consolas, Monaco, "Anonymous Pro", Menlo, monospace;
     font-size: 0.6rem;
     font-weight: bold;
     padding-top: 5px;
@@ -202,7 +204,7 @@ input {
     border: 1px solid rgb(41, 128, 185);
     background-color: rgb(44, 62, 80);
     color: rgb(46, 204, 113);
-    font-family: Monaco, "Courier New", Menlo, Consolas, monospace;
+    font-family: Consolas, Monaco, "Anonymous Pro", Menlo, monospace;
     box-sizing: border-box;
     padding-right: 7px;
     text-align: right;
@@ -470,5 +472,15 @@ input:checked + .toggle-switch-widget:before {
     .top-bar {
         display: none;
         height: 10px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"] {
+        font-size: 16px;
     }
 }
