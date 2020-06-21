@@ -244,12 +244,22 @@ class VirtualHexapod {
     }
 
     cloneShift(tx, ty, tz) {
+        let debugObject = {debugString: ""}
+
         const body = this.body.cloneShift(tx, ty, tz)
-        const legs = this.legs.map(leg => leg.cloneShift(tx, ty, tz))
-        return this._buildClone(body, legs, this.localAxes)
+
+        const bx = body.verticesList[0].x
+        debugObject.debugString += `shiftedBody: ${bx} \n\n`
+
+        const legs = this.legs.map(leg => leg.cloneShift(tx, ty, tz, debugObject))
+
+        const lx = legs[0].bodyContactPoint.x
+        debugObject.debugString += `shiftedLeg: ${lx} \n`
+
+        return this._buildClone(body, legs, this.localAxes, debugObject.debugString)
     }
 
-    _buildClone(body, legs, localAxes) {
+    _buildClone(body, legs, localAxes, debugString = "") {
         // FIXME:
         // After shifting and/or rotating the hexapod
         // We can no longer guarrantee that the legPositionsOnGround
@@ -264,11 +274,7 @@ class VirtualHexapod {
             foundSolution: this.foundSolution,
         })
 
-        const vx = clone.body.verticesList[0].x.toFixed(2)
-        const lx = clone.legs[0].bodyContactPoint.x.toFixed(2)
-        clone.debugString =
-            this.debugString + `\n\n buildClone: body ${vx} leg: ${lx} |\n\n`
-
+        clone.debugString = debugString
         return clone
     }
 

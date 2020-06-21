@@ -196,8 +196,25 @@ class Linkage {
         return this.cloneTrotShift(transformMatrix, 0, 0, 0)
     }
 
-    cloneShift(tx, ty, tz) {
-        return this.cloneTrotShift(identity(4), tx, ty, tz)
+    cloneShift(tx, ty, tz, debugObject = { debugString: " "}) {
+        const pointsMap = LEG_POINT_TYPES_LIST.reduce((pointsMap, pointType) => {
+            const oldPoint = this.pointsMap[pointType]
+            const newPoint = oldPoint.cloneShift(tx, ty, tz, debugObject)
+            pointsMap[pointType] = newPoint
+            return pointsMap
+        }, {})
+
+        let clone = new Linkage(
+            this.dimensions,
+            this.position,
+            this.bodyContactPoint,
+            this.pose,
+            { hasNoPoints: true }
+        )
+
+        // override pointsMap of clone
+        clone.pointsMap = pointsMap
+        return clone
     }
 
     /* *

@@ -30,7 +30,11 @@ class Vector {
         return this.newTrot(transformMatrix, this.name, this.id)
     }
 
-    cloneShift(tx, ty, tz) {
+    cloneShift(tx, ty, tz, debugObject = { debugString: " "}) {
+        if (this.name === "rightMiddle-bodyContactPoint") {
+            debugObject.debugString += `inCloneShift(leg): \n x: ${this.x} tx: ${tx} \n\n`
+        }
+
         return new Vector(this.x + tx, this.y + ty, this.z + tz, this.name, this.id)
     }
 
