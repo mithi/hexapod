@@ -244,7 +244,7 @@ class VirtualHexapod {
     }
 
     cloneShift(tx, ty, tz) {
-        let debugObject = {debugString: ""}
+        let debugObject = { debugString: "" }
 
         const body = this.body.cloneShift(tx, ty, tz)
 

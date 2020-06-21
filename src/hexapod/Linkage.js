@@ -196,7 +196,7 @@ class Linkage {
         return this.cloneTrotShift(transformMatrix, 0, 0, 0)
     }
 
-    cloneShift(tx, ty, tz, debugObject = { debugString: " "}) {
+    cloneShift(tx, ty, tz, debugObject = { debugString: " " }) {
         const pointsMap = LEG_POINT_TYPES_LIST.reduce((pointsMap, pointType) => {
             const oldPoint = this.pointsMap[pointType]
             const newPoint = oldPoint.cloneShift(tx, ty, tz, debugObject)
