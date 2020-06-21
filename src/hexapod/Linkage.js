@@ -77,7 +77,7 @@
   "" this.id : a number from 0 to 5 corresponding to a particular position
 
   * * * * */
-import { multiply, identity } from "mathjs"
+import { multiply } from "mathjs"
 import { tRotYmatrix, tRotZmatrix } from "./geometry"
 import {
     LEG_POINT_TYPES_LIST,
