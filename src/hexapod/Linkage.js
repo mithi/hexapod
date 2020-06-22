@@ -54,23 +54,22 @@
   {} this.pose: { alpha, beta, gamma }
   "" this.position: "rightMiddle" from POSITION_NAMES_LIST or "linkage-position-not-defined"
 
-  {} this.pointsMap, a map of
-      e.g. if position is "rightBack" then the pointMap is
-      {
-          bodyContactPoint: {x, y, z, id: "5-0", name: "rightBack-bodyContactPoint"}
-          coxiaPoint: {x, y, z, id: "5-1", name: "rightBack-coxiaPoint"}
-          femurPoint: {x, y, z, id: "5-2", name: "rightBack-femurPoint"}
-          footTipPoint: {x, y, z, id: "5-3", name: "rightBack-footTipPoint"}
-      }
-      each id is prefixed with 5 because the leg point id corresponding to "rightMiddle"
+  [] this.allPointsList: A list pointing to each of the four points in the map
+      which the first element being the bodyContactPoint, the last element being the footTipPoint
+
+      [
+          {x, y, z, id: "5-0", name: "rightBack-bodyContactPoint"},
+          {x, y, z, id: "5-1", name: "rightBack-coxiaPoint"},
+          {x, y, z, id: "5-2", name: "rightBack-femurPoint"},
+          {x, y, z, id: "5-3", name: "rightBack-footTipPoint"},
+      ]
+      each id is prefixed with 5 because the leg point id corresponding to "rightBack"
       position is 5.
 
   ....................
   (linkage derived properties)
   ....................
 
-  [] this.allPointsList: A list pointing to each of the four points in the map
-      which the first element being the bodyContactPoint, the last element being the footTipPoint
   {} this.maybeGroundContactPoint: The point which probably is the one in contact
       with the ground, but not necessarily the case (no guarantees)
   "" this.name: "{position}Leg" e.g. "rightMiddleLeg"
@@ -99,25 +98,24 @@ class Linkage {
         if (flags.hasNoPoints) {
             return
         }
-        // pointsMap maps position to actual point i.e
-        // pointsMap["femurPoint"] = Vector(x, y, z, "rightMiddle-femurPoint", "0-2")
-        this.pointsMap = this._computePoints(pose, originPoint)
-    }
 
-    get femurPoint() {
-        return this.pointsMap.femurPoint
-    }
-
-    get coxiaPoint() {
-        return this.pointsMap.coxiaPoint
+        this.allPointsList = this._computePoints(pose, originPoint)
     }
 
     get bodyContactPoint() {
-        return this.pointsMap.bodyContactPoint
+        return this.allPointsList[0]
+    }
+
+    get coxiaPoint() {
+        return this.allPointsList[1]
+    }
+
+    get femurPoint() {
+        return this.allPointsList[2]
     }
 
     get footTipPoint() {
-        return this.pointsMap.footTipPoint
+        return this.allPointsList[3]
     }
 
     get id() {
@@ -138,13 +136,6 @@ class Linkage {
         return maybeGroundContactPoint
     }
 
-    get allPointsList() {
-        return LEG_POINT_TYPES_LIST.reduce(
-            (pointsList, pointType) => [...pointsList, this.pointsMap[pointType]],
-            []
-        )
-    }
-
     /* *
      * .............
      * clone (translate) rotate shift cloneTrotShift
@@ -162,32 +153,27 @@ class Linkage {
      * and again be translated by tx, ty, tz
      * */
     cloneTrotShift(transformMatrix, tx, ty, tz) {
-        const pointsMap = LEG_POINT_TYPES_LIST.reduce((pointsMap, pointType) => {
-            const oldPoint = this.pointsMap[pointType]
-            const newPoint = oldPoint.cloneTrotShift(transformMatrix, tx, ty, tz)
-            pointsMap[pointType] = newPoint
-            return pointsMap
-        }, {})
-
-        return this._buildClone(pointsMap)
+        const newPointsList = this.allPointsList.map(oldPoint =>
+            oldPoint.cloneTrotShift(transformMatrix, tx, ty, tz)
+        )
+        return this._buildClone(newPointsList)
     }
 
     cloneTrot(transformMatrix) {
-        return this.cloneTrotShift(transformMatrix, 0, 0, 0)
+        const newPointsList = this.allPointsList.map(oldPoint =>
+            oldPoint.cloneTrot(transformMatrix)
+        )
+        return this._buildClone(newPointsList)
     }
 
     cloneShift(tx, ty, tz) {
-        const pointsMap = LEG_POINT_TYPES_LIST.reduce((pointsMap, pointType) => {
-            const oldPoint = this.pointsMap[pointType]
-            const newPoint = oldPoint.cloneShift(tx, ty, tz)
-            pointsMap[pointType] = newPoint
-            return pointsMap
-        }, {})
-
-        return this._buildClone(pointsMap)
+        const newPointsList = this.allPointsList.map(oldPoint =>
+            oldPoint.cloneShift(tx, ty, tz)
+        )
+        return this._buildClone(newPointsList)
     }
 
-    _buildClone(pointsMap) {
+    _buildClone(allPointsList) {
         let clone = new Linkage(
             this.dimensions,
             this.position,
@@ -196,8 +182,8 @@ class Linkage {
             { hasNoPoints: true }
         )
 
-        // override pointsMap of clone
-        clone.pointsMap = pointsMap
+        // override allPointsList of clone
+        clone.allPointsList = allPointsList
         return clone
     }
 
@@ -206,12 +192,12 @@ class Linkage {
      * structure of pointNameIdMap
      * .............
      *
-     * pointNameIdMap = {
-     *   bodyContactPoint: {name: "{legPosition}-bodyContactPoint", id: "{legId}-0" },
-     *   coxiaPoint: {name: "{legPosition}-coxiaPoint", id: "{legId}-1" },
-     *   femurPoint: {name: "{legPosition}-femurPoint", id: "{legId}-2" },
-     *   footTipPoint: {name: "{legPosition}-footTipPoint", id: "{legId}-3" },
-     * }
+     * pointNameIds = [
+     *   {name: "{legPosition}-bodyContactPoint", id: "{legId}-0" },
+     *   {name: "{legPosition}-coxiaPoint", id: "{legId}-1" },
+     *   {name: "{legPosition}-femurPoint", id: "{legId}-2" },
+     *   {name: "{legPosition}-footTipPoint", id: "{legId}-3" },
+     * ]
      *
      * */
     _buildNameId = (pointName, id) => ({
@@ -219,11 +205,10 @@ class Linkage {
         id: `${this.id}-${id}`,
     })
 
-    _buildPointNameIdMap = () =>
-        LEG_POINT_TYPES_LIST.reduce((PointNameIdMap, pointType, index) => {
-            PointNameIdMap[pointType] = this._buildNameId(pointType, index)
-            return PointNameIdMap
-        }, {})
+    _buildPointNameIds = () =>
+        LEG_POINT_TYPES_LIST.map((pointType, index) =>
+            this._buildNameId(pointType, index)
+        )
 
     /* *
      * ................
@@ -248,14 +233,14 @@ class Linkage {
 
         const originPoint = new Vector(0, 0, 0)
 
-        const localPointsMap = {
-            bodyContactPoint: originPoint,
-            coxiaPoint: originPoint.cloneTrot(matrix01),
-            femurPoint: originPoint.cloneTrot(matrix02),
-            footTipPoint: originPoint.cloneTrot(matrix03),
-        }
+        const localPoints = [
+            originPoint, // bodyContactPoint
+            originPoint.cloneTrot(matrix01), // coxiaPoint
+            originPoint.cloneTrot(matrix02), // femurPoint
+            originPoint.cloneTrot(matrix03), // footTipPoint
+        ]
 
-        return localPointsMap
+        return localPoints
     }
 
     /* *
@@ -264,46 +249,44 @@ class Linkage {
      *   find local points wrt hexapod's center of gravity (0, 0, 0)
      * ................
      * */
-    _computePointsWrtHexapodCog(alpha, originPoint, localPointsMap, pointNameIdMap) {
+    _computePointsWrtHexapodCog(alpha, originPoint, localPoints, pointNameIds) {
+        const zAngle = POSITION_NAME_TO_AXIS_ANGLE_MAP[this.position] + alpha
+
         const twistMatrix = tRotZmatrix(
-            POSITION_NAME_TO_AXIS_ANGLE_MAP[this.position] + alpha,
+            zAngle,
             originPoint.x,
             originPoint.y,
             originPoint.z
         )
 
-        const pointsMap = LEG_POINT_TYPES_LIST.reduce((pointsMap, pointType) => {
-            const point = localPointsMap[pointType].newTrot(
-                twistMatrix,
-                pointNameIdMap[pointType].name,
-                pointNameIdMap[pointType].id
-            )
-            pointsMap[pointType] = point
-            return pointsMap
-        }, {})
+        const allPointsList = localPoints.map((localPoint, index) => {
+            const name = pointNameIds[index].name
+            const id = pointNameIds[index].id
+            const point = localPoint.newTrot(twistMatrix, name, id)
+            return point
+        })
 
-        return pointsMap
+        return allPointsList
     }
 
     /* *
-     *  Example of pointsMap: {
-     *     bodyContactPoint: {x, y, z, id: "5-0", name: "rightBack-bodyContactPoint"}
-     *     coxiaPoint: {x, y, z, id: "5-1", name: "rightBack-coxiaPoint"}
-     *     femurPoint: {x, y, z, id: "5-2", name: "rightBack-femurPoint"}
-     *     footTipPoint: {x, y, z, id: "5-3", name: "rightBack-footTipPoint"}
-     * }
+     *  Example of allPointsList =  [
+     *     {x, y, z, id: "5-0", name: "rightBack-bodyContactPoint"},
+     *     {x, y, z, id: "5-1", name: "rightBack-coxiaPoint"},
+     *     {x, y, z, id: "5-2", name: "rightBack-femurPoint"},
+     *     {x, y, z, id: "5-3", name: "rightBack-footTipPoint"},
+     * ]
+     * x, y, z are numbers
      * */
     _computePoints(pose, originPoint) {
         const { alpha, beta, gamma } = pose
-        const pointNameIdMap = this._buildPointNameIdMap()
-        const localPointsMap = this._computePointsWrtBodyContact(beta, gamma)
-        const pointsMap = this._computePointsWrtHexapodCog(
-            alpha,
-            originPoint,
-            localPointsMap,
-            pointNameIdMap
+        const pointNameIds = this._buildPointNameIds()
+        const localPoints = this._computePointsWrtBodyContact(beta, gamma)
+        // prettier-ignore
+        const allPointsList = this._computePointsWrtHexapodCog(
+            alpha, originPoint, localPoints, pointNameIds
         )
-        return pointsMap
+        return allPointsList
     }
 }
 
