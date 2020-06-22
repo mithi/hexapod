@@ -1,16 +1,3 @@
-import {
-    sin,
-    cos,
-    unit,
-    matrix,
-    multiply,
-    transpose,
-    identity,
-    concat,
-    dotMultiply,
-    ones,
-    add,
-} from "mathjs"
 import Vector from "./Vector"
 
 const degrees = thetaRadians => (thetaRadians * 180) / Math.PI
@@ -86,55 +73,105 @@ const projectedVectorOntoPlane = (u, n) => {
     return vectorFromTo(tempVector, u)
 }
 
-function getSinCos(theta) {
-    return [sin(unit(theta, "deg")), cos(unit(theta, "deg"))]
+const getSinCos = theta =>
+    [Math.sin(radians(theta)), Math.cos(radians(theta))]
+
+
+const IDENTITY_MATRIX_4x4 = [
+    [1, 0, 0, 0],
+    [0, 1, 0, 0],
+    [0, 0, 1, 0],
+    [0, 0, 0, 1],
+]
+
+const uniformMatrix4x4 = d => {
+    const dRow = [d, d, d, d]
+    return [dRow.slice(), dRow.slice(), dRow.slice(), dRow.slice()]
+}
+
+const dotMultiply4x4 = (matrixA, matrixB) => {
+    let resultMatrix = uniformMatrix4x4(null)
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            resultMatrix[i][j] = matrixA[i][j] * matrixB[i][j]
+        }
+    }
+
+    return resultMatrix
+}
+
+const add4x4 = (matrixA, matrixB) => {
+    let resultMatrix = uniformMatrix4x4(null)
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            resultMatrix[i][j] = matrixA[i][j] + matrixB[i][j]
+        }
+    }
+
+    return resultMatrix
+}
+
+const multiply4x4 = (matrixA, matrixB) => {
+    let resultMatrix = uniformMatrix4x4(null)
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            resultMatrix[i][j] =
+                matrixA[i][0] * matrixB[0][j] +
+                matrixA[i][1] * matrixB[1][j] +
+                matrixA[i][2] * matrixB[2][j] +
+                matrixA[i][3] * matrixB[3][j]
+        }
+    }
+
+    return resultMatrix
 }
 
 function tRotXmatrix(theta, tx = 0, ty = 0, tz = 0) {
     const [s, c] = getSinCos(theta)
-    return matrix([
+
+    return [
         [1, 0, 0, tx],
         [0, c, -s, ty],
         [0, s, c, tz],
         [0, 0, 0, 1],
-    ])
+    ]
 }
 
 function tRotYmatrix(theta, tx = 0, ty = 0, tz = 0) {
     const [s, c] = getSinCos(theta)
-    return matrix([
+    return [
         [c, 0, s, tx],
         [0, 1, 0, ty],
         [-s, 0, c, tz],
         [0, 0, 0, 1],
-    ])
+    ]
 }
 
 function tRotZmatrix(theta, tx = 0, ty = 0, tz = 0) {
     const [s, c] = getSinCos(theta)
-    return matrix([
+    return [
         [c, -s, 0, tx],
         [s, c, 0, ty],
         [0, 0, 1, tz],
         [0, 0, 0, 1],
-    ])
+    ]
 }
 
 const tRotXYZmatrix = (xTheta, yTheta, zTheta) => {
     const rx = tRotXmatrix(xTheta)
     const ry = tRotYmatrix(yTheta)
     const rz = tRotZmatrix(zTheta)
-    const rxy = multiply(rx, ry)
-    const rxyz = multiply(rxy, rz)
+    const rxy = multiply4x4(rx, ry)
+    const rxyz = multiply4x4(rxy, rz)
     return rxyz
 }
 
-const skew = p =>
-    matrix([
-        [0, -p.z, p.y],
-        [p.z, 0, -p.x],
-        [-p.y, p.x, 0],
-    ])
+const skew = p => [
+    [0, -p.z, p.y, 0],
+    [p.z, 0, -p.x, 0],
+    [-p.y, p.x, 0, 0],
+    [0, 0, 0, 1],
+]
 
 const matrixToAlignVectorAtoB = (a, b) => {
     const v = cross(a, b)
@@ -142,17 +179,17 @@ const matrixToAlignVectorAtoB = (a, b) => {
     // When angle between a and b is zero or 180 degrees
     // cross product is 0, R = I
     if (s === 0) {
-        return identity(4)
+        return IDENTITY_MATRIX_4x4
     }
 
     const c = dot(a, b)
     const vx = skew(v)
     const d = (1 - c) / (s * s)
-    const vx2 = multiply(vx, vx)
-    const dvx2 = dotMultiply(vx2, multiply(ones(3, 3), d))
-    const r = add(add(identity(3), vx), dvx2)
-    const r_ = concat(r, [[0, 0, 0]], 0)
-    const transformMatrix = concat(r_, transpose([[0, 0, 0, 1]]), 1)
+    const vx2 = multiply4x4(vx, vx)
+    const dMatrix = uniformMatrix4x4(d)
+    const dvx2 = dotMultiply4x4(vx2, dMatrix)
+    const temp = add4x4(IDENTITY_MATRIX_4x4, vx)
+    const transformMatrix = add4x4(temp, dvx2)
     return transformMatrix
 }
 
@@ -178,4 +215,5 @@ export {
     tRotXYZmatrix,
     skew,
     matrixToAlignVectorAtoB,
+    multiply4x4,
 }

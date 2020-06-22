@@ -1,5 +1,3 @@
-import { multiply, transpose, index } from "mathjs"
-
 class Vector {
     constructor(x, y, z, name = "no-name-point", id = "no-id-point") {
         this.x = x
@@ -15,15 +13,15 @@ class Vector {
         // find point in a global axes coordinate frame
         // where the local axes wrt the global frame is defined by
         // parameter transformMatrix
-        const givenPointColumn = transpose([[this.x, this.y, this.z, 1]])
-        const resultPointColumn = multiply(transformMatrix, givenPointColumn)
-        return new Vector(
-            resultPointColumn.subset(index(0, 0)),
-            resultPointColumn.subset(index(1, 0)),
-            resultPointColumn.subset(index(2, 0)),
-            name,
-            id
-        )
+        const [r0, r1, r2] = transformMatrix.slice(0, 3)
+        const [r00, r01, r02, tx] = r0
+        const [r10, r11, r12, ty] = r1
+        const [r20, r21, r22, tz] = r2
+
+        const newX = this.x * r00 + this.y * r01 + this.z * r02 + tx
+        const newY = this.x * r10 + this.y * r11 + this.z * r12 + ty
+        const newZ = this.x * r20 + this.y * r21 + this.z * r22 + tz
+        return new Vector(newX, newY, newZ, name, id)
     }
 
     cloneTrot(transformMatrix) {
