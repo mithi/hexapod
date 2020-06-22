@@ -80,24 +80,22 @@ class Hexagon {
     }
 
     cloneTrotShift(transformMatrix, tx, ty, tz) {
-        let clone = new Hexagon(this.dimensions, { hasNoPoints: true })
-        clone.cog = this.cog.cloneTrotShift(transformMatrix, tx, ty, tz)
-        clone.head = this.head.cloneTrotShift(transformMatrix, tx, ty, tz)
-        clone.verticesList = this.verticesList.map(point =>
-            point.cloneTrotShift(transformMatrix, tx, ty, tz)
-        )
-        return clone
+        return this._doTransform("cloneTrotShift", transformMatrix, tx, ty, tz)
     }
 
     cloneTrot(transformMatrix) {
-        return this.cloneTrotShift(transformMatrix, 0, 0, 0)
+        return this._doTransform("cloneTrot", transformMatrix)
     }
 
     cloneShift(tx, ty, tz) {
+        return this._doTransform("cloneShift", tx, ty, tz)
+    }
+
+    _doTransform(transformFunction, ...args) {
         let clone = new Hexagon(this.dimensions, { hasNoPoints: true })
-        clone.cog = this.cog.cloneShift(tx, ty, tz)
-        clone.head = this.head.cloneShift(tx, ty, tz)
-        clone.verticesList = this.verticesList.map(point => point.cloneShift(tx, ty, tz))
+        clone.cog = this.cog[transformFunction](...args)
+        clone.head = this.head[transformFunction](...args)
+        clone.verticesList = this.verticesList.map(point => point[transformFunction](...args))
         return clone
     }
 }
