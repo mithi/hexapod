@@ -2,6 +2,12 @@ import React, { Component } from "react"
 import { sliderList, Card, BasicButton } from "../generic"
 import { solveInverseKinematics } from "../../hexapod"
 import { DEFAULT_IK_PARAMS } from "../../templates"
+import {
+    SECTION_NAMES,
+    ROTATE_SLIDERS_LABELS,
+    TRANSLATE_SLIDERS_LABELS,
+    RESET_LABEL,
+} from "../texts"
 
 const _updatedStateParamsUnsolved = (ikParams, message) => ({
     ikParams,
@@ -18,7 +24,7 @@ const _updatedStateParamsSolved = (ikParams, message) => ({
 })
 
 class InverseKinematicsPage extends Component {
-    pageName = "Inverse Kinematics"
+    pageName = SECTION_NAMES.inverseKinematics
 
     componentDidMount() {
         this.props.onMount(this.pageName)
@@ -47,12 +53,12 @@ class InverseKinematicsPage extends Component {
     }
 
     get resetButton() {
-        return <BasicButton handleClick={this.reset}>Reset</BasicButton>
+        return <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
     }
 
     get rotateSliders() {
         const { rx, ry, rz, hipStance, legStance } = this.props.params.ikParams
-        return sliderList(["rx", "ry", "rz", "hipStance", "legStance"], [-45, 45, 0.01], {
+        return sliderList(ROTATE_SLIDERS_LABELS, [-45, 45, 0.01], {
             onUpdate: this.updateIkParams,
             params: { rx, ry, rz, hipStance, legStance },
         })
@@ -60,7 +66,7 @@ class InverseKinematicsPage extends Component {
 
     get translateSliders() {
         const { tx, ty, tz } = this.props.params.ikParams
-        return sliderList(["tx", "ty", "tz"], [-1, 1, 0.01], {
+        return sliderList(TRANSLATE_SLIDERS_LABELS, [-1, 1, 0.01], {
             onUpdate: this.updateIkParams,
             params: { tx, ty, tz },
         })

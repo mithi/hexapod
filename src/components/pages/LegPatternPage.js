@@ -1,9 +1,10 @@
 import React, { Component } from "react"
 import { sliderList, Card, BasicButton } from "../generic"
 import { DEFAULT_POSE, DEFAULT_PATTERN_PARAMS } from "../../templates"
+import { SECTION_NAMES, ANGLE_NAMES } from "../texts"
 
 class LegPatternPage extends Component {
-    pageName = "Leg Patterns"
+    pageName = SECTION_NAMES.legPatterns
 
     componentDidMount() {
         this.props.onMount(this.pageName)
@@ -31,7 +32,7 @@ class LegPatternPage extends Component {
     }
 
     get rotateSliders() {
-        return sliderList(["alpha", "beta", "gamma"], [-180, 180, 1], {
+        return sliderList(ANGLE_NAMES, [-180, 180, 1], {
             onUpdate: this.updatePatternPose,
             params: this.props.params.patternParams,
         })
