@@ -73,9 +73,7 @@ const projectedVectorOntoPlane = (u, n) => {
     return vectorFromTo(tempVector, u)
 }
 
-const getSinCos = theta =>
-    [Math.sin(radians(theta)), Math.cos(radians(theta))]
-
+const getSinCos = theta => [Math.sin(radians(theta)), Math.cos(radians(theta))]
 
 const IDENTITY_MATRIX_4x4 = [
     [1, 0, 0, 0],
@@ -89,30 +87,30 @@ const uniformMatrix4x4 = d => {
     return [dRow.slice(), dRow.slice(), dRow.slice(), dRow.slice()]
 }
 
-const dotMultiply4x4 = (matrixA, matrixB) => {
+const add = (a, b) => a + b
+const multiply = (a, b) => a * b
+
+const operate4x4 = (matrixA, matrixB, operation) => {
     let resultMatrix = uniformMatrix4x4(null)
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
-            resultMatrix[i][j] = matrixA[i][j] * matrixB[i][j]
+            resultMatrix[i][j] = operation.call(null, matrixA[i][j], matrixB[i][j])
         }
     }
-
     return resultMatrix
 }
 
-const add4x4 = (matrixA, matrixB) => {
-    let resultMatrix = uniformMatrix4x4(null)
-    for (let i = 0; i < 4; i++) {
-        for (let j = 0; j < 4; j++) {
-            resultMatrix[i][j] = matrixA[i][j] + matrixB[i][j]
-        }
-    }
+const dotMultiply4x4 = (matrixA, matrixB) => {
+    return operate4x4(matrixA, matrixB, multiply)
+}
 
-    return resultMatrix
+const add4x4 = (matrixA, matrixB) => {
+    return operate4x4(matrixA, matrixB, add)
 }
 
 const multiply4x4 = (matrixA, matrixB) => {
     let resultMatrix = uniformMatrix4x4(null)
+
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             resultMatrix[i][j] =
