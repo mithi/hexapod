@@ -76,8 +76,7 @@
   "" this.id : a number from 0 to 5 corresponding to a particular position
 
   * * * * */
-import { multiply } from "mathjs"
-import { tRotYmatrix, tRotZmatrix } from "./geometry"
+import { tRotYmatrix, tRotZmatrix, multiply4x4 } from "./geometry"
 import {
     LEG_POINT_TYPES_LIST,
     POSITION_NAME_TO_ID_MAP,
@@ -226,8 +225,8 @@ class Linkage {
         const matrix01 = tRotYmatrix(-beta, this.dimensions.coxia, 0, 0)
         const matrix12 = tRotYmatrix(90 - gamma, this.dimensions.femur, 0, 0)
         const matrix23 = tRotYmatrix(0, this.dimensions.tibia, 0, 0)
-        const matrix02 = multiply(matrix01, matrix12)
-        const matrix03 = multiply(matrix02, matrix23)
+        const matrix02 = multiply4x4(matrix01, matrix12)
+        const matrix03 = multiply4x4(matrix02, matrix23)
 
         const originPoint = new Vector(0, 0, 0)
 

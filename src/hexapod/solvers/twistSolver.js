@@ -1,4 +1,3 @@
-import { atan2 } from "mathjs"
 import { degrees } from "../geometry"
 import { POSITION_NAME_TO_ID_MAP } from "../constants"
 
@@ -100,8 +99,8 @@ const complexTwist = (currentPoints, defaultPoints) => {
     const defaultSamePoint = defaultPoints[samePointIndex]
 
     const thetaRadians =
-        atan2(defaultSamePoint.y, defaultSamePoint.x) -
-        atan2(defaultSamePoint.y, defaultSamePoint.x)
+        Math.atan2(defaultSamePoint.y, defaultSamePoint.x) -
+        Math.atan2(defaultSamePoint.y, defaultSamePoint.x)
 
     return degrees(thetaRadians)
 }
