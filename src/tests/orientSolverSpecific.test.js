@@ -24,6 +24,7 @@ test.each(CASES)("Should return the correct orientation properties %p", thisCase
                 legPoses[i]
             )
     )
+
     const {
         nAxis,
         height,

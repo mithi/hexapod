@@ -30,6 +30,7 @@ test.each(CASES)("Should twist or not twist hexapod appropriately: %p", thisCase
         (pose, position) => ({ ...pose, [position]: params.patternPose }),
         {}
     )
+
     const virtualHexapod = new VirtualHexapod(params.dimensions, pose)
 
     virtualHexapod.body.allPointsList.forEach((point, index) =>

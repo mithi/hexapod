@@ -1,15 +1,8 @@
 import React from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import { VirtualHexapod, getNewPlotParams } from "./hexapod"
-import {
-    DEFAULT_DIMENSIONS,
-    DEFAULT_POSE,
-    DEFAULT_PATTERN_PARAMS,
-    DEFAULT_IK_PARAMS,
-    DATA,
-    LAYOUT,
-    CAMERA_VIEW,
-} from "./templates"
+import * as defaults from "./templates"
+import { SECTION_NAMES, PATHS } from "./components/texts"
 import {
     PoseTable,
     Nav,
@@ -18,7 +11,6 @@ import {
     DimensionsWidget,
     MessageBox,
 } from "./components"
-
 import {
     ForwardKinematicsPage,
     InverseKinematicsPage,
@@ -26,26 +18,27 @@ import {
     LegPatternPage,
 } from "./components/pages"
 
+
 class App extends React.Component {
     state = {
-        currentPage: "Root",
+        currentPage: SECTION_NAMES.LandingPage,
         inHexapodPage: false,
         showPoseMessage: true,
         showInfo: false,
         info: {},
 
-        ikParams: DEFAULT_IK_PARAMS,
-        patternParams: DEFAULT_PATTERN_PARAMS,
+        ikParams: defaults.DEFAULT_IK_PARAMS,
+        patternParams: defaults.DEFAULT_PATTERN_PARAMS,
 
         hexapodParams: {
-            dimensions: DEFAULT_DIMENSIONS,
-            pose: DEFAULT_POSE,
+            dimensions: defaults.DEFAULT_DIMENSIONS,
+            pose: defaults.DEFAULT_POSE,
         },
 
         plot: {
-            data: DATA,
-            layout: LAYOUT,
-            latestCameraView: CAMERA_VIEW,
+            data: defaults.DATA,
+            layout: defaults.LAYOUT,
+            latestCameraView: defaults.CAMERA_VIEW,
             revisionCounter: 0,
         },
     }
@@ -55,7 +48,7 @@ class App extends React.Component {
      * * * * * * * * * * * * * */
 
     onPageLoad = pageName => {
-        if (pageName === "Root") {
+        if (pageName === SECTION_NAMES.landingPage) {
             this.setState({
                 currentPage: pageName,
                 inHexapodPage: false,
@@ -70,11 +63,11 @@ class App extends React.Component {
             inHexapodPage: true,
             showInfo: false,
             showPoseMessage: false,
-            ikParams: DEFAULT_IK_PARAMS,
-            patternParams: DEFAULT_PATTERN_PARAMS,
-            hexapodParams: { ...this.state.hexapodParams, pose: DEFAULT_POSE },
+            ikParams: defaults.DEFAULT_IK_PARAMS,
+            patternParams: defaults.DEFAULT_PATTERN_PARAMS,
+            hexapodParams: { ...this.state.hexapodParams, pose: defaults.DEFAULT_POSE },
         })
-        this.updatePlot(this.state.hexapodParams.dimensions, DEFAULT_POSE)
+        this.updatePlot(this.state.hexapodParams.dimensions, defaults.DEFAULT_POSE)
     }
 
     /* * * * * * * * * * * * * *
@@ -177,14 +170,14 @@ class App extends React.Component {
             <Route path="/" exact>
                 <LandingPage onMount={this.onPageLoad} />
             </Route>
-            <Route path="/forward-kinematics">
+            <Route path={PATHS.forwardKinematics.path}>
                 <ForwardKinematicsPage
                     params={{ pose: this.state.hexapodParams.pose }}
                     onUpdate={this.updatePose}
                     onMount={this.onPageLoad}
                 />
             </Route>
-            <Route path="/inverse-kinematics">
+            <Route path={PATHS.inverseKinematics.path}>
                 <InverseKinematicsPage
                     params={{
                         dimensions: this.state.hexapodParams.dimensions,
@@ -194,7 +187,7 @@ class App extends React.Component {
                     onMount={this.onPageLoad}
                 />
             </Route>
-            <Route path="/leg-patterns">
+            <Route path={PATHS.legPatterns.path}>
                 <LegPatternPage
                     params={{ patternParams: this.state.patternParams }}
                     onUpdate={this.updatePatternPose}
