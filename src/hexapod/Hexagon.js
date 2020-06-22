@@ -95,7 +95,9 @@ class Hexagon {
         let clone = new Hexagon(this.dimensions, { hasNoPoints: true })
         clone.cog = this.cog[transformFunction](...args)
         clone.head = this.head[transformFunction](...args)
-        clone.verticesList = this.verticesList.map(point => point[transformFunction](...args))
+        clone.verticesList = this.verticesList.map(point =>
+            point[transformFunction](...args)
+        )
         return clone
     }
 }
