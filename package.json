@@ -6,7 +6,6 @@
         "@testing-library/jest-dom": "^4.2.4",
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
-        "mathjs": "^7.0.0",
         "plotly.js-gl3d-dist-min": "^1.54.2",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
