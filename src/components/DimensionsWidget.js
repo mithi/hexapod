@@ -2,11 +2,12 @@ import React, { Component } from "react"
 import NumberInputField from "./generic/NumberInputField"
 import { Card, BasicButton, ToggleSwitch } from "./generic/SmallWidgets"
 import { DEFAULT_DIMENSIONS } from "../templates"
+import { SECTION_NAMES, DIMENSION_NAMES, RESET_LABEL } from "./texts.js"
 
 class DimensionsWidget extends Component {
-    sectionName = "Dimensions"
+    sectionName = SECTION_NAMES.dimensions
 
-    state = { isFine: true, granularity: 1, label: "fine" }
+    state = { isFine: true, granularity: 1 }
 
     reset = () => {
         const dimensions = DEFAULT_DIMENSIONS
@@ -43,8 +44,7 @@ class DimensionsWidget extends Component {
     }
 
     get NumberInputFields() {
-        const dimensionNames = ["front", "side", "middle", "coxia", "femur", "tibia"]
-        return dimensionNames.map(name => (
+        return DIMENSION_NAMES.map(name => (
             <NumberInputField
                 key={name}
                 name={name}
@@ -56,7 +56,7 @@ class DimensionsWidget extends Component {
     }
 
     get resetButton() {
-        return <BasicButton handleClick={this.reset}>Reset</BasicButton>
+        return <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
     }
 
     get header() {

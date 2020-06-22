@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import { Card } from "../generic"
+import { ANGLE_NAMES } from "../texts"
 
 class LegPoseWidget extends Component {
     updateFieldState = (angle, value) => {
@@ -10,8 +11,7 @@ class LegPoseWidget extends Component {
     }
 
     fields = Component => {
-        const angleNames = ["alpha", "beta", "gamma"]
-        return angleNames.map(name => {
+        return ANGLE_NAMES.map(name => {
             const newId = `${this.props.name}-${name}`
             return (
                 <Component
