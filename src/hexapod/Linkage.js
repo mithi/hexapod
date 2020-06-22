@@ -153,22 +153,20 @@ class Linkage {
      * and again be translated by tx, ty, tz
      * */
     cloneTrotShift(transformMatrix, tx, ty, tz) {
-        const newPointsList = this.allPointsList.map(oldPoint =>
-            oldPoint.cloneTrotShift(transformMatrix, tx, ty, tz)
-        )
-        return this._buildClone(newPointsList)
+        return this._doTransform("cloneTrotShift", transformMatrix, tx, ty, tz)
     }
 
     cloneTrot(transformMatrix) {
-        const newPointsList = this.allPointsList.map(oldPoint =>
-            oldPoint.cloneTrot(transformMatrix)
-        )
-        return this._buildClone(newPointsList)
+        return this._doTransform("cloneTrot", transformMatrix)
     }
 
     cloneShift(tx, ty, tz) {
+        return this._doTransform("cloneShift", tx, ty, tz)
+    }
+
+    _doTransform(transformFunction, ...args) {
         const newPointsList = this.allPointsList.map(oldPoint =>
-            oldPoint.cloneShift(tx, ty, tz)
+            oldPoint[transformFunction](...args)
         )
         return this._buildClone(newPointsList)
     }
