@@ -77,7 +77,7 @@
   "" this.id : a number from 0 to 5 corresponding to a particular position
 
   * * * * */
-import { multiply, identity } from "mathjs"
+import { multiply } from "mathjs"
 import { tRotYmatrix, tRotZmatrix } from "./geometry"
 import {
     LEG_POINT_TYPES_LIST,
@@ -144,6 +144,7 @@ class Linkage {
             []
         )
     }
+
     /* *
      * .............
      * clone (translate) rotate shift cloneTrotShift
@@ -168,6 +169,25 @@ class Linkage {
             return pointsMap
         }, {})
 
+        return this._buildClone(pointsMap)
+    }
+
+    cloneTrot(transformMatrix) {
+        return this.cloneTrotShift(transformMatrix, 0, 0, 0)
+    }
+
+    cloneShift(tx, ty, tz) {
+        const pointsMap = LEG_POINT_TYPES_LIST.reduce((pointsMap, pointType) => {
+            const oldPoint = this.pointsMap[pointType]
+            const newPoint = oldPoint.cloneShift(tx, ty, tz)
+            pointsMap[pointType] = newPoint
+            return pointsMap
+        }, {})
+
+        return this._buildClone(pointsMap)
+    }
+
+    _buildClone(pointsMap) {
         let clone = new Linkage(
             this.dimensions,
             this.position,
@@ -179,14 +199,6 @@ class Linkage {
         // override pointsMap of clone
         clone.pointsMap = pointsMap
         return clone
-    }
-
-    cloneTrot(transformMatrix) {
-        return this.cloneTrotShift(transformMatrix, 0, 0, 0)
-    }
-
-    cloneShift(tx, ty, tz) {
-        return this.cloneTrotShift(identity(4), tx, ty, tz)
     }
 
     /* *
