@@ -18,7 +18,6 @@ import {
     LegPatternPage,
 } from "./components/pages"
 
-
 class App extends React.Component {
     state = {
         currentPage: SECTION_NAMES.LandingPage,

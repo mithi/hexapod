@@ -7,9 +7,15 @@ const SECTION_NAMES = {
 }
 
 const PATHS = {
-    inverseKinematics: { path: "/inverse-kinematics", description: SECTION_NAMES.inverseKinematics },
-    forwardKinematics: { path: "/forward-kinematics", description: SECTION_NAMES.forwardKinematics },
-    legPatterns: { path: "/leg-patterns", description: SECTION_NAMES.legPatterns},
+    inverseKinematics: {
+        path: "/inverse-kinematics",
+        description: SECTION_NAMES.inverseKinematics,
+    },
+    forwardKinematics: {
+        path: "/forward-kinematics",
+        description: SECTION_NAMES.forwardKinematics,
+    },
+    legPatterns: { path: "/leg-patterns", description: SECTION_NAMES.legPatterns },
     landingPage: { path: "/", description: SECTION_NAMES.landingPage },
 }
 
