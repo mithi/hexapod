@@ -13,6 +13,7 @@ const successHeader = subject => (
         <FaCheck className="vertical-align" /> {subject}
     </h2>
 )
+
 const MessageBox = ({ info }) =>
     info ? (
         <div className="message">

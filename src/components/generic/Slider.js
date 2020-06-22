@@ -6,7 +6,7 @@ import React from "react"
  * props of Slider component:
  * ................
  *   name: Label of the slider
- *   params: [minimum, maximum, step]
+ *   attributes: [minimum, maximum, step]
  *   value: current value (to be displayed)
  *   handleChange: callback to call when slider changes
  *
