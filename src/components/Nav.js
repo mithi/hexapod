@@ -1,36 +1,27 @@
 import React from "react"
-import { BasicLink, PageLink } from "./generic"
 import { FaGithubAlt } from "react-icons/fa"
 import { GrStatusGoodSmall } from "react-icons/gr"
+import { BasicLink, PageLink } from "./generic"
+import { URLS, PATH_LINKS, LINK_DESCRIPTIONS } from "./texts"
 
-const URL_KOFI = "https://ko-fi.com/minimithi"
-const URL_SRC = "https://github.com/mithi/hexapod"
 const ICON_KOFI = "🍵"
-
-const URL_NAME_KOFI = "Buy Mithi Ko-Fi 🍵"
-const URL_NAME_SRC = "Source Code"
-
-const PATHS = [
-    { path: "inverse-kinematics", name: "Inverse kinematics" },
-    { path: "forward-kinematics", name: "Forward kinematics" },
-    { path: "leg-patterns", name: "Leg Patterns" },
-    { path: "/", name: "Root" },
-]
+const NAV_CONTENT_PREFIX = "navContent"
+const NAV_DETAILED_PREFIX = "navDetailed"
 
 const NavContent = () => (
     <ul className="row-container no-bullet top-bar">
-        <li key={URL_KOFI}>
-            <BasicLink path={URL_KOFI}>{ICON_KOFI}</BasicLink>
+        <li key={NAV_CONTENT_PREFIX + URLS.KOFI}>
+            <BasicLink path={URLS.KOFI}>{ICON_KOFI}</BasicLink>
         </li>
-        <li key={URL_SRC}>
-            <BasicLink path={URL_SRC}>
+        <li key={NAV_CONTENT_PREFIX + URLS.REPO}>
+            <BasicLink path={URLS.REPO}>
                 <FaGithubAlt className="vertical-align" />
             </BasicLink>
         </li>
 
-        {PATHS.map((path, index) => (
-            <li key={index}>
-                <PageLink path={path.path}>
+        {PATH_LINKS.map((link, index) => (
+            <li key={NAV_CONTENT_PREFIX + link.path}>
+                <PageLink path={link.path}>
                     <GrStatusGoodSmall className="small-icon" />
                 </PageLink>
             </li>
@@ -40,21 +31,21 @@ const NavContent = () => (
 
 const NavDetailed = () => (
     <ul className="column-container no-bullet" id="nav">
-        <li key={URL_KOFI}>
-            <BasicLink path={URL_KOFI} className="text-link">
-                {ICON_KOFI} {URL_NAME_KOFI}
+        <li key={NAV_DETAILED_PREFIX + LINK_DESCRIPTIONS.KOFI}>
+            <BasicLink path={URLS.KOFI} className="text-link">
+                {ICON_KOFI} {LINK_DESCRIPTIONS.KOFI}
             </BasicLink>
         </li>
-        <li key={URL_SRC}>
-            <BasicLink path={URL_SRC} className="text-link">
-                <FaGithubAlt className="vertical-align" /> {URL_NAME_SRC}
+        <li key={NAV_DETAILED_PREFIX + LINK_DESCRIPTIONS.REPO}>
+            <BasicLink path={URLS.REPO} className="text-link">
+                <FaGithubAlt className="vertical-align" /> {LINK_DESCRIPTIONS.REPO}
             </BasicLink>
         </li>
 
-        {PATHS.map((path, index) => (
-            <li key={index}>
-                <PageLink path={path.path} className="text-link">
-                    <GrStatusGoodSmall className="small-icon" /> {path.name}
+        {PATH_LINKS.map(link => (
+            <li key={NAV_DETAILED_PREFIX + link.path}>
+                <PageLink path={link.path} className="text-link">
+                    <GrStatusGoodSmall className="small-icon" /> {link.description}
                 </PageLink>
             </li>
         ))}
