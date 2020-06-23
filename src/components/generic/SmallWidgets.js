@@ -1,4 +1,16 @@
 import React from "react"
+import ReactMarkdown from "react-markdown"
+import { ICON_COMPONENTS } from "../texts"
+
+const AlertBox = ({ info }) => (
+    <div className="message">
+        <h2 className="red">
+            {ICON_COMPONENTS.times} {" "}
+            {info.subject}
+        </h2>
+        <ReactMarkdown source={info.body} />
+    </div>
+)
 
 const ToggleSwitch = ({ value, handleChange, showLabel, labelTop }) => (
     <div className="switch-container">
@@ -19,7 +31,7 @@ const Card = props => {
     const { className, title, children } = props
 
     return (
-        <div className={`${className || ""}`}>
+        <div className={className}>
             <props.h>{title}</props.h>
             {children}
         </div>
@@ -32,4 +44,4 @@ const BasicButton = ({ handleClick, children }) => (
     </button>
 )
 
-export { Card, ToggleSwitch, BasicButton }
+export { AlertBox, Card, ToggleSwitch, BasicButton }

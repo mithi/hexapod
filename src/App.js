@@ -9,7 +9,7 @@ import {
     NavDetailed,
     HexapodPlot,
     DimensionsWidget,
-    MessageBox,
+    AlertBox,
 } from "./components"
 import {
     ForwardKinematicsPage,
@@ -128,7 +128,7 @@ class App extends React.Component {
      * * * * * * * * * * * * * */
 
     mightShowMessage = () =>
-        this.state.showInfo ? <MessageBox info={this.state.info} /> : null
+        this.state.showInfo ? <AlertBox info={this.state.info} /> : null
 
     mightShowDetailedNav = () => (this.state.inHexapodPage ? <NavDetailed /> : null)
 
