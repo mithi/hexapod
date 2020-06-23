@@ -64,17 +64,6 @@ class Hexagon {
         return [...this.verticesList, this.verticesList[0]]
     }
 
-    get vertices() {
-        // a hash mapping the position ie(right middle) to the vertex point
-        return this.verticesList.reduce(
-            (verticesMap, vertex) => ({
-                ...verticesMap,
-                [POSITION_NAMES_LIST[vertex.id]]: vertex,
-            }),
-            {}
-        )
-    }
-
     get allPointsList() {
         return [...this.verticesList, this.cog, this.head]
     }
