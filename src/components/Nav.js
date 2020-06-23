@@ -2,11 +2,11 @@ import React from "react"
 import { URL_LINKS, PATH_LINKS, ICON_COMPONENTS } from "./texts"
 import { Link } from "react-router-dom"
 
-const NAV_BULLETS_PREFIX = "navContent"
+const NAV_BULLETS_PREFIX = "navBullet"
 const NAV_DETAILED_PREFIX = "navDetailed"
 
-const BulletPageLink = ({ keyPrefix, path, description, }) => (
-    <li key={keyPrefix + path}>
+const BulletPageLink = ({ path, description }) => (
+    <li>
         <Link to={path} className="link-icon">
             <span>
                 {ICON_COMPONENTS.circle} {description}{" "}
@@ -15,8 +15,8 @@ const BulletPageLink = ({ keyPrefix, path, description, }) => (
     </li>
 )
 
-const BulletUrlLink = ({ keyPrefix, path, text, icon }) => (
-    <li key={keyPrefix + path}>
+const BulletUrlLink = ({ path, description, icon }) => (
+    <li>
         <a
             href={path}
             className="link-icon"
@@ -24,7 +24,7 @@ const BulletUrlLink = ({ keyPrefix, path, text, icon }) => (
             rel="noopener noreferrer"
             children={
                 <span>
-                    {icon} {text}{" "}
+                    {icon} {description}{" "}
                 </span>
             }
         />
@@ -34,11 +34,15 @@ const BulletUrlLink = ({ keyPrefix, path, text, icon }) => (
 const NavBullets = () => (
     <ul className="row-container no-bullet top-bar">
         {URL_LINKS.map(link => (
-            <BulletUrlLink path={link.url} key={NAV_BULLETS_PREFIX} icon={link.icon} />
+            <BulletUrlLink
+                path={link.url}
+                key={NAV_BULLETS_PREFIX + link.url}
+                icon={link.icon}
+            />
         ))}
 
         {PATH_LINKS.map(link => (
-            <BulletPageLink keyPrefix={NAV_BULLETS_PREFIX} path={link.path} />
+            <BulletPageLink key={NAV_BULLETS_PREFIX + link.path} path={link.path} />
         ))}
     </ul>
 )
@@ -48,15 +52,15 @@ const NavDetailed = () => (
         {URL_LINKS.map(link => (
             <BulletUrlLink
                 path={link.url}
-                keyPrefix={NAV_DETAILED_PREFIX}
+                key={NAV_DETAILED_PREFIX + link.url}
                 icon={link.icon}
-                text={link.description}
+                description={link.description}
             />
         ))}
 
-        {PATH_LINKS.map(link => (
+        {PATH_LINKS.map((link, index) => (
             <BulletPageLink
-                keyPrefix={NAV_DETAILED_PREFIX}
+                key={NAV_DETAILED_PREFIX + link.path}
                 path={link.path}
                 description={link.description}
             />
