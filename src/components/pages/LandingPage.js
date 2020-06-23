@@ -1,8 +1,7 @@
 import React from "react"
 import ReactMarkdown from "react-markdown"
 import { NavDetailed } from ".."
-import { PageLink } from "../generic"
-import { LANDING_PAGE_MESSAGE, SECTION_NAMES, PATHS } from "../texts"
+import { LANDING_PAGE_MESSAGE, SECTION_NAMES } from "../texts"
 
 class LandingPage extends React.Component {
     pageName = SECTION_NAMES.landingPage
@@ -13,9 +12,7 @@ class LandingPage extends React.Component {
 
     render = () => (
         <>
-            <PageLink path={PATHS.inverseKinematics.path}>
-                <div className="hexapod-img" />{" "}
-            </PageLink>
+            <div className="hexapod-img" />{" "}
             <div id="landing">
                 <ReactMarkdown source={LANDING_PAGE_MESSAGE} />
             </div>
