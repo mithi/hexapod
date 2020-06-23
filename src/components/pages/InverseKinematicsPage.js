@@ -2,13 +2,7 @@ import React, { Component } from "react"
 import { Slider, Card, BasicButton } from "../generic"
 import { solveInverseKinematics } from "../../hexapod"
 import { DEFAULT_IK_PARAMS } from "../../templates"
-import {
-    SECTION_NAMES,
-    ROTATE_SLIDERS_LABELS,
-    TRANSLATE_SLIDERS_LABELS,
-    RESET_LABEL,
-    RANGE_PARAMS,
-} from "../vars"
+import { SECTION_NAMES, IK_SLIDERS_LABELS, RESET_LABEL, RANGE_PARAMS } from "../vars"
 
 const _updatedStateParamsUnsolved = (ikParams, message) => ({
     ikParams,
@@ -57,8 +51,8 @@ class InverseKinematicsPage extends Component {
         return <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
     }
 
-    get rotateSliders() {
-        return ROTATE_SLIDERS_LABELS.map(name => (
+    get sliders() {
+        return IK_SLIDERS_LABELS.map(name => (
             <Slider
                 key={name}
                 name={name}
@@ -69,26 +63,14 @@ class InverseKinematicsPage extends Component {
         ))
     }
 
-    get translateSliders() {
-        return TRANSLATE_SLIDERS_LABELS.map(name => (
-            <Slider
-                key={name}
-                name={name}
-                rangeParams={RANGE_PARAMS.translateInputs}
-                handleChange={this.updateIkParams}
-                value={this.props.params.ikParams[name]}
-            />
-        ))
-    }
-
     render() {
-        const rotateSliders = this.rotateSliders
+        const sliders = this.sliders
 
         return (
             <Card title={this.pageName} h="h2">
-                <div className="row-container">{this.translateSliders}</div>
-                <div className="row-container">{rotateSliders.slice(0, 3)}</div>
-                <div className="row-container">{rotateSliders.slice(3)}</div>
+                <div className="row-container">{sliders.slice(0, 3)}</div>
+                <div className="row-container">{sliders.slice(3, 6)}</div>
+                <div className="row-container">{sliders.slice(6, 8)}</div>
                 {this.resetButton}
             </Card>
         )
