@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Slider, Card, BasicButton } from "../generic"
 import { DEFAULT_POSE, DEFAULT_PATTERN_PARAMS } from "../../templates"
-import { SECTION_NAMES, ANGLE_NAMES, RESET_LABEL } from "../texts"
+import { SECTION_NAMES, ANGLE_NAMES, RESET_LABEL, RANGE_PARAMS } from "../texts"
 
 class LegPatternPage extends Component {
     pageName = SECTION_NAMES.legPatterns
@@ -32,15 +32,15 @@ class LegPatternPage extends Component {
     }
 
     get rotateSliders() {
-        return ANGLE_NAMES.map(name =>
+        return ANGLE_NAMES.map(name => (
             <Slider
                 key={name}
                 name={name}
-                attributes={[-180, 180, 1]}
+                rangeParams={RANGE_PARAMS[name]}
                 handleChange={this.updatePatternPose}
                 value={this.props.params.patternParams[name]}
             />
-        )
+        ))
     }
 
     render = () => (

@@ -2,8 +2,6 @@ import React, { Component } from "react"
 
 class InputField extends Component {
     state = {
-        currentValue: 0,
-        parentValue: 0,
         message: null,
     }
 
@@ -19,7 +17,7 @@ class InputField extends Component {
     }
 
     handleChange(value) {
-        const [minValue, maxValue, stepValue] = this.props.attributes
+        const { minVal, maxVal, stepVal } = this.props.rangeParams
         const validity = this.myRef.current.validity
 
         if (validity.badInput) {
@@ -28,17 +26,17 @@ class InputField extends Component {
         }
 
         if (validity.rangeOverflow) {
-            this.setState({ message: `max=${maxValue}` })
+            this.setState({ message: `max=${maxVal}` })
             return
         }
 
         if (validity.rangeUnderflow) {
-            this.setState({ message: `min=${minValue}` })
+            this.setState({ message: `min=${minVal}` })
             return
         }
 
         if (validity.stepMismatch) {
-            this.setState({ message: `step=${stepValue}` })
+            this.setState({ message: `step=${stepVal}` })
             return
         }
 
@@ -59,9 +57,9 @@ class InputField extends Component {
     }
 
     render() {
-        const { name, attributes, id, value } = this.props
+        const { name, rangeParams, id, value } = this.props
         const newId = id || name
-        const [minValue, maxValue, stepValue] = attributes
+        const { minVal, maxVal, stepVal } = rangeParams
 
         return (
             <div className="cell">
@@ -75,9 +73,9 @@ class InputField extends Component {
                     ref={this.myRef}
                     value={value}
                     onChange={e => this.handleChange(e.target.value)}
-                    min={minValue}
-                    max={maxValue}
-                    step={stepValue}
+                    min={minVal}
+                    max={maxVal}
+                    step={stepVal}
                     style={{ margin: 0 }}
                 />
                 <label className="label red" style={{ opacity: 1 }}>

@@ -7,6 +7,7 @@ import {
     ROTATE_SLIDERS_LABELS,
     TRANSLATE_SLIDERS_LABELS,
     RESET_LABEL,
+    RANGE_PARAMS,
 } from "../texts"
 
 const _updatedStateParamsUnsolved = (ikParams, message) => ({
@@ -61,7 +62,7 @@ class InverseKinematicsPage extends Component {
             <Slider
                 key={name}
                 name={name}
-                attributes={[-45, 45, 0.01]}
+                rangeParams={RANGE_PARAMS[name]}
                 handleChange={this.updateIkParams}
                 value={this.props.params.ikParams[name]}
             />
@@ -73,7 +74,7 @@ class InverseKinematicsPage extends Component {
             <Slider
                 key={name}
                 name={name}
-                attributes={[0, 1, 0.01]}
+                rangeParams={RANGE_PARAMS.translateInputs}
                 handleChange={this.updateIkParams}
                 value={this.props.params.ikParams[name]}
             />
