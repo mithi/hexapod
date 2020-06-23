@@ -1,6 +1,6 @@
 import React from "react"
 import ReactMarkdown from "react-markdown"
-import { ICON_COMPONENTS } from "../texts"
+import { ICON_COMPONENTS } from "../vars"
 
 const AlertBox = ({ info }) => (
     <div className="message">

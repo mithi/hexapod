@@ -8,7 +8,7 @@ import {
     TRANSLATE_SLIDERS_LABELS,
     RESET_LABEL,
     RANGE_PARAMS,
-} from "../texts"
+} from "../vars"
 
 const _updatedStateParamsUnsolved = (ikParams, message) => ({
     ikParams,

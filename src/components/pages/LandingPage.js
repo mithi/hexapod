@@ -1,7 +1,7 @@
 import React from "react"
 import ReactMarkdown from "react-markdown"
 import { NavDetailed } from ".."
-import { LANDING_PAGE_MESSAGE, SECTION_NAMES } from "../texts"
+import { LANDING_PAGE_MESSAGE, SECTION_NAMES } from "../vars"
 
 class LandingPage extends React.Component {
     pageName = SECTION_NAMES.landingPage
