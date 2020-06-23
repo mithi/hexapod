@@ -29,9 +29,7 @@ const LEG_NAMES = [
     "rightBack",
 ]
 
-const ROTATE_SLIDERS_LABELS = ["rx", "ry", "rz", "hipStance", "legStance"]
-const TRANSLATE_SLIDERS_LABELS = ["tx", "ty", "tz"]
-
+const IK_SLIDERS_LABELS = ["tx", "ty", "tz", "rx", "ry", "rz", "hipStance", "legStance"]
 const RESET_LABEL = "reset"
 
 /*************
@@ -47,9 +45,13 @@ const RANGES = {
     180: rangeParams(180),
 }
 
+const translateInputs = { minVal: -1, maxVal: 1, stepVal: 0.01 }
+
 const RANGE_PARAMS = {
     dimensionInputs: { minVal: 0, maxVal: Infinity, stepVal: 1 },
-    translateInputs: { minVal: -1, maxVal: 1, stepVal: 0.01 },
+    tx: translateInputs,
+    ty: translateInputs,
+    tz: translateInputs,
     rx: RANGES[30],
     ry: RANGES[30],
     rz: RANGES[60],
@@ -154,8 +156,7 @@ export {
     ANGLE_NAMES,
     DIMENSION_NAMES,
     LEG_NAMES,
-    TRANSLATE_SLIDERS_LABELS,
-    ROTATE_SLIDERS_LABELS,
+    IK_SLIDERS_LABELS,
     RESET_LABEL,
     PATHS,
     URL_LINKS,
