@@ -1,57 +1,70 @@
 import React from "react"
-import { FaGithubAlt } from "react-icons/fa"
-import { GrStatusGoodSmall } from "react-icons/gr"
-import { BasicLink, PageLink } from "./generic"
-import { URLS, PATH_LINKS, LINK_DESCRIPTIONS } from "./texts"
+import { URL_LINKS, PATH_LINKS, ICON_COMPONENTS } from "./texts"
+import { Link } from "react-router-dom"
 
-const ICON_KOFI = "🍵"
-const NAV_CONTENT_PREFIX = "navContent"
+const NAV_BULLETS_PREFIX = "navContent"
 const NAV_DETAILED_PREFIX = "navDetailed"
 
-const NavContent = () => (
-    <ul className="row-container no-bullet top-bar">
-        <li key={NAV_CONTENT_PREFIX + URLS.KOFI}>
-            <BasicLink path={URLS.KOFI}>{ICON_KOFI}</BasicLink>
-        </li>
-        <li key={NAV_CONTENT_PREFIX + URLS.REPO}>
-            <BasicLink path={URLS.REPO}>
-                <FaGithubAlt className="vertical-align" />
-            </BasicLink>
-        </li>
+const BulletPageLink = ({ keyPrefix, path, description, className }) => (
+    <li key={keyPrefix + path}>
+        <Link to={path} className={`link-icon ${className || ""}`} >
+            <span>{ICON_COMPONENTS.circle} {description} </span>
+        </Link>
+    </li>
+)
 
-        {PATH_LINKS.map((link, index) => (
-            <li key={NAV_CONTENT_PREFIX + link.path}>
-                <PageLink path={link.path}>
-                    <GrStatusGoodSmall className="small-icon" />
-                </PageLink>
-            </li>
+const BulletUrlLink = ({ keyPrefix, path, text, icon }) => (
+    <li key={keyPrefix + path}>
+        <a
+            href={path}
+            className={"link-icon"}
+            target="_blank"
+            rel="noopener noreferrer"
+            children={<span>{icon} {text} </span>}
+        />
+    </li>
+)
+
+const NavBullets = () => (
+    <ul className="row-container no-bullet top-bar">
+        {URL_LINKS.map(link => (
+            <BulletUrlLink
+                path={link.url}
+                key={NAV_BULLETS_PREFIX}
+                icon={link.icon}
+            />
+        ))}
+
+        {PATH_LINKS.map(link => (
+            <BulletPageLink
+                keyPrefix={NAV_BULLETS_PREFIX}
+                path={link.path}
+            />
         ))}
     </ul>
 )
 
 const NavDetailed = () => (
     <ul className="column-container no-bullet" id="nav">
-        <li key={NAV_DETAILED_PREFIX + LINK_DESCRIPTIONS.KOFI}>
-            <BasicLink path={URLS.KOFI} className="text-link">
-                {ICON_KOFI} {LINK_DESCRIPTIONS.KOFI}
-            </BasicLink>
-        </li>
-        <li key={NAV_DETAILED_PREFIX + LINK_DESCRIPTIONS.REPO}>
-            <BasicLink path={URLS.REPO} className="text-link">
-                <FaGithubAlt className="vertical-align" /> {LINK_DESCRIPTIONS.REPO}
-            </BasicLink>
-        </li>
+        {URL_LINKS.map(link => (
+            <BulletUrlLink
+                path={link.url}
+                keyPrefix={NAV_DETAILED_PREFIX}
+                icon={link.icon}
+                text={link.description}
+            />
+        ))}
 
         {PATH_LINKS.map(link => (
-            <li key={NAV_DETAILED_PREFIX + link.path}>
-                <PageLink path={link.path} className="text-link">
-                    <GrStatusGoodSmall className="small-icon" /> {link.description}
-                </PageLink>
-            </li>
+            <BulletPageLink
+                keyPrefix={NAV_DETAILED_PREFIX}
+                path={link.path}
+                description={link.description}
+            />
         ))}
     </ul>
 )
 
-const Nav = () => <NavContent />
+const Nav = () => <NavBullets />
 
 export { Nav, NavDetailed }

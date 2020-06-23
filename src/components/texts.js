@@ -1,3 +1,8 @@
+import React from "react"
+import { GiCoffeeMug } from "react-icons/gi"
+import { FaGithubAlt } from "react-icons/fa"
+import { GrStatusGoodSmall } from "react-icons/gr"
+
 const SECTION_NAMES = {
     dimensions: "Dimensions",
     inverseKinematics: "Inverse Kinematics",
@@ -6,25 +11,12 @@ const SECTION_NAMES = {
     landingPage: "Root",
 }
 
-const PATHS = {
-    inverseKinematics: {
-        path: "/inverse-kinematics",
-        description: SECTION_NAMES.inverseKinematics,
-    },
-    forwardKinematics: {
-        path: "/forward-kinematics",
-        description: SECTION_NAMES.forwardKinematics,
-    },
-    legPatterns: { path: "/leg-patterns", description: SECTION_NAMES.legPatterns },
-    landingPage: { path: "/", description: SECTION_NAMES.landingPage },
+const PATH_NAMES = {
+    inverseKinematics: "/inverse-kinematics",
+    forwardKinematics: "/forward-kinematics",
+    legPatterns: "/leg-patterns",
+    landingPage: "/",
 }
-
-const PATH_LINKS = [
-    PATHS.inverseKinematics,
-    PATHS.forwardKinematics,
-    PATHS.legPatterns,
-    PATHS.landingPage,
-]
 
 const ANGLE_NAMES = ["alpha", "beta", "gamma"]
 const DIMENSION_NAMES = ["front", "side", "middle", "coxia", "femur", "tibia"]
@@ -36,6 +28,7 @@ const LEG_NAMES = [
     "leftBack",
     "rightBack",
 ]
+
 const ROTATE_SLIDERS_LABELS = ["rx", "ry", "rz", "hipStance", "legStance"]
 const RESET_LABEL = "reset"
 const TRANSLATE_SLIDERS_LABELS = ["tx", "ty", "tz"]
@@ -44,15 +37,53 @@ const TRANSLATE_SLIDERS_LABELS = ["tx", "ty", "tz"]
  * NAVIGATION
  *************/
 
-const URLS = {
-    KOFI: "https://ko-fi.com/minimithi",
-    REPO: "https://github.com/mithi/hexapod",
+const ICON_COMPONENTS = {
+    mug: <GiCoffeeMug className="vertical-align" />,
+    circle: <GrStatusGoodSmall className="small-icon" />,
+    octocat: <FaGithubAlt className="vertical-align" />,
 }
 
-const LINK_DESCRIPTIONS = {
-    KOFI: "Buy Mithi Ko-Fi 🍵",
-    REPO: "Source Code",
+const PATHS = {
+    inverseKinematics: {
+        path: PATH_NAMES.inverseKinematics,
+        description: SECTION_NAMES.inverseKinematics,
+    },
+    forwardKinematics: {
+        path: PATH_NAMES.forwardKinematics,
+        description: SECTION_NAMES.forwardKinematics,
+    },
+    legPatterns: {
+        path: PATH_NAMES.legPatterns,
+        description: SECTION_NAMES.legPatterns,
+    },
+    landingPage: {
+        path: PATH_NAMES,
+        description: SECTION_NAMES.landingPage,
+    },
 }
+
+const KOFI_LINK_PROPERTIES = {
+    name: "KOFI",
+    icon: ICON_COMPONENTS.mug,
+    description: "Buy Mithi Ko-Fi 🍵",
+    url: "https://ko-fi.com/minimithi",
+}
+
+const REPO_LINK_PROPERTIES = {
+    name: "REPO",
+    icon: ICON_COMPONENTS.octocat,
+    description: "Source Code",
+    url: "https://github.com/mithi/hexapod",
+}
+
+const PATH_LINKS = [
+    PATHS.inverseKinematics,
+    PATHS.forwardKinematics,
+    PATHS.legPatterns,
+    PATHS.landingPage,
+]
+
+const URL_LINKS = [KOFI_LINK_PROPERTIES, REPO_LINK_PROPERTIES]
 
 /*************
  * LANDING PAGE
@@ -84,6 +115,7 @@ modules to follow better software practices. [How you can help][5].
 `
 
 export {
+    ICON_COMPONENTS,
     LANDING_PAGE_MESSAGE,
     SECTION_NAMES,
     ANGLE_NAMES,
@@ -93,7 +125,6 @@ export {
     ROTATE_SLIDERS_LABELS,
     RESET_LABEL,
     PATHS,
+    URL_LINKS,
     PATH_LINKS,
-    URLS,
-    LINK_DESCRIPTIONS,
 }
