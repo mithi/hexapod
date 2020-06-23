@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import NumberInputField from "./generic/NumberInputField"
 import { Card, BasicButton, ToggleSwitch } from "./generic/SmallWidgets"
 import { DEFAULT_DIMENSIONS } from "../templates"
-import { SECTION_NAMES, DIMENSION_NAMES, RESET_LABEL, RANGE_PARAMS } from "./texts.js"
+import { SECTION_NAMES, DIMENSION_NAMES, RESET_LABEL, RANGE_PARAMS } from "./vars"
 
 class DimensionsWidget extends Component {
     sectionName = SECTION_NAMES.dimensions

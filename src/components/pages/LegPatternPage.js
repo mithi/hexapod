@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Slider, Card, BasicButton } from "../generic"
 import { DEFAULT_POSE, DEFAULT_PATTERN_PARAMS } from "../../templates"
-import { SECTION_NAMES, ANGLE_NAMES, RESET_LABEL, RANGE_PARAMS } from "../texts"
+import { SECTION_NAMES, ANGLE_NAMES, RESET_LABEL, RANGE_PARAMS } from "../vars"
 
 class LegPatternPage extends Component {
     pageName = SECTION_NAMES.legPatterns

@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import LegPoseWidget from "./LegPoseWidgets"
 import { Card, ToggleSwitch, BasicButton, NumberInputField, Slider } from "../generic"
 import { DEFAULT_POSE } from "../../templates"
-import { SECTION_NAMES, LEG_NAMES, RESET_LABEL } from "../texts"
+import { SECTION_NAMES, LEG_NAMES, RESET_LABEL } from "../vars"
 
 const renderTwoColumns = cells => (
     <>
