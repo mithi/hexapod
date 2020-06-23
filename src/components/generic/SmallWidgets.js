@@ -32,5 +32,4 @@ const BasicButton = ({ handleClick, children }) => (
     </button>
 )
 
-
 export { Card, ToggleSwitch, BasicButton }
