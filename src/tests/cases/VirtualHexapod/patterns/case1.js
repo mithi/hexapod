@@ -110,9 +110,6 @@ const GROUND_CONTACT_POINTS_LIST = [
     },
 ]
 
-const HAS_TWISTED = true
-const TWIST_ANGLE = -28
-
 const LOCAL_AXES = {
     xAxis: {
         x: 0.882947592858927,
@@ -140,8 +137,6 @@ const CASE = {
     result: {
         bodyAllPointsList: BODY_ALL_POINTS_LIST,
         groundContactPointsList: GROUND_CONTACT_POINTS_LIST,
-        hasTwisted: HAS_TWISTED,
-        twistAngle: TWIST_ANGLE,
         localAxes: LOCAL_AXES,
     },
 
