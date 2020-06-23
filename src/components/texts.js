@@ -30,8 +30,35 @@ const LEG_NAMES = [
 ]
 
 const ROTATE_SLIDERS_LABELS = ["rx", "ry", "rz", "hipStance", "legStance"]
-const RESET_LABEL = "reset"
 const TRANSLATE_SLIDERS_LABELS = ["tx", "ty", "tz"]
+
+const RESET_LABEL = "reset"
+
+/*************
+ * RANGE PARAMS
+ *************/
+
+const rangeParams = absVal => ({ minVal: -absVal, maxVal: absVal, stepVal: 0.01 })
+const RANGES = {
+    30: rangeParams(30),
+    45: rangeParams(45),
+    60: rangeParams(60),
+    90: rangeParams(90),
+    180: rangeParams(180),
+}
+
+const RANGE_PARAMS = {
+    dimensionInputs: { minVal: 0, maxVal: Infinity, stepVal: 1 },
+    translateInputs: { minVal: -1, maxVal: 1, stepVal: 0.01 },
+    rx: RANGES[30],
+    ry: RANGES[30],
+    rz: RANGES[60],
+    legStance: RANGES[90],
+    hipStance: RANGES[60],
+    alpha: RANGES[90],
+    beta: RANGES[180],
+    gamma: RANGES[180],
+}
 
 /*************
  * ICONS
@@ -63,7 +90,7 @@ const PATHS = {
         description: SECTION_NAMES.legPatterns,
     },
     landingPage: {
-        path: PATH_NAMES,
+        path: PATH_NAMES.landingPage,
         description: SECTION_NAMES.landingPage,
     },
 }
@@ -133,4 +160,5 @@ export {
     PATHS,
     URL_LINKS,
     PATH_LINKS,
+    RANGE_PARAMS,
 }

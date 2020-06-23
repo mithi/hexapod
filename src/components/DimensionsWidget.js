@@ -2,11 +2,10 @@ import React, { Component } from "react"
 import NumberInputField from "./generic/NumberInputField"
 import { Card, BasicButton, ToggleSwitch } from "./generic/SmallWidgets"
 import { DEFAULT_DIMENSIONS } from "../templates"
-import { SECTION_NAMES, DIMENSION_NAMES, RESET_LABEL } from "./texts.js"
+import { SECTION_NAMES, DIMENSION_NAMES, RESET_LABEL, RANGE_PARAMS } from "./texts.js"
 
 class DimensionsWidget extends Component {
     sectionName = SECTION_NAMES.dimensions
-
     state = { isFine: true, granularity: 1 }
 
     reset = () => {
@@ -44,11 +43,12 @@ class DimensionsWidget extends Component {
     }
 
     get NumberInputFields() {
+        const { minVal, maxVal } = RANGE_PARAMS.dimensionInputs
         return DIMENSION_NAMES.map(name => (
             <NumberInputField
                 key={name}
                 name={name}
-                attributes={[0, Infinity, this.state.granularity]}
+                rangeParams={{ minVal, maxVal, stepVal: this.state.granularity }}
                 value={this.props.params.dimensions[name]}
                 handleChange={this.updateFieldState}
             />

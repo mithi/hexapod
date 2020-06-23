@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Card } from "../generic"
-import { ANGLE_NAMES } from "../texts"
+import { ANGLE_NAMES, RANGE_PARAMS } from "../texts"
 
 class LegPoseWidget extends Component {
     updateFieldState = (angle, value) => {
@@ -18,7 +18,7 @@ class LegPoseWidget extends Component {
                     key={newId}
                     name={name}
                     id={newId}
-                    attributes={[-180, 180, 0.01]}
+                    rangeParams={RANGE_PARAMS[name]}
                     value={this.props.pose[name]}
                     handleChange={this.updateFieldState}
                 />
