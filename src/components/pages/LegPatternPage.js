@@ -1,7 +1,7 @@
 import React, { Component } from "react"
-import { sliderList, Card, BasicButton } from "../generic"
+import { Slider, Card, BasicButton } from "../generic"
 import { DEFAULT_POSE, DEFAULT_PATTERN_PARAMS } from "../../templates"
-import { SECTION_NAMES, ANGLE_NAMES } from "../texts"
+import { SECTION_NAMES, ANGLE_NAMES, RESET_LABEL } from "../texts"
 
 class LegPatternPage extends Component {
     pageName = SECTION_NAMES.legPatterns
@@ -28,14 +28,19 @@ class LegPatternPage extends Component {
     }
 
     get resetButton() {
-        return <BasicButton handleClick={this.reset}>Reset</BasicButton>
+        return <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
     }
 
     get rotateSliders() {
-        return sliderList(ANGLE_NAMES, [-180, 180, 1], {
-            onUpdate: this.updatePatternPose,
-            params: this.props.params.patternParams,
-        })
+        return ANGLE_NAMES.map(name =>
+            <Slider
+                key={name}
+                name={name}
+                attributes={[-180, 180, 1]}
+                handleChange={this.updatePatternPose}
+                value={this.props.params.patternParams[name]}
+            />
+        )
     }
 
     render = () => (

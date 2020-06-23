@@ -11,13 +11,14 @@ import React from "react"
  *   handleChange: callback to call when slider changes
  *
  * */
-const Slider = ({ name, value, attributes, handleChange }) => (
+const Slider = ({ name, id, value, attributes, handleChange }) => (
     <div className="slider-container cell">
-        <label htmlFor={name} className="label">
+        <label htmlFor={id || name } className="label">
             {name}: {value}
         </label>
         <input
             type="range"
+            id={id || name}
             min={attributes[0]}
             max={attributes[1]}
             step={attributes[2]}
@@ -28,27 +29,4 @@ const Slider = ({ name, value, attributes, handleChange }) => (
     </div>
 )
 
-/* *
- *
- * ................
- * params of Slider list:
- * ................
- *
- *   sliderNames: List of strings
- *   sliderSettings: [minimum, maximum, step]
- *   props.params: map from sliderNames to value
- *   props.onUpdate: callback to call when slider changes
- *
- * */
-const sliderList = (sliderNames, sliderSettings, { onUpdate, params }) =>
-    sliderNames.map(name => (
-        <Slider
-            key={name}
-            name={name}
-            attributes={sliderSettings}
-            handleChange={onUpdate}
-            value={params[name]}
-        />
-    ))
-
-export { Slider, sliderList }
+export { Slider }
