@@ -18,7 +18,7 @@ _(in Javascript!)_
 - 🚧 Under heavy construction. This project is still a buggy 🐞🐛 work in progress. 
 - See: https://hexapod.netlify.app
 
-## Contributions Welcome! [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blueviolet.svg?style=flat)](https://www.firsttimersonly.com/) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](./CONTRIBUTING.md) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://www.contributor-covenant.org/) 
+## Contributions Welcome! [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blueviolet.svg?style=flat)](https://www.firsttimersonly.com/) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](./CONTRIBUTING.md) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://www.contributor-covenant.org/) 
 
 - Any contribution to improve the source code will be extremely appreciated. 💙 Anything. Anything at all. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement.
 - A couple of examples from the top of my head: 
@@ -30,9 +30,9 @@ _(in Javascript!)_
 
 ![](./public/img/screenshot2.png)
 
-| <img src="./public/img/screenshot1.png" alt="drawing" width="600" /> | <img src="./public/img/screenshot3.png" alt="drawing" width="305" /> |
+| <img src="./public/img/screenshot1.png" alt="drawing" width="600" /> | <img src="./public/img/screenshot4.png" alt="drawing" width="305" /> |
 |---|---|
-| . | . |
+| <img src="./public/img/screenshot5.png" alt="drawing" width="600" /> | <img src="./public/img/screenshot3.png" alt="drawing" width="305" /> |
 
 
 ## [☕](https://ko-fi.com/minimithi) I love badges! (Don't we all?)  
