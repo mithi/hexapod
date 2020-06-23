@@ -5,9 +5,9 @@ import { Link } from "react-router-dom"
 const NAV_BULLETS_PREFIX = "navContent"
 const NAV_DETAILED_PREFIX = "navDetailed"
 
-const BulletPageLink = ({ keyPrefix, path, description, className }) => (
+const BulletPageLink = ({ keyPrefix, path, description, }) => (
     <li key={keyPrefix + path}>
-        <Link to={path} className={`link-icon ${className || ""}`}>
+        <Link to={path} className="link-icon">
             <span>
                 {ICON_COMPONENTS.circle} {description}{" "}
             </span>
@@ -19,7 +19,7 @@ const BulletUrlLink = ({ keyPrefix, path, text, icon }) => (
     <li key={keyPrefix + path}>
         <a
             href={path}
-            className={"link-icon"}
+            className="link-icon"
             target="_blank"
             rel="noopener noreferrer"
             children={
