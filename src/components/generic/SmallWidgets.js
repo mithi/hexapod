@@ -5,8 +5,7 @@ import { ICON_COMPONENTS } from "../texts"
 const AlertBox = ({ info }) => (
     <div className="message">
         <h2 className="red">
-            {ICON_COMPONENTS.times} {" "}
-            {info.subject}
+            {ICON_COMPONENTS.times} {info.subject}
         </h2>
         <ReactMarkdown source={info.body} />
     </div>
