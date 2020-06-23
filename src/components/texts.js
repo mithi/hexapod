@@ -1,6 +1,6 @@
 import React from "react"
 import { GiCoffeeMug } from "react-icons/gi"
-import { FaGithubAlt } from "react-icons/fa"
+import { FaGithubAlt, FaTimes, FaCheck } from "react-icons/fa"
 import { GrStatusGoodSmall } from "react-icons/gr"
 
 const SECTION_NAMES = {
@@ -34,14 +34,20 @@ const RESET_LABEL = "reset"
 const TRANSLATE_SLIDERS_LABELS = ["tx", "ty", "tz"]
 
 /*************
- * NAVIGATION
+ * ICONS
  *************/
 
 const ICON_COMPONENTS = {
     mug: <GiCoffeeMug className="vertical-align" />,
     circle: <GrStatusGoodSmall className="small-icon" />,
     octocat: <FaGithubAlt className="vertical-align" />,
+    check: <FaCheck className="vertical-align" />,
+    times: <FaTimes className="vertical-align" />,
 }
+
+/*************
+ * NAVIGATION
+ *************/
 
 const PATHS = {
     inverseKinematics: {
