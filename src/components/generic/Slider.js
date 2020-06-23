@@ -1,5 +1,5 @@
 import React from "react"
-
+import { RANGE_PARAMS } from "../vars"
 /* *
  *
  * ................
@@ -29,4 +29,15 @@ const Slider = ({ name, id, value, rangeParams, handleChange }) => (
     </div>
 )
 
-export { Slider }
+const sliderList = ({ names, values, handleChange }) =>
+    names.map(name => (
+        <Slider
+            key={name}
+            name={name}
+            rangeParams={RANGE_PARAMS[name]}
+            handleChange={handleChange}
+            value={values[name]}
+        />
+    ))
+
+export { Slider, sliderList }
