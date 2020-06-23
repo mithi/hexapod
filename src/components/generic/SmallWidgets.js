@@ -1,5 +1,4 @@
 import React from "react"
-import { Link } from "react-router-dom"
 
 const ToggleSwitch = ({ value, handleChange, showLabel, labelTop }) => (
     <div className="switch-container">
@@ -33,22 +32,5 @@ const BasicButton = ({ handleClick, children }) => (
     </button>
 )
 
-const BasicLink = ({ path, className, style, children }) => (
-    <a
-        href={path}
-        className={`link-icon ${className || ""}`}
-        style={style}
-        target="_blank"
-        rel="noopener noreferrer"
-    >
-        <span>{children}</span>
-    </a>
-)
 
-const PageLink = ({ path, className, style, children }) => (
-    <Link to={path} className={`link-icon ${className || ""}`} style={style}>
-        <span>{children}</span>
-    </Link>
-)
-
-export { BasicLink, PageLink, Card, ToggleSwitch, BasicButton }
+export { Card, ToggleSwitch, BasicButton }
