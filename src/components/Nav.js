@@ -1,5 +1,5 @@
 import React from "react"
-import { URL_LINKS, PATH_LINKS, ICON_COMPONENTS } from "./texts"
+import { URL_LINKS, PATH_LINKS, ICON_COMPONENTS } from "./vars"
 import { Link } from "react-router-dom"
 
 const NAV_BULLETS_PREFIX = "navBullet"
