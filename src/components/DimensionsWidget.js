@@ -55,10 +55,6 @@ class DimensionsWidget extends Component {
         ))
     }
 
-    get resetButton() {
-        return <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
-    }
-
     get header() {
         return (
             <div className="row-container flex-wrap">
@@ -67,10 +63,11 @@ class DimensionsWidget extends Component {
             </div>
         )
     }
+
     render = () => (
         <Card title={this.header} h="div">
             <div className="row-container flex-wrap">{this.NumberInputFields}</div>
-            {this.resetButton}
+            <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
         </Card>
     )
 }

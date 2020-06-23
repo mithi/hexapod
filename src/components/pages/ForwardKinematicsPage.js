@@ -56,10 +56,6 @@ class ForwardKinematicsPage extends Component {
         })
     }
 
-    get resetButton() {
-        return <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
-    }
-
     get toggleSwitch() {
         return (
             <ToggleSwitch
@@ -94,7 +90,7 @@ class ForwardKinematicsPage extends Component {
         return (
             <Card title={header()} h="div">
                 {renderTwoColumns(cells)}
-                {this.resetButton}
+                <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
             </Card>
         )
     }
