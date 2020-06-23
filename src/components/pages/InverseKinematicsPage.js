@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { sliderList, Card, BasicButton } from "../generic"
+import { Slider, Card, BasicButton } from "../generic"
 import { solveInverseKinematics } from "../../hexapod"
 import { DEFAULT_IK_PARAMS } from "../../templates"
 import {
@@ -57,19 +57,27 @@ class InverseKinematicsPage extends Component {
     }
 
     get rotateSliders() {
-        const { rx, ry, rz, hipStance, legStance } = this.props.params.ikParams
-        return sliderList(ROTATE_SLIDERS_LABELS, [-45, 45, 0.01], {
-            onUpdate: this.updateIkParams,
-            params: { rx, ry, rz, hipStance, legStance },
-        })
+        return ROTATE_SLIDERS_LABELS.map(name => (
+            <Slider
+                key={name}
+                name={name}
+                attributes={[-45, 45, 0.01]}
+                handleChange={this.updateIkParams}
+                value={this.props.params.ikParams[name]}
+            />
+        ))
     }
 
     get translateSliders() {
-        const { tx, ty, tz } = this.props.params.ikParams
-        return sliderList(TRANSLATE_SLIDERS_LABELS, [-1, 1, 0.01], {
-            onUpdate: this.updateIkParams,
-            params: { tx, ty, tz },
-        })
+        return TRANSLATE_SLIDERS_LABELS.map(name => (
+            <Slider
+                key={name}
+                name={name}
+                attributes={[0, 1, 0.01]}
+                handleChange={this.updateIkParams}
+                value={this.props.params.ikParams[name]}
+            />
+        ))
     }
 
     render() {
