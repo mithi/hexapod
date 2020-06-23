@@ -2,7 +2,7 @@ import React from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import { VirtualHexapod, getNewPlotParams } from "./hexapod"
 import * as defaults from "./templates"
-import { SECTION_NAMES, PATHS } from "./components/texts"
+import { SECTION_NAMES, PATHS } from "./components/vars"
 import {
     PoseTable,
     Nav,
