@@ -30,9 +30,9 @@ _(in Javascript!)_
 
 ![](./public/img/screenshot2.png)
 
-| <img src="./public/img/screenshot1.png" alt="drawing" width="600" /> | <img src="./public/img/screenshot4.png" alt="drawing" width="305" /> |
+| <img src="./public/img/screenshot1.png" alt="drawing" width="600" /> | <img src="./public/img/screenshot3.png" alt="drawing" width="305" /> |
 |---|---|
-| <img src="./public/img/screenshot5.png" alt="drawing" width="600" /> | <img src="./public/img/screenshot3.png" alt="drawing" width="305" /> |
+| <img src="./public/img/screenshot5.png" alt="drawing" width="600" /> | <img src="./public/img/screenshot4.png" alt="drawing" width="305" /> |
 
 
 ## [☕](https://ko-fi.com/minimithi) I love badges! (Don't we all?)  
