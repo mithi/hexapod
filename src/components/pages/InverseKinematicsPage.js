@@ -47,10 +47,6 @@ class InverseKinematicsPage extends Component {
         this.props.onUpdate(result.hexapod, stateParams)
     }
 
-    get resetButton() {
-        return <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
-    }
-
     get sliders() {
         return sliderList({
             names: IK_SLIDERS_LABELS,
@@ -67,7 +63,7 @@ class InverseKinematicsPage extends Component {
                 <div className="row-container">{sliders.slice(0, 3)}</div>
                 <div className="row-container">{sliders.slice(3, 6)}</div>
                 <div className="row-container">{sliders.slice(6, 8)}</div>
-                {this.resetButton}
+                <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
             </Card>
         )
     }

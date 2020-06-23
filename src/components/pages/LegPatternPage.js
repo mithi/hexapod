@@ -27,11 +27,7 @@ class LegPatternPage extends Component {
         this.props.onUpdate(DEFAULT_POSE, DEFAULT_PATTERN_PARAMS)
     }
 
-    get resetButton() {
-        return <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
-    }
-
-    get rotateSliders() {
+    get sliders() {
         return sliderList({
             names: ANGLE_NAMES,
             values: this.props.params.patternParams,
@@ -41,8 +37,8 @@ class LegPatternPage extends Component {
 
     render = () => (
         <Card title={this.pageName} h="h2">
-            <div className="row-container">{this.rotateSliders}</div>
-            {this.resetButton}
+            <div className="row-container">{this.sliders}</div>
+            <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
         </Card>
     )
 }
