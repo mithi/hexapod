@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App Renders App component correctly 1`] = `
+exports[`AppFragment Renders App snapshot correctly 1`] = `
 <DocumentFragment>
   <ul
     class="row-container no-bullet top-bar"

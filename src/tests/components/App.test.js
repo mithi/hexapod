@@ -6,6 +6,7 @@ import { PATH_LINKS, URL_LINKS } from "../../components/vars"
 /* * * *
  Navigation Footer
  * * * */
+
 const expectToHaveNav = () => {
     const roles = ["navigation", "contentinfo"]
     roles.map(role => expect(screen.getByRole(role)).toBeInTheDocument())
@@ -20,6 +21,7 @@ const expectToHaveNav = () => {
 /* * * *
 Default Dimensions Widget
  * * * */
+
 const expectToHaveDefaultDimensionsWidget = () => {
     const heading = screen.getByRole("heading", { name: "Dimensions" })
     expect(heading).toBeInTheDocument()
@@ -45,6 +47,7 @@ const expectToHaveDefaultDimensionsWidget = () => {
 /* * * *
 Default Leg Patterns Page
  * * * */
+
 const expectToHaveDefaultLegPatternsPage = () => {
     const heading = screen.getByRole("heading", { name: "Leg Patterns" })
     expect(heading).toBeInTheDocument()
@@ -62,6 +65,7 @@ const expectToHaveDefaultLegPatternsPage = () => {
 /* * * *
 Default Inverse Kinematics Page
  * * * */
+
 const expectToHaveDefaultInverseKinematics = () => {
     const heading = screen.getByRole("heading", { name: "Inverse Kinematics" })
     expect(heading).toBeInTheDocument()
@@ -127,67 +131,62 @@ const expectToHaveDefaultForwardKinematics = () => {
 }
 
 /* * * *
-Navigate correctly to Leg Patterns Page
+Elements all pages share
  * * * */
-const expectToRenderLegPatternsComponents = () => {
+
+const expectEachPage = (flags = {numberOfResetButtons: 2, numberOfToggleSwitches: 1}) => {
+    const resetButtons = screen.getAllByRole("button", { name: "reset" })
+    const toggleSwitches = screen.getAllByRole("checkbox")
+    expect(resetButtons).toHaveLength(flags.numberOfResetButtons)
+    expect(toggleSwitches).toHaveLength(flags.numberOfToggleSwitches)
     expectToHaveDefaultDimensionsWidget()
-    expectToHaveDefaultLegPatternsPage()
     expectToHaveNav()
 
-    expect(screen.getAllByRole("button", { name: "reset" })).toHaveLength(2)
-    expect(screen.getAllByRole("checkbox")).toHaveLength(1)
 }
 
-/* * * *
-Navigate correctly to Inverse Kinematics Page
- * * * */
-const expectToRenderInverseKinematicsComponents = () => {
-    expectToHaveDefaultDimensionsWidget()
-    expectToHaveDefaultInverseKinematics()
-    expectToHaveNav()
-
-    expect(screen.getAllByRole("button", { name: "reset" })).toHaveLength(2)
-    expect(screen.getAllByRole("checkbox")).toHaveLength(1)
-}
-
-/* * * *
-Navigate correctly to Forward Kinematics Page
- * * * */
-const expectToRenderForwardKinematicsComponents = () => {
-    expectToHaveDefaultDimensionsWidget()
-    expectToHaveDefaultForwardKinematics()
-    expectToHaveNav()
-
-    expect(screen.getAllByRole("button", { name: "reset" })).toHaveLength(2)
-    expect(screen.getAllByRole("checkbox")).toHaveLength(2)
-}
+const click = name => fireEvent.click(screen.getByRole("link", { name }))
 
 /* * * *
 Application
  * * * */
-describe("App", () => {
-    test("Renders App component correctly", () => {
+describe("AppFragment", () => {
+    test("Renders App snapshot correctly", () => {
         const { asFragment } = render(<App />)
         expect(asFragment()).toMatchSnapshot()
-
         const heading = screen.getByRole("heading", {
             name: "Mithi's Bare Minimum Hexapod Robot Simulator",
         })
-
         expect(heading).toBeInTheDocument()
         expectToHaveNav()
     })
-
-    test("Navigates to appropriate page", () => {
-        render(<App />)
-
-        fireEvent.click(screen.getByText(/Leg Patterns/i))
-        expectToRenderLegPatternsComponents()
-
-        fireEvent.click(screen.getByText(/Inverse Kinematics/i))
-        expectToRenderInverseKinematicsComponents()
-
-        fireEvent.click(screen.getByText(/Forward Kinematics/i))
-        expectToRenderForwardKinematicsComponents()
-    })
 })
+
+
+describe("App", () => {
+
+    beforeEach(() => {
+        render(<App />)
+    })
+
+    test("Navigates to Leg Patterns page", () => {
+        click("Leg Patterns")
+        expectEachPage()
+        expectToHaveDefaultLegPatternsPage()
+    })
+
+    test("Navigates to Inverse Kinematics page", () => {
+        click("Inverse Kinematics")
+        expectEachPage()
+        expectToHaveDefaultInverseKinematics()
+
+    })
+
+    test("Navigates to Forward Kinematics page", () => {
+        click("Forward Kinematics")
+        expectEachPage({numberOfResetButtons: 2, numberOfToggleSwitches: 2})
+        expectToHaveDefaultForwardKinematics()
+
+    })
+
+})
+
