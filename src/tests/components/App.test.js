@@ -134,14 +134,15 @@ const expectToHaveDefaultForwardKinematics = () => {
 Elements all pages share
  * * * */
 
-const expectEachPage = (flags = {numberOfResetButtons: 2, numberOfToggleSwitches: 1}) => {
+const expectEachPage = (
+    flags = { numberOfResetButtons: 2, numberOfToggleSwitches: 1 }
+) => {
     const resetButtons = screen.getAllByRole("button", { name: "reset" })
     const toggleSwitches = screen.getAllByRole("checkbox")
     expect(resetButtons).toHaveLength(flags.numberOfResetButtons)
     expect(toggleSwitches).toHaveLength(flags.numberOfToggleSwitches)
     expectToHaveDefaultDimensionsWidget()
     expectToHaveNav()
-
 }
 
 const click = name => fireEvent.click(screen.getByRole("link", { name }))
@@ -153,17 +154,10 @@ describe("AppFragment", () => {
     test("Renders App snapshot correctly", () => {
         const { asFragment } = render(<App />)
         expect(asFragment()).toMatchSnapshot()
-        const heading = screen.getByRole("heading", {
-            name: "Mithi's Bare Minimum Hexapod Robot Simulator",
-        })
-        expect(heading).toBeInTheDocument()
-        expectToHaveNav()
     })
 })
 
-
 describe("App", () => {
-
     beforeEach(() => {
         render(<App />)
     })
@@ -178,15 +172,31 @@ describe("App", () => {
         click("Inverse Kinematics")
         expectEachPage()
         expectToHaveDefaultInverseKinematics()
-
     })
 
     test("Navigates to Forward Kinematics page", () => {
         click("Forward Kinematics")
-        expectEachPage({numberOfResetButtons: 2, numberOfToggleSwitches: 2})
+        expectEachPage({ numberOfResetButtons: 2, numberOfToggleSwitches: 2 })
         expectToHaveDefaultForwardKinematics()
-
     })
 
-})
+    test("Navigates to Landing Page", () => {
+        click("Root")
+        const heading = screen.getByRole("heading", {
+            name: "Mithi's Bare Minimum Hexapod Robot Simulator",
+        })
+        expect(heading).toBeInTheDocument()
 
+        const wrongHeadings = [
+            "Dimensions",
+            "Leg Patterns",
+            "Inverse Kinematics",
+            "Forward Kinematics",
+        ]
+        wrongHeadings.forEach(name =>
+            expect(screen.queryByRole("heading", { name })).toBeNull()
+        )
+
+        expectToHaveNav()
+    })
+})
