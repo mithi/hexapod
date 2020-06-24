@@ -2,8 +2,10 @@
 [![Code Climate](https://codeclimate.com/github/mithi/hexapod/badges/gpa.svg)](https://codeclimate.com/github/mithi/hexapod)
 [![](https://img.shields.io/codeclimate/tech-debt/mithi/hexapod)](https://codeclimate.com/github/mithi/hexapod/trends/technical_debt) 
 [![codecov](https://codecov.io/gh/mithi/hexapod/branch/master/graph/badge.svg)](https://codecov.io/gh/mithi/hexapod)
+[![HitCount](http://hits.dwyl.com/mithi/hexapod.svg)](http://hits.dwyl.com/mithi/hexapod)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier)
 [![](https://img.shields.io/badge/Buy%20me%20-coffee!-orange.svg?logo=buy-me-a-coffee&color=795548)](https://ko-fi.com/minimithi)
+
 
 
 # Mithi's Bare-Minimum Hexapod Robot Simulator Rewrite
@@ -40,7 +42,6 @@ _(in Javascript!)_
 [![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg?style=flat)](https://opensource.org/licenses/Apache-2.0)
 ![](https://img.shields.io/codeclimate/maintainability-percentage/mithi/hexapod)
 ![](https://img.shields.io/codeclimate/maintainability/mithi/hexapod)
-[![HitCount](http://hits.dwyl.com/mithi/hexapod.svg)](http://hits.dwyl.com/mithi/hexapod)
 ![](https://img.shields.io/codeclimate/issues/mithi/hexapod?label=code%20climate%20issues)
 ![](https://img.shields.io/github/last-commit/mithi/hexapod)
 ![](https://img.shields.io/github/commit-activity/m/mithi/hexapod?color=yellow&style=flat)
