@@ -1,0 +1,202 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dimension Widget renders component correctly 1`] = `
+<DocumentFragment>
+  <div>
+    <div>
+      <div
+        class="row-container flex-wrap"
+      >
+        <h2>
+          Dimensions
+        </h2>
+        <div
+          class="switch-container"
+        >
+          <label
+            class="switch"
+          >
+            <input
+              type="checkbox"
+              value=""
+            />
+            <span
+              class="toggle-switch-widget round"
+            />
+            <br />
+            <label
+              class="label"
+            />
+          </label>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row-container flex-wrap"
+    >
+      <div
+        class="cell"
+      >
+        <label
+          class="label"
+          for="front"
+        >
+          front
+        </label>
+        <input
+          id="front"
+          inputmode="numeric"
+          max="Infinity"
+          min="0"
+          step="1"
+          style="margin: 0px;"
+          type="number"
+          value="71"
+        />
+        <label
+          class="label red"
+          style="opacity: 1;"
+        >
+           
+        </label>
+      </div>
+      <div
+        class="cell"
+      >
+        <label
+          class="label"
+          for="side"
+        >
+          side
+        </label>
+        <input
+          id="side"
+          inputmode="numeric"
+          max="Infinity"
+          min="0"
+          step="1"
+          style="margin: 0px;"
+          type="number"
+          value="102"
+        />
+        <label
+          class="label red"
+          style="opacity: 1;"
+        >
+           
+        </label>
+      </div>
+      <div
+        class="cell"
+      >
+        <label
+          class="label"
+          for="middle"
+        >
+          middle
+        </label>
+        <input
+          id="middle"
+          inputmode="numeric"
+          max="Infinity"
+          min="0"
+          step="1"
+          style="margin: 0px;"
+          type="number"
+          value="133"
+        />
+        <label
+          class="label red"
+          style="opacity: 1;"
+        >
+           
+        </label>
+      </div>
+      <div
+        class="cell"
+      >
+        <label
+          class="label"
+          for="coxia"
+        >
+          coxia
+        </label>
+        <input
+          id="coxia"
+          inputmode="numeric"
+          max="Infinity"
+          min="0"
+          step="1"
+          style="margin: 0px;"
+          type="number"
+          value="94"
+        />
+        <label
+          class="label red"
+          style="opacity: 1;"
+        >
+           
+        </label>
+      </div>
+      <div
+        class="cell"
+      >
+        <label
+          class="label"
+          for="femur"
+        >
+          femur
+        </label>
+        <input
+          id="femur"
+          inputmode="numeric"
+          max="Infinity"
+          min="0"
+          step="1"
+          style="margin: 0px;"
+          type="number"
+          value="165"
+        />
+        <label
+          class="label red"
+          style="opacity: 1;"
+        >
+           
+        </label>
+      </div>
+      <div
+        class="cell"
+      >
+        <label
+          class="label"
+          for="tibia"
+        >
+          tibia
+        </label>
+        <input
+          id="tibia"
+          inputmode="numeric"
+          max="Infinity"
+          min="0"
+          step="1"
+          style="margin: 0px;"
+          type="number"
+          value="154"
+        />
+        <label
+          class="label red"
+          style="opacity: 1;"
+        >
+           
+        </label>
+      </div>
+    </div>
+    <button
+      class="button"
+      type="button"
+    >
+      reset
+    </button>
+  </div>
+</DocumentFragment>
+`;
