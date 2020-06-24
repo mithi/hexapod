@@ -43,15 +43,16 @@ jobs:
      # Yarn is included in the list of software installed on the GitHub-hosted Ubuntu
      # so there's no need to include a step install Yarn.
  
+    - name: Install project dependencies
+      if: steps.yarn-cache.outputs.cache-hit != 'true'
+      run: yarn
+
     - name: Add prettier
+      if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn add prettier --dev
 
     - name: Check code style
       run: yarn run prettier --config ./.prettierrc.yaml --check  ./src/*
-
-    - name: Install project dependencies
-      if: steps.yarn-cache.outputs.cache-hit != 'true' # Over here!
-      run: yarn
 
     - name: Build project
       run: yarn build         
