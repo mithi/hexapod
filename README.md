@@ -13,7 +13,7 @@ _(in Javascript!)_
 
 - Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero server-side computations!
 
-- Consider buying me [a couple cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
+- Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
 
 - 🚧 Under heavy construction. This project is still a buggy 🐞🐛 work in progress. 
 - See: https://hexapod.netlify.app
@@ -22,8 +22,8 @@ _(in Javascript!)_
 
 - Any contribution to improve the source code will be extremely appreciated. 💙 Anything. Anything at all. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement.
 - A couple of examples from the top of my head: 
-  - Adding more (and better) tests and test cases (Current code coverage isn't so pretty)
-  - Improving the page layout for enhanced user experience
+  - Adding more (and better) tests and test cases
+  - Improving the page layout for better user experience
   - Suggesting refactors and better software development practices in general
 - See [./CONTRIBUTING.md](./CONTRIBUTING.md)
 
