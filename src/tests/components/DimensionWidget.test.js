@@ -1,5 +1,5 @@
 import React from "react"
-import { render, screen, within } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 import { DimensionsWidget } from "../../components"
 
 const DIMENSIONS = {
@@ -22,19 +22,12 @@ describe("Dimension Widget", () => {
         expect(screen.getByRole("heading")).toHaveTextContent("Dimensions")
         expect(screen.getByRole("checkbox")).toBeInTheDocument()
 
-        const button = screen.getByText("reset").closest("button")
+        const button = screen.getByRole("button", { name: "reset" })
         expect(button).toBeInTheDocument()
 
-        Object.entries(DIMENSIONS).every(([name, value]) => {
-            const attributes = {
-                name,
-                value,
-                max: "Infinity",
-                step: "1",
-                min: "0",
-                type: "number",
-            }
-            expect(screen.getByRole("spinbutton", attributes)).toBeInTheDocument()
+        Object.entries(DIMENSIONS).forEach(([name, value]) => {
+            const node = screen.getByRole("spinbutton", { name })
+            expect(node).toHaveAttribute("value", `${value}`)
             expect(screen.getByLabelText(name)).toBeInTheDocument()
         })
     })
