@@ -1,0 +1,353 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navigation Components renders Nav correctly 1`] = `
+<DocumentFragment>
+  <ul
+    class="row-container no-bullet top-bar"
+  >
+    <li>
+      <a
+        class="link-icon"
+        href="https://ko-fi.com/minimithi"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <span>
+          <svg
+            class="vertical-align"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M221.97 54.406c-40.375 0-77.013 8.01-104.345 21.563C90.293 89.52 70.937 109.51 70.937 134c0 2.57.213 5.094.626 7.563l-.032 5.875c-.555 82.898 16.25 164.612 14.97 244.718-.372 23.295 14.294 43.908 38 57.594s56.797 21.5 97.125 21.5c40.357 0 71.338-8.024 92.906-22.03 21.57-14.008 33.408-34.712 33.408-56.908 0-3.17.054-6.345.125-9.53 42.143-1.114 75.316-23.45 97.125-52.563 22.235-29.684 34.027-66.306 34.687-99.626.66-33.32-9.983-66.91-39.156-80.594-14.588-6.842-30.593-6.573-49.25-1.125-6.16 1.798-12.548 4.25-19.126 7.375.07-2.93.125-5.86.125-8.75v-6.72c.33-2.214.5-4.484.5-6.78 0-24.49-19.357-44.478-46.69-58.03-27.33-13.554-63.937-21.564-104.31-21.564zm0 18.688c37.87 0 72.087 7.752 96.03 19.625 23.943 11.87 36.28 26.974 36.28 41.28 0 14.306-12.337 29.44-36.28 41.313-23.943 11.87-58.16 19.593-96.03 19.593-37.87 0-72.09-7.722-96.032-19.594-23.943-11.87-36.313-27.006-36.313-41.312 0-14.306 12.37-29.41 36.313-41.28 23.942-11.874 58.16-19.626 96.03-19.626zm-69.657 39.03c-23.19 6.707-37.907 16.684-37.907 27.814 0 20.193 48.398 36.562 108.094 36.562 59.696 0 108.063-16.37 108.063-36.563 0-10.264-12.52-19.546-32.657-26.187 5.266 4.105 8.22 8.692 8.22 13.563 0 17.186-36.765 31.124-82.126 31.124-45.36 0-82.125-13.938-82.125-31.125 0-5.518 3.788-10.693 10.438-15.187zm263.312 68.282c4.34-.023 7.825.793 10.53 2.063 10.826 5.076 18.406 22.81 17.908 48.124-.5 25.313-9.714 55.51-26.844 78.375-16.296 21.75-38.106 36.352-67.126 37.905 4.352-49.843 14.23-100.49 19.28-147.844 20.724-13.842 35.894-18.567 46.25-18.624z"
+            />
+          </svg>
+           
+        </span>
+      </a>
+    </li>
+    <li>
+      <a
+        class="link-icon"
+        href="https://github.com/mithi/hexapod"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <span>
+          <svg
+            class="vertical-align"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 480 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"
+            />
+          </svg>
+           
+        </span>
+      </a>
+    </li>
+    <li>
+      <a
+        class="link-icon"
+        href="/inverse-kinematics"
+      >
+        <span>
+          <svg
+            class="small-icon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 12 12"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="6"
+              cy="6"
+              fill-rule="evenodd"
+              r="5"
+              stroke="#000"
+            />
+          </svg>
+           
+        </span>
+      </a>
+    </li>
+    <li>
+      <a
+        class="link-icon"
+        href="/forward-kinematics"
+      >
+        <span>
+          <svg
+            class="small-icon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 12 12"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="6"
+              cy="6"
+              fill-rule="evenodd"
+              r="5"
+              stroke="#000"
+            />
+          </svg>
+           
+        </span>
+      </a>
+    </li>
+    <li>
+      <a
+        class="link-icon"
+        href="/leg-patterns"
+      >
+        <span>
+          <svg
+            class="small-icon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 12 12"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="6"
+              cy="6"
+              fill-rule="evenodd"
+              r="5"
+              stroke="#000"
+            />
+          </svg>
+           
+        </span>
+      </a>
+    </li>
+    <li>
+      <a
+        class="link-icon"
+        href="/"
+      >
+        <span>
+          <svg
+            class="small-icon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 12 12"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="6"
+              cy="6"
+              fill-rule="evenodd"
+              r="5"
+              stroke="#000"
+            />
+          </svg>
+           
+        </span>
+      </a>
+    </li>
+  </ul>
+</DocumentFragment>
+`;
+
+exports[`Navigation Components renders NavDetailed component correctly 1`] = `
+<DocumentFragment>
+  <footer>
+    <nav
+      id="nav"
+    >
+      <ul
+        class="column-container no-bullet"
+      >
+        <li>
+          <a
+            class="link-icon"
+            href="https://ko-fi.com/minimithi"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <span>
+              <svg
+                class="vertical-align"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M221.97 54.406c-40.375 0-77.013 8.01-104.345 21.563C90.293 89.52 70.937 109.51 70.937 134c0 2.57.213 5.094.626 7.563l-.032 5.875c-.555 82.898 16.25 164.612 14.97 244.718-.372 23.295 14.294 43.908 38 57.594s56.797 21.5 97.125 21.5c40.357 0 71.338-8.024 92.906-22.03 21.57-14.008 33.408-34.712 33.408-56.908 0-3.17.054-6.345.125-9.53 42.143-1.114 75.316-23.45 97.125-52.563 22.235-29.684 34.027-66.306 34.687-99.626.66-33.32-9.983-66.91-39.156-80.594-14.588-6.842-30.593-6.573-49.25-1.125-6.16 1.798-12.548 4.25-19.126 7.375.07-2.93.125-5.86.125-8.75v-6.72c.33-2.214.5-4.484.5-6.78 0-24.49-19.357-44.478-46.69-58.03-27.33-13.554-63.937-21.564-104.31-21.564zm0 18.688c37.87 0 72.087 7.752 96.03 19.625 23.943 11.87 36.28 26.974 36.28 41.28 0 14.306-12.337 29.44-36.28 41.313-23.943 11.87-58.16 19.593-96.03 19.593-37.87 0-72.09-7.722-96.032-19.594-23.943-11.87-36.313-27.006-36.313-41.312 0-14.306 12.37-29.41 36.313-41.28 23.942-11.874 58.16-19.626 96.03-19.626zm-69.657 39.03c-23.19 6.707-37.907 16.684-37.907 27.814 0 20.193 48.398 36.562 108.094 36.562 59.696 0 108.063-16.37 108.063-36.563 0-10.264-12.52-19.546-32.657-26.187 5.266 4.105 8.22 8.692 8.22 13.563 0 17.186-36.765 31.124-82.126 31.124-45.36 0-82.125-13.938-82.125-31.125 0-5.518 3.788-10.693 10.438-15.187zm263.312 68.282c4.34-.023 7.825.793 10.53 2.063 10.826 5.076 18.406 22.81 17.908 48.124-.5 25.313-9.714 55.51-26.844 78.375-16.296 21.75-38.106 36.352-67.126 37.905 4.352-49.843 14.23-100.49 19.28-147.844 20.724-13.842 35.894-18.567 46.25-18.624z"
+                />
+              </svg>
+               Buy Mithi Ko-Fi 🍵
+            </span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="link-icon"
+            href="https://github.com/mithi/hexapod"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <span>
+              <svg
+                class="vertical-align"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 480 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"
+                />
+              </svg>
+               Source Code
+            </span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="link-icon"
+            href="/inverse-kinematics"
+          >
+            <span>
+              <svg
+                class="small-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 12 12"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="6"
+                  cy="6"
+                  fill-rule="evenodd"
+                  r="5"
+                  stroke="#000"
+                />
+              </svg>
+               Inverse Kinematics
+            </span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="link-icon"
+            href="/forward-kinematics"
+          >
+            <span>
+              <svg
+                class="small-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 12 12"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="6"
+                  cy="6"
+                  fill-rule="evenodd"
+                  r="5"
+                  stroke="#000"
+                />
+              </svg>
+               Forward Kinematics
+            </span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="link-icon"
+            href="/leg-patterns"
+          >
+            <span>
+              <svg
+                class="small-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 12 12"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="6"
+                  cy="6"
+                  fill-rule="evenodd"
+                  r="5"
+                  stroke="#000"
+                />
+              </svg>
+               Leg Patterns
+            </span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="link-icon"
+            href="/"
+          >
+            <span>
+              <svg
+                class="small-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 12 12"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="6"
+                  cy="6"
+                  fill-rule="evenodd"
+                  r="5"
+                  stroke="#000"
+                />
+              </svg>
+               Root
+            </span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </footer>
+</DocumentFragment>
+`;

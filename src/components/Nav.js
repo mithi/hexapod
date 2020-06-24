@@ -9,7 +9,7 @@ const BulletPageLink = ({ path, description }) => (
     <li>
         <Link to={path} className="link-icon">
             <span>
-                {ICON_COMPONENTS.circle} {description}{" "}
+                {ICON_COMPONENTS.circle} {description}
             </span>
         </Link>
     </li>
@@ -24,7 +24,7 @@ const BulletUrlLink = ({ path, description, icon }) => (
             rel="noopener noreferrer"
             children={
                 <span>
-                    {icon} {description}{" "}
+                    {icon} {description}
                 </span>
             }
         />
@@ -48,24 +48,28 @@ const NavBullets = () => (
 )
 
 const NavDetailed = () => (
-    <ul className="column-container no-bullet" id="nav">
-        {URL_LINKS.map(link => (
-            <BulletUrlLink
-                path={link.url}
-                key={NAV_DETAILED_PREFIX + link.url}
-                icon={link.icon}
-                description={link.description}
-            />
-        ))}
+    <footer>
+        <nav id="nav">
+            <ul className="column-container no-bullet">
+                {URL_LINKS.map(link => (
+                    <BulletUrlLink
+                        path={link.url}
+                        key={NAV_DETAILED_PREFIX + link.url}
+                        icon={link.icon}
+                        description={link.description}
+                    />
+                ))}
 
-        {PATH_LINKS.map((link, index) => (
-            <BulletPageLink
-                key={NAV_DETAILED_PREFIX + link.path}
-                path={link.path}
-                description={link.description}
-            />
-        ))}
-    </ul>
+                {PATH_LINKS.map(link => (
+                    <BulletPageLink
+                        key={NAV_DETAILED_PREFIX + link.path}
+                        path={link.path}
+                        description={link.description}
+                    />
+                ))}
+            </ul>
+        </nav>
+    </footer>
 )
 
 const Nav = () => <NavBullets />
