@@ -8,6 +8,10 @@ class DimensionsWidget extends Component {
     sectionName = SECTION_NAMES.dimensions
     state = { isFine: true, granularity: 1 }
 
+    componentDidMount() {
+        this.setState({ granularity: 1, toggleLabel: "1x" })
+    }
+
     reset = () => {
         const dimensions = DEFAULT_DIMENSIONS
         this.props.onUpdate(dimensions)
