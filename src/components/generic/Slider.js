@@ -13,9 +13,9 @@ import { RANGE_PARAMS } from "../vars"
  * */
 const Slider = ({ name, id, value, rangeParams, handleChange }) => (
     <div className="slider-container cell">
-        <label htmlFor={id || name} className="label">
-            {name}: {value}
-        </label>
+        <span className="label">
+            <label htmlFor={id || name}>{name}</label> : {value}
+        </span>
         <input
             type="range"
             id={id || name}
