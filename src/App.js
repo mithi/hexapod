@@ -1,5 +1,6 @@
 import React from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import ReactGA from "react-ga"
 import { VirtualHexapod, getNewPlotParams } from "./hexapod"
 import * as defaults from "./templates"
 import { SECTION_NAMES, PATHS } from "./components/vars"
@@ -17,9 +18,6 @@ import {
     LandingPage,
     LegPatternPage,
 } from "./components/pages"
-import ReactGA from "react-ga"
-
-
 
 class App extends React.Component {
     state = {
