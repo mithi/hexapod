@@ -17,8 +17,7 @@ _(in Javascript!)_
 
 - Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
 
-- 🚧 Under heavy construction. This project is still a buggy 🐞🐛 work in progress. 
-- See: https://hexapod.netlify.app
+- See: [https://hexapod.netlify.app](https://hexapod.netlify.app)
 
 ## Contributions Welcome! [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blueviolet.svg?style=flat)](https://www.firsttimersonly.com/) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](./CONTRIBUTING.md) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://www.contributor-covenant.org/) 
 
