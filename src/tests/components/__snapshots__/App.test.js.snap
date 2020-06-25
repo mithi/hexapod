@@ -226,15 +226,13 @@ to build other robotics related visualizers. (Quadrotors?!)
           </li>
           <li>
             <p>
-              Any contribution to improve the source code will be extremely appreciated. 💙
-Anything from fixing typographical errors to completely changing the page design ... or even rewriting
-modules to follow better software practices. 
+              Love coding? However big or small, any contribution to 
               <a
-                href="https://github.com/mithi/hexapod/wiki/Types-of-(code)-Contributions"
+                href="https://github.com/mithi/hexapod/blob/master/CONTRIBUTING.md"
               >
-                How you can help
+                improve the source code
               </a>
-              .
+               is always appreciated. 💙
             </p>
           </li>
         </ul>
