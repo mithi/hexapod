@@ -11,30 +11,23 @@
 # Mithi's Bare-Minimum Hexapod Robot Simulator Rewrite
 _(in Javascript!)_
   
-<img src="https://mithi.github.io/robotics-blog/v2-hexapod-1.gif" alt="drawing" width="300" align="right" />
+<img src="https://mithi.github.io/robotics-blog/v2-hexapod-1.gif" alt="drawing" width="200" align="right" />
 
 - Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero server-side computations!
 
 - Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
 
-- 🚧 Under heavy construction. This project is still a buggy 🐞🐛 work in progress. 
-- See: https://hexapod.netlify.app
+- See: [https://hexapod.netlify.app](https://hexapod.netlify.app)
 
 ## Contributions Welcome! [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blueviolet.svg?style=flat)](https://www.firsttimersonly.com/) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](./CONTRIBUTING.md) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://www.contributor-covenant.org/) 
 
 - Any contribution to improve the source code will be extremely appreciated. 💙 Anything. Anything at all. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement.
-- A couple of examples from the top of my head: 
-  - Adding more (and better) tests and test cases
-  - Improving the page layout for better user experience
-  - Suggesting refactors and better software development practices in general
-- See [./CONTRIBUTING.md](./CONTRIBUTING.md)
-
 
 ![](./public/img/screenshot2.png)
 
-| <img src="./public/img/screenshot1.png" alt="drawing" width="600" /> | <img src="./public/img/screenshot3.png" alt="drawing" width="305" /> |
+| <img src="./public/img/screenshot1.png" alt="drawing" width="600" /> | <img src="./public/img/screenshot4.png" alt="drawing" width="305" /> |
 |---|---|
-| <img src="./public/img/screenshot5.png" alt="drawing" width="600" /> | <img src="./public/img/screenshot4.png" alt="drawing" width="305" /> |
+| . | . |
 
 
 ## [☕](https://ko-fi.com/minimithi) I love badges! (Don't we all?)  
