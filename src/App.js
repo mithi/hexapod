@@ -17,6 +17,12 @@ import {
     LandingPage,
     LegPatternPage,
 } from "./components/pages"
+import ReactGA from "react-ga"
+
+ReactGA.initialize("UA-170794768-1", {
+    debug: true,
+    gaOptions: { siteSpeedSampleRate: 100 },
+})
 
 class App extends React.Component {
     state = {
@@ -47,6 +53,7 @@ class App extends React.Component {
      * * * * * * * * * * * * * */
 
     onPageLoad = pageName => {
+        ReactGA.pageview(window.location.pathname + window.location.search)
         if (pageName === SECTION_NAMES.landingPage) {
             this.setState({
                 currentPage: pageName,
