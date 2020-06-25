@@ -21,9 +21,9 @@ import VirtualHexapod from "../hexapod/VirtualHexapod"
 import { POSITION_NAMES_LIST } from "../hexapod/constants"
 import { expectToBeEqualPoints, expectVectorsToHaveSameXYZ } from "./helpers"
 import CASE1 from "./cases/VirtualHexapod/patterns/case1"
+import CASE2 from "./cases/VirtualHexapod/patterns/case2"
 
-const CASES = [CASE1]
-
+const CASES = [CASE1, CASE2]
 test.each(CASES)("Should twist or not twist hexapod appropriately: %p", thisCase => {
     const { params, result } = thisCase
     const pose = POSITION_NAMES_LIST.reduce(

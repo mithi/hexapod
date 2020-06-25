@@ -12,16 +12,8 @@ const POSE = {
     rightFront: { alpha: -40.61, beta: -29.6, gamma: 31.15 },
     leftFront: { alpha: -10.48, beta: 22.41, gamma: -37.2 },
     leftMiddle: { alpha: -13.86, beta: 71.14, gamma: -57.16 },
-    leftBack: {
-        alpha: -18.43,
-        beta: 86.4,
-        gamma: -52.52,
-    },
-    rightBack: {
-        alpha: -15.67,
-        beta: 17.24,
-        gamma: -6.43,
-    },
+    leftBack: { alpha: -18.43, beta: 86.4, gamma: -52.52 },
+    rightBack: { alpha: -15.67, beta: 17.24, gamma: -6.43 },
 }
 
 const DIMENSIONS = {
