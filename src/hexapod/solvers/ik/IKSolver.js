@@ -124,7 +124,7 @@ class IKSolver {
             const legXaxisAngle = POSITION_NAME_TO_AXIS_ANGLE_MAP[legPosition]
 
             // prettier-ignore
-            const alpha = computeAlpha(
+            let alpha = computeAlpha(
                 known.coxiaUnitVector, legXaxisAngle, axes.xAxis, axes.zAxis
             )
 
@@ -336,6 +336,13 @@ const computeAlpha = (coxiaVector, legXaxisAngle, xAxis, zAxis) => {
     if (alpha < -180) {
         return alpha + 360
     }
+
+    // ❗❗❗THIS IS A HACK ❗❗❗
+    // THERE IS A BUG HERE SOMEWHERE, FIND IT
+    if (alpha === 180 || alpha === -180) {
+        return 0
+    }
+
     return alpha
 }
 

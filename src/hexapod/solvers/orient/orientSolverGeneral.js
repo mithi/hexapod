@@ -81,10 +81,12 @@ const JOINT_INDEX_TRIOS = makeJointIndexTrios()
 
 const computeOrientationProperties = (legsNoGravity, flags = { shuffle: false }) => {
     const someLegTrios = flags.shuffle
-        ? shuffleArray(SOME_LEG_ID_TRIOS.slice(0))
+        ? shuffleArray(SOME_LEG_ID_TRIOS.slice())
         : SOME_LEG_ID_TRIOS
 
     const legIndexTrios = [...someLegTrios, ...ADJACENT_LEG_ID_TRIOS]
+
+    let fallback = null
 
     for (let i = 0; i < legIndexTrios.length; i++) {
         const threeLegIndices = legIndexTrios[i]
@@ -115,12 +117,33 @@ const computeOrientationProperties = (legsNoGravity, flags = { shuffle: false })
                 continue
             }
 
+            // ❗❗❗THIS IS A HACK ❗❗❗
+            // THERE IS A BUG HERE SOMEWHERE, FIND IT
+            if (height === 0) {
+                if (fallback === null) {
+                    fallback = { p0, p1, p2, normal, height }
+                }
+                continue
+            }
+
             const groundLegsNoGravity = findLegsOnGround(legsNoGravity, normal, height)
             return { nAxis: normal, height, groundLegsNoGravity }
         }
     }
 
-    return null
+    if (fallback === null) {
+        return null
+    }
+
+    return {
+        nAxis: fallback.normal,
+        height: fallback.height,
+        groundLegsNoGravity: findLegsOnGround(
+            legsNoGravity,
+            fallback.normal,
+            fallback.height
+        ),
+    }
 }
 
 const getThreePoints = (threeLegs, threeJointIndices) =>
