@@ -22,12 +22,6 @@ _(in Javascript!)_
 ## Contributions Welcome! [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blueviolet.svg?style=flat)](https://www.firsttimersonly.com/) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](./CONTRIBUTING.md) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://www.contributor-covenant.org/) 
 
 - Any contribution to improve the source code will be extremely appreciated. 💙 Anything. Anything at all. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement.
-- A couple of examples from the top of my head: 
-  - Adding more (and better) tests and test cases
-  - Improving the page layout for better user experience
-  - Suggesting refactors and better software development practices in general
-- See [./CONTRIBUTING.md](./CONTRIBUTING.md)
-
 
 ![](./public/img/screenshot2.png)
 

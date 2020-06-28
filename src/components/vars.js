@@ -135,7 +135,7 @@ No more server-side computations!
 - Consider buying me a [couple cups of coffee 🍵 🍵 🍵][4] to motivate me
 to build other robotics related visualizers. (Quadrotors?!)
 
-- Love coding? Any contribution, big or small, to [improve the source code][5] will always be appreciated. 💙
+- Love coding? However big or small, any contribution to [improve the source code][5] is always appreciated. 💙
 
 ## Love, Mithi
 
