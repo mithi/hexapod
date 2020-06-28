@@ -186,59 +186,9 @@ exports[`AppFragment Renders App snapshot correctly 1`] = `
         <h1>
           Mithi's Bare Minimum Hexapod Robot Simulator
         </h1>
-        <ul>
-          <li>
-            <p>
-              Solve (and visualize) 
-              <a
-                href="/forward-kinematics"
-              >
-                forward
-              </a>
-               and 
-              <a
-                href="/inverse-kinematics"
-              >
-                inverse
-              </a>
-               kinematics purely on your browser!
-It's a complete rewrite of the 
-              <a
-                href="https://github.com/mithi/hexapod-robot-simulator"
-              >
-                one
-              </a>
-               I wrote in Python 🐍.
-No more server-side computations!
-            </p>
-          </li>
-          <li>
-            <p>
-              Consider buying me a 
-              <a
-                href="https://ko-fi.com/minimithi"
-              >
-                couple cups of coffee 🍵 🍵 🍵
-              </a>
-               to motivate me
-to build other robotics related visualizers. (Quadrotors?!)
-            </p>
-          </li>
-          <li>
-            <p>
-              Love coding? However big or small, any contribution to 
-              <a
-                href="https://github.com/mithi/hexapod/blob/master/CONTRIBUTING.md"
-              >
-                improve the source code
-              </a>
-               is always appreciated. 💙
-            </p>
-          </li>
-        </ul>
-        <h2>
-          Love, Mithi
-        </h2>
+        <p>
+          Enjoy your stay and share with your friends!
+        </p>
       </div>
       <footer>
         <nav

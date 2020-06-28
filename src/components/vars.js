@@ -1,6 +1,6 @@
 import React from "react"
 import { GiCoffeeMug } from "react-icons/gi"
-import { FaGithubAlt, FaTimes, FaCheck } from "react-icons/fa"
+import { FaGithubAlt, FaTimes } from "react-icons/fa"
 import { GrStatusGoodSmall } from "react-icons/gr"
 
 const SECTION_NAMES = {
@@ -70,7 +70,6 @@ const ICON_COMPONENTS = {
     mug: <GiCoffeeMug className="vertical-align" />,
     circle: <GrStatusGoodSmall className="small-icon" />,
     octocat: <FaGithubAlt className="vertical-align" />,
-    check: <FaCheck className="vertical-align" />,
     times: <FaTimes className="vertical-align" />,
 }
 
@@ -125,26 +124,8 @@ const URL_LINKS = [KOFI_LINK_PROPERTIES, REPO_LINK_PROPERTIES]
  *************/
 
 const LANDING_PAGE_MESSAGE = `
-
 # Mithi's Bare Minimum Hexapod Robot Simulator
-
-- Solve (and visualize) [forward][1] and [inverse][2] kinematics purely on your browser!
-It's a complete rewrite of the [one][3] I wrote in Python 🐍.
-No more server-side computations!
-
-- Consider buying me a [couple cups of coffee 🍵 🍵 🍵][4] to motivate me
-to build other robotics related visualizers. (Quadrotors?!)
-
-- Love coding? However big or small, any contribution to [improve the source code][5] is always appreciated. 💙
-
-## Love, Mithi
-
-[1]: /forward-kinematics
-[2]: /inverse-kinematics
-[3]: https://github.com/mithi/hexapod-robot-simulator
-[4]: https://ko-fi.com/minimithi
-[5]: https://github.com/mithi/hexapod/blob/master/CONTRIBUTING.md
-
+Enjoy your stay and share with your friends!
 `
 
 export {
