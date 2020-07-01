@@ -304,9 +304,9 @@ input[type="number"] {
 }
 
 .switch-container {
+    cursor: pointer;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    align-items: center;
     margin-left: 5px;
 }
 
@@ -317,6 +317,10 @@ input[type="number"] {
     width: 30px;
     height: 17px;
     border: 1px rgb(46, 204, 113);
+}
+
+.switch + .label {
+    cursor: pointer;
 }
 
 /* Hide default HTML checkbox */
