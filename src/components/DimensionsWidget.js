@@ -38,6 +38,7 @@ class DimensionsWidget extends Component {
     get toggleSwitch() {
         return (
             <ToggleSwitch
+                id="DimensionsWidgetSwitch"
                 value={this.state.toggleLabel}
                 handleChange={this.toggleMode}
                 showLabel={true}

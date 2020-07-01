@@ -11,18 +11,21 @@ const AlertBox = ({ info }) => (
     </div>
 )
 
-const ToggleSwitch = ({ value, handleChange, showLabel, labelTop }) => (
+const ToggleSwitch = ({ id, value, handleChange, showLabel, labelTop }) => (
     <div className="switch-container">
         {
             // prettier-ignore
-            showLabel && labelTop ? (<label className="label">{value}<br /></label>) : null
+            showLabel && labelTop ? (<label className="label">{value}</label>) : null
         }
-        <label className="switch">
-            <input type="checkbox" value={value} onChange={handleChange} />
+        <label className="switch" htmlFor={id}>
+            <input id={id} type="checkbox" value={value} onChange={handleChange} />
             <span className="toggle-switch-widget round"></span>
-            <br />
-            {showLabel && !labelTop ? <label className="label">{value}</label> : null}
         </label>
+        {showLabel && !labelTop ? (
+            <label className="label" htmlFor={id}>
+                {value}
+            </label>
+        ) : null}
     </div>
 )
 
