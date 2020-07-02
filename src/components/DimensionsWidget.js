@@ -41,8 +41,7 @@ class DimensionsWidget extends Component {
                 id="DimensionsWidgetSwitch"
                 value={this.state.toggleLabel}
                 handleChange={this.toggleMode}
-                showLabel={true}
-                labelTop={false}
+                showValue={true}
             />
         )
     }

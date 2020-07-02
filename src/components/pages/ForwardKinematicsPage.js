@@ -62,7 +62,7 @@ class ForwardKinematicsPage extends Component {
                 id="FwdKinematicsSwitch"
                 value={this.state.widgetType}
                 handleChange={this.toggleMode}
-                showLabel={false}
+                showValue={false}
             />
         )
     }
