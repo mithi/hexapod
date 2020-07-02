@@ -1,18 +1,38 @@
-Thank you for your interest in contributing to this project! 
-All types of contributions are welcome, no matter how big or small.
+# Contributing
 
-## Useful things:
+Thank you for your interest in contributing to this project!
 
-- Before contributing, please discuss the change you wish to make in an issue before making this change. Explain what you want to accomplish (e.g the problem you want to solve), why you want to do it, and how would do it. Wait for it to get assigned to you!
-- First-time contributors are welcome! If you need clarification, don't hesitate to ask! There are no stupid questions! Your PR will not be merged if the CI build fails.
-- Consistent code formatting is important. I use automated code formatters ([prettier][prettier_link] for Javascript, [black][black_link] for Python for example) to format my code.
-- I use [code climate][code_climate_link] to check for code smells.
-- Please read [the commit style guide][commit_style_guide_link], the guide which I try to adhere to when wording my commit messages. These are not rules, just a guide.
-- I prefer PRs with fewer commits. [Squash the commits and push force][rewriting_git_history_link] if you need to. But of course, it's better if all the changes in one commit are logically connected. For whatever purpose it may serve, here's [a simple git workflow][git_workflow_link] I try to stick to. Adding appropriate tests in your PR is always appreciated.
-- Thoughtfully-written explanations and the rationale of the pull request is required! Explain what your PR is solving, why, and how. [Allow project maintainers to edit your pull request][how_to_allow_pr_edits_link].
-- Of course, Be a nice person :) [![Contributor Covenant][contributor_covenant_badge]](./CODE_OF_CONDUCT.md)
+All types of contributions are welcome, no matter how big or small. This are not rules, just a guide. You don't have to follow them to the dot. Use your best judgment.
 
-## Here are a few examples of things you can do:
+## ❤️ Useful things
+
+- ☑️ Before contributing, it would be better to discuss the change you wish to make with me in an issue before making this change. Explain what you want to accomplish (e.g the problem you want to solve), why you want to do it, and how would do it. Wait for it to get assigned to you!
+
+- ☑️ Thoughtfully-written explanations and the rationale of the pull request is always appreciated! Explain what your PR is solving, why, and how.
+
+- ☑️ Please [allow project maintainers to edit your pull request][how_to_allow_pr_edits_link]!
+
+- ☑️ Explanations of issues and PRs don't have to be long. Two or three sentences might be sufficient in a lot of cases, probably.
+
+- ☑️ Just stating the obvious, your PR will almost always NOT be merged if the CI build fails.
+
+- ☑️ Consistent code formatting is important. I use automated code formatters ([prettier][prettier_link] for Javascript and [black][black_link] for Python for example) to format my code.
+
+- ☑️ I use [code climate][code_climate_link] to check for code smells. I really appreciate code
+that is written with readability in mind. Code is read 10x more than it is written! I always
+think about how I can reduce cognitive complexity of my code before committing them.
+
+- ☑️ Adding appropriate tests in your PR is always appreciated.
+
+- ☑️ Please read [the commit style guide][commit_style_guide_link], the guide which I try to adhere to when wording my commit messages. These are not rules, just a guide.
+
+- ☑️ I prefer PRs with fewer commits. [Squash the commits and push force][rewriting_git_history_link] if you need to. But of course, it's better if all the changes in one commit are logically connected.
+
+- ☑️ For whatever purpose it may serve, here's [a simple git workflow][git_workflow_link] I try to stick to.
+
+- ☑️ Of course, let's always be nice to each other 🤗 [![Contributor Covenant][contributor_covenant_badge]](./CODE_OF_CONDUCT.md)
+
+## ❤️ A few examples of things you can do
 
 - Work on an existing issue (feature request, bug, etc)
 - Add new tests and test cases to improve code coverage
@@ -20,19 +40,30 @@ All types of contributions are welcome, no matter how big or small.
 - Report and fix bugs
 - Suggest idiomatic code and better software practices
 - Suggest ways to improving code quality / readability
-- Improve User Interface / Experience Design
-- Improve documentation
+- Suggest additional refactors to reduce cognitive complexity or what not
+- Improve user interface / experience and design
+- Improve documentation and code comments
 - Your own cool idea! Feature requests. Suggest an idea for this project.
-- More on: [Types of Code Contributions][contribute_link] 
+- Other ideas: [Types of Code Contributions][contribute_link]
 
+## ❤️ Thank you for reading! 🤗
 
 [contributor_covenant_badge]: https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg
+
 [contibutor_covenant_link]: https://www.contributor-covenant.org/
+
 [contribute_link]: https://github.com/mithi/hexapod/wiki/Types-of-(code)-Contributions
+
 [commit_style_guide_link]: https://github.com/mithi/hexapod/wiki/A-Commit-Style-Guide
+
 [git_workflow_link]: https://github.com/mithi/hexapod/wiki/Simple-Git-Workflow-guide
-[prettier_link]: https://github.com/mithi/hexapod/blob/master/.prettierrc.yaml
+
+[prettier_link]: https://prettier.io/
+
 [black_link]: https://github.com/psf/black
+
 [code_climate_link]: https://github.com/mithi/hexapod/blob/master/.codeclimate.yml
+
 [rewriting_git_history_link]: https://thoughtbot.com/blog/git-interactive-rebase-squash-amend-rewriting-history
+
 [how_to_allow_pr_edits_link]: https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/allowing-changes-to-a-pull-request-branch-created-from-a-fork
