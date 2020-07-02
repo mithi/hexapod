@@ -15,20 +15,22 @@ exports[`Dimension Widget renders component correctly 1`] = `
         >
           <label
             class="switch"
+            for="DimensionsWidgetSwitch"
           >
             <input
+              id="DimensionsWidgetSwitch"
               type="checkbox"
               value="1x"
             />
             <span
               class="toggle-switch-widget round"
             />
-            <br />
-            <label
-              class="label"
-            >
-              1x
-            </label>
+          </label>
+          <label
+            class="label"
+            for="DimensionsWidgetSwitch"
+          >
+            1x
           </label>
         </div>
       </div>
