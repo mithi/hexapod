@@ -91,6 +91,7 @@ th {
 
 th,
 td {
+    min-width: 50px;
     border-bottom: 1px solid rgba(41, 128, 185, 0.5);
     font-size: 12px;
     line-height: 16px;

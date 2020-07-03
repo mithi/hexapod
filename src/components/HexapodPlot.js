@@ -1,11 +1,37 @@
-import React from "react"
-import Plotly from "plotly.js-gl3d-dist-min"
-import createPlotlyComponent from "react-plotly.js/factory"
-const Plot = createPlotlyComponent(Plotly)
+import React, { useEffect, useState, useRef } from "react"
 
 const HexapodPlot = props => {
+    const [ready, setReady] = useState(false)
+    const ref = useRef()
+
+    useEffect(() => {
+        let cancel = false
+        async function load() {
+            const [Plotly, createPlotlyComponent] = await Promise.allSettled([
+                import("plotly.js-gl3d-dist-min"),
+                import("react-plotly.js/factory"),
+            ]).then(values => values.map(({ value }) => value))
+
+            ref.current = createPlotlyComponent.default(Plotly.default)
+
+            if (!cancel) {
+                setReady(true)
+            }
+        }
+        load()
+
+        return () => {
+            cancel = true
+        }
+    }, [])
+
+    if (!ready) {
+        return null
+    }
+
+    const PlotEl = ref.current
     return (
-        <Plot
+        <PlotEl
             data={props.data}
             layout={props.layout}
             useResizeHandler={true}

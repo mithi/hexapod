@@ -1,5 +1,4 @@
 import React from "react"
-import ReactMarkdown from "react-markdown"
 import { ICON_COMPONENTS } from "../vars"
 
 const AlertBox = ({ info }) => (
@@ -7,7 +6,7 @@ const AlertBox = ({ info }) => (
         <h2 className="red">
             {ICON_COMPONENTS.times} {info.subject}
         </h2>
-        <ReactMarkdown source={info.body} />
+        <pre>{info.body}</pre>
     </div>
 )
 

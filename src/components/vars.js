@@ -124,16 +124,13 @@ const URL_LINKS = [KOFI_LINK_PROPERTIES, REPO_LINK_PROPERTIES]
  * LANDING PAGE
  *************/
 
-const LANDING_PAGE_MESSAGE = `
-
-# Mithi's Bare Minimum Hexapod Robot Simulator
-
-Enjoy your stay and share with your friends!
-`
+const LANDING_PAGE_TITLE = `Mithi's Bare Minimum Hexapod Robot Simulator`
+const LANDING_PAGE_SUBTITLE = `Enjoy your stay and share with your friends!`
 
 export {
     ICON_COMPONENTS,
-    LANDING_PAGE_MESSAGE,
+    LANDING_PAGE_TITLE,
+    LANDING_PAGE_SUBTITLE,
     SECTION_NAMES,
     ANGLE_NAMES,
     DIMENSION_NAMES,

@@ -1,9 +1,9 @@
 import React from "react"
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { BrowserRouter as Router } from "react-router-dom"
 import ReactGA from "react-ga"
 import { VirtualHexapod, getNewPlotParams } from "./hexapod"
 import * as defaults from "./templates"
-import { SECTION_NAMES, PATHS } from "./components/vars"
+import { SECTION_NAMES } from "./components/vars"
 import {
     PoseTable,
     Nav,
@@ -12,12 +12,8 @@ import {
     DimensionsWidget,
     AlertBox,
 } from "./components"
-import {
-    ForwardKinematicsPage,
-    InverseKinematicsPage,
-    LandingPage,
-    LegPatternPage,
-} from "./components/pages"
+
+import Routes from "./routes"
 
 ReactGA.initialize("UA-170794768-1", {
     //debug: true,
@@ -170,60 +166,34 @@ class App extends React.Component {
     )
 
     /* * * * * * * * * * * * * *
-     * Pages
-     * * * * * * * * * * * * * */
-
-    showPage = () => (
-        <Switch>
-            <Route path="/" exact>
-                <LandingPage onMount={this.onPageLoad} />
-            </Route>
-            <Route path={PATHS.forwardKinematics.path}>
-                <ForwardKinematicsPage
-                    params={{ pose: this.state.hexapodParams.pose }}
-                    onUpdate={this.updatePose}
-                    onMount={this.onPageLoad}
-                />
-            </Route>
-            <Route path={PATHS.inverseKinematics.path}>
-                <InverseKinematicsPage
-                    params={{
-                        dimensions: this.state.hexapodParams.dimensions,
-                        ikParams: this.state.ikParams,
-                    }}
-                    onUpdate={this.updateIkParams}
-                    onMount={this.onPageLoad}
-                />
-            </Route>
-            <Route path={PATHS.legPatterns.path}>
-                <LegPatternPage
-                    params={{ patternParams: this.state.patternParams }}
-                    onUpdate={this.updatePatternPose}
-                    onMount={this.onPageLoad}
-                />
-            </Route>
-        </Switch>
-    )
-
-    /* * * * * * * * * * * * * *
      * Layout
      * * * * * * * * * * * * * */
 
-    render = () => (
-        <Router>
-            <Nav />
-            <div className="main content">
-                <div className="sidebar column-container cell">
-                    {this.mightShowDimensions()}
-                    {this.showPage()}
-                    {this.mightShowPoseTable()}
-                    {this.mightShowMessage()}
+    render() {
+        return (
+            <Router>
+                <Nav />
+                <div className="main content">
+                    <div className="sidebar column-container cell">
+                        {this.mightShowDimensions()}
+                        <Routes
+                            patternParams={this.state.patternParams}
+                            hexapodParams={this.state.hexapodParams}
+                            ikParams={this.state.ikParams}
+                            onPageLoad={this.onPageLoad}
+                            updatePose={this.updatePose}
+                            updateIkParams={this.updateIkParams}
+                            updatePatternPose={this.updatePatternPose}
+                        />
+                        {this.mightShowPoseTable()}
+                        {this.mightShowMessage()}
+                    </div>
+                    {this.mightShowPlot()}
                 </div>
-                {this.mightShowPlot()}
-            </div>
-            {this.mightShowDetailedNav()}
-        </Router>
-    )
+                {this.mightShowDetailedNav()}
+            </Router>
+        )
+    }
 }
 
 export default App
