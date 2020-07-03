@@ -2,35 +2,38 @@
 
 Thank you for your interest in contributing to this project!
 
-All types of contributions are welcome, no matter how big or small. This are not rules, just a guide. You don't have to follow them to the dot. Use your best judgment.
+All types of contributions are welcome, no matter how big or small. 
+
+These are mostly guidelines, not rules. You don't have to follow them to the dot. Use your best judgment.
+
+I highly encourage that you read this guide before submitting a PR. It won't take you more than five minutes to read it! 
+
 
 ## ❤️ Useful things
 
-- ☑️ Before contributing, it would be better to discuss the change you wish to make with me in an issue before making this change. Explain what you want to accomplish (e.g the problem you want to solve), why you want to do it, and how would do it. Wait for it to get assigned to you!
+- Before contributing, it's probably be better to discuss the change you wish to make with me in an issue before making this change. Explain what you want to accomplish (e.g the problem you want to solve), why you want to do it, and how would do it.
 
-- ☑️ Thoughtfully-written explanations and the rationale of the pull request is always appreciated! Explain what your PR is solving, why, and how.
+- Thoughtfully-written explanations and the rationale of the pull request is always appreciated! Explain what your PR is solving, why, and how.
 
-- ☑️ Please [allow project maintainers to edit your pull request][how_to_allow_pr_edits_link]!
+- Explanations of issues and PRs don't have to be long. Two or three sentences might be sufficient in a lot of cases, probably.
 
-- ☑️ Explanations of issues and PRs don't have to be long. Two or three sentences might be sufficient in a lot of cases, probably.
+- Please [allow project maintainers to edit your pull request][how_to_allow_pr_edits_link]!
 
-- ☑️ Just stating the obvious, your PR will almost always NOT be merged if the CI build fails.
+- Your PR will most likely NOT be merged if the CI build fails.
 
-- ☑️ Consistent code formatting is important. I use automated code formatters ([prettier][prettier_link] for Javascript and [black][black_link] for Python for example) to format my code.
+- Consistent code formatting is important. I use automatic code formatters ([prettier][prettier_link] for Javascript and [black][black_link] for Python for example) to format my code.
 
-- ☑️ I use [code climate][code_climate_link] to check for code smells. I really appreciate code
-that is written with readability in mind. Code is read 10x more than it is written! I always
-think about how I can reduce cognitive complexity of my code before committing them.
+- I use [code climate][code_climate_link] to check for code smells. I really appreciate code that is written with readability in mind. I always think about how I can reduce cognitive complexity of my code before committing them.
 
-- ☑️ Adding appropriate tests in your PR is always appreciated.
+- Adding corresponding tests in your PR is always appreciated.
 
-- ☑️ Please read [the commit style guide][commit_style_guide_link], the guide which I try to adhere to when wording my commit messages. These are not rules, just a guide.
+- I try to adhere to this [commit style guide][commit_style_guide_link], when I word my commit messages.
 
-- ☑️ I prefer PRs with fewer commits. [Squash the commits and push force][rewriting_git_history_link] if you need to. But of course, it's better if all the changes in one commit are logically connected.
+- I prefer PRs with fewer commits. [Squash the commits and push force][rewriting_git_history_link] if you need to. But of course, it's better if all the changes in a single commit are logically connected.
 
-- ☑️ For whatever purpose it may serve, here's [a simple git workflow][git_workflow_link] I try to stick to.
+- For whatever purpose it may serve, here's [a simple git workflow][git_workflow_link] I try to stick to.
 
-- ☑️ Of course, let's always be nice to each other 🤗 [![Contributor Covenant][contributor_covenant_badge]](./CODE_OF_CONDUCT.md)
+- Of course, let's always be nice to each other 🤗 [![Contributor Covenant][contributor_covenant_badge]](./CODE_OF_CONDUCT.md)
 
 ## ❤️ A few examples of things you can do
 
