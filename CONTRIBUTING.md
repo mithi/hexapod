@@ -1,18 +1,16 @@
 # Contributing
 
-Thank you for your interest in contributing to this project!
-
-All types of contributions are welcome, no matter how big or small. 
-
-These are mostly guidelines, not rules. You don't have to follow them to the dot. Use your best judgment.
+Thank you for your interest in contributing to this project! All types of contributions are welcome, no matter how big or small. 
 
 I highly encourage that you read this guide before submitting a PR. It won't take you more than five minutes to read! 
+
+These are mostly guidelines, not rules. You don't have to follow them to the dot. Use your best judgment.
 
 ## ❤️ The most important ones
 
 - Please [allow project maintainers to edit your pull request][how_to_allow_pr_edits_link]!
 
-- Consistent code formatting is important. I use automatic code formatters ([prettier][prettier_link] for Javascript and [black][black_link] for Python for example) to format my code.
+- Consistent code formatting is important. I use automatic code formatters ([prettier][prettier_link] for Javascript, [black][black_link] for Python).
 
 - I use [code climate][code_climate_link] to check for code smells. I really appreciate code that is written with readability in mind. I always think about how I can reduce cognitive complexity of my code before committing them.
 
@@ -49,7 +47,7 @@ I highly encourage that you read this guide before submitting a PR. It won't tak
 - Improve user interface / experience and design
 - Improve documentation and code comments
 - Your own cool idea! Feature requests. Suggest an idea for this project.
-- Other ideas: [Types of Code Contributions][contribute_link]
+- None of the above
 
 ## ❤️ Thank you for reading! 🤗
 
