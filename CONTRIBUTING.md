@@ -4,7 +4,7 @@ Thank you for your interest in contributing to this project! All types of contri
 
 I highly encourage that you read this guide before submitting a PR. It won't take you more than five minutes to read! 
 
-These are mostly guidelines, not rules. You don't have to follow them to the dot. Use your best judgment.
+These are mostly guidelines, not rules. Use your best judgment.
 
 ## ❤️ The most important ones
 
@@ -12,17 +12,17 @@ These are mostly guidelines, not rules. You don't have to follow them to the dot
 
 - Consistent code formatting is important. I use automatic code formatters ([prettier][prettier_link] for Javascript, [black][black_link] for Python).
 
-- I use [code climate][code_climate_link] to check for code smells. I really appreciate code that is written with readability in mind. I always think about how I can reduce cognitive complexity of my code before committing them.
+- I use [code climate][code_climate_link] to detect code smells. I really appreciate code that is written with readability in mind. I always think about how I can reduce cognitive complexity of my code before committing them.
 
-- I try to adhere to this [commit style guide][commit_style_guide_link], when I word my commit messages.
+- I try to adhere to this [commit style guide][commit_style_guide_link] when I word my commit messages.
 
 - I like it when people are nice to each other. I don't like mean or rude people. [![Contributor Covenant][contributor_covenant_badge]](./CODE_OF_CONDUCT.md)
 
 ## ❤️ Nice to have
 
-- Before contributing, it's probably better to discuss the change you wish to make in an issue first. Explain what you want to accomplish (e.g the problem you want to solve), why you want to do it, and how would do it.
+- Before contributing, it's probably better to discuss the change you wish to make in an issue first. An issue explaining what you want to accomplish, why you want to do it, and how would do it.
 
-- Thoughtfully-written explanations and the rationale of the pull request is always appreciated! Explain what your PR is solving, why, and how.
+- Thoughtfully-written explanations and the rationale of the pull request is always appreciated!
 
 - Explanations of issues and PRs don't have to be long. Two or three sentences might be sufficient in a lot of cases, probably.
 
@@ -30,7 +30,7 @@ These are mostly guidelines, not rules. You don't have to follow them to the dot
 
 - I prefer PRs with fewer commits. [Squash the commits and push force][rewriting_git_history_link] if you need to. But of course, it's better if all the changes in a single commit are logically connected.
 
-- Adding corresponding tests in your PR is always appreciated.
+- Including corresponding tests in your PR is always appreciated.
 
 - For whatever purpose it may serve, here's [a simple git workflow][git_workflow_link] I try to stick to.
 
