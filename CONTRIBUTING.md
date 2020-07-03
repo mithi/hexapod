@@ -1,36 +1,39 @@
 # Contributing
 
-Thank you for your interest in contributing to this project!
+Thank you for your interest in contributing to this project! All types of contributions are welcome, no matter how big or small. 
 
-All types of contributions are welcome, no matter how big or small. This are not rules, just a guide. You don't have to follow them to the dot. Use your best judgment.
+I highly encourage that you read this guide before submitting a PR. It won't take you more than five minutes to read! 
 
-## ❤️ Useful things
+These are mostly guidelines, not rules. Use your best judgment.
 
-- ☑️ Before contributing, it would be better to discuss the change you wish to make with me in an issue before making this change. Explain what you want to accomplish (e.g the problem you want to solve), why you want to do it, and how would do it. Wait for it to get assigned to you!
+## ❤️ The most important ones
 
-- ☑️ Thoughtfully-written explanations and the rationale of the pull request is always appreciated! Explain what your PR is solving, why, and how.
+- Please [allow project maintainers to edit your pull request][how_to_allow_pr_edits_link]!
 
-- ☑️ Please [allow project maintainers to edit your pull request][how_to_allow_pr_edits_link]!
+- Consistent code formatting is important. I use automatic code formatters ([prettier][prettier_link] for Javascript, [black][black_link] for Python).
 
-- ☑️ Explanations of issues and PRs don't have to be long. Two or three sentences might be sufficient in a lot of cases, probably.
+- I use [code climate][code_climate_link] to detect code smells. I really appreciate code that is written with readability in mind. I always think about how I can reduce cognitive complexity of my code before committing them.
 
-- ☑️ Just stating the obvious, your PR will almost always NOT be merged if the CI build fails.
+- I try to adhere to this [commit style guide][commit_style_guide_link] when I word my commit messages.
 
-- ☑️ Consistent code formatting is important. I use automated code formatters ([prettier][prettier_link] for Javascript and [black][black_link] for Python for example) to format my code.
+- I like it when people are nice to each other. I don't like mean or rude people. [![Contributor Covenant][contributor_covenant_badge]](./CODE_OF_CONDUCT.md)
 
-- ☑️ I use [code climate][code_climate_link] to check for code smells. I really appreciate code
-that is written with readability in mind. Code is read 10x more than it is written! I always
-think about how I can reduce cognitive complexity of my code before committing them.
+## ❤️ Nice to have
 
-- ☑️ Adding appropriate tests in your PR is always appreciated.
+- Before contributing, it's probably better to discuss the change you wish to make in an issue first. An issue explaining what you want to accomplish, why you want to do it, and how would do it.
 
-- ☑️ Please read [the commit style guide][commit_style_guide_link], the guide which I try to adhere to when wording my commit messages. These are not rules, just a guide.
+- Thoughtfully-written explanations and the rationale of the pull request is always appreciated!
 
-- ☑️ I prefer PRs with fewer commits. [Squash the commits and push force][rewriting_git_history_link] if you need to. But of course, it's better if all the changes in one commit are logically connected.
+- Explanations of issues and PRs don't have to be long. Two or three sentences might be sufficient in a lot of cases, probably.
 
-- ☑️ For whatever purpose it may serve, here's [a simple git workflow][git_workflow_link] I try to stick to.
+- Your PR will most likely NOT be merged if the CI build fails.
 
-- ☑️ Of course, let's always be nice to each other 🤗 [![Contributor Covenant][contributor_covenant_badge]](./CODE_OF_CONDUCT.md)
+- I prefer PRs with fewer commits. [Squash the commits and push force][rewriting_git_history_link] if you need to. But of course, it's better if all the changes in a single commit are logically connected.
+
+- Including corresponding tests in your PR is always appreciated.
+
+- For whatever purpose it may serve, here's [a simple git workflow][git_workflow_link] I try to stick to.
+
 
 ## ❤️ A few examples of things you can do
 
@@ -44,7 +47,7 @@ think about how I can reduce cognitive complexity of my code before committing t
 - Improve user interface / experience and design
 - Improve documentation and code comments
 - Your own cool idea! Feature requests. Suggest an idea for this project.
-- Other ideas: [Types of Code Contributions][contribute_link]
+- None of the above
 
 ## ❤️ Thank you for reading! 🤗
 
