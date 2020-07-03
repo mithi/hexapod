@@ -444,12 +444,18 @@ input:checked + .toggle-switch-widget:before {
 }
 
 @media screen and (max-width: 667px) and (orientation: landscape) {
+    .main {
+        flex-direction: column;
+        margin: 0;
+    }
+
     .sidebar {
         min-width: 225px;
     }
 
     .plot {
-        width: 100%;
+        margin: 0 auto;
+        width: 90%;
         height: 275px;
         min-width: 250px;
     }
