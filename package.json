@@ -4,7 +4,7 @@
     "private": true,
     "dependencies": {
         "@testing-library/jest-dom": "^4.2.4",
-        "@testing-library/react": "^9.3.2",
+        "@testing-library/react": "^10.4.4",
         "@testing-library/user-event": "^7.1.2",
         "jest-canvas-mock": "^2.2.0",
         "plotly.js-gl3d-dist-min": "^1.54.2",
@@ -21,7 +21,7 @@
         "analyze": "source-map-explorer 'build/static/js/*.js'",
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "react-scripts test",
+        "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
         "eject": "react-scripts eject"
     },
     "eslintConfig": {
@@ -40,6 +40,7 @@
         ]
     },
     "devDependencies": {
+        "jest-environment-jsdom-sixteen": "^1.0.3",
         "prettier": "2.0.5"
     }
 }
