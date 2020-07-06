@@ -1,7 +1,7 @@
 import React from "react"
-import { render, screen, fireEvent, act } from "@testing-library/react"
+import { render, screen, fireEvent, act, waitFor } from "@testing-library/react"
 import App from "../../App"
-import { PATH_LINKS, URL_LINKS } from "../../components/vars"
+import { PATH_LINKS, URL_LINKS, LANDING_PAGE_TITLE } from "../../components/vars"
 
 /* * * *
  Navigation Footer
@@ -152,11 +152,9 @@ Application
  * * * */
 describe("AppFragment", () => {
     test("Renders App snapshot correctly", async () => {
-        let container
-        await act(async () => {
-            container = await render(<App />)
-        })
-        expect(container.asFragment()).toMatchSnapshot()
+        const { asFragment } = render(<App />)
+        await waitFor(() => screen.findByText(LANDING_PAGE_TITLE))
+        expect(asFragment()).toMatchSnapshot()
     })
 })
 
