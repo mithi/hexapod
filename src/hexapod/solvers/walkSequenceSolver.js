@@ -56,6 +56,7 @@ const getWalkSequence = (
     params = {
         rx: 0,
         ry: 0,
+        tz: -0.5,
         legStance: 45,
         hipStance: 45,
         hipSwing: 20,
@@ -64,12 +65,12 @@ const getWalkSequence = (
         dimensions: DEFAULT_DIMENSIONS,
     }
 ) => {
-    const { hipStance, rx, ry, legStance, dimensions } = params
+    const { hipStance, rx, ry, tz, legStance, dimensions } = params
 
     const rawIKparams = {
         tx: 0,
         ty: 0,
-        tz: 0,
+        tz,
         legStance,
         hipStance,
         rx,
@@ -201,9 +202,17 @@ const buildSequences = (startPose, liftSwing, hipSwing, stepCount) => {
     legPositions.forEach(legPosition => {
         const { alpha, beta, gamma } = startPose[legPosition]
         const deltaAlpha = hipSwingForward[legPosition]
-        forwardAlphaSeqs[legPosition] = buildSequence(alpha, deltaAlpha, doubleStepCount)
+        forwardAlphaSeqs[legPosition] = buildSequence(
+            alpha - deltaAlpha,
+            2 * deltaAlpha,
+            doubleStepCount
+        )
         liftBetaSeqs[legPosition] = buildSequence(beta, Math.abs(liftSwing), stepCount)
-        liftGammaSeqs[legPosition] = buildSequence(gamma, -Math.abs(liftSwing) / 2, stepCount)
+        liftGammaSeqs[legPosition] = buildSequence(
+            gamma,
+            -Math.abs(liftSwing) / 2,
+            stepCount
+        )
     })
 
     return {
