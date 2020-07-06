@@ -364,13 +364,6 @@ exports[`AppFragment Renders App snapshot correctly 1`] = `
         </nav>
       </footer>
     </div>
-    <div
-      class="no-display"
-    >
-      <div
-        style="height: 100%; width: 100%;"
-      />
-    </div>
   </div>
 </DocumentFragment>
 `;
