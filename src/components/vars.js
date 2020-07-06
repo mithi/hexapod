@@ -118,6 +118,12 @@ const PATH_LINKS = [
     PATHS.landingPage,
 ]
 
+const HEXAPOD_LINK_PATHS = [
+    PATHS.inverseKinematics.path,
+    PATHS.forwardKinematics.path,
+    PATHS.legPatterns.path,
+]
+
 const URL_LINKS = [KOFI_LINK_PROPERTIES, REPO_LINK_PROPERTIES]
 
 /*************
@@ -140,5 +146,6 @@ export {
     PATHS,
     URL_LINKS,
     PATH_LINKS,
+    HEXAPOD_LINK_PATHS,
     RANGE_PARAMS,
 }

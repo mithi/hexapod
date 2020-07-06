@@ -19,7 +19,8 @@ const TableRow = React.memo(({ label, alpha, beta, gamma }) => (
     </tr>
 ))
 
-const PoseTable = ({ pose }) => {
+const PoseTable = ({ pose, showPoseTable }) => {
+    if (!showPoseTable) return null
     const { rightMiddle, rightFront, leftFront, leftMiddle, leftBack, rightBack } = pose
     return (
         <div className="table-container">

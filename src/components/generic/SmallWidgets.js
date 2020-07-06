@@ -1,14 +1,15 @@
 import React from "react"
 import { ICON_COMPONENTS } from "../vars"
 
-const AlertBox = ({ info }) => (
-    <div className="message">
-        <h2 className="red">
-            {ICON_COMPONENTS.times} {info.subject}
-        </h2>
-        <pre>{info.body}</pre>
-    </div>
-)
+const AlertBox = ({ showInfo, info }) =>
+    showInfo && (
+        <div className="message">
+            <h2 className="red">
+                {ICON_COMPONENTS.times} {info.subject}
+            </h2>
+            <pre>{info.body}</pre>
+        </div>
+    )
 
 const ToggleSwitch = ({ id, value, handleChange, showValue }) => (
     <div className="switch-container">

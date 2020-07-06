@@ -1,17 +1,10 @@
 import React from "react"
-import { BrowserRouter as Router } from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import ReactGA from "react-ga"
 import { VirtualHexapod, getNewPlotParams } from "./hexapod"
 import * as defaults from "./templates"
-import { SECTION_NAMES } from "./components/vars"
-import {
-    PoseTable,
-    Nav,
-    NavDetailed,
-    HexapodPlot,
-    DimensionsWidget,
-    AlertBox,
-} from "./components"
+import { SECTION_NAMES, PATH_LINKS } from "./components/vars"
+import { Nav, NavDetailed } from "./components"
 
 import Routes from "./routes"
 
@@ -24,8 +17,7 @@ ReactGA.initialize("UA-170794768-1", {
 class App extends React.Component {
     state = {
         currentPage: SECTION_NAMES.LandingPage,
-        inHexapodPage: false,
-        showPoseMessage: true,
+        showPoseMessage: false,
         showInfo: false,
         info: {},
 
@@ -55,7 +47,6 @@ class App extends React.Component {
         if (pageName === SECTION_NAMES.landingPage) {
             this.setState({
                 currentPage: pageName,
-                inHexapodPage: false,
                 showInfo: false,
                 showPoseMessage: false,
             })
@@ -64,7 +55,6 @@ class App extends React.Component {
 
         this.setState({
             currentPage: pageName,
-            inHexapodPage: true,
             showInfo: false,
             showPoseMessage: false,
             ikParams: defaults.DEFAULT_IK_PARAMS,
@@ -129,43 +119,6 @@ class App extends React.Component {
     }
 
     /* * * * * * * * * * * * * *
-     * Control display of widgets
-     * * * * * * * * * * * * * */
-
-    mightShowMessage = () =>
-        this.state.showInfo ? <AlertBox info={this.state.info} /> : null
-
-    mightShowDetailedNav = () => (this.state.inHexapodPage ? <NavDetailed /> : null)
-
-    mightShowPoseTable = () => {
-        if (this.state.showPoseMessage) {
-            return <PoseTable pose={this.state.hexapodParams.pose} />
-        }
-    }
-
-    mightShowDimensions = () => {
-        if (this.state.inHexapodPage) {
-            return (
-                <DimensionsWidget
-                    params={{ dimensions: this.state.hexapodParams.dimensions }}
-                    onUpdate={this.updateDimensions}
-                />
-            )
-        }
-    }
-
-    mightShowPlot = () => (
-        <div className={this.state.inHexapodPage ? "plot border" : "no-display"}>
-            <HexapodPlot
-                data={this.state.plot.data}
-                layout={this.state.plot.layout}
-                onRelayout={this.logCameraView}
-                revision={this.state.plot.revisionCounter}
-            />
-        </div>
-    )
-
-    /* * * * * * * * * * * * * *
      * Layout
      * * * * * * * * * * * * * */
 
@@ -173,24 +126,33 @@ class App extends React.Component {
         return (
             <Router>
                 <Nav />
-                <div className="main content">
-                    <div className="sidebar column-container cell">
-                        {this.mightShowDimensions()}
+                <Switch>
+                    <Route path={PATH_LINKS.map(({ path }) => path)} exact>
                         <Routes
-                            patternParams={this.state.patternParams}
-                            hexapodParams={this.state.hexapodParams}
-                            ikParams={this.state.ikParams}
                             onPageLoad={this.onPageLoad}
+                            showPoseMessage={this.state.showPoseMessage}
+                            showInfo={this.state.showInfo}
+                            info={this.state.info}
+                            data={this.state.plot.data}
+                            layout={this.state.plot.layout}
+                            onRelayout={this.logCameraView}
+                            revision={this.state.plot.revisionCounter}
+                            hexapodParams={this.state.hexapodParams}
+                            patternParams={this.state.patternParams}
+                            ikParams={this.state.ikParams}
                             updatePose={this.updatePose}
                             updateIkParams={this.updateIkParams}
                             updatePatternPose={this.updatePatternPose}
+                            updateDimensions={this.updateDimensions}
                         />
-                        {this.mightShowPoseTable()}
-                        {this.mightShowMessage()}
-                    </div>
-                    {this.mightShowPlot()}
-                </div>
-                {this.mightShowDetailedNav()}
+                    </Route>
+                    <Route>
+                        <div className="no-match">
+                            <h1>404</h1>
+                            <NavDetailed />
+                        </div>
+                    </Route>
+                </Switch>
             </Router>
         )
     }

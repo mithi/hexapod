@@ -144,6 +144,17 @@ tr:hover {
     font-size: 13px;
 }
 
+.no-match {
+    margin: 0 auto;
+    min-width: 300px;
+    width: 40%;
+    max-width: 900px;
+}
+
+.no-match h1 {
+    text-align: center;
+}
+
 #nav {
     margin-top: 20px;
 }

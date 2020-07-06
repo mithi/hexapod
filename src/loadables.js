@@ -11,20 +11,30 @@ const LazyForwardKinematicsPage = lazy(() =>
         /* webpackChunkName: "FwdKinematics", webpackPrefetch: true */ "./components/pages/ForwardKinematicsPage"
     )
 )
+
 const LazyInverseKinematicsPage = lazy(() =>
     import(
         /* webpackChunkName: "InvKinematics", webpackPrefetch: true */ "./components/pages/InverseKinematicsPage"
     )
 )
+
 const LazyLegPatternPage = lazy(() =>
     import(
         /* webpackChunkName: "LegPattern", webpackPrefetch: true */ "./components/pages/LegPatternPage"
     )
 )
 
+const LazyHexapodPlot = lazy(() =>
+    import(
+        /* webpackChunkName: "Hexapod", webpackPreload: true */ "./components/HexapodPlot"
+    )
+)
+
+const Fallback = () => <h2>Loading...</h2>
+
 export function SuspenseLandingPage(props) {
     return (
-        <Suspense fallback={null}>
+        <Suspense fallback={<Fallback />}>
             <LazyLanding {...props} />
         </Suspense>
     )
@@ -32,7 +42,7 @@ export function SuspenseLandingPage(props) {
 
 export function SuspenseForwardKinematicsPage(props) {
     return (
-        <Suspense fallback={null}>
+        <Suspense fallback={<Fallback />}>
             <LazyForwardKinematicsPage {...props} />
         </Suspense>
     )
@@ -40,7 +50,7 @@ export function SuspenseForwardKinematicsPage(props) {
 
 export function SuspenseInverseKinematicsPage(props) {
     return (
-        <Suspense fallback={null}>
+        <Suspense fallback={<Fallback />}>
             <LazyInverseKinematicsPage {...props} />
         </Suspense>
     )
@@ -48,8 +58,16 @@ export function SuspenseInverseKinematicsPage(props) {
 
 export function SuspenseLegPatternPage(props) {
     return (
-        <Suspense fallback={null}>
+        <Suspense fallback={<Fallback />}>
             <LazyLegPatternPage {...props} />
+        </Suspense>
+    )
+}
+
+export function SuspenseHexapodPlot(props) {
+    return (
+        <Suspense fallback={<Fallback />}>
+            <LazyHexapodPlot {...props} />
         </Suspense>
     )
 }

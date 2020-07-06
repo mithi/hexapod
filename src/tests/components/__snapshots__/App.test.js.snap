@@ -179,7 +179,6 @@ exports[`AppFragment Renders App snapshot correctly 1`] = `
       <div
         class="hexapod-img"
       />
-       
       <div
         id="landing"
       >
