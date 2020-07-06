@@ -18,7 +18,6 @@ const POSITION_NAMES_LIST = [
     "rightBack",
 ]
 
-
 const cases = [
     {
         params: {
@@ -41,7 +40,6 @@ test.each(cases)("test walkSequence:", example => {
     const actualStepCount = example.params.stepCount * 4
 
     POSITION_NAMES_LIST.forEach(position => {
-
         const alphaSeq = sequence[position].alpha
         const betaSeq = sequence[position].beta
         const gammaSeq = sequence[position].gamma
@@ -54,6 +52,5 @@ test.each(cases)("test walkSequence:", example => {
 
         expect(gammaSeq).toBeDefined()
         expect(gammaSeq).toHaveLength(actualStepCount)
-
     })
 })
