@@ -33,9 +33,6 @@ class App extends React.Component {
         showInfo: false,
         info: {},
 
-        ikParams: defaults.DEFAULT_IK_PARAMS,
-        patternParams: defaults.DEFAULT_PATTERN_PARAMS,
-
         hexapodParams: {
             dimensions: defaults.DEFAULT_DIMENSIONS,
             pose: defaults.DEFAULT_POSE,
@@ -55,10 +52,10 @@ class App extends React.Component {
 
     onPageLoad = pageName => {
         ReactGA.pageview(window.location.pathname + window.location.search)
+        this.setState({ currentPage: pageName })
 
         if (pageName === SECTION_NAMES.landingPage) {
             this.setState({
-                currentPage: pageName,
                 inHexapodPage: false,
                 showInfo: false,
                 showPoseMessage: false,
@@ -67,14 +64,12 @@ class App extends React.Component {
         }
 
         this.setState({
-            currentPage: pageName,
             inHexapodPage: true,
             showInfo: false,
             showPoseMessage: false,
-            ikParams: defaults.DEFAULT_IK_PARAMS,
-            patternParams: defaults.DEFAULT_PATTERN_PARAMS,
             hexapodParams: { ...this.state.hexapodParams, pose: defaults.DEFAULT_POSE },
         })
+
         this.updatePlot(this.state.hexapodParams.dimensions, defaults.DEFAULT_POSE)
     }
 
@@ -117,7 +112,7 @@ class App extends React.Component {
      * Handle individual input fields update
      * * * * * * * * * * * * * */
 
-    updateIkParams = (hexapod, updatedStateParams) => {
+    updateIk = (hexapod, updatedStateParams) => {
         this.updatePlotWithHexapod(hexapod)
         this.setState({ ...updatedStateParams })
     }
@@ -126,11 +121,6 @@ class App extends React.Component {
         this.updatePlot(dimensions, this.state.hexapodParams.pose)
 
     updatePose = pose => this.updatePlot(this.state.hexapodParams.dimensions, pose)
-
-    updatePatternPose = (pose, patternParams) => {
-        this.updatePlot(this.state.hexapodParams.dimensions, pose)
-        this.setState({ patternParams })
-    }
 
     /* * * * * * * * * * * * * *
      * Control display of widgets
@@ -189,18 +179,13 @@ class App extends React.Component {
                 <InverseKinematicsPage
                     params={{
                         dimensions: this.state.hexapodParams.dimensions,
-                        ikParams: this.state.ikParams,
                     }}
-                    onUpdate={this.updateIkParams}
+                    onUpdate={this.updateIk}
                     onMount={this.onPageLoad}
                 />
             </Route>
             <Route path={PATHS.legPatterns.path}>
-                <LegPatternPage
-                    params={{ patternParams: this.state.patternParams }}
-                    onUpdate={this.updatePatternPose}
-                    onMount={this.onPageLoad}
-                />
+                <LegPatternPage onUpdate={this.updatePose} onMount={this.onPageLoad} />
             </Route>
         </Switch>
     )
