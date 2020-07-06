@@ -1,16 +1,17 @@
-import React from "react"
+import React, { useLayoutEffect, useState } from "react"
 import createPlotlyComponent from "react-plotly.js/factory"
 
 const PlotlyPromise = import(
     /* webpackChunkName: "Plotly-gl-3d", webpackPreload: true */ "plotly.js-gl3d-dist-min"
 ).then(Plotly => Plotly.default)
 
-const HexapodPlot = props => {
+const HexapodPlot = ({ data, layout, onRelayout, revision }) => {
     const ref = React.useRef()
-    const [ready, setReady] = React.useState(false)
+    const [ready, setReady] = useState(false)
 
-    React.useEffect(() => {
+    useLayoutEffect(() => {
         let cancel
+
         PlotlyPromise.then(Plotly => {
             ref.current = createPlotlyComponent(Plotly)
         }).then(() => {
@@ -36,13 +37,13 @@ const HexapodPlot = props => {
 
     return (
         <Plot
-            data={props.data}
-            layout={props.layout}
+            data={data}
+            layout={layout}
             useResizeHandler={true}
             style={{ height: "100%", width: "100%" }}
             config={{ displaylogo: false, responsive: true }}
-            onRelayout={props.onRelayout}
-            revision={props.revision}
+            onRelayout={onRelayout}
+            revision={revision}
         />
     )
 }
