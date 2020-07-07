@@ -235,18 +235,20 @@ input[type="number"] {
 }
 
 .label {
+    width: 100%;
     font-size: 0.6rem;
     margin-left: 5px;
     opacity: 0.5;
+    white-space: nowrap;
 }
 
 .no-display {
     display: none;
 }
 
-.row-container {
+.row-container,
+.leg-sliders-container {
     display: flex;
-    flex-wrap: unset;
 }
 
 .flex-wrap {
@@ -321,6 +323,7 @@ input[type="number"] {
 
 .switch + .label {
     cursor: pointer;
+    width: unset;
 }
 
 /* Hide default HTML checkbox */
@@ -408,8 +411,8 @@ input:checked + .toggle-switch-widget:before {
         flex-grow: 0;
     }
 
-    .row-container {
-        flex-wrap: wrap;
+    .leg-sliders-container {
+        flex-direction: column;
     }
 
     .slider-container.cell {
@@ -436,8 +439,9 @@ input:checked + .toggle-switch-widget:before {
 
     .sidebar {
         max-width: 600px;
-        width: 100%;
-        margin-right: 0;
+        width: 90%;
+        min-width: 290px;
+        margin: 0 auto;
     }
 
     .plot {
@@ -457,6 +461,7 @@ input:checked + .toggle-switch-widget:before {
 
     .sidebar {
         min-width: 225px;
+        margin: 0 auto;
     }
 
     .plot {
@@ -470,8 +475,8 @@ input:checked + .toggle-switch-widget:before {
         flex-grow: 0;
     }
 
-    .row-container {
-        flex-wrap: wrap;
+    .leg-sliders-container {
+        flex-direction: column;
     }
 
     .slider-container.cell {
