@@ -11,7 +11,8 @@
 # Mithi's Bare-Minimum Hexapod Robot Simulator Rewrite
 _(in Javascript!)_
   
-<img src="https://mithi.github.io/robotics-blog/v2-hexapod-1.gif" alt="drawing" width="200" align="right" />
+
+<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="300" align="right" />
 
 - Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero server-side computations!
 
@@ -23,11 +24,8 @@ _(in Javascript!)_
 
 - Any contribution to improve the source code will be extremely appreciated. 💙 Anything. Anything at all. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement.
 
-![](./public/img/screenshot2.png)
 
-| <img src="./public/img/screenshot1.png" alt="drawing" width="600" /> | <img src="./public/img/screenshot4.png" alt="drawing" width="305" /> |
-|---|---|
-| . | . |
+![](./public/img/screenshot2.png)
 
 
 ## [☕](https://ko-fi.com/minimithi) I love badges! (Don't we all?)  
