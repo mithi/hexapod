@@ -29,7 +29,7 @@ _(in Javascript!)_
 | . | . | . |
 
 ## Main Contributors
-I will put your name here if I've merged your PR multiple times or if you've contributed to this project substantially in other ways.
+I will put your name here if I've merged your PR multiple times or if you've substantially contributed to this project in other ways.
 
 - [@mithi](https://github.com/mithi)
 - [@icyJoseph](https://github.com/icyJoseph)
