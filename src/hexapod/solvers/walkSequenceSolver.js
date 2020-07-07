@@ -81,12 +81,7 @@ const getWalkSequence = (
     const [ikSolver] = solveHexapodParams(dimensions, rawIKparams, true)
 
     if (!ikSolver.foundSolution || ikSolver.hasLegsOffGround) {
-        return {
-            poseSequence: null,
-            obtainedSolution: false,
-            message: ikSolver.message,
-            hasLegsOffGround: ikSolver.hasLegsOffGround,
-        }
+        return null
     }
 
     const { hipSwing, liftSwing, stepCount } = params
