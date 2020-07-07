@@ -21,9 +21,6 @@ class App extends React.Component {
         showInfo: false,
         info: {},
 
-        ikParams: defaults.DEFAULT_IK_PARAMS,
-        patternParams: defaults.DEFAULT_PATTERN_PARAMS,
-
         hexapodParams: {
             dimensions: defaults.DEFAULT_DIMENSIONS,
             pose: defaults.DEFAULT_POSE,
@@ -43,6 +40,7 @@ class App extends React.Component {
 
     onPageLoad = pageName => {
         ReactGA.pageview(window.location.pathname + window.location.search)
+        this.setState({ currentPage: pageName })
 
         if (pageName === SECTION_NAMES.landingPage) {
             this.setState({
@@ -57,10 +55,9 @@ class App extends React.Component {
             currentPage: pageName,
             showInfo: false,
             showPoseMessage: false,
-            ikParams: defaults.DEFAULT_IK_PARAMS,
-            patternParams: defaults.DEFAULT_PATTERN_PARAMS,
             hexapodParams: { ...this.state.hexapodParams, pose: defaults.DEFAULT_POSE },
         })
+
         this.updatePlot(this.state.hexapodParams.dimensions, defaults.DEFAULT_POSE)
     }
 
@@ -103,7 +100,7 @@ class App extends React.Component {
      * Handle individual input fields update
      * * * * * * * * * * * * * */
 
-    updateIkParams = (hexapod, updatedStateParams) => {
+    updateIk = (hexapod, updatedStateParams) => {
         this.updatePlotWithHexapod(hexapod)
         this.setState({ ...updatedStateParams })
     }
@@ -112,11 +109,6 @@ class App extends React.Component {
         this.updatePlot(dimensions, this.state.hexapodParams.pose)
 
     updatePose = pose => this.updatePlot(this.state.hexapodParams.dimensions, pose)
-
-    updatePatternPose = (pose, patternParams) => {
-        this.updatePlot(this.state.hexapodParams.dimensions, pose)
-        this.setState({ patternParams })
-    }
 
     /* * * * * * * * * * * * * *
      * Layout
