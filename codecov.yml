@@ -1,0 +1,23 @@
+# https://docs.codecov.io/docs/commit-status#branches
+coverage:
+  status:
+    project:
+      default:
+        # basic
+        target: auto
+        threshold: 5%
+        base: auto
+        flags:
+          - unit
+        paths:
+          - "src"
+       # advanced
+        branches:
+          - master
+        if_not_found: success
+        if_ci_failed: error
+        informational: false
+        only_pulls: false
+    patch:
+      default:
+        enabled: no
