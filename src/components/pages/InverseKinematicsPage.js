@@ -41,7 +41,7 @@ class InverseKinematicsPage extends Component {
     }
 
     reset = () => {
-        this.setState({ DEFAULT_IK_PARAMS })
+        this.setState({ ikParams: DEFAULT_IK_PARAMS })
         const result = solveInverseKinematics(
             this.props.params.dimensions,
             DEFAULT_IK_PARAMS
