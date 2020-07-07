@@ -22,6 +22,7 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
+        "test:coverage": "react-scripts test --env=jest-environment-jsdom-sixteen --collectCoverage --watchAll=false",
         "eject": "react-scripts eject"
     },
     "eslintConfig": {
@@ -42,5 +43,13 @@
     "devDependencies": {
         "jest-environment-jsdom-sixteen": "^1.0.3",
         "prettier": "2.0.5"
+    },
+    "jest": {
+        "collectCoverageFrom": [
+            "src/{components,hexapod}/*.{js,jsx,ts,tsx}",
+            "src/loadables.js",
+            "src/App.js",
+            "src/routes.js"
+        ]
     }
 }
