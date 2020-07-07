@@ -4,7 +4,8 @@ import ReactGA from "react-ga"
 import { VirtualHexapod, getNewPlotParams } from "./hexapod"
 import * as defaults from "./templates"
 import { SECTION_NAMES, PATH_LINKS } from "./components/vars"
-import { Nav, NavDetailed } from "./components"
+import { Nav } from "./components"
+import NoMatch from "./components/pages/NoMatch"
 
 import Routes from "./routes"
 
@@ -115,34 +116,26 @@ class App extends React.Component {
      * * * * * * * * * * * * * */
 
     render() {
+        const { plot, ...rest } = this.state
+        const routeProps = {
+            ...rest,
+            ...plot,
+            revision: plot.revisionCounter,
+            onRelayout: this.logCameraView,
+            updatePose: this.updatePose,
+            updateIkParams: this.updateIkParams,
+            updatePatternPose: this.updatePatternPose,
+            updateDimensions: this.updateDimensions,
+        }
         return (
             <Router>
                 <Nav />
                 <Switch>
                     <Route path={PATH_LINKS.map(({ path }) => path)} exact>
-                        <Routes
-                            onPageLoad={this.onPageLoad}
-                            showPoseMessage={this.state.showPoseMessage}
-                            showInfo={this.state.showInfo}
-                            info={this.state.info}
-                            data={this.state.plot.data}
-                            layout={this.state.plot.layout}
-                            onRelayout={this.logCameraView}
-                            revision={this.state.plot.revisionCounter}
-                            hexapodParams={this.state.hexapodParams}
-                            patternParams={this.state.patternParams}
-                            ikParams={this.state.ikParams}
-                            updatePose={this.updatePose}
-                            updateIkParams={this.updateIkParams}
-                            updatePatternPose={this.updatePatternPose}
-                            updateDimensions={this.updateDimensions}
-                        />
+                        <Routes {...routeProps} onPageLoad={this.onPageLoad} />
                     </Route>
                     <Route>
-                        <div className="no-match">
-                            <h1>404</h1>
-                            <NavDetailed />
-                        </div>
+                        <NoMatch />
                     </Route>
                 </Switch>
             </Router>
