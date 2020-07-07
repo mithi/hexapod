@@ -150,12 +150,6 @@ const click = name => fireEvent.click(screen.getByRole("link", { name }))
 /* * * *
 Application
  * * * */
-describe("AppFragment", () => {
-    test("Renders App snapshot correctly", () => {
-        const { asFragment } = render(<App />)
-        expect(asFragment()).toMatchSnapshot()
-    })
-})
 
 describe("App", () => {
     beforeEach(() => {
