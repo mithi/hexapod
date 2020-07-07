@@ -59,11 +59,15 @@ class WalkingGaitsPage extends Component {
         this.stopAnimation()
     }
 
-    toggleAnimationMode = () => {
+    toggleAnimating = () => {
         const isAnimating = !this.state.isAnimating
 
         isAnimating ? this.startAnimation() : this.stopAnimation()
         this.setState({ isAnimating })
+    }
+
+    toggleDirection = () => {
+        this.setState({ isForward: !this.state.isForward })
     }
 
     startAnimation = () => {
@@ -76,17 +80,20 @@ class WalkingGaitsPage extends Component {
 
     animate = () => {
         const animationCount = (this.state.animationCount + 1) % this.state.totalStepCount
-        const pose = getPose(this.state.walkSequence, animationCount)
+
+        const step = this.state.isForward
+            ? animationCount
+            : this.state.totalStepCount - animationCount
+
+        const pose = getPose(this.state.walkSequence, step)
         this.props.onUpdate(pose)
         this.setState({ animationCount })
     }
 
     setWalkSequence = gaitParams => {
         const walkSequence =
-            getWalkSequence({
-                ...gaitParams,
-                dimensions: this.props.params.dimensions,
-            }) || this.state.walkSequence
+            getWalkSequence(this.props.params.dimensions, gaitParams) ||
+            this.state.walkSequence
 
         const totalStepCount = 4 * gaitParams.stepCount
 
@@ -107,12 +114,26 @@ class WalkingGaitsPage extends Component {
 
     get animatingToggleSwitch() {
         return (
-            <>
-                <p> Toggle animation </p>
+            <div className="row-container flex-wrap">
+                <p>Animate:</p>
                 <ToggleSwitch
                     id="IsAnimatingSwitch"
                     value={this.state.isAnimating ? "PLAYING..." : "PAUSED."}
-                    handleChange={this.toggleAnimationMode}
+                    handleChange={this.toggleAnimating}
+                    showValue={true}
+                />
+                <p> {this.state.isAnimating ? this.state.animationCount : null} </p>
+            </div>
+        )
+    }
+
+    get directionToggleSwitch() {
+        return (
+            <>
+                <ToggleSwitch
+                    id="walkDirectionSwitch"
+                    value={this.state.isForward ? "going forward." : "going backward."}
+                    handleChange={this.toggleDirection}
                     showValue={true}
                 />
             </>
@@ -132,11 +153,15 @@ class WalkingGaitsPage extends Component {
         const sliders = this.sliders
         return (
             <>
+                <div className="row-container flex-wrap">
+                    <p> Motion Parameters </p>
+                    {this.directionToggleSwitch}
+                </div>
+                <div className="row-container">{sliders.slice(5, 8)}</div>
                 <p>Orientation Parameters</p>
                 <div className="row-container">{sliders.slice(0, 3)}</div>
                 <div className="row-container">{sliders.slice(3, 5)}</div>
-                <p>Motion Parameters</p>
-                <div className="row-container">{sliders.slice(5, 8)}</div>
+                <br />
                 <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
             </>
         )
@@ -146,9 +171,7 @@ class WalkingGaitsPage extends Component {
         return (
             <Card title={this.pageName} h="h2">
                 {this.animatingToggleSwitch}
-                <p> - - - </p>
                 {!this.state.isAnimating ? this.gaitWidgets : null}
-                {this.state.isAnimating ? <h1>{this.state.animationCount}</h1> : null}
             </Card>
         )
     }
