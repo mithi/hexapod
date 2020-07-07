@@ -23,6 +23,7 @@ const cases = [
         params: {
             dimensions: DEFAULT_DIMENSIONS,
             gaitParams: {
+                tx: 0,
                 tz: 0,
                 rx: 0,
                 ry: 0,
@@ -43,7 +44,6 @@ test.each(cases)("test walkSequence:", example => {
     const actualStepCount = example.params.gaitParams.stepCount * 4
 
     POSITION_NAMES_LIST.forEach(position => {
-
         const alphaSeq = sequence[position].alpha
         const betaSeq = sequence[position].beta
         const gammaSeq = sequence[position].gamma
