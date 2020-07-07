@@ -189,7 +189,13 @@ class App extends React.Component {
                 <LegPatternPage onUpdate={this.updatePose} onMount={this.onPageLoad} />
             </Route>
             <Route path={PATHS.walkingGaits.path}>
-                <WalkingGaitsPage onMount={this.onPageLoad} />
+                <WalkingGaitsPage
+                    params={{
+                        dimensions: this.state.hexapodParams.dimensions,
+                    }}
+                    onUpdate={this.updatePose}
+                    onMount={this.onPageLoad}
+                />
             </Route>
         </Switch>
     )
