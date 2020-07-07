@@ -1,9 +1,16 @@
 import React, { Component } from "react"
-import { sliderList, Card } from "../generic"
-import { SECTION_NAMES } from "../vars"
+import { sliderList, Card, BasicButton } from "../generic"
+import { SECTION_NAMES, RESET_LABEL } from "../vars"
 
 const SLIDER_LABELS = [
-    "stepCnt", "rx", "ry", "tz", "legStance", "hipStance", "hipSwing", "liftSwing"
+    "tz",
+    "stepCnt",
+    "rx",
+    "ry",
+    "legStance",
+    "hipStance",
+    "hipSwing",
+    "liftSwing",
 ]
 
 const PARAMS = {
@@ -24,7 +31,7 @@ const DEFAULT_GAIT_VARS = SLIDER_LABELS.reduce((gaitParams, gaitVar) => {
 
 class WalkingGaitsPage extends Component {
     pageName = SECTION_NAMES.walkingGaits
-    state = { gaitParams: DEFAULT_GAIT_VARS}
+    state = { gaitParams: DEFAULT_GAIT_VARS }
 
     componentDidMount() {
         this.props.onMount(this.pageName)
@@ -46,14 +53,25 @@ class WalkingGaitsPage extends Component {
         })
     }
 
-    render = () => {
-        const sliders = this.sliders
+    reset = () => {
+        this.setState({ gaitParams: DEFAULT_GAIT_VARS })
+    }
 
+    get gaitWidgets() {
+        const sliders = this.sliders
         return (
-            <Card title={this.pageName} h="h2">
+            <>
                 <div className="row-container">{sliders.slice(0, 4)}</div>
                 <div className="row-container">{sliders.slice(4, 6)}</div>
                 <div className="row-container">{sliders.slice(6, 8)}</div>
+                <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
+            </>
+        )
+    }
+    render = () => {
+        return (
+            <Card title={this.pageName} h="h2">
+                {this.gaitWidgets}
             </Card>
         )
     }
