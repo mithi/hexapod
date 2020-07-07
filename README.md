@@ -12,7 +12,7 @@
 _(in Javascript!)_
   
 
-<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="300" align="right" />
+<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="350" align="right" />
 
 - Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero server-side computations!
 
@@ -22,11 +22,18 @@ _(in Javascript!)_
 
 ## Contributions Welcome! [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blueviolet.svg?style=flat)](https://www.firsttimersonly.com/) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](./CONTRIBUTING.md) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://www.contributor-covenant.org/) 
 
-- Any contribution to improve the source code will be extremely appreciated. 💙 Anything. Anything at all. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement.
+- Any contribution to improve the source code will be extremely appreciated. 💙 Anything. Anything at all. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement. [Contributing Guide](./CONTRIBUTING.md).
 
+| <img src="./public/img/screenshot1.png" alt="drawing" width="290" /> | <img src="./public/img/screenshot2.png" alt="drawing" width="450" />  | <img src="./public/img/screenshot4.png" alt="drawing" width="160" /> |
+|----|----|----|
+| . | . | . |
 
-![](./public/img/screenshot2.png)
+## Main Contributors
+I will put your name here if I've merged your PR multiple times or if you've contributed to this project substantially in other ways.
 
+- [@mithi](https://github.com/mithi)
+- [@icyJoseph](https://github.com/icyJoseph)
+- [@mikong](https://github.com/mikong)
 
 ## [☕](https://ko-fi.com/minimithi) I love badges! (Don't we all?)  
 
