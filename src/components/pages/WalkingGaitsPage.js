@@ -5,6 +5,7 @@ import getWalkSequence from "../../hexapod/solvers/walkSequenceSolver"
 
 const SLIDER_LABELS = [
     "tz",
+    "tx",
     "rx",
     "ry",
     "legStance",
@@ -15,13 +16,14 @@ const SLIDER_LABELS = [
 ]
 
 const PARAMS = {
-    tz: { minVal: -0.5, maxVal: 0.5, stepVal: 0.01, defaultVal: 0 },
-    rx: { minVal: -15, maxVal: 15, stepVal: 0.01, defaultVal: 0 },
-    ry: { minVal: -15, maxVal: 15, stepVal: 0.01, defaultVal: 0 },
-    legStance: { minVal: -60, maxVal: 60, stepVal: 0.01, defaultVal: 0 },
-    hipStance: { minVal: 10, maxVal: 40, stepVal: 0.01, defaultVal: 25 },
-    hipSwing: { minVal: 10, maxVal: 40, stepVal: 0.01, defaultVal: 25 },
-    liftSwing: { minVal: 10, maxVal: 70, stepVal: 0.01, defaultVal: 40 },
+    tx: { minVal: -0.25, maxVal: 0.25, stepVal: 0.1, defaultVal: 0 },
+    tz: { minVal: -0.5, maxVal: 0.5, stepVal: 0.1, defaultVal: 0 },
+    rx: { minVal: -15, maxVal: 15, stepVal: 0.1, defaultVal: 0 },
+    ry: { minVal: -15, maxVal: 15, stepVal: 0.1, defaultVal: 0 },
+    legStance: { minVal: -60, maxVal: 60, stepVal: 0.1, defaultVal: 0 },
+    hipStance: { minVal: 10, maxVal: 40, stepVal: 0.1, defaultVal: 25 },
+    hipSwing: { minVal: 10, maxVal: 40, stepVal: 0.1, defaultVal: 25 },
+    liftSwing: { minVal: 10, maxVal: 70, stepVal: 0.1, defaultVal: 40 },
     stepCount: { minVal: 3, maxVal: 7, stepVal: 1, defaultVal: 5 },
 }
 
@@ -97,9 +99,9 @@ class WalkingGaitsPage extends Component {
 
         const totalStepCount = 4 * gaitParams.stepCount
 
-        const pose = getPose(walkSequence, 0)
+        const pose = getPose(walkSequence, this.state.animationCount)
         this.props.onUpdate(pose)
-        this.setState({ gaitParams, walkSequence, totalStepCount, animationCount: 0 })
+        this.setState({ gaitParams, walkSequence, totalStepCount })
     }
 
     updateGaitParams = (name, value) => {
@@ -157,10 +159,10 @@ class WalkingGaitsPage extends Component {
                     <p> Motion Parameters </p>
                     {this.directionToggleSwitch}
                 </div>
-                <div className="row-container">{sliders.slice(5, 8)}</div>
+                <div className="row-container">{sliders.slice(6, 9)}</div>
                 <p>Orientation Parameters</p>
-                <div className="row-container">{sliders.slice(0, 3)}</div>
-                <div className="row-container">{sliders.slice(3, 5)}</div>
+                <div className="row-container">{sliders.slice(0, 4)}</div>
+                <div className="row-container">{sliders.slice(4, 6)}</div>
                 <br />
                 <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
             </>
@@ -171,7 +173,7 @@ class WalkingGaitsPage extends Component {
         return (
             <Card title={this.pageName} h="h2">
                 {this.animatingToggleSwitch}
-                {!this.state.isAnimating ? this.gaitWidgets : null}
+                {this.gaitWidgets}
             </Card>
         )
     }

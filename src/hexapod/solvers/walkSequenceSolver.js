@@ -47,6 +47,7 @@ endPowerStroke / startReturnStroke
 const getWalkSequence = (
     dimensions,
     params = {
+        tx: 0,
         tz: 0,
         rx: 0,
         ry: 0,
@@ -57,10 +58,10 @@ const getWalkSequence = (
         liftSwing: 40,
     }
 ) => {
-    const { hipStance, rx, ry, tz, legStance } = params
+    const { hipStance, rx, ry, tx, tz, legStance } = params
 
     const rawIKparams = {
-        tx: 0,
+        tx,
         ty: 0,
         tz,
         legStance,
