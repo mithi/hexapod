@@ -46,7 +46,7 @@
     },
     "jest": {
         "collectCoverageFrom": [
-            "src/{components,hexapod}/*.{js,jsx,ts,tsx}",
+            "src/{components,hexapod}/**/*.{js,jsx,ts,tsx}",
             "src/loadables.js",
             "src/App.js",
             "src/routes.js"
