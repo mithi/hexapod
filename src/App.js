@@ -17,6 +17,7 @@ import {
     InverseKinematicsPage,
     LandingPage,
     LegPatternPage,
+    WalkingGaitsPage,
 } from "./components/pages"
 
 ReactGA.initialize("UA-170794768-1", {
@@ -186,6 +187,9 @@ class App extends React.Component {
             </Route>
             <Route path={PATHS.legPatterns.path}>
                 <LegPatternPage onUpdate={this.updatePose} onMount={this.onPageLoad} />
+            </Route>
+            <Route path={PATHS.walkingGaits.path}>
+                <WalkingGaitsPage onMount={this.onPageLoad} />
             </Route>
         </Switch>
     )
