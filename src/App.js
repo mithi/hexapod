@@ -123,8 +123,8 @@ class App extends React.Component {
             revision: plot.revisionCounter,
             onRelayout: this.logCameraView,
             updatePose: this.updatePose,
-            updateIkParams: this.updateIkParams,
-            updatePatternPose: this.updatePatternPose,
+            updateIkParams: this.updateIk,
+            updatePatternPose: this.updatePose,
             updateDimensions: this.updateDimensions,
         }
         return (
