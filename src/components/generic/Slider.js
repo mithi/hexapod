@@ -29,12 +29,12 @@ const Slider = ({ name, id, value, rangeParams, handleChange }) => (
     </div>
 )
 
-const sliderList = ({ names, values, handleChange }) =>
+const sliderList = ({ names, values, handleChange, rangeParams }) =>
     names.map(name => (
         <Slider
             key={name}
             name={name}
-            rangeParams={RANGE_PARAMS[name]}
+            rangeParams={ rangeParams? rangeParams[name] : RANGE_PARAMS[name]}
             handleChange={handleChange}
             value={values[name]}
         />
