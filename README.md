@@ -20,7 +20,7 @@ _(in Javascript!)_
 
 - See: [https://hexapod.netlify.app](https://hexapod.netlify.app)
 
-## Contributions Welcome! [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blueviolet.svg?style=flat)](https://www.firsttimersonly.com/) [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](./CONTRIBUTING.md) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://www.contributor-covenant.org/) 
+## Contributions Welcome!
 
 - Any contribution to improve the source code will be extremely appreciated. 💙 Anything. Anything at all. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement. [Contributing Guide](./CONTRIBUTING.md).
 
@@ -29,13 +29,13 @@ _(in Javascript!)_
 | . | . | . |
 
 ## Main Contributors
-I will put your name here if I've merged your PR multiple times or if you've substantially contributed to this project in other ways.
+I will put your name below if I've merged your PR multiple times or if you've substantially contributed to this project in other ways.
 
 - [@mithi](https://github.com/mithi)
 - [@icyJoseph](https://github.com/icyJoseph)
 - [@mikong](https://github.com/mikong)
 
-## [☕](https://ko-fi.com/minimithi) I love badges! (Don't we all?)  
+## I love badges! (Don't we all?)  
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg?style=flat)](https://opensource.org/licenses/Apache-2.0)
 ![](https://img.shields.io/codeclimate/maintainability-percentage/mithi/hexapod)
