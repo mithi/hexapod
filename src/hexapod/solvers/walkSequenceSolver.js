@@ -182,7 +182,7 @@ const tripodBSequence = (
 
 const buildSequences = (startPose, liftSwing, hipSwing, stepCount) => {
     const doubleStepCount = 2 * stepCount
-    const aHipSwing = Math.abs(hipSwing)
+    const aHipSwing = hipSwing
 
     const hipSwingForward = {
         leftFront: -aHipSwing,
