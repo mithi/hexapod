@@ -1,33 +1,55 @@
-import React, { useLayoutEffect, useState } from "react"
+import React, { useCallback, useLayoutEffect, useState, useRef } from "react"
 import createPlotlyComponent from "react-plotly.js/factory"
 
-const PlotlyPromise = import(
-    /* webpackChunkName: "Plotly-gl-3d", webpackPreload: true */ "plotly.js-gl3d-dist-min"
-).then(Plotly => Plotly.default)
+import { sleep } from "../utils"
 
-const HexapodPlot = ({ data, layout, onRelayout, revision }) => {
-    const ref = React.useRef()
+const PlotlyPromise = () =>
+    import(
+        /* webpackChunkName: "Plotly-gl-3d", webpackPreload: true */ "plotly.js-gl3d-dist-min"
+    ).then(Plotly => Plotly.default)
+
+export const HexapodPlot = ({ data, layout, onRelayout, revision, promise }) => {
+    const ref = useRef()
+    const loadingRef = useRef()
+    const promiseRef = useRef(promise)
     const [ready, setReady] = useState(false)
+    const [error, setError] = useState(false)
+
+    const loader = useCallback(() => {
+        setError(false)
+
+        promiseRef
+            .current()
+            .then(Plotly => {
+                ref.current = createPlotlyComponent(Plotly)
+            })
+            .then(sleep(250))
+            .then(() => {
+                if (loadingRef.current) {
+                    setReady(true)
+                }
+            })
+            .catch(() => setError(true))
+    }, [])
 
     useLayoutEffect(() => {
-        let cancel
+        loader()
+    }, [loader])
 
-        PlotlyPromise.then(Plotly => {
-            ref.current = createPlotlyComponent(Plotly)
-        }).then(() => {
-            if (!cancel) {
-                setReady(true)
-            }
-        })
-
-        return () => {
-            cancel = true
-        }
-    }, [])
+    if (error) {
+        return (
+            <div>
+                <h2>Error Loading Plotly</h2>
+                <button className="button" onClick={loader}>
+                    Retry
+                </button>
+            </div>
+        )
+    }
 
     if (!ready) {
         return (
-            <div>
+            <div ref={loadingRef}>
                 <h2>Loading...</h2>
             </div>
         )
@@ -44,8 +66,13 @@ const HexapodPlot = ({ data, layout, onRelayout, revision }) => {
             config={{ displaylogo: false, responsive: true }}
             onRelayout={onRelayout}
             revision={revision}
+            testId="plot"
         />
     )
 }
 
-export default HexapodPlot
+const HexapodPlotWithPlotlyPromise = props => (
+    <HexapodPlot {...props} promise={PlotlyPromise} />
+)
+
+export default HexapodPlotWithPlotlyPromise
