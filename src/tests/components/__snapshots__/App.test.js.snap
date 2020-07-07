@@ -364,6 +364,14 @@ exports[`AppFragment Renders App snapshot correctly 1`] = `
         </nav>
       </footer>
     </div>
+    <div
+      class="plot border"
+      hidden=""
+    >
+      <h2>
+        Loading...
+      </h2>
+    </div>
   </div>
 </DocumentFragment>
 `;

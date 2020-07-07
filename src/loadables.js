@@ -30,7 +30,7 @@ const LazyHexapodPlot = lazy(() =>
     )
 )
 
-const Fallback = () => <h2>Loading...</h2>
+const Fallback = () => null
 
 export function SuspenseLandingPage(props) {
     return (

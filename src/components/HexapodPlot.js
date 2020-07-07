@@ -38,21 +38,17 @@ export const HexapodPlot = ({ data, layout, onRelayout, revision, promise }) => 
 
     if (error) {
         return (
-            <div>
+            <>
                 <h2>Error Loading Plotly</h2>
                 <button className="button" onClick={loader}>
                     Retry
                 </button>
-            </div>
+            </>
         )
     }
 
     if (!ready) {
-        return (
-            <div ref={loadingRef}>
-                <h2>Loading...</h2>
-            </div>
-        )
+        return <h2 ref={loadingRef}>Loading...</h2>
     }
 
     const Plot = ref.current
