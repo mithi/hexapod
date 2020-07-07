@@ -268,7 +268,6 @@ input[type="number"] {
 
 .slider {
     -webkit-appearance: none;
-    width: 100%;
     height: 4px;
     border: 0px;
     border-radius: 5px;
@@ -414,7 +413,7 @@ input:checked + .toggle-switch-widget:before {
     }
 
     .slider-container.cell {
-        flex: auto;
+        flex: 1;
     }
 
     th,
@@ -431,21 +430,19 @@ input:checked + .toggle-switch-widget:before {
     }
 
     .main {
-        flex-direction: column;
+        flex-direction: column-reverse;
         margin: 0;
     }
 
     .sidebar {
         max-width: 600px;
         width: 100%;
-        order: 1;
         margin-right: 0;
     }
 
     .plot {
         width: 100%;
         height: 400px;
-        order: 0;
         box-sizing: border-box;
         margin: 0;
         margin-top: 5px;
@@ -454,7 +451,7 @@ input:checked + .toggle-switch-widget:before {
 
 @media screen and (max-width: 667px) and (orientation: landscape) {
     .main {
-        flex-direction: column;
+        flex-direction: column-reverse;
         margin: 0;
     }
 
@@ -463,7 +460,7 @@ input:checked + .toggle-switch-widget:before {
     }
 
     .plot {
-        margin: 0 auto;
+        margin: 8px auto 0;
         width: 90%;
         height: 275px;
         min-width: 250px;
@@ -473,16 +470,12 @@ input:checked + .toggle-switch-widget:before {
         flex-grow: 0;
     }
 
-    .nav {
-        display: none;
-    }
-
     .row-container {
         flex-wrap: wrap;
     }
 
     .slider-container.cell {
-        flex: auto;
+        flex: 1;
     }
 
     table {
@@ -495,11 +488,6 @@ input:checked + .toggle-switch-widget:before {
         font-size: 8px;
         padding-top: 10px;
         padding-bottom: 10px;
-    }
-
-    .top-bar {
-        display: none;
-        height: 10px;
     }
 }
 
