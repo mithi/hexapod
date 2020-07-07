@@ -43,29 +43,21 @@ endPowerStroke / startReturnStroke
 
 
   * * */
-const DEFAULT_DIMENSIONS = {
-    front: 100,
-    side: 100,
-    middle: 100,
-    coxia: 100,
-    femur: 100,
-    tibia: 100,
-}
 
 const getWalkSequence = (
+    dimensions,
     params = {
+        tz: 0,
         rx: 0,
         ry: 0,
-        tz: -0.5,
-        legStance: 45,
-        hipStance: 45,
-        hipSwing: 20,
-        liftSwing: 20,
-        stepCount: 40,
-        dimensions: DEFAULT_DIMENSIONS,
+        legStance: 0,
+        hipStance: 25,
+        stepCount: 5,
+        hipSwing: 25,
+        liftSwing: 40,
     }
 ) => {
-    const { hipStance, rx, ry, tz, legStance, dimensions } = params
+    const { hipStance, rx, ry, tz, legStance } = params
 
     const rawIKparams = {
         tx: 0,
@@ -85,11 +77,12 @@ const getWalkSequence = (
     }
 
     const { hipSwing, liftSwing, stepCount } = params
+    const aHipSwing = Math.abs(hipSwing)
 
     const { forwardAlphaSeqs, liftBetaSeqs, liftGammaSeqs } = buildSequences(
         ikSolver.pose,
         liftSwing,
-        hipSwing,
+        aHipSwing,
         stepCount
     )
 
@@ -175,9 +168,8 @@ const tripodBSequence = (
         return sequences
     }, {})
 
-const buildSequences = (startPose, liftSwing, hipSwing, stepCount) => {
+const buildSequences = (startPose, liftSwing, aHipSwing, stepCount) => {
     const doubleStepCount = 2 * stepCount
-    const aHipSwing = hipSwing
 
     const hipSwingForward = {
         leftFront: -aHipSwing,

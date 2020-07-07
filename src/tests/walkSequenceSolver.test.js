@@ -21,14 +21,17 @@ const POSITION_NAMES_LIST = [
 const cases = [
     {
         params: {
-            rx: 0,
-            ry: 0,
-            legStance: 45,
-            hipStance: 45,
-            hipSwing: 20,
-            liftSwing: 45,
-            stepCount: 10,
             dimensions: DEFAULT_DIMENSIONS,
+            gaitParams: {
+                tz: 0,
+                rx: 0,
+                ry: 0,
+                legStance: 0,
+                hipStance: 25,
+                stepCount: 5,
+                hipSwing: 25,
+                liftSwing: 40,
+            },
         },
         result: { answer: true },
         description: "first sequence",
@@ -36,10 +39,11 @@ const cases = [
 ]
 
 test.each(cases)("test walkSequence:", example => {
-    const sequence = getWalkSequence(example.params)
-    const actualStepCount = example.params.stepCount * 4
+    const sequence = getWalkSequence(example.params.dimensions, example.params.gaitParams)
+    const actualStepCount = example.params.gaitParams.stepCount * 4
 
     POSITION_NAMES_LIST.forEach(position => {
+
         const alphaSeq = sequence[position].alpha
         const betaSeq = sequence[position].beta
         const gammaSeq = sequence[position].gamma
