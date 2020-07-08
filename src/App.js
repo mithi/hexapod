@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-d
 import ReactGA from "react-ga"
 import { VirtualHexapod, getNewPlotParams } from "./hexapod"
 import * as defaults from "./templates"
-import { SECTION_NAMES, PATH_LINKS } from "./components/vars"
+import { PATH_LINKS } from "./components/vars"
 import { Nav } from "./components"
 
 import Routes from "./routes"
@@ -18,10 +18,6 @@ ReactGA.initialize("UA-170794768-1", {
 
 class App extends React.Component {
     state = {
-        showPoseMessage: false,
-        showInfo: false,
-        info: {},
-
         hexapodParams: {
             dimensions: defaults.DEFAULT_DIMENSIONS,
             pose: defaults.DEFAULT_POSE,
@@ -39,20 +35,11 @@ class App extends React.Component {
      * Handle page load
      * * * * * * * * * * * * * */
 
-    onPageLoad = pageName => {
+    onPageLoad = () => {
         ReactGA.pageview(window.location.pathname + window.location.search)
 
-        if (pageName === SECTION_NAMES.landingPage) {
-            return this.setState({
-                showInfo: false,
-                showPoseMessage: false,
-            })
-        }
-
-        return this.setState(
+        this.setState(
             {
-                showInfo: false,
-                showPoseMessage: false,
                 hexapodParams: {
                     ...this.state.hexapodParams,
                     pose: defaults.DEFAULT_POSE,
@@ -69,11 +56,6 @@ class App extends React.Component {
     /* * * * * * * * * * * * * *
      * Handle plot update
      * * * * * * * * * * * * * */
-
-    updatePlot = (dimensions, pose) => {
-        const newHexapodModel = new VirtualHexapod(dimensions, pose)
-        return this.updatePlotWithHexapod(newHexapodModel)
-    }
 
     updatePlotWithHexapod = hexapod => {
         if (hexapod === null || hexapod === undefined || !hexapod.foundSolution) {
@@ -101,13 +83,9 @@ class App extends React.Component {
         return this.setState({ ...this.state, plot: plot })
     }
 
-    /* * * * * * * * * * * * * *
-     * Handle individual input fields update
-     * * * * * * * * * * * * * */
-
-    updateIk = (hexapod, updatedStateParams) => {
-        this.updatePlotWithHexapod(hexapod)
-        return this.setState({ ...updatedStateParams })
+    updatePlot = (dimensions, pose) => {
+        const newHexapodModel = new VirtualHexapod(dimensions, pose)
+        this.updatePlotWithHexapod(newHexapodModel)
     }
 
     updateDimensions = dimensions =>
@@ -120,20 +98,22 @@ class App extends React.Component {
      * * * * * * * * * * * * * */
 
     render() {
-        const { hexapodParams, ...rest } = this.state
         return (
             <Router>
                 <Nav />
                 <Switch>
                     <Route path={PATH_LINKS.map(({ path }) => path)} exact>
-                        <HexapodParamsProvider {...hexapodParams}>
+                        <HexapodParamsProvider {...this.state.hexapodParams}>
                             <HandlersProvider
                                 onPageLoad={this.onPageLoad}
-                                updateIk={this.updateIk}
                                 updatePose={this.updatePose}
+                                updatePlotWithHexapod={this.updatePlotWithHexapod}
                                 updateDimensions={this.updateDimensions}
                             >
-                                <Routes {...rest} onRelayout={this.logCameraView} />
+                                <Routes
+                                    {...this.state.plot}
+                                    onRelayout={this.logCameraView}
+                                />
                             </HandlersProvider>
                         </HexapodParamsProvider>
                     </Route>

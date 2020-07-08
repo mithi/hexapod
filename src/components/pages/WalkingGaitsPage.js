@@ -55,7 +55,7 @@ class WalkingGaitsPage extends Component {
     }
 
     componentDidMount() {
-        this.props.onMount(this.pageName)
+        this.props.onMount()
         this.setWalkSequence(DEFAULT_GAIT_VARS)
     }
 

@@ -1,15 +1,15 @@
 import React from "react"
-import { URL_LINKS, PATH_LINKS, ICON_COMPONENTS } from "./vars"
+import { URL_LINKS, PATH_LINKS } from "./vars"
 import { Link } from "react-router-dom"
 
 const NAV_BULLETS_PREFIX = "navBullet"
 const NAV_DETAILED_PREFIX = "navDetailed"
 
-const BulletPageLink = React.memo(({ path, description }) => (
+const BulletPageLink = React.memo(({ link, showDesc }) => (
     <li>
-        <Link to={path} className="link-icon">
+        <Link to={link.path} className="link-icon">
             <span>
-                {ICON_COMPONENTS.circle} {description}
+                {link.icon} {showDesc ? link.description : null}
             </span>
         </Link>
     </li>
@@ -42,7 +42,7 @@ const NavBullets = React.memo(() => (
         ))}
 
         {PATH_LINKS.map(link => (
-            <BulletPageLink key={NAV_BULLETS_PREFIX + link.path} path={link.path} />
+            <BulletPageLink key={NAV_BULLETS_PREFIX + link.path} link={link} />
         ))}
     </ul>
 ))
@@ -63,8 +63,8 @@ const NavDetailed = React.memo(() => (
                 {PATH_LINKS.map(link => (
                     <BulletPageLink
                         key={NAV_DETAILED_PREFIX + link.path}
-                        path={link.path}
-                        description={link.description}
+                        link={link}
+                        showDesc={true}
                     />
                 ))}
             </ul>

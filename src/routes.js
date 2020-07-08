@@ -2,7 +2,7 @@ import React from "react"
 import { Route, Switch, useRouteMatch } from "react-router-dom"
 import { HEXAPOD_LINK_PATHS, PATHS } from "./components/vars"
 
-import { PoseTable, NavDetailed, DimensionsWidget, AlertBox } from "./components"
+import { NavDetailed, DimensionsWidget } from "./components"
 
 import {
     SuspenseLandingPage,
@@ -13,13 +13,7 @@ import {
     SuspenseHexapodPlot,
 } from "./loadables"
 
-export const Routes = ({
-    showPoseMessage,
-    showInfo,
-    info,
-    plot: { data, layout, revisionCounter },
-    onRelayout,
-}) => {
+export const Routes = ({ data, layout, revisionCounter, onRelayout }) => {
     const { path } = useRouteMatch()
 
     return (
@@ -50,8 +44,6 @@ export const Routes = ({
                             <SuspenseWalkingGaitsPage />
                         </Route>
                     </Switch>
-                    <PoseTable showPoseTable={showPoseMessage} />
-                    <AlertBox showInfo={showInfo} info={info} />
                 </div>
                 <div hidden={path === "/"} className="plot border">
                     <SuspenseHexapodPlot

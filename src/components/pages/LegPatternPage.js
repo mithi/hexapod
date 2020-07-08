@@ -9,7 +9,7 @@ class LegPatternPage extends Component {
     state = { patternParams: DEFAULT_PATTERN_PARAMS }
 
     componentDidMount() {
-        this.props.onMount(this.pageName)
+        this.props.onMount()
         this.setState({ patternParams: DEFAULT_PATTERN_PARAMS })
     }
 

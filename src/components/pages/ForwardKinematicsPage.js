@@ -34,7 +34,7 @@ class ForwardKinematicsPage extends Component {
     state = { modeBool: false, widgetType: "NumberInputField" }
 
     componentDidMount() {
-        this.props.onMount(this.pageName)
+        this.props.onMount()
     }
 
     reset = () => {
