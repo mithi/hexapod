@@ -7,6 +7,7 @@ import { SECTION_NAMES, PATH_LINKS } from "./components/vars"
 import { Nav } from "./components"
 
 import Routes from "./routes"
+import { HandlersProvider } from "./components/providers/Handlers"
 
 ReactGA.initialize("UA-170794768-1", {
     //debug: true,
@@ -119,21 +120,24 @@ class App extends React.Component {
 
     render() {
         const { plot, ...rest } = this.state
-        const routeProps = {
-            ...rest,
-            ...plot,
-            revision: plot.revisionCounter,
-            onRelayout: this.logCameraView,
-            updatePose: this.updatePose,
-            updateIk: this.updateIk,
-            updateDimensions: this.updateDimensions,
-        }
         return (
             <Router>
                 <Nav />
                 <Switch>
                     <Route path={PATH_LINKS.map(({ path }) => path)} exact>
-                        <Routes {...routeProps} onPageLoad={this.onPageLoad} />
+                        <HandlersProvider
+                            onPageLoad={this.onPageLoad}
+                            updateIk={this.updateIk}
+                            updatePose={this.updatePose}
+                            updateDimensions={this.updateDimensions}
+                        >
+                            <Routes
+                                {...plot}
+                                {...rest}
+                                revision={plot.revisionCounter}
+                                onRelayout={this.logCameraView}
+                            />
+                        </HandlersProvider>
                     </Route>
                     <Route>
                         <Redirect to="/" />

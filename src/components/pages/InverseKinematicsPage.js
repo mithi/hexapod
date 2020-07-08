@@ -33,12 +33,11 @@ class InverseKinematicsPage extends Component {
 
         if (!result.obtainedSolution) {
             const stateParams = _updatedStateParamsUnsolved(result.message)
-            this.props.onUpdateIk(null, stateParams)
-            return
+            return this.props.onUpdateIk(null, stateParams)
         }
 
         const stateParams = _updatedStateParamsSolved(result.message)
-        this.props.onUpdateIk(result.hexapod, stateParams)
+        return this.props.onUpdateIk(result.hexapod, stateParams)
     }
 
     reset = () => {

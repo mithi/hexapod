@@ -31,8 +31,9 @@ export const RenderWithHandlers = ({ children, ...rest }) => {
         onPageLoad: onMount,
         updatePose: onUpdatePose,
         updateIk: onUpdateIk,
+        updateDimensions: onUpdateDimensions,
     } = useContext(HandlersCtx)
-    return children({ ...rest, onMount, onUpdatePose, onUpdateIk })
+    return children({ ...rest, onMount, onUpdatePose, onUpdateIk, onUpdateDimensions })
 }
 
 export const withHandlers = Component => props => {
