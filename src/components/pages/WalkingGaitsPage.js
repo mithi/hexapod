@@ -48,15 +48,16 @@ class WalkingGaitsPage extends Component {
     state = {
         gaitParams: DEFAULT_GAIT_VARS,
         isAnimating: false,
-        animationCount: 0,
-        totalStepCount: 0,
+        isTripodGait: true,
         isForward: true,
         showGaitWidgets: true,
+        animationCount: 0,
+        totalStepCount: 0,
     }
 
     componentDidMount() {
         this.props.onMount(this.pageName)
-        this.setWalkSequence(DEFAULT_GAIT_VARS)
+        this.setWalkSequence(DEFAULT_GAIT_VARS, this.state.isTripodGait)
     }
 
     componentWillUnmount() {
@@ -72,6 +73,12 @@ class WalkingGaitsPage extends Component {
 
     toggleDirection = () => {
         this.setState({ isForward: !this.state.isForward })
+    }
+
+    toggleGaitType = () => {
+        const isTripodGait = !this.state.isTripodGait
+        this.setWalkSequence(this.state.gaitParams, isTripodGait)
+        this.setState({ isTripodGait })
     }
 
     toggleWidgets = () => {
@@ -98,9 +105,11 @@ class WalkingGaitsPage extends Component {
         this.setState({ animationCount, pose })
     }
 
-    setWalkSequence = gaitParams => {
+    setWalkSequence = (gaitParams, isTripodGait) => {
+        const gaitType = isTripodGait ? "tripod" : "ripple"
+
         const walkSequence =
-            getWalkSequence(this.props.params.dimensions, gaitParams) ||
+            getWalkSequence(this.props.params.dimensions, gaitParams, gaitType) ||
             this.state.walkSequence
 
         const totalStepCount = walkSequence["leftMiddle"].alpha.length
@@ -112,19 +121,19 @@ class WalkingGaitsPage extends Component {
 
     updateGaitParams = (name, value) => {
         const gaitParams = { ...this.state.gaitParams, [name]: value }
-        this.setWalkSequence(gaitParams)
+        this.setWalkSequence(gaitParams, this.state.isTripodGait)
     }
 
     reset = () => {
         this.setState({ gaitParams: DEFAULT_GAIT_VARS })
-        this.setWalkSequence(DEFAULT_GAIT_VARS)
+        this.setWalkSequence(DEFAULT_GAIT_VARS, this.state.isTripodGait)
     }
 
     get widgetsSwitch() {
         return (
             <ToggleSwitch
                 id="gaitWidgetSwitch"
-                value={this.state.showGaitWidgets ? "controls shown" : "pose shown"}
+                value={this.state.showGaitWidgets ? "controlsShown" : "poseShown"}
                 handleChange={this.toggleWidgets}
                 showValue={true}
             />
@@ -133,16 +142,27 @@ class WalkingGaitsPage extends Component {
 
     get animatingSwitch() {
         return (
-            <div className="row-container flex-wrap">
-                <p>Animate:</p>
+            <p className="row-container">
                 <ToggleSwitch
                     id="IsAnimatingSwitch"
-                    value={this.state.isAnimating ? "PLAYING..." : "PAUSED."}
+                    value={this.state.isAnimating ? "PLAYING... " : "...PAUSED. "}
                     handleChange={this.toggleAnimating}
                     showValue={true}
                 />
-                <p> {this.state.isAnimating ? this.state.animationCount : null} </p>
-            </div>
+                {" <"}--- Press this!{" "}
+                {this.state.isAnimating ? this.state.animationCount : null}
+            </p>
+        )
+    }
+
+    get gaitTypeSwitch() {
+        return (
+            <ToggleSwitch
+                id="gaitTypeSwitch"
+                value={this.state.isTripodGait ? "tripodGait" : "rippleGait"}
+                handleChange={this.toggleGaitType}
+                showValue={true}
+            />
         )
     }
 
@@ -150,7 +170,7 @@ class WalkingGaitsPage extends Component {
         return (
             <ToggleSwitch
                 id="walkDirectionSwitch"
-                value={this.state.isForward ? "going forward." : "going backward."}
+                value={this.state.isForward ? "goingForward" : "goingBackward"}
                 handleChange={this.toggleDirection}
                 showValue={true}
             />
@@ -170,15 +190,14 @@ class WalkingGaitsPage extends Component {
         const sliders = this.sliders
         return (
             <>
-                <div className="row-container flex-wrap">
-                    <p> Motion Parameters </p>
-                    {this.directionSwitch}
-                </div>
                 <div className="row-container">{sliders.slice(6, 9)}</div>
-                <p>Orientation Parameters</p>
                 <div className="row-container">{sliders.slice(0, 3)}</div>
                 <div className="row-container">{sliders.slice(3, 6)}</div>
-                <br />
+                <p className="row-container">
+                    <div className="cell">{this.gaitTypeSwitch}</div>
+                    <div className="cell">{this.directionSwitch}</div>
+                    <div className="cell"> </div>
+                </p>
                 <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
             </>
         )
@@ -193,15 +212,19 @@ class WalkingGaitsPage extends Component {
         )
     }
 
+    get widgetsShown() {
+        if (this.state.showGaitWidgets) {
+            return this.gaitWidgets
+        } else {
+            return <PoseTable pose={this.state.pose} />
+        }
+    }
+
     render = () => {
         return (
             <Card title={this.header} h="div">
                 {this.animatingSwitch}
-                {this.state.showGaitWidgets ? (
-                    this.gaitWidgets
-                ) : (
-                    <PoseTable pose={this.state.pose} />
-                )}
+                {this.widgetsShown}
             </Card>
         )
     }

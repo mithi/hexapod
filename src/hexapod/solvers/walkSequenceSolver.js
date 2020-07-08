@@ -240,11 +240,11 @@ const buildRippleLegSequence = (position, bLift, gLift, fw1, fw2, bk1, bk2, bk3,
 
     const moduloMap = {
         leftBack: 0,
-        rightBack: 3,
-        leftMiddle: 2,
-        rightMiddle: 5,
-        leftFront: 4,
         rightFront: 1,
+        leftMiddle: 2,
+        rightBack: 3,
+        leftFront: 4,
+        rightMiddle: 5,
     }
 
     return {
