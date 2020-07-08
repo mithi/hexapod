@@ -4,6 +4,7 @@ import { solveInverseKinematics } from "../../hexapod"
 import { SECTION_NAMES, IK_SLIDERS_LABELS, RESET_LABEL } from "../vars"
 import { DEFAULT_IK_PARAMS } from "../../templates"
 import { withHandlers } from "../providers/Handlers"
+import { withHexapodParams } from "../providers/HexapodParams"
 
 const _updatedStateParamsUnsolved = message => ({
     showPoseMessage: false,
@@ -72,4 +73,7 @@ class InverseKinematicsPage extends Component {
     }
 }
 
-export default withHandlers(InverseKinematicsPage)
+export default withHexapodParams(
+    withHandlers(InverseKinematicsPage),
+    ({ dimensions }) => ({ params: { dimensions } })
+)

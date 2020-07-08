@@ -17,20 +17,17 @@ export const Routes = ({
     showPoseMessage,
     showInfo,
     info,
-    data,
-    layout,
-    revision,
-    hexapodParams,
+    plot: { data, layout, revisionCounter },
     onRelayout,
 }) => {
     const { path } = useRouteMatch()
-    const { dimensions, pose } = hexapodParams
+
     return (
         <>
             <div className="main content">
                 <div className="sidebar column-container cell">
                     <Route path={HEXAPOD_LINK_PATHS} exact>
-                        <DimensionsWidget params={{ dimensions }} />
+                        <DimensionsWidget />
                     </Route>
                     <Switch>
                         <Route path="/" exact>
@@ -38,11 +35,11 @@ export const Routes = ({
                         </Route>
 
                         <Route path={PATHS.forwardKinematics.path}>
-                            <SuspenseForwardKinematicsPage params={{ pose }} />
+                            <SuspenseForwardKinematicsPage />
                         </Route>
 
                         <Route path={PATHS.inverseKinematics.path}>
-                            <SuspenseInverseKinematicsPage params={{ dimensions }} />
+                            <SuspenseInverseKinematicsPage />
                         </Route>
 
                         <Route path={PATHS.legPatterns.path}>
@@ -50,10 +47,10 @@ export const Routes = ({
                         </Route>
 
                         <Route path={PATHS.walkingGaits.path}>
-                            <SuspenseWalkingGaitsPage params={{ dimensions }} />
+                            <SuspenseWalkingGaitsPage />
                         </Route>
                     </Switch>
-                    <PoseTable pose={pose} showPoseTable={showPoseMessage} />
+                    <PoseTable showPoseTable={showPoseMessage} />
                     <AlertBox showInfo={showInfo} info={info} />
                 </div>
                 <div hidden={path === "/"} className="plot border">
@@ -61,7 +58,7 @@ export const Routes = ({
                         data={data}
                         layout={layout}
                         onRelayout={onRelayout}
-                        revision={revision}
+                        revision={revisionCounter}
                     />
                 </div>
             </div>

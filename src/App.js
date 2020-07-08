@@ -8,6 +8,7 @@ import { Nav } from "./components"
 
 import Routes from "./routes"
 import { HandlersProvider } from "./components/providers/Handlers"
+import { HexapodParamsProvider } from "./components/providers/HexapodParams"
 
 ReactGA.initialize("UA-170794768-1", {
     //debug: true,
@@ -119,25 +120,22 @@ class App extends React.Component {
      * * * * * * * * * * * * * */
 
     render() {
-        const { plot, ...rest } = this.state
+        const { hexapodParams, ...rest } = this.state
         return (
             <Router>
                 <Nav />
                 <Switch>
                     <Route path={PATH_LINKS.map(({ path }) => path)} exact>
-                        <HandlersProvider
-                            onPageLoad={this.onPageLoad}
-                            updateIk={this.updateIk}
-                            updatePose={this.updatePose}
-                            updateDimensions={this.updateDimensions}
-                        >
-                            <Routes
-                                {...plot}
-                                {...rest}
-                                revision={plot.revisionCounter}
-                                onRelayout={this.logCameraView}
-                            />
-                        </HandlersProvider>
+                        <HexapodParamsProvider {...hexapodParams}>
+                            <HandlersProvider
+                                onPageLoad={this.onPageLoad}
+                                updateIk={this.updateIk}
+                                updatePose={this.updatePose}
+                                updateDimensions={this.updateDimensions}
+                            >
+                                <Routes {...rest} onRelayout={this.logCameraView} />
+                            </HandlersProvider>
+                        </HexapodParamsProvider>
                     </Route>
                     <Route>
                         <Redirect to="/" />

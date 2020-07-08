@@ -1,4 +1,5 @@
 import React from "react"
+import { withHexapodParams } from "./providers/HexapodParams"
 
 const TableHeader = React.memo(({ labels }) => (
     <thead>
@@ -41,4 +42,4 @@ const PoseTable = ({ pose, showPoseTable }) => {
     )
 }
 
-export default PoseTable
+export default withHexapodParams(PoseTable, ({ pose }) => ({ pose }))

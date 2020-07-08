@@ -4,6 +4,7 @@ import { Card, ToggleSwitch, BasicButton, NumberInputField, Slider } from "../ge
 import { DEFAULT_POSE } from "../../templates"
 import { SECTION_NAMES, LEG_NAMES, RESET_LABEL } from "../vars"
 import { withHandlers } from "../providers/Handlers"
+import { withHexapodParams } from "../providers/HexapodParams"
 
 const renderTwoColumns = cells => (
     <>
@@ -98,4 +99,6 @@ class ForwardKinematicsPage extends Component {
     }
 }
 
-export default withHandlers(ForwardKinematicsPage)
+export default withHexapodParams(withHandlers(ForwardKinematicsPage), ({ pose }) => ({
+    params: { pose },
+}))
