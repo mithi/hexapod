@@ -26,7 +26,7 @@ const LazyLegPatternPage = lazy(() =>
 
 const LazyHexapodPlot = lazy(() =>
     import(
-        /* webpackChunkName: "Hexapod", webpackPreload: true */ "./components/HexapodPlot"
+        /* webpackChunkName: "Hexapod", webpackPrefetch: true */ "./components/HexapodPlot"
     )
 )
 

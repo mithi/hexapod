@@ -4,9 +4,7 @@ import createPlotlyComponent from "react-plotly.js/factory"
 import { sleep } from "../utils"
 
 const PlotlyPromise = () =>
-    import(
-        /* webpackChunkName: "Plotly-gl-3d", webpackPreload: true */ "plotly.js-gl3d-dist-min"
-    ).then(Plotly => Plotly.default)
+    import("plotly.js-gl3d-dist-min").then(Plotly => Plotly.default)
 
 export const HexapodPlot = ({ data, layout, onRelayout, revision, promise }) => {
     const ref = useRef()
