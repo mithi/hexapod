@@ -13,12 +13,7 @@ const DIMENSIONS = {
 
 describe("Dimension Widget", () => {
     test("renders component correctly", () => {
-        const { asFragment } = render(
-            <DimensionsWidget params={{ dimensions: DIMENSIONS }} />
-        )
-
-        expect(asFragment()).toMatchSnapshot()
-
+        render(<DimensionsWidget params={{ dimensions: DIMENSIONS }} />)
         expect(screen.getByRole("heading")).toHaveTextContent("Dimensions")
         expect(screen.getByRole("checkbox")).toBeInTheDocument()
 

@@ -9,6 +9,7 @@ const SECTION_NAMES = {
     forwardKinematics: "Forward Kinematics",
     legPatterns: "Leg Patterns",
     landingPage: "Root",
+    walkingGaits: "Walking Gaits",
 }
 
 const PATH_NAMES = {
@@ -16,6 +17,7 @@ const PATH_NAMES = {
     forwardKinematics: "/forward-kinematics",
     legPatterns: "/leg-patterns",
     landingPage: "/",
+    walkingGaits: "/walking-gaits",
 }
 
 const ANGLE_NAMES = ["alpha", "beta", "gamma"]
@@ -95,6 +97,11 @@ const PATHS = {
         path: PATH_NAMES.landingPage,
         description: SECTION_NAMES.landingPage,
     },
+
+    walkingGaits: {
+        path: PATH_NAMES.walkingGaits,
+        description: SECTION_NAMES.walkingGaits,
+    },
 }
 
 const KOFI_LINK_PROPERTIES = {
@@ -115,6 +122,7 @@ const PATH_LINKS = [
     PATHS.inverseKinematics,
     PATHS.forwardKinematics,
     PATHS.legPatterns,
+    PATHS.walkingGaits,
     PATHS.landingPage,
 ]
 

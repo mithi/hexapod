@@ -15,38 +15,28 @@ const solveInverseKinematics = (
     rawIKparams,
     flags = { rotateThenShift: true }
 ) => {
-    const { tVec, rotMatrix, startPose } = convertIKparams(dimensions, rawIKparams)
-    const startHexapod = new VirtualHexapod(dimensions, startPose)
-
-    const rotateThenShift = flags.rotateThenShift
-    const targets = buildHexapodTargets(startHexapod, rotMatrix, tVec, {
-        rotateThenShift,
-    })
-
-    // Solve for the pose of the hexapod if it exists
-    const solvedHexapodParams = new IKSolver().solve(
-        startHexapod.legDimensions,
-        targets.bodyContactPoints,
-        targets.groundContactPoints,
-        targets.axes
+    const [ikSolver, target_groundContactPoints] = solveHexapodParams(
+        dimensions,
+        rawIKparams,
+        flags.rotateThenShift
     )
 
-    if (!solvedHexapodParams.foundSolution) {
+    if (!ikSolver.foundSolution) {
         return {
             pose: null,
             obtainedSolution: false,
-            message: solvedHexapodParams.message,
+            message: ikSolver.message,
             hexapod: null,
         }
     }
 
     // How the hexapod looks like if the center of gravity is at (0, 0, _)
-    const currentHexapod = new VirtualHexapod(dimensions, solvedHexapodParams.pose)
-    const excludedPositions = solvedHexapodParams.legPositionsOffGround
+    const currentHexapod = new VirtualHexapod(dimensions, ikSolver.pose)
+    const excludedPositions = ikSolver.legPositionsOffGround
 
     const pivots = findTwoPivotPoints(
         currentHexapod.groundContactPoints,
-        targets.groundContactPoints,
+        target_groundContactPoints,
         excludedPositions
     )
 
@@ -55,11 +45,35 @@ const solveInverseKinematics = (
         : currentHexapod
 
     return {
-        pose: solvedHexapodParams.pose,
+        pose: ikSolver.pose,
         obtainedSolution: true,
-        message: solvedHexapodParams.message,
+        message: ikSolver.message,
         hexapod,
     }
+}
+
+/* * *
+    Returns a two-element array
+    1. ikSolver: IKSolver object
+    2. An array of target ground contact points
+ * * */
+const solveHexapodParams = (dimensions, rawIKparams, rotateThenShift) => {
+    const { tVec, rotMatrix, startPose } = convertIKparams(dimensions, rawIKparams)
+    const startHexapod = new VirtualHexapod(dimensions, startPose)
+
+    const targets = buildHexapodTargets(startHexapod, rotMatrix, tVec, {
+        rotateThenShift,
+    })
+
+    // Solve for the pose of the hexapod if it exists
+    const ikSolver = new IKSolver().solve(
+        startHexapod.legDimensions,
+        targets.bodyContactPoints,
+        targets.groundContactPoints,
+        targets.axes
+    )
+
+    return [ikSolver, targets.groundContactPoints]
 }
 
 // Make sure all parameter values are numbers
@@ -246,3 +260,4 @@ const findTwoPivotPoints = (currentPoints, targetPoints, excludedPositions) => {
 }
 
 export default solveInverseKinematics
+export { solveHexapodParams }

@@ -9,6 +9,7 @@ import {
     SuspenseForwardKinematicsPage,
     SuspenseInverseKinematicsPage,
     SuspenseLegPatternPage,
+    SuspenseWalkingGaitsPage,
     SuspenseHexapodPlot,
 } from "./loadables"
 
@@ -67,6 +68,15 @@ export const Routes = ({
                             <SuspenseLegPatternPage
                                 params={{ patternParams: patternParams }}
                                 onUpdate={updatePatternPose}
+                                onMount={onPageLoad}
+                            />
+                        </Route>
+                        <Route path={PATHS.walkingGaits.path}>
+                            <SuspenseWalkingGaitsPage
+                                params={{
+                                    dimensions: hexapodParams.dimensions,
+                                }}
+                                onUpdate={updatePose}
                                 onMount={onPageLoad}
                             />
                         </Route>

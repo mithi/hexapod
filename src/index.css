@@ -247,18 +247,20 @@ input[type="number"] {
 }
 
 .label {
+    width: 100%;
     font-size: 0.6rem;
     margin-left: 5px;
     opacity: 0.5;
+    white-space: nowrap;
 }
 
 .no-display {
     display: none;
 }
 
-.row-container {
+.row-container,
+.leg-sliders-container {
     display: flex;
-    flex-wrap: unset;
 }
 
 .flex-wrap {
@@ -280,7 +282,6 @@ input[type="number"] {
 
 .slider {
     -webkit-appearance: none;
-    width: 100%;
     height: 4px;
     border: 0px;
     border-radius: 5px;
@@ -334,6 +335,7 @@ input[type="number"] {
 
 .switch + .label {
     cursor: pointer;
+    width: unset;
 }
 
 /* Hide default HTML checkbox */
@@ -421,12 +423,12 @@ input:checked + .toggle-switch-widget:before {
         flex-grow: 0;
     }
 
-    .row-container {
-        flex-wrap: wrap;
+    .leg-sliders-container {
+        flex-direction: column;
     }
 
     .slider-container.cell {
-        flex: auto;
+        flex: 1;
     }
 
     th,
@@ -443,21 +445,20 @@ input:checked + .toggle-switch-widget:before {
     }
 
     .main {
-        flex-direction: column;
+        flex-direction: column-reverse;
         margin: 0;
     }
 
     .sidebar {
         max-width: 600px;
-        width: 100%;
-        order: 1;
-        margin-right: 0;
+        width: 90%;
+        min-width: 290px;
+        margin: 0 auto;
     }
 
     .plot {
         width: 100%;
         height: 400px;
-        order: 0;
         box-sizing: border-box;
         margin: 0;
         margin-top: 5px;
@@ -466,16 +467,17 @@ input:checked + .toggle-switch-widget:before {
 
 @media screen and (max-width: 667px) and (orientation: landscape) {
     .main {
-        flex-direction: column;
+        flex-direction: column-reverse;
         margin: 0;
     }
 
     .sidebar {
         min-width: 225px;
+        margin: 0 auto;
     }
 
     .plot {
-        margin: 0 auto;
+        margin: 8px auto 0;
         width: 90%;
         height: 275px;
         min-width: 250px;
@@ -485,16 +487,12 @@ input:checked + .toggle-switch-widget:before {
         flex-grow: 0;
     }
 
-    .nav {
-        display: none;
-    }
-
-    .row-container {
-        flex-wrap: wrap;
+    .leg-sliders-container {
+        flex-direction: column;
     }
 
     .slider-container.cell {
-        flex: auto;
+        flex: 1;
     }
 
     table {
@@ -507,11 +505,6 @@ input:checked + .toggle-switch-widget:before {
         font-size: 8px;
         padding-top: 10px;
         padding-bottom: 10px;
-    }
-
-    .top-bar {
-        display: none;
-        height: 10px;
     }
 }
 

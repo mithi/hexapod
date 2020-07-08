@@ -30,6 +30,12 @@ const LazyHexapodPlot = lazy(() =>
     )
 )
 
+const LazyWalkingGaitsPage = lazy(() =>
+    import(
+        /* webpackChunkName: "WalkingGaits", webpackPrefetch: true */ "./components/pages/WalkingGaitsPage"
+    )
+)
+
 const Fallback = () => null
 
 export function SuspenseLandingPage(props) {
@@ -60,6 +66,14 @@ export function SuspenseLegPatternPage(props) {
     return (
         <Suspense fallback={<Fallback />}>
             <LazyLegPatternPage {...props} />
+        </Suspense>
+    )
+}
+
+export function SuspenseWalkingGaitsPage(props) {
+    return (
+        <Suspense fallback={<Fallback />}>
+            <LazyWalkingGaitsPage {...props} />
         </Suspense>
     )
 }
