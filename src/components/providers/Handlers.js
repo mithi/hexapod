@@ -26,12 +26,19 @@ export const usePageLoad = () => {
     return useMemo(() => onPageLoad, [onPageLoad])
 }
 
-export const useUpdatePose = () => {
-    const { updatePose } = useContext(HandlersCtx)
-    return useMemo(() => updatePose, [updatePose])
+export const RenderWithHandlers = ({ children, ...rest }) => {
+    const {
+        onPageLoad: onMount,
+        updatePose: onUpdatePose,
+        updateIk: onUpdateIk,
+    } = useContext(HandlersCtx)
+    return children({ ...rest, onMount, onUpdatePose, onUpdateIk })
 }
 
-export const useUpdateIk = () => {
-    const { updateIk } = useContext(HandlersCtx)
-    return useMemo(() => updateIk, [updateIk])
+export const withHandlers = Component => props => {
+    return (
+        <RenderWithHandlers {...props}>
+            {enhanced => <Component {...enhanced} />}
+        </RenderWithHandlers>
+    )
 }

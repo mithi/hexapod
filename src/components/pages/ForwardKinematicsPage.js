@@ -3,7 +3,7 @@ import LegPoseWidget from "./LegPoseWidgets"
 import { Card, ToggleSwitch, BasicButton, NumberInputField, Slider } from "../generic"
 import { DEFAULT_POSE } from "../../templates"
 import { SECTION_NAMES, LEG_NAMES, RESET_LABEL } from "../vars"
-import { usePageLoad, useUpdatePose } from "../providers/Handlers"
+import { withHandlers } from "../providers/Handlers"
 
 const renderTwoColumns = cells => (
     <>
@@ -37,7 +37,7 @@ class ForwardKinematicsPage extends Component {
     }
 
     reset = () => {
-        this.props.onUpdate(DEFAULT_POSE)
+        this.props.onUpdatePose(DEFAULT_POSE)
     }
 
     updatePose = (name, angle, value) => {
@@ -46,7 +46,7 @@ class ForwardKinematicsPage extends Component {
             ...pose,
             [name]: { ...pose[name], [angle]: value },
         }
-        this.props.onUpdate(newPose)
+        this.props.onUpdatePose(newPose)
     }
 
     toggleMode = () => {
@@ -98,12 +98,4 @@ class ForwardKinematicsPage extends Component {
     }
 }
 
-const WithHandlers = props => {
-    const onMount = usePageLoad()
-    const onUpdate = useUpdatePose()
-    return <ForwardKinematicsPage {...props} onMount={onMount} onUpdate={onUpdate} />
-}
-
-WithHandlers.displayName = "WithHandlers(ForwardKinematicsPage)"
-
-export default WithHandlers
+export default withHandlers(ForwardKinematicsPage)

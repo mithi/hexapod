@@ -3,7 +3,7 @@ import { sliderList, Card, BasicButton } from "../generic"
 import { solveInverseKinematics } from "../../hexapod"
 import { SECTION_NAMES, IK_SLIDERS_LABELS, RESET_LABEL } from "../vars"
 import { DEFAULT_IK_PARAMS } from "../../templates"
-import { usePageLoad, useUpdateIk } from "../providers/Handlers"
+import { withHandlers } from "../providers/Handlers"
 
 const _updatedStateParamsUnsolved = message => ({
     showPoseMessage: false,
@@ -33,12 +33,12 @@ class InverseKinematicsPage extends Component {
 
         if (!result.obtainedSolution) {
             const stateParams = _updatedStateParamsUnsolved(result.message)
-            this.props.onUpdate(null, stateParams)
+            this.props.onUpdateIk(null, stateParams)
             return
         }
 
         const stateParams = _updatedStateParamsSolved(result.message)
-        this.props.onUpdate(result.hexapod, stateParams)
+        this.props.onUpdateIk(result.hexapod, stateParams)
     }
 
     reset = () => {
@@ -48,7 +48,7 @@ class InverseKinematicsPage extends Component {
             DEFAULT_IK_PARAMS
         )
         const stateParams = _updatedStateParamsSolved(result.message)
-        this.props.onUpdate(result.hexapod, stateParams)
+        this.props.onUpdateIk(result.hexapod, stateParams)
     }
 
     get sliders() {
@@ -73,12 +73,4 @@ class InverseKinematicsPage extends Component {
     }
 }
 
-const WithHandlers = props => {
-    const onMount = usePageLoad()
-    const onUpdate = useUpdateIk()
-    return <InverseKinematicsPage {...props} onMount={onMount} onUpdate={onUpdate} />
-}
-
-WithHandlers.displayName = "WithHandlers(InverseKinematicsPage)"
-
-export default WithHandlers
+export default withHandlers(InverseKinematicsPage)
