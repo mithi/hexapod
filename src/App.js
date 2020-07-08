@@ -1,11 +1,10 @@
 import React from "react"
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom"
 import ReactGA from "react-ga"
 import { VirtualHexapod, getNewPlotParams } from "./hexapod"
 import * as defaults from "./templates"
 import { SECTION_NAMES, PATH_LINKS } from "./components/vars"
 import { Nav } from "./components"
-import NoMatch from "./components/pages/NoMatch"
 
 import Routes from "./routes"
 
@@ -135,7 +134,7 @@ class App extends React.Component {
                         <Routes {...routeProps} onPageLoad={this.onPageLoad} />
                     </Route>
                     <Route>
-                        <NoMatch />
+                        <Redirect to="/" />
                     </Route>
                 </Switch>
             </Router>
