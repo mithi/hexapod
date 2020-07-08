@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { sliderList, Card, BasicButton, ToggleSwitch } from "../generic"
 import { SECTION_NAMES, RESET_LABEL } from "../vars"
 import getWalkSequence from "../../hexapod/solvers/walkSequenceSolver"
+import { PoseTable } from ".."
 
 const SLIDER_LABELS = [
     "tz",
@@ -50,6 +51,7 @@ class WalkingGaitsPage extends Component {
         animationCount: 0,
         totalStepCount: 0,
         isForward: true,
+        showGaitWidgets: true,
     }
 
     componentDidMount() {
@@ -72,6 +74,10 @@ class WalkingGaitsPage extends Component {
         this.setState({ isForward: !this.state.isForward })
     }
 
+    toggleWidgets = () => {
+        this.setState({ showGaitWidgets: !this.state.showGaitWidgets })
+    }
+
     startAnimation = () => {
         this.intervalID = setInterval(this.animate, 1)
     }
@@ -89,7 +95,7 @@ class WalkingGaitsPage extends Component {
 
         const pose = getPose(this.state.walkSequence, step)
         this.props.onUpdate(pose)
-        this.setState({ animationCount })
+        this.setState({ animationCount, pose })
     }
 
     setWalkSequence = gaitParams => {
@@ -101,7 +107,7 @@ class WalkingGaitsPage extends Component {
 
         const pose = getPose(walkSequence, this.state.animationCount)
         this.props.onUpdate(pose)
-        this.setState({ gaitParams, walkSequence, totalStepCount })
+        this.setState({ gaitParams, walkSequence, totalStepCount, pose })
     }
 
     updateGaitParams = (name, value) => {
@@ -114,7 +120,18 @@ class WalkingGaitsPage extends Component {
         this.setWalkSequence(DEFAULT_GAIT_VARS)
     }
 
-    get animatingToggleSwitch() {
+    get widgetsSwitch() {
+        return (
+            <ToggleSwitch
+                id="gaitWidgetSwitch"
+                value={this.state.showGaitWidgets ? "controls shown" : "pose shown"}
+                handleChange={this.toggleWidgets}
+                showValue={true}
+            />
+        )
+    }
+
+    get animatingSwitch() {
         return (
             <div className="row-container flex-wrap">
                 <p>Animate:</p>
@@ -129,16 +146,14 @@ class WalkingGaitsPage extends Component {
         )
     }
 
-    get directionToggleSwitch() {
+    get directionSwitch() {
         return (
-            <>
-                <ToggleSwitch
-                    id="walkDirectionSwitch"
-                    value={this.state.isForward ? "going forward." : "going backward."}
-                    handleChange={this.toggleDirection}
-                    showValue={true}
-                />
-            </>
+            <ToggleSwitch
+                id="walkDirectionSwitch"
+                value={this.state.isForward ? "going forward." : "going backward."}
+                handleChange={this.toggleDirection}
+                showValue={true}
+            />
         )
     }
 
@@ -157,7 +172,7 @@ class WalkingGaitsPage extends Component {
             <>
                 <div className="row-container flex-wrap">
                     <p> Motion Parameters </p>
-                    {this.directionToggleSwitch}
+                    {this.directionSwitch}
                 </div>
                 <div className="row-container">{sliders.slice(6, 9)}</div>
                 <p>Orientation Parameters</p>
@@ -169,11 +184,24 @@ class WalkingGaitsPage extends Component {
         )
     }
 
+    get header() {
+        return (
+            <div className="row-container flex-wrap">
+                <h2>{this.pageName}</h2>
+                {this.widgetsSwitch}
+            </div>
+        )
+    }
+
     render = () => {
         return (
-            <Card title={this.pageName} h="h2">
-                {this.animatingToggleSwitch}
-                {this.gaitWidgets}
+            <Card title={this.header} h="div">
+                {this.animatingSwitch}
+                {this.state.showGaitWidgets ? (
+                    this.gaitWidgets
+                ) : (
+                    <PoseTable pose={this.state.pose} />
+                )}
             </Card>
         )
     }
