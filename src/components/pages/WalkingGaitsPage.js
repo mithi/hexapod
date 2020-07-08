@@ -103,7 +103,7 @@ class WalkingGaitsPage extends Component {
             getWalkSequence(this.props.params.dimensions, gaitParams) ||
             this.state.walkSequence
 
-        const totalStepCount = 4 * gaitParams.stepCount
+        const totalStepCount = walkSequence["leftMiddle"].alpha.length
 
         const pose = getPose(walkSequence, this.state.animationCount)
         this.props.onUpdate(pose)

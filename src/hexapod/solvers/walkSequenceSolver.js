@@ -214,6 +214,19 @@ const buildSequences = (startPose, liftSwing, aHipSwing, stepCount) => {
     }
 }
 
+const buildSequence = (startVal, delta, stepCount) => {
+    const step = delta / stepCount
+
+    let currentItem = startVal
+    let array = []
+    for (let i = 0; i < stepCount; i++) {
+        currentItem += step
+        array.push(currentItem)
+    }
+
+    return array
+}
+
 const fillArray = (value, len) => {
     if (len === 0) {
         return []
@@ -229,19 +242,6 @@ const fillArray = (value, len) => {
     }
 
     return a
-}
-
-const buildSequence = (startVal, delta, stepCount) => {
-    const step = delta / stepCount
-
-    let currentItem = startVal
-    let array = []
-    for (let i = 0; i < stepCount; i++) {
-        currentItem += step
-        array.push(currentItem)
-    }
-
-    return array
 }
 
 /* * *
