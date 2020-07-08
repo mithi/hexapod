@@ -40,9 +40,23 @@ const cases = [
 ]
 
 test.each(cases)("test walkSequence:", example => {
-    const sequence = getWalkSequence(example.params.dimensions, example.params.gaitParams)
-    const actualStepCount = example.params.gaitParams.stepCount * 4
+    const stepCount = example.params.gaitParams.stepCount
 
+    const sequence1 = getWalkSequence(
+        example.params.dimensions,
+        example.params.gaitParams
+    )
+    testSequence(sequence1, stepCount * 4)
+
+    const sequence2 = getWalkSequence(
+        example.params.dimensions,
+        example.params.gaitParams,
+        "ripple"
+    )
+    testSequence(sequence2, stepCount * 6)
+})
+
+const testSequence = (sequence, actualStepCount) => {
     POSITION_NAMES_LIST.forEach(position => {
         const alphaSeq = sequence[position].alpha
         const betaSeq = sequence[position].beta
@@ -57,4 +71,4 @@ test.each(cases)("test walkSequence:", example => {
         expect(gammaSeq).toBeDefined()
         expect(gammaSeq).toHaveLength(actualStepCount)
     })
-})
+}
