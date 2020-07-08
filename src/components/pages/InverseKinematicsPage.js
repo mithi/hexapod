@@ -21,12 +21,13 @@ class InverseKinematicsPage extends Component {
         const result = solveInverseKinematics(this.props.params.dimensions, ikParams)
 
         if (!result.obtainedSolution) {
-            this.props.onUpdatePlot(null)
-            this.setState({ errorMessage: result.message, pose: null })
-            return
+            return this.setState(
+                { errorMessage: result.message, pose: null, ikParams },
+                () => this.props.onUpdateHexapod(null)
+            )
         }
 
-        this.update(result.hexapod, ikParams)
+        return this.update(result.hexapod, ikParams)
     }
 
     reset = () => {
@@ -38,13 +39,14 @@ class InverseKinematicsPage extends Component {
     }
 
     update = (hexapod, ikParams) => {
-        this.setState({
-            ikParams: ikParams,
-            errorMessage: null,
-            pose: hexapod.pose,
-        })
-
-        this.props.onUpdatePlot(hexapod)
+        return this.setState(
+            {
+                ikParams: ikParams,
+                errorMessage: null,
+                pose: hexapod.pose,
+            },
+            () => this.props.onUpdateHexapod(hexapod)
+        )
     }
 
     get sliders() {

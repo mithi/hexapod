@@ -13,7 +13,7 @@ import {
     SuspenseHexapodPlot,
 } from "./loadables"
 
-export const Routes = ({ data, layout, revisionCounter, onRelayout }) => {
+export const Routes = ({ data, layout, counter, onRelayout }) => {
     const { path } = useRouteMatch()
 
     return (
@@ -50,7 +50,7 @@ export const Routes = ({ data, layout, revisionCounter, onRelayout }) => {
                         data={data}
                         layout={layout}
                         onRelayout={onRelayout}
-                        revision={revisionCounter}
+                        revision={counter}
                     />
                 </div>
             </div>

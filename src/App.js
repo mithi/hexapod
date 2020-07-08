@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback, useReducer, useEffect, useRef } from "react"
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom"
 import ReactGA from "react-ga"
 import { VirtualHexapod, getNewPlotParams } from "./hexapod"
@@ -16,114 +16,108 @@ ReactGA.initialize("UA-170794768-1", {
     gaOptions: { siteSpeedSampleRate: 100 },
 })
 
-class App extends React.Component {
-    state = {
-        hexapodParams: {
-            dimensions: defaults.DEFAULT_DIMENSIONS,
-            pose: defaults.DEFAULT_POSE,
-        },
+const merge = (prev, next) => ({ ...prev, ...next })
+const mergeWithCounter = (prev, next) => ({
+    ...merge(prev, next),
+    counter: prev.counter + 1,
+})
 
-        plot: {
-            data: defaults.DATA,
-            layout: defaults.LAYOUT,
-            latestCameraView: defaults.CAMERA_VIEW,
-            revisionCounter: 0,
-        },
-    }
+function App() {
+    const [hexapodParams, setHexaPod] = useReducer(merge, {
+        dimensions: defaults.DEFAULT_DIMENSIONS,
+        pose: defaults.DEFAULT_POSE,
+    })
 
-    /* * * * * * * * * * * * * *
-     * Handle page load
-     * * * * * * * * * * * * * */
+    const [plot, setPlot] = useReducer(mergeWithCounter, {
+        data: defaults.DATA,
+        layout: defaults.LAYOUT,
+        counter: 0,
+    })
 
-    onPageLoad = () => {
-        ReactGA.pageview(window.location.pathname + window.location.search)
-
-        this.setState(
-            {
-                hexapodParams: {
-                    ...this.state.hexapodParams,
-                    pose: defaults.DEFAULT_POSE,
-                },
-            },
-            () =>
-                this.updatePlot(
-                    this.state.hexapodParams.dimensions,
-                    defaults.DEFAULT_POSE
-                )
-        )
-    }
+    const cameraView = useRef()
+    cameraView.current = defaults.CAMERA_VIEW
 
     /* * * * * * * * * * * * * *
      * Handle plot update
      * * * * * * * * * * * * * */
 
-    updatePlotWithHexapod = hexapod => {
+    const updatePlotWithHexapod = useCallback(hexapod => {
         if (hexapod === null || hexapod === undefined || !hexapod.foundSolution) {
             return
         }
 
-        const [data, layout] = getNewPlotParams(hexapod, this.state.plot.latestCameraView)
-        return this.setState({
-            plot: {
-                ...this.state.plot,
-                data,
-                layout,
-                revisionCounter: this.state.plot.revisionCounter + 1,
-            },
-            hexapodParams: {
-                dimensions: hexapod.dimensions,
-                pose: hexapod.pose,
-            },
+        const [data, layout] = getNewPlotParams(hexapod, cameraView.current)
+
+        return setPlot({
+            data,
+            layout,
         })
-    }
+    }, [])
 
-    logCameraView = relayoutData => {
-        const newCameraView = relayoutData["scene.camera"]
-        const plot = { ...this.state.plot, latestCameraView: newCameraView }
-        return this.setState({ ...this.state, plot: plot })
-    }
+    /* * * * * * * * * * * * * *
+     * Every time the hexapod changes, update the plot!
+     * * * * * * * * * * * * * */
+    useEffect(() => {
+        const hexapod = new VirtualHexapod(hexapodParams.dimensions, hexapodParams.pose)
+        updatePlotWithHexapod(hexapod)
+    }, [hexapodParams, updatePlotWithHexapod])
 
-    updatePlot = (dimensions, pose) => {
-        const newHexapodModel = new VirtualHexapod(dimensions, pose)
-        this.updatePlotWithHexapod(newHexapodModel)
-    }
+    const logCameraView = useCallback(relayoutData => {
+        cameraView.current = relayoutData["scene.camera"] ?? defaults.CAMERA_VIEW
+    }, [])
 
-    updateDimensions = dimensions =>
-        this.updatePlot(dimensions, this.state.hexapodParams.pose)
+    const updateDimensions = useCallback(dimensions => setHexaPod({ dimensions }), [
+        setHexaPod,
+    ])
 
-    updatePose = pose => this.updatePlot(this.state.hexapodParams.dimensions, pose)
+    const updatePose = useCallback(pose => setHexaPod({ pose }), [setHexaPod])
+
+    const updateHexapod = useCallback(
+        hexapod => {
+            // bail-out if nothing comes through
+            if (hexapod) setHexaPod(hexapod)
+        },
+        [setHexaPod]
+    )
+
+    /* * * * * * * * * * * * * *
+     * Handle page load
+     * * * * * * * * * * * * * */
+
+    const onPageLoad = useCallback(() => {
+        ReactGA.pageview(window.location.pathname + window.location.search)
+
+        return setHexaPod({
+            pose: defaults.DEFAULT_POSE,
+        })
+    }, [setHexaPod])
 
     /* * * * * * * * * * * * * *
      * Layout
      * * * * * * * * * * * * * */
 
-    render() {
-        return (
-            <Router>
-                <Nav />
-                <Switch>
-                    <Route path={PATH_LINKS.map(({ path }) => path)} exact>
-                        <HexapodParamsProvider {...this.state.hexapodParams}>
-                            <HandlersProvider
-                                onPageLoad={this.onPageLoad}
-                                updatePose={this.updatePose}
-                                updatePlotWithHexapod={this.updatePlotWithHexapod}
-                                updateDimensions={this.updateDimensions}
-                            >
-                                <Routes
-                                    {...this.state.plot}
-                                    onRelayout={this.logCameraView}
-                                />
-                            </HandlersProvider>
-                        </HexapodParamsProvider>
-                    </Route>
-                    <Route>
-                        <Redirect to="/" />
-                    </Route>
-                </Switch>
-            </Router>
-        )
-    }
+    return (
+        <Router>
+            <Nav />
+            <Switch>
+                <Route path={PATH_LINKS.map(({ path }) => path)} exact>
+                    <HexapodParamsProvider {...hexapodParams}>
+                        <HandlersProvider
+                            onPageLoad={onPageLoad}
+                            updatePose={updatePose}
+                            updateHexapod={updateHexapod}
+                            updateDimensions={updateDimensions}
+                        >
+                            <Routes {...plot} onRelayout={logCameraView} />
+                        </HandlersProvider>
+                    </HexapodParamsProvider>
+                </Route>
+                <Route>
+                    <Redirect to="/" />
+                </Route>
+            </Switch>
+        </Router>
+    )
 }
 
 export default App

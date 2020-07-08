@@ -5,18 +5,18 @@ const HandlersCtx = createContext()
 export function HandlersProvider({
     onPageLoad,
     updatePose,
-    updatePlotWithHexapod,
+    updateHexapod,
     updateDimensions,
     children,
 }) {
     const value = useMemo(
         () => ({
             onPageLoad,
-            updatePlotWithHexapod,
+            updateHexapod,
             updatePose,
             updateDimensions,
         }),
-        [onPageLoad, updatePlotWithHexapod, updatePose, updateDimensions]
+        [onPageLoad, updateHexapod, updatePose, updateDimensions]
     )
     return <HandlersCtx.Provider value={value}>{children}</HandlersCtx.Provider>
 }
@@ -31,14 +31,14 @@ export const RenderWithHandlers = ({ children, ...rest }) => {
         onPageLoad: onMount,
         updatePose: onUpdatePose,
         updateDimensions: onUpdateDimensions,
-        updatePlotWithHexapod: onUpdatePlot,
+        updateHexapod: onUpdateHexapod,
     } = useContext(HandlersCtx)
     return children({
         ...rest,
         onMount,
         onUpdatePose,
         onUpdateDimensions,
-        onUpdatePlot,
+        onUpdateHexapod,
     })
 }
 
