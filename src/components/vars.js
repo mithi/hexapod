@@ -1,6 +1,6 @@
 import React from "react"
 import { GiCoffeeMug } from "react-icons/gi"
-import { FaGithubAlt, FaTimes, FaCheck } from "react-icons/fa"
+import { FaGithubAlt, FaTimes, FaCheck, FaHome, FaSquare } from "react-icons/fa"
 import { GrStatusGoodSmall } from "react-icons/gr"
 
 const SECTION_NAMES = {
@@ -71,9 +71,11 @@ const RANGE_PARAMS = {
 const ICON_COMPONENTS = {
     mug: <GiCoffeeMug className="vertical-align" />,
     circle: <GrStatusGoodSmall className="small-icon" />,
+    square: <FaSquare className="small-icon" />,
     octocat: <FaGithubAlt className="vertical-align" />,
     check: <FaCheck className="vertical-align" />,
     times: <FaTimes className="vertical-align" />,
+    home: <FaHome className="vertical-align" />,
 }
 
 /*************
@@ -84,23 +86,28 @@ const PATHS = {
     inverseKinematics: {
         path: PATH_NAMES.inverseKinematics,
         description: SECTION_NAMES.inverseKinematics,
+        icon: ICON_COMPONENTS.circle,
     },
     forwardKinematics: {
         path: PATH_NAMES.forwardKinematics,
         description: SECTION_NAMES.forwardKinematics,
+        icon: ICON_COMPONENTS.circle,
     },
     legPatterns: {
         path: PATH_NAMES.legPatterns,
         description: SECTION_NAMES.legPatterns,
+        icon: ICON_COMPONENTS.circle,
     },
     landingPage: {
         path: PATH_NAMES.landingPage,
         description: SECTION_NAMES.landingPage,
+        icon: ICON_COMPONENTS.home,
     },
 
     walkingGaits: {
         path: PATH_NAMES.walkingGaits,
         description: SECTION_NAMES.walkingGaits,
+        icon: ICON_COMPONENTS.circle,
     },
 }
 
