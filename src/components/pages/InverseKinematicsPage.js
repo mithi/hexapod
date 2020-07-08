@@ -3,6 +3,9 @@ import { sliderList, Card, BasicButton, AlertBox } from "../generic"
 import { solveInverseKinematics } from "../../hexapod"
 import { SECTION_NAMES, IK_SLIDERS_LABELS, RESET_LABEL } from "../vars"
 import { DEFAULT_IK_PARAMS, DEFAULT_POSE } from "../../templates"
+import { withHandlers } from "../providers/Handlers"
+import { withHexapodParams } from "../providers/HexapodParams"
+
 import { PoseTable } from ".."
 
 class InverseKinematicsPage extends Component {
@@ -18,12 +21,13 @@ class InverseKinematicsPage extends Component {
         const result = solveInverseKinematics(this.props.params.dimensions, ikParams)
 
         if (!result.obtainedSolution) {
-            this.props.onUpdate(null)
-            this.setState({ errorMessage: result.message, pose: null })
-            return
+            return this.setState(
+                { errorMessage: result.message, pose: null, ikParams },
+                () => this.props.onUpdateHexapod(null)
+            )
         }
 
-        this.update(result.hexapod, ikParams)
+        return this.update(result.hexapod, ikParams)
     }
 
     reset = () => {
@@ -35,13 +39,14 @@ class InverseKinematicsPage extends Component {
     }
 
     update = (hexapod, ikParams) => {
-        this.setState({
-            ikParams: ikParams,
-            errorMessage: null,
-            pose: hexapod.pose,
-        })
-
-        this.props.onUpdate(hexapod)
+        return this.setState(
+            {
+                ikParams: ikParams,
+                errorMessage: null,
+                pose: hexapod.pose,
+            },
+            () => this.props.onUpdateHexapod(hexapod)
+        )
     }
 
     get sliders() {
@@ -74,4 +79,7 @@ class InverseKinematicsPage extends Component {
     }
 }
 
-export default InverseKinematicsPage
+export default withHexapodParams(
+    withHandlers(InverseKinematicsPage),
+    ({ dimensions }) => ({ params: { dimensions } })
+)

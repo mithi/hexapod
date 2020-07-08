@@ -2,6 +2,8 @@ import React, { Component } from "react"
 import { sliderList, Card, BasicButton, ToggleSwitch } from "../generic"
 import { SECTION_NAMES, RESET_LABEL } from "../vars"
 import getWalkSequence from "../../hexapod/solvers/walkSequenceSolver"
+import { withHandlers } from "../providers/Handlers"
+import { withHexapodParams } from "../providers/HexapodParams"
 
 const SLIDER_LABELS = [
     "tz",
@@ -53,7 +55,7 @@ class WalkingGaitsPage extends Component {
     }
 
     componentDidMount() {
-        this.props.onMount(this.pageName)
+        this.props.onMount()
         this.setWalkSequence(DEFAULT_GAIT_VARS)
     }
 
@@ -88,7 +90,7 @@ class WalkingGaitsPage extends Component {
             : this.state.totalStepCount - animationCount
 
         const pose = getPose(this.state.walkSequence, step)
-        this.props.onUpdate(pose)
+        this.props.onUpdatePose(pose)
         this.setState({ animationCount })
     }
 
@@ -100,7 +102,7 @@ class WalkingGaitsPage extends Component {
         const totalStepCount = 4 * gaitParams.stepCount
 
         const pose = getPose(walkSequence, this.state.animationCount)
-        this.props.onUpdate(pose)
+        this.props.onUpdatePose(pose)
         this.setState({ gaitParams, walkSequence, totalStepCount })
     }
 
@@ -179,4 +181,6 @@ class WalkingGaitsPage extends Component {
     }
 }
 
-export default WalkingGaitsPage
+export default withHexapodParams(withHandlers(WalkingGaitsPage), ({ dimensions }) => ({
+    params: { dimensions },
+}))

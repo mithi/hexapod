@@ -2,13 +2,14 @@ import React, { Component } from "react"
 import { sliderList, Card, BasicButton } from "../generic"
 import { DEFAULT_POSE, DEFAULT_PATTERN_PARAMS } from "../../templates"
 import { SECTION_NAMES, ANGLE_NAMES, RESET_LABEL } from "../vars"
+import { withHandlers } from "../providers/Handlers"
 
 class LegPatternPage extends Component {
     pageName = SECTION_NAMES.legPatterns
     state = { patternParams: DEFAULT_PATTERN_PARAMS }
 
     componentDidMount() {
-        this.props.onMount(this.pageName)
+        this.props.onMount()
         this.setState({ patternParams: DEFAULT_PATTERN_PARAMS })
     }
 
@@ -20,12 +21,12 @@ class LegPatternPage extends Component {
             newPose[leg] = patternParams
         }
 
-        this.props.onUpdate(newPose)
+        this.props.onUpdatePose(newPose)
         this.setState({ patternParams })
     }
 
     reset = () => {
-        this.props.onUpdate(DEFAULT_POSE)
+        this.props.onUpdatePose(DEFAULT_POSE)
         this.setState({ patternParams: DEFAULT_PATTERN_PARAMS })
     }
 
@@ -45,4 +46,4 @@ class LegPatternPage extends Component {
     )
 }
 
-export default LegPatternPage
+export default withHandlers(LegPatternPage)

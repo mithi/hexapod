@@ -1,5 +1,5 @@
 import React from "react"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { render, screen, fireEvent, act, waitFor } from "@testing-library/react"
 import App from "../../App"
 import { PATH_LINKS, URL_LINKS } from "../../components/vars"
 
@@ -145,40 +145,51 @@ const expectEachPage = (
     expectToHaveNav()
 }
 
-const click = name => fireEvent.click(screen.getByRole("link", { name }))
+const click = async name => {
+    const element = await waitFor(() => screen.getByRole("link", { name }))
+    await act(async () => {
+        await fireEvent.click(element)
+    })
+}
 
 /* * * *
 Application
  * * * */
 
 describe("App", () => {
-    beforeEach(() => {
-        render(<App />)
+    beforeEach(async () => {
+        await act(async () => {
+            render(<App />)
+        })
     })
 
-    test("Navigates to Leg Patterns page", () => {
-        click("Leg Patterns")
+    test("Navigates to Leg Patterns page", async () => {
+        await click("Leg Patterns")
         expectEachPage()
         expectToHaveDefaultLegPatternsPage()
     })
 
-    test("Navigates to Inverse Kinematics page", () => {
-        click("Inverse Kinematics")
+    test("Navigates to Inverse Kinematics page", async () => {
+        await click("Inverse Kinematics")
+
         expectEachPage()
         expectToHaveDefaultInverseKinematics()
     })
 
-    test("Navigates to Forward Kinematics page", () => {
-        click("Forward Kinematics")
+    test("Navigates to Forward Kinematics page", async () => {
+        await click("Forward Kinematics")
+
         expectEachPage({ numberOfResetButtons: 2, numberOfToggleSwitches: 2 })
         expectToHaveDefaultForwardKinematics()
     })
 
-    test("Navigates to Landing Page", () => {
-        click("Root")
+    test("Navigates to Landing Page", async () => {
+        await click("Root")
+
         const heading = screen.getByRole("heading", {
             name: "Mithi's Bare Minimum Hexapod Robot Simulator",
         })
+
         expect(heading).toBeInTheDocument()
 
         const wrongHeadings = [
@@ -187,6 +198,7 @@ describe("App", () => {
             "Inverse Kinematics",
             "Forward Kinematics",
         ]
+
         wrongHeadings.forEach(name =>
             expect(screen.queryByRole("heading", { name })).toBeNull()
         )

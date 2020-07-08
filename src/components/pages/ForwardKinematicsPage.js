@@ -3,6 +3,8 @@ import LegPoseWidget from "./LegPoseWidgets"
 import { Card, ToggleSwitch, BasicButton, NumberInputField, Slider } from "../generic"
 import { DEFAULT_POSE } from "../../templates"
 import { SECTION_NAMES, LEG_NAMES, RESET_LABEL } from "../vars"
+import { withHandlers } from "../providers/Handlers"
+import { withHexapodParams } from "../providers/HexapodParams"
 
 const renderTwoColumns = cells => (
     <>
@@ -32,11 +34,11 @@ class ForwardKinematicsPage extends Component {
     state = { modeBool: false, widgetType: "NumberInputField" }
 
     componentDidMount() {
-        this.props.onMount(this.pageName)
+        this.props.onMount()
     }
 
     reset = () => {
-        this.props.onUpdate(DEFAULT_POSE)
+        this.props.onUpdatePose(DEFAULT_POSE)
     }
 
     updatePose = (name, angle, value) => {
@@ -45,7 +47,7 @@ class ForwardKinematicsPage extends Component {
             ...pose,
             [name]: { ...pose[name], [angle]: value },
         }
-        this.props.onUpdate(newPose)
+        this.props.onUpdatePose(newPose)
     }
 
     toggleMode = () => {
@@ -97,4 +99,6 @@ class ForwardKinematicsPage extends Component {
     }
 }
 
-export default ForwardKinematicsPage
+export default withHexapodParams(withHandlers(ForwardKinematicsPage), ({ pose }) => ({
+    params: { pose },
+}))

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 const NAV_BULLETS_PREFIX = "navBullet"
 const NAV_DETAILED_PREFIX = "navDetailed"
 
-const BulletPageLink = ({ link, showDesc }) => (
+const BulletPageLink = React.memo(({ link, showDesc }) => (
     <li>
         <Link to={link.path} className="link-icon">
             <span>
@@ -13,9 +13,9 @@ const BulletPageLink = ({ link, showDesc }) => (
             </span>
         </Link>
     </li>
-)
+))
 
-const BulletUrlLink = ({ path, description, icon }) => (
+const BulletUrlLink = React.memo(({ path, description, icon }) => (
     <li>
         <a
             href={path}
@@ -29,9 +29,9 @@ const BulletUrlLink = ({ path, description, icon }) => (
             }
         />
     </li>
-)
+))
 
-const NavBullets = () => (
+const NavBullets = React.memo(() => (
     <ul className="row-container no-bullet top-bar">
         {URL_LINKS.map(link => (
             <BulletUrlLink
@@ -45,9 +45,9 @@ const NavBullets = () => (
             <BulletPageLink key={NAV_BULLETS_PREFIX + link.path} link={link} />
         ))}
     </ul>
-)
+))
 
-const NavDetailed = () => (
+const NavDetailed = React.memo(() => (
     <footer>
         <nav id="nav">
             <ul className="column-container no-bullet">
@@ -70,8 +70,8 @@ const NavDetailed = () => (
             </ul>
         </nav>
     </footer>
-)
+))
 
-const Nav = () => <NavBullets />
+const Nav = NavBullets
 
 export { Nav, NavDetailed }

@@ -1,6 +1,6 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
-import { DimensionsWidget } from "../../components"
+import { DimensionsWidget } from "../../components/DimensionsWidget"
 
 const DIMENSIONS = {
     front: 71,

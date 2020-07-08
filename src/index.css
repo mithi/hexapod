@@ -91,6 +91,7 @@ th {
 
 th,
 td {
+    min-width: 50px;
     border-bottom: 1px solid rgba(41, 128, 185, 0.5);
     font-size: 12px;
     line-height: 16px;
@@ -141,6 +142,17 @@ tr:hover {
 .text-link {
     line-height: 20px;
     font-size: 13px;
+}
+
+.no-match {
+    margin: 0 auto;
+    min-width: 300px;
+    width: 40%;
+    max-width: 900px;
+}
+
+.no-match h1 {
+    text-align: center;
 }
 
 #nav {

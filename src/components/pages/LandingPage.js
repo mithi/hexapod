@@ -1,20 +1,21 @@
-import React from "react"
-import ReactMarkdown from "react-markdown"
+import React, { useLayoutEffect } from "react"
 import { NavDetailed } from ".."
-import { LANDING_PAGE_MESSAGE, SECTION_NAMES } from "../vars"
+import { LANDING_PAGE_TITLE, LANDING_PAGE_SUBTITLE } from "../vars"
+import { usePageLoad } from "../providers/Handlers"
 
-class LandingPage extends React.Component {
-    pageName = SECTION_NAMES.landingPage
+function LandingPage() {
+    const onPageLoad = usePageLoad()
 
-    componentDidMount() {
-        this.props.onMount(this.pageName)
-    }
+    useLayoutEffect(() => {
+        onPageLoad()
+    }, [onPageLoad])
 
-    render = () => (
+    return (
         <>
-            <div className="hexapod-img" />{" "}
+            <div className="hexapod-img" />
             <div id="landing">
-                <ReactMarkdown source={LANDING_PAGE_MESSAGE} />
+                <h1>{LANDING_PAGE_TITLE}</h1>
+                <p>{LANDING_PAGE_SUBTITLE}</p>
             </div>
             <NavDetailed />
         </>
