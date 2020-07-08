@@ -8,7 +8,54 @@ import { solveHexapodParams } from "./ik/hexapodSolver"
         beta: [],
         gamma: [],
     }
+    ....
   }
+
+  * * */
+
+const getWalkSequence = (
+    dimensions,
+    params = {
+        tx: 0,
+        tz: 0,
+        rx: 0,
+        ry: 0,
+        legStance: 0,
+        hipStance: 25,
+        stepCount: 5,
+        hipSwing: 25,
+        liftSwing: 40,
+    },
+    gaitType
+) => {
+    const { hipStance, rx, ry, tx, tz, legStance } = params
+
+    const rawIKparams = {
+        tx,
+        ty: 0,
+        tz,
+        legStance,
+        hipStance,
+        rx,
+        ry,
+        rz: 0,
+    }
+
+    const [ikSolver] = solveHexapodParams(dimensions, rawIKparams, true)
+
+    if (!ikSolver.foundSolution || ikSolver.hasLegsOffGround) {
+        return null
+    }
+
+    const { hipSwing, liftSwing, stepCount } = params
+    const [aHipSwing, aLiftSwing] = [Math.abs(hipSwing), Math.abs(liftSwing)]
+
+    return gaitType === "ripple"
+        ? rippleSequence(ikSolver.pose, aLiftSwing, aHipSwing, stepCount)
+        : tripodSequence(ikSolver.pose, aLiftSwing, aHipSwing, stepCount)
+}
+
+/* *
 
 powerStroke aka stancePhase
 returnStroke aka swingPhase
@@ -41,52 +88,11 @@ endPowerStroke / startReturnStroke
  |------- returnStroke -------|----- powerStroke ----------|
  |-- liftUp --|-- shoveDown --|
 
-
-  * * */
-
-const getWalkSequence = (
-    dimensions,
-    params = {
-        tx: 0,
-        tz: 0,
-        rx: 0,
-        ry: 0,
-        legStance: 0,
-        hipStance: 25,
-        stepCount: 5,
-        hipSwing: 25,
-        liftSwing: 40,
-    }
-) => {
-    const { hipStance, rx, ry, tx, tz, legStance } = params
-
-    const rawIKparams = {
-        tx,
-        ty: 0,
-        tz,
-        legStance,
-        hipStance,
-        rx,
-        ry,
-        rz: 0,
-    }
-
-    const [ikSolver] = solveHexapodParams(dimensions, rawIKparams, true)
-
-    if (!ikSolver.foundSolution || ikSolver.hasLegsOffGround) {
-        return null
-    }
-
-    const { hipSwing, liftSwing, stepCount } = params
-    const aHipSwing = Math.abs(hipSwing)
-
-    return tripodSequence(ikSolver.pose, liftSwing, aHipSwing, stepCount)
-}
-
-const tripodSequence = (pose, liftSwing, aHipSwing, stepCount) => {
+ * */
+const tripodSequence = (pose, aLiftSwing, aHipSwing, stepCount) => {
     const { forwardAlphaSeqs, liftBetaSeqs, liftGammaSeqs } = buildSequences(
         pose,
-        liftSwing,
+        aLiftSwing,
         aHipSwing,
         stepCount
     )
@@ -173,18 +179,89 @@ const tripodBSequence = (
         return sequences
     }, {})
 
-const buildSequences = (startPose, liftSwing, aHipSwing, stepCount) => {
-    const doubleStepCount = 2 * stepCount
+/* * *
 
-    const hipSwingForward = {
-        leftFront: -aHipSwing,
-        rightMiddle: aHipSwing,
-        leftBack: -aHipSwing,
-        rightFront: aHipSwing,
-        leftMiddle: -aHipSwing,
-        rightBack: aHipSwing,
+RIPPLE SEQUENCE
+a - lift-up
+b - shove-down
+[1, 2, 3, 4] - retract / power stroke sequence
+
+left-back     |-- a --|-- b --|   1   |   2   |   3   |   4   |
+left-middle   |   3   |   4   |-- a --|-- b --|   1   |   2   |
+left-front    |   1   |   2   |   3   |   4   |-- a --|-- b --|
+right-front   |   4   |-- a --|-- b --|   1   |   2   |   3   |
+right-back    |   1   |   2   |   3   |-- a --|-- b --|   4   |
+right-middle  |-- b --|   1   |   2   |   3   |   4   |-- a --|
+
+ * * */
+
+const rippleSequence = (startPose, aLiftSwing, aHipSwing, stepCount) => {
+    const hipSwingForward = getHipSwingForward(aHipSwing)
+    const legPositions = Object.keys(startPose)
+
+    let sequences = {}
+    legPositions.forEach(position => {
+        const { alpha, beta, gamma } = startPose[position]
+        const betaLift = buildSequence(beta, aLiftSwing, stepCount)
+        const gammaLift = buildSequence(gamma, -aLiftSwing / 2, stepCount)
+
+        const delta = hipSwingForward[position]
+        const fw1 = buildSequence(alpha - delta, delta, stepCount)
+        const fw2 = buildSequence(alpha, delta, stepCount)
+
+        const halfDelta = delta / 2
+        const bk1 = buildSequence(alpha + delta, -halfDelta, stepCount)
+        const bk2 = buildSequence(alpha + halfDelta, -halfDelta, stepCount)
+        const bk3 = buildSequence(alpha, -halfDelta, stepCount)
+        const bk4 = buildSequence(alpha - halfDelta, -halfDelta, stepCount)
+
+        // prettier-ignore
+        sequences[position] = buildRippleLegSequence(
+            position, betaLift, gammaLift, fw1, fw2, bk1, bk2, bk3, bk4
+        )
+    })
+
+    return sequences
+}
+
+const buildRippleLegSequence = (position, bLift, gLift, fw1, fw2, bk1, bk2, bk3, bk4) => {
+    const stepCount = fw1.length
+    const revGLift = gLift.slice().reverse()
+    const revBLift = bLift.slice().reverse()
+    const b0 = bLift[0]
+    const g0 = gLift[0]
+    // n stands for neutral
+    const bN = fillArray(b0, stepCount)
+    const gN = fillArray(g0, stepCount)
+
+    const alphaSeq = [fw1, fw2, bk1, bk2, bk3, bk4]
+    const betaSeq = [bLift, revBLift, bN, bN, bN, bN]
+    const gammaSeq = [gLift, revGLift, gN, gN, gN, gN]
+
+    const moduloMap = {
+        leftBack: 0,
+        rightBack: 3,
+        leftMiddle: 2,
+        rightMiddle: 5,
+        leftFront: 4,
+        rightFront: 1,
     }
 
+    return {
+        alpha: modSequence(moduloMap[position], alphaSeq),
+        beta: modSequence(moduloMap[position], betaSeq),
+        gamma: modSequence(moduloMap[position], gammaSeq),
+    }
+}
+
+const modSequence = (mod, seq) => {
+    const sequence = [...seq, ...seq]
+    return sequence.slice(mod, mod + 6).flat()
+}
+
+const buildSequences = (startPose, aLiftSwing, aHipSwing, stepCount) => {
+    const doubleStepCount = 2 * stepCount
+    const hipSwingForward = getHipSwingForward(aHipSwing)
     const legPositions = Object.keys(startPose)
 
     let forwardAlphaSeqs = {}
@@ -199,12 +276,8 @@ const buildSequences = (startPose, liftSwing, aHipSwing, stepCount) => {
             2 * deltaAlpha,
             doubleStepCount
         )
-        liftBetaSeqs[legPosition] = buildSequence(beta, Math.abs(liftSwing), stepCount)
-        liftGammaSeqs[legPosition] = buildSequence(
-            gamma,
-            -Math.abs(liftSwing) / 2,
-            stepCount
-        )
+        liftBetaSeqs[legPosition] = buildSequence(beta, aLiftSwing, stepCount)
+        liftGammaSeqs[legPosition] = buildSequence(gamma, -aLiftSwing / 2, stepCount)
     })
 
     return {
@@ -227,6 +300,17 @@ const buildSequence = (startVal, delta, stepCount) => {
     return array
 }
 
+const getHipSwingForward = aHipSwing => {
+    return {
+        leftFront: -aHipSwing,
+        rightMiddle: aHipSwing,
+        leftBack: -aHipSwing,
+        rightFront: aHipSwing,
+        leftMiddle: -aHipSwing,
+        rightBack: aHipSwing,
+    }
+}
+
 const fillArray = (value, len) => {
     if (len === 0) {
         return []
@@ -244,19 +328,4 @@ const fillArray = (value, len) => {
     return a
 }
 
-/* * *
-
-
-a - lift-up
-b - shove-down
-* - retract / power stroke
-
-left-front    |-- a --|-- b --|   *   |   *   |   *   |   *   |
-left-middle   |   *   |   *   |-- a --|-- b --|   *   |   *   |
-left-back     |   *   |   *   |   *   |   *   |-- a --|-- b --|
-right-front   |   *   |-- a --|-- b --|   *   |   *   |   *   |
-right-middle  |   *   |   *   |   *   |-- a --|-- b --|   *   |
-right-back    |   b   |   *   |   *   |   *   |   *   |-- a --|
-
- * * */
 export default getWalkSequence
