@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { sliderList, Card, BasicButton } from "../generic"
 import { DEFAULT_POSE, DEFAULT_PATTERN_PARAMS } from "../../templates"
 import { SECTION_NAMES, ANGLE_NAMES, RESET_LABEL } from "../vars"
+import { usePageLoad, useUpdatePose } from "../providers/Handlers"
 
 class LegPatternPage extends Component {
     pageName = SECTION_NAMES.legPatterns
@@ -45,4 +46,12 @@ class LegPatternPage extends Component {
     )
 }
 
-export default LegPatternPage
+const WithHandlers = props => {
+    const onMount = usePageLoad()
+    const onUpdate = useUpdatePose()
+    return <LegPatternPage {...props} onMount={onMount} onUpdate={onUpdate} />
+}
+
+WithHandlers.displayName = "WithHandlers(LegPatternPage)"
+
+export default WithHandlers

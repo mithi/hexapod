@@ -3,6 +3,8 @@ import { sliderList, Card, BasicButton, ToggleSwitch } from "../generic"
 import { SECTION_NAMES, RESET_LABEL } from "../vars"
 import getWalkSequence from "../../hexapod/solvers/walkSequenceSolver"
 
+import { usePageLoad, useUpdatePose } from "../providers/Handlers"
+
 const SLIDER_LABELS = [
     "tz",
     "tx",
@@ -179,4 +181,12 @@ class WalkingGaitsPage extends Component {
     }
 }
 
-export default WalkingGaitsPage
+const WithHandlers = props => {
+    const onMount = usePageLoad()
+    const onUpdate = useUpdatePose()
+    return <WalkingGaitsPage {...props} onMount={onMount} onUpdate={onUpdate} />
+}
+
+WithHandlers.displayName = "WithHandlers(WalkingGaitsPage)"
+
+export default WithHandlers

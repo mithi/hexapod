@@ -130,6 +130,7 @@ const HEXAPOD_LINK_PATHS = [
     PATHS.inverseKinematics.path,
     PATHS.forwardKinematics.path,
     PATHS.legPatterns.path,
+    PATHS.walkingGaits.path,
 ]
 
 const URL_LINKS = [KOFI_LINK_PROPERTIES, REPO_LINK_PROPERTIES]

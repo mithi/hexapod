@@ -16,7 +16,6 @@ ReactGA.initialize("UA-170794768-1", {
 
 class App extends React.Component {
     state = {
-        currentPage: SECTION_NAMES.LandingPage,
         showPoseMessage: false,
         showInfo: false,
         info: {},
@@ -40,25 +39,29 @@ class App extends React.Component {
 
     onPageLoad = pageName => {
         ReactGA.pageview(window.location.pathname + window.location.search)
-        this.setState({ currentPage: pageName })
 
         if (pageName === SECTION_NAMES.landingPage) {
-            this.setState({
-                currentPage: pageName,
+            return this.setState({
                 showInfo: false,
                 showPoseMessage: false,
             })
-            return
         }
 
-        this.setState({
-            currentPage: pageName,
-            showInfo: false,
-            showPoseMessage: false,
-            hexapodParams: { ...this.state.hexapodParams, pose: defaults.DEFAULT_POSE },
-        })
-
-        this.updatePlot(this.state.hexapodParams.dimensions, defaults.DEFAULT_POSE)
+        return this.setState(
+            {
+                showInfo: false,
+                showPoseMessage: false,
+                hexapodParams: {
+                    ...this.state.hexapodParams,
+                    pose: defaults.DEFAULT_POSE,
+                },
+            },
+            () =>
+                this.updatePlot(
+                    this.state.hexapodParams.dimensions,
+                    defaults.DEFAULT_POSE
+                )
+        )
     }
 
     /* * * * * * * * * * * * * *
@@ -67,7 +70,7 @@ class App extends React.Component {
 
     updatePlot = (dimensions, pose) => {
         const newHexapodModel = new VirtualHexapod(dimensions, pose)
-        this.updatePlotWithHexapod(newHexapodModel)
+        return this.updatePlotWithHexapod(newHexapodModel)
     }
 
     updatePlotWithHexapod = hexapod => {
@@ -76,7 +79,7 @@ class App extends React.Component {
         }
 
         const [data, layout] = getNewPlotParams(hexapod, this.state.plot.latestCameraView)
-        this.setState({
+        return this.setState({
             plot: {
                 ...this.state.plot,
                 data,
@@ -93,7 +96,7 @@ class App extends React.Component {
     logCameraView = relayoutData => {
         const newCameraView = relayoutData["scene.camera"]
         const plot = { ...this.state.plot, latestCameraView: newCameraView }
-        this.setState({ ...this.state, plot: plot })
+        return this.setState({ ...this.state, plot: plot })
     }
 
     /* * * * * * * * * * * * * *
@@ -102,7 +105,7 @@ class App extends React.Component {
 
     updateIk = (hexapod, updatedStateParams) => {
         this.updatePlotWithHexapod(hexapod)
-        this.setState({ ...updatedStateParams })
+        return this.setState({ ...updatedStateParams })
     }
 
     updateDimensions = dimensions =>

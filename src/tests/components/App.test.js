@@ -1,5 +1,5 @@
 import React from "react"
-import { render, screen, fireEvent, act } from "@testing-library/react"
+import { render, screen, fireEvent, act, waitFor } from "@testing-library/react"
 import App from "../../App"
 import { PATH_LINKS, URL_LINKS } from "../../components/vars"
 
@@ -145,7 +145,12 @@ const expectEachPage = (
     expectToHaveNav()
 }
 
-const click = name => fireEvent.click(screen.getByRole("link", { name }))
+const click = async name => {
+    const element = await waitFor(() => screen.getByRole("link", { name }))
+    await act(async () => {
+        await fireEvent.click(element)
+    })
+}
 
 /* * * *
 Application
@@ -159,33 +164,27 @@ describe("App", () => {
     })
 
     test("Navigates to Leg Patterns page", async () => {
-        await act(async () => {
-            click("Leg Patterns")
-        })
+        await click("Leg Patterns")
         expectEachPage()
         expectToHaveDefaultLegPatternsPage()
     })
 
     test("Navigates to Inverse Kinematics page", async () => {
-        await act(async () => {
-            click("Inverse Kinematics")
-        })
+        await click("Inverse Kinematics")
+
         expectEachPage()
         expectToHaveDefaultInverseKinematics()
     })
 
     test("Navigates to Forward Kinematics page", async () => {
-        await act(async () => {
-            click("Forward Kinematics")
-        })
+        await click("Forward Kinematics")
+
         expectEachPage({ numberOfResetButtons: 2, numberOfToggleSwitches: 2 })
         expectToHaveDefaultForwardKinematics()
     })
 
     test("Navigates to Landing Page", async () => {
-        await act(async () => {
-            click("Root")
-        })
+        await click("Root")
 
         const heading = screen.getByRole("heading", {
             name: "Mithi's Bare Minimum Hexapod Robot Simulator",

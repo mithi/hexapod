@@ -3,6 +3,7 @@ import LegPoseWidget from "./LegPoseWidgets"
 import { Card, ToggleSwitch, BasicButton, NumberInputField, Slider } from "../generic"
 import { DEFAULT_POSE } from "../../templates"
 import { SECTION_NAMES, LEG_NAMES, RESET_LABEL } from "../vars"
+import { usePageLoad, useUpdatePose } from "../providers/Handlers"
 
 const renderTwoColumns = cells => (
     <>
@@ -97,4 +98,12 @@ class ForwardKinematicsPage extends Component {
     }
 }
 
-export default ForwardKinematicsPage
+const WithHandlers = props => {
+    const onMount = usePageLoad()
+    const onUpdate = useUpdatePose()
+    return <ForwardKinematicsPage {...props} onMount={onMount} onUpdate={onUpdate} />
+}
+
+WithHandlers.displayName = "WithHandlers(ForwardKinematicsPage)"
+
+export default WithHandlers

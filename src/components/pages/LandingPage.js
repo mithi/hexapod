@@ -1,11 +1,14 @@
 import React, { useLayoutEffect } from "react"
 import { NavDetailed } from ".."
 import { LANDING_PAGE_TITLE, LANDING_PAGE_SUBTITLE, SECTION_NAMES } from "../vars"
+import { usePageLoad } from "../providers/Handlers"
 
-function LandingPage({ onMount }) {
+function LandingPage() {
+    const onPageLoad = usePageLoad()
+
     useLayoutEffect(() => {
-        onMount(SECTION_NAMES.landingPage)
-    }, [onMount])
+        onPageLoad(SECTION_NAMES.landingPage)
+    }, [onPageLoad])
 
     return (
         <>

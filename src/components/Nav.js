@@ -72,6 +72,6 @@ const NavDetailed = React.memo(() => (
     </footer>
 ))
 
-const Nav = React.memo(() => <NavBullets />)
+const Nav = NavBullets
 
 export { Nav, NavDetailed }

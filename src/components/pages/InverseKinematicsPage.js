@@ -3,6 +3,7 @@ import { sliderList, Card, BasicButton } from "../generic"
 import { solveInverseKinematics } from "../../hexapod"
 import { SECTION_NAMES, IK_SLIDERS_LABELS, RESET_LABEL } from "../vars"
 import { DEFAULT_IK_PARAMS } from "../../templates"
+import { usePageLoad, useUpdateIk } from "../providers/Handlers"
 
 const _updatedStateParamsUnsolved = message => ({
     showPoseMessage: false,
@@ -72,4 +73,12 @@ class InverseKinematicsPage extends Component {
     }
 }
 
-export default InverseKinematicsPage
+const WithHandlers = props => {
+    const onMount = usePageLoad()
+    const onUpdate = useUpdateIk()
+    return <InverseKinematicsPage {...props} onMount={onMount} onUpdate={onUpdate} />
+}
+
+WithHandlers.displayName = "WithHandlers(InverseKinematicsPage)"
+
+export default WithHandlers
