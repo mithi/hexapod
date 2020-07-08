@@ -80,8 +80,12 @@ const getWalkSequence = (
     const { hipSwing, liftSwing, stepCount } = params
     const aHipSwing = Math.abs(hipSwing)
 
+    return tripodSequence(ikSolver.pose, liftSwing, aHipSwing, stepCount)
+}
+
+const tripodSequence = (pose, liftSwing, aHipSwing, stepCount) => {
     const { forwardAlphaSeqs, liftBetaSeqs, liftGammaSeqs } = buildSequences(
-        ikSolver.pose,
+        pose,
         liftSwing,
         aHipSwing,
         stepCount
@@ -240,4 +244,19 @@ const buildSequence = (startVal, delta, stepCount) => {
     return array
 }
 
+/* * *
+
+
+a - lift-up
+b - shove-down
+* - retract / power stroke
+
+left-front    |-- a --|-- b --|   *   |   *   |   *   |   *   |
+left-middle   |   *   |   *   |-- a --|-- b --|   *   |   *   |
+left-back     |   *   |   *   |   *   |   *   |-- a --|-- b --|
+right-front   |   *   |-- a --|-- b --|   *   |   *   |   *   |
+right-middle  |   *   |   *   |   *   |-- a --|-- b --|   *   |
+right-back    |   b   |   *   |   *   |   *   |   *   |-- a --|
+
+ * * */
 export default getWalkSequence
