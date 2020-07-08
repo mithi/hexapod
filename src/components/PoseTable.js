@@ -1,5 +1,4 @@
 import React from "react"
-import { withHexapodParams } from "./providers/HexapodParams"
 
 const TableHeader = React.memo(({ labels }) => (
     <thead>
@@ -20,8 +19,7 @@ const TableRow = React.memo(({ label, alpha, beta, gamma }) => (
     </tr>
 ))
 
-const PoseTable = ({ pose, showPoseTable }) => {
-    if (!showPoseTable) return null
+const PoseTable = ({ pose }) => {
     const { rightMiddle, rightFront, leftFront, leftMiddle, leftBack, rightBack } = pose
     return (
         <div className="table-container">
@@ -42,4 +40,4 @@ const PoseTable = ({ pose, showPoseTable }) => {
     )
 }
 
-export default withHexapodParams(PoseTable, ({ pose }) => ({ pose }))
+export default PoseTable
