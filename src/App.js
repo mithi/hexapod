@@ -4,14 +4,7 @@ import ReactGA from "react-ga"
 import { VirtualHexapod, getNewPlotParams } from "./hexapod"
 import * as defaults from "./templates"
 import { SECTION_NAMES, PATHS } from "./components/vars"
-import {
-    PoseTable,
-    Nav,
-    NavDetailed,
-    HexapodPlot,
-    DimensionsWidget,
-    AlertBox,
-} from "./components"
+import { Nav, NavDetailed, HexapodPlot, DimensionsWidget } from "./components"
 import {
     ForwardKinematicsPage,
     InverseKinematicsPage,
@@ -30,9 +23,6 @@ class App extends React.Component {
     state = {
         currentPage: SECTION_NAMES.LandingPage,
         inHexapodPage: false,
-        showPoseMessage: true,
-        showInfo: false,
-        info: {},
 
         hexapodParams: {
             dimensions: defaults.DEFAULT_DIMENSIONS,
@@ -56,18 +46,12 @@ class App extends React.Component {
         this.setState({ currentPage: pageName })
 
         if (pageName === SECTION_NAMES.landingPage) {
-            this.setState({
-                inHexapodPage: false,
-                showInfo: false,
-                showPoseMessage: false,
-            })
+            this.setState({ inHexapodPage: false })
             return
         }
 
         this.setState({
             inHexapodPage: true,
-            showInfo: false,
-            showPoseMessage: false,
             hexapodParams: { ...this.state.hexapodParams, pose: defaults.DEFAULT_POSE },
         })
 
@@ -77,11 +61,6 @@ class App extends React.Component {
     /* * * * * * * * * * * * * *
      * Handle plot update
      * * * * * * * * * * * * * */
-
-    updatePlot = (dimensions, pose) => {
-        const newHexapodModel = new VirtualHexapod(dimensions, pose)
-        this.updatePlotWithHexapod(newHexapodModel)
-    }
 
     updatePlotWithHexapod = hexapod => {
         if (hexapod === null || hexapod === undefined || !hexapod.foundSolution) {
@@ -109,13 +88,9 @@ class App extends React.Component {
         this.setState({ ...this.state, plot: plot })
     }
 
-    /* * * * * * * * * * * * * *
-     * Handle individual input fields update
-     * * * * * * * * * * * * * */
-
-    updateIk = (hexapod, updatedStateParams) => {
-        this.updatePlotWithHexapod(hexapod)
-        this.setState({ ...updatedStateParams })
+    updatePlot = (dimensions, pose) => {
+        const newHexapodModel = new VirtualHexapod(dimensions, pose)
+        this.updatePlotWithHexapod(newHexapodModel)
     }
 
     updateDimensions = dimensions =>
@@ -127,16 +102,7 @@ class App extends React.Component {
      * Control display of widgets
      * * * * * * * * * * * * * */
 
-    mightShowMessage = () =>
-        this.state.showInfo ? <AlertBox info={this.state.info} /> : null
-
     mightShowDetailedNav = () => (this.state.inHexapodPage ? <NavDetailed /> : null)
-
-    mightShowPoseTable = () => {
-        if (this.state.showPoseMessage) {
-            return <PoseTable pose={this.state.hexapodParams.pose} />
-        }
-    }
 
     mightShowDimensions = () => {
         if (this.state.inHexapodPage) {
@@ -181,7 +147,7 @@ class App extends React.Component {
                     params={{
                         dimensions: this.state.hexapodParams.dimensions,
                     }}
-                    onUpdate={this.updateIk}
+                    onUpdate={this.updatePlotWithHexapod}
                     onMount={this.onPageLoad}
                 />
             </Route>
@@ -211,8 +177,6 @@ class App extends React.Component {
                 <div className="sidebar column-container cell">
                     {this.mightShowDimensions()}
                     {this.showPage()}
-                    {this.mightShowPoseTable()}
-                    {this.mightShowMessage()}
                 </div>
                 {this.mightShowPlot()}
             </div>
