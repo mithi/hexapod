@@ -21,7 +21,6 @@ export const Routes = ({
     layout,
     revision,
     hexapodParams,
-    patternParams,
     onRelayout,
 }) => {
     const { path } = useRouteMatch()
@@ -47,7 +46,7 @@ export const Routes = ({
                         </Route>
 
                         <Route path={PATHS.legPatterns.path}>
-                            <SuspenseLegPatternPage params={{ patternParams }} />
+                            <SuspenseLegPatternPage />
                         </Route>
 
                         <Route path={PATHS.walkingGaits.path}>
