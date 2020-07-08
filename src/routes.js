@@ -24,9 +24,8 @@ export const Routes = ({
     hexapodParams,
     patternParams,
     ikParams,
+    updateIk,
     updatePose,
-    updateIkParams,
-    updatePatternPose,
     updateDimensions,
     onRelayout,
 }) => {
@@ -60,14 +59,14 @@ export const Routes = ({
                                     dimensions: hexapodParams.dimensions,
                                     ikParams: ikParams,
                                 }}
-                                onUpdate={updateIkParams}
+                                onUpdate={updateIk}
                                 onMount={onPageLoad}
                             />
                         </Route>
                         <Route path={PATHS.legPatterns.path}>
                             <SuspenseLegPatternPage
                                 params={{ patternParams: patternParams }}
-                                onUpdate={updatePatternPose}
+                                onUpdate={updatePose}
                                 onMount={onPageLoad}
                             />
                         </Route>
