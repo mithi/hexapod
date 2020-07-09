@@ -1,5 +1,5 @@
 import React from "react"
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom"
 import ReactGA from "react-ga"
 import { VirtualHexapod, getNewPlotParams } from "./hexapod"
 import * as defaults from "./templates"
@@ -21,7 +21,6 @@ ReactGA.initialize("UA-170794768-1", {
 
 class App extends React.Component {
     state = {
-        currentPage: SECTION_NAMES.LandingPage,
         inHexapodPage: false,
 
         hexapodParams: {
@@ -43,18 +42,13 @@ class App extends React.Component {
 
     onPageLoad = pageName => {
         ReactGA.pageview(window.location.pathname + window.location.search)
-        this.setState({ currentPage: pageName })
 
         if (pageName === SECTION_NAMES.landingPage) {
             this.setState({ inHexapodPage: false })
             return
         }
 
-        this.setState({
-            inHexapodPage: true,
-            hexapodParams: { ...this.state.hexapodParams, pose: defaults.DEFAULT_POSE },
-        })
-
+        this.setState({ inHexapodPage: true })
         this.updatePlot(this.state.hexapodParams.dimensions, defaults.DEFAULT_POSE)
     }
 
@@ -63,7 +57,7 @@ class App extends React.Component {
      * * * * * * * * * * * * * */
 
     updatePlotWithHexapod = hexapod => {
-        if (hexapod === null || hexapod === undefined || !hexapod.foundSolution) {
+        if (!hexapod || !hexapod.foundSolution) {
             return
         }
 
@@ -102,21 +96,8 @@ class App extends React.Component {
      * Control display of widgets
      * * * * * * * * * * * * * */
 
-    mightShowDetailedNav = () => (this.state.inHexapodPage ? <NavDetailed /> : null)
-
-    mightShowDimensions = () => {
-        if (this.state.inHexapodPage) {
-            return (
-                <DimensionsWidget
-                    params={{ dimensions: this.state.hexapodParams.dimensions }}
-                    onUpdate={this.updateDimensions}
-                />
-            )
-        }
-    }
-
-    mightShowPlot = () => (
-        <div className={this.state.inHexapodPage ? "plot border" : "no-display"}>
+    plot = () => (
+        <div hidden={!this.state.inHexapodPage} className="plot border">
             <HexapodPlot
                 data={this.state.plot.data}
                 layout={this.state.plot.layout}
@@ -126,42 +107,68 @@ class App extends React.Component {
         </div>
     )
 
+    dimensions = () => (
+        <div hidden={!this.state.inHexapodPage}>
+            <DimensionsWidget
+                params={{ dimensions: this.state.hexapodParams.dimensions }}
+                onUpdate={this.updateDimensions}
+            />
+        </div>
+    )
+
+    navDetailed = () => (
+        <div hidden={!this.state.inHexapodPage}>
+            <NavDetailed />
+        </div>
+    )
+
     /* * * * * * * * * * * * * *
      * Pages
      * * * * * * * * * * * * * */
 
-    showPage = () => (
+    pageLanding = () => <LandingPage onMount={this.onPageLoad} />
+
+    pagePatterns = () => (
+        <LegPatternPage onMount={this.onPageLoad} onUpdate={this.updatePose} />
+    )
+
+    pageIk = () => (
+        <InverseKinematicsPage
+            onMount={this.onPageLoad}
+            onUpdate={this.updatePlotWithHexapod}
+            params={{
+                dimensions: this.state.hexapodParams.dimensions,
+            }}
+        />
+    )
+
+    pageFk = () => (
+        <ForwardKinematicsPage
+            onMount={this.onPageLoad}
+            onUpdate={this.updatePose}
+            params={{ pose: this.state.hexapodParams.pose }}
+        />
+    )
+
+    pageWalking = () => (
+        <WalkingGaitsPage
+            onMount={this.onPageLoad}
+            params={{
+                dimensions: this.state.hexapodParams.dimensions,
+            }}
+            onUpdate={this.updatePose}
+        />
+    )
+
+    page = () => (
         <Switch>
-            <Route path="/" exact>
-                <LandingPage onMount={this.onPageLoad} />
-            </Route>
-            <Route path={PATHS.forwardKinematics.path}>
-                <ForwardKinematicsPage
-                    params={{ pose: this.state.hexapodParams.pose }}
-                    onUpdate={this.updatePose}
-                    onMount={this.onPageLoad}
-                />
-            </Route>
-            <Route path={PATHS.inverseKinematics.path}>
-                <InverseKinematicsPage
-                    params={{
-                        dimensions: this.state.hexapodParams.dimensions,
-                    }}
-                    onUpdate={this.updatePlotWithHexapod}
-                    onMount={this.onPageLoad}
-                />
-            </Route>
-            <Route path={PATHS.legPatterns.path}>
-                <LegPatternPage onUpdate={this.updatePose} onMount={this.onPageLoad} />
-            </Route>
-            <Route path={PATHS.walkingGaits.path}>
-                <WalkingGaitsPage
-                    params={{
-                        dimensions: this.state.hexapodParams.dimensions,
-                    }}
-                    onUpdate={this.updatePose}
-                    onMount={this.onPageLoad}
-                />
+            <Route path="/" exact component={this.pageLanding} />
+            <Route path={PATHS.legPatterns.path} exact component={this.pagePatterns} />
+            <Route path={PATHS.forwardKinematics.path} exact component={this.pageFk} />
+            <Route path={PATHS.inverseKinematics.path} exact component={this.pageIk} />
+            <Route path={PATHS.walkingGaits.path} exact component={this.pageWalking} />
+            <Route>
+                <Redirect to="/" />
             </Route>
         </Switch>
     )
@@ -175,12 +182,12 @@ class App extends React.Component {
             <Nav />
             <div className="main content">
                 <div className="sidebar column-container cell">
-                    {this.mightShowDimensions()}
-                    {this.showPage()}
+                    {this.dimensions()}
+                    {this.page()}
                 </div>
-                {this.mightShowPlot()}
+                {this.plot()}
             </div>
-            {this.mightShowDetailedNav()}
+            {this.navDetailed()}
         </Router>
     )
 }
