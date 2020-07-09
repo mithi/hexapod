@@ -23,16 +23,12 @@ const ToggleSwitch = ({ id, value, handleChange, showValue }) => (
     </div>
 )
 
-const Card = props => {
-    const { className, title, children } = props
-
-    return (
-        <div className={className}>
-            <props.h>{title}</props.h>
-            {children}
-        </div>
-    )
-}
+const Card = ({ className, title, children }) => (
+    <div className={className}>
+        {title}
+        {children}
+    </div>
+)
 
 const BasicButton = ({ handleClick, children }) => (
     <button type="button" className="button" onClick={handleClick}>

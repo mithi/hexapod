@@ -93,7 +93,7 @@ class ForwardKinematicsPage extends Component {
         const cells = LEG_NAMES.map(name => this.makeCell(name))
 
         return (
-            <Card title={this.header} h="div">
+            <Card title={this.header}>
                 {renderTwoColumns(cells)}
                 <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
             </Card>

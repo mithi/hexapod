@@ -63,7 +63,7 @@ class InverseKinematicsPage extends Component {
     render() {
         const sliders = this.sliders
         return (
-            <Card title={this.pageName} h="h2">
+            <Card title={<h2>{this.pageName}</h2>}>
                 <div className="row-container">{sliders.slice(0, 3)}</div>
                 <div className="row-container">{sliders.slice(3, 6)}</div>
                 <div className="row-container">{sliders.slice(6, 8)}</div>

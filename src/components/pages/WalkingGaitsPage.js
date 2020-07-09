@@ -226,7 +226,7 @@ class WalkingGaitsPage extends Component {
 
     render = () => {
         return (
-            <Card title={this.header} h="div">
+            <Card title={this.header}>
                 {this.animatingSwitch}
                 {this.widgetsShown}
             </Card>
