@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { sliderList, Card, BasicButton, ToggleSwitch } from "../generic"
 import { SECTION_NAMES, RESET_LABEL } from "../vars"
 import getWalkSequence from "../../hexapod/solvers/walkSequenceSolver"
-import { PoseTable } from ".."
+import PoseTable from "./PoseTable"
 
 const ANIMATION_DELAY = 1
 

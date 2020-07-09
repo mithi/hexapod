@@ -1,6 +1,6 @@
 import React from "react"
 import ReactMarkdown from "react-markdown"
-import { POSITION_NAMES_LIST } from "../hexapod"
+import { POSITION_NAMES_LIST } from "../../hexapod"
 
 const POSITION_ALIAS = {
     rightMiddle: "rm",
