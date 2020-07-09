@@ -38,7 +38,7 @@ class LegPatternPage extends Component {
     }
 
     render = () => (
-        <Card title={this.pageName} h="h2">
+        <Card title={<h2>{this.pageName}</h2>}>
             <div className="leg-sliders-container">{this.sliders}</div>
             <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
         </Card>

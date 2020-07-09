@@ -69,7 +69,7 @@ class DimensionsWidget extends Component {
     }
 
     render = () => (
-        <Card title={this.header} h="div">
+        <Card title={this.header}>
             <div className="row-container flex-wrap">{this.NumberInputFields}</div>
             <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
         </Card>

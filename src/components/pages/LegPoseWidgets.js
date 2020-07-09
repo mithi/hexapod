@@ -27,7 +27,7 @@ class LegPoseWidget extends Component {
     }
 
     render = () => (
-        <Card title={this.props.name} h="h3" className="column-container">
+        <Card title={<h3>{this.props.name}</h3>} className="column-container">
             <div className={this.props.renderStacked ? "" : "row-container flex-wrap"}>
                 {this.fields(this.props.WidgetType)}
             </div>
