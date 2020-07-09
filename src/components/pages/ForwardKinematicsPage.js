@@ -56,17 +56,6 @@ class ForwardKinematicsPage extends Component {
         })
     }
 
-    get toggleSwitch() {
-        return (
-            <ToggleSwitch
-                id="FwdKinematicsSwitch"
-                value={this.state.widgetType}
-                handleChange={this.toggleMode}
-                showValue={false}
-            />
-        )
-    }
-
     makeCell = name => (
         <div className="cell">
             <LegPoseWidget
@@ -80,16 +69,31 @@ class ForwardKinematicsPage extends Component {
         </div>
     )
 
-    render = () => {
-        const cells = LEG_NAMES.map(name => this.makeCell(name))
-        const header = () => (
+    get toggleSwitch() {
+        return (
+            <ToggleSwitch
+                id="FwdKinematicsSwitch"
+                value={this.state.widgetType}
+                handleChange={this.toggleMode}
+                showValue={false}
+            />
+        )
+    }
+
+    get header() {
+        return (
             <div className="row-container flex-wrap">
                 <h2>{this.pageName}</h2>
                 {this.toggleSwitch}
             </div>
         )
+    }
+
+    render = () => {
+        const cells = LEG_NAMES.map(name => this.makeCell(name))
+
         return (
-            <Card title={header()} h="div">
+            <Card title={this.header} h="div">
                 {renderTwoColumns(cells)}
                 <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
             </Card>
