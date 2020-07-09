@@ -60,7 +60,7 @@ const getWalkSequence = (
 powerStroke aka stancePhase
 returnStroke aka swingPhase
 
-startPowerStroke / endReturnStroke
+1. > startPowerStroke / endReturnStroke < 6.
 
        \
         \
@@ -70,13 +70,23 @@ startPowerStroke / endReturnStroke
       \ \   |   /
        \ *--*--*
 
-endPowerStroke / startReturnStroke
+2. > middlePowerStroke / middleReturnStroke < 5.
 
      --- *--*--*
         /   |   \
        * -- * -- * ---
         \   |   /
     ---- *--*--*
+
+3. > endPowerStroke / startReturnStroke < 4.
+
+       / *--*--*
+      / /   |   \
+       * -- * -- *
+        \   |   / \
+         *--*--*   \
+       /
+      /
 
  TRIPOD1 - leftFront, rightMiddle, leftBack
 
