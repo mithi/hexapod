@@ -4,6 +4,8 @@ import { SECTION_NAMES, RESET_LABEL } from "../vars"
 import getWalkSequence from "../../hexapod/solvers/walkSequenceSolver"
 import { PoseTable } from ".."
 
+const ANIMATION_DELAY = 1
+
 const SLIDER_LABELS = [
     "tz",
     "tx",
@@ -22,7 +24,7 @@ const PARAMS = {
     rx: { minVal: -15, maxVal: 15, stepVal: 0.5, defaultVal: 0 },
     ry: { minVal: -15, maxVal: 15, stepVal: 0.5, defaultVal: 0 },
     legStance: { minVal: -50, maxVal: 50, stepVal: 0.5, defaultVal: 0 },
-    hipStance: { minVal: 20, maxVal: 40, stepVal: 0.5, defaultVal: 20 },
+    hipStance: { minVal: 20, maxVal: 40, stepVal: 0.5, defaultVal: 30 },
     hipSwing: { minVal: 10, maxVal: 40, stepVal: 0.5, defaultVal: 25 },
     liftSwing: { minVal: 10, maxVal: 70, stepVal: 0.5, defaultVal: 40 },
     stepCount: { minVal: 3, maxVal: 7, stepVal: 1, defaultVal: 5 },
@@ -86,7 +88,7 @@ class WalkingGaitsPage extends Component {
     }
 
     startAnimation = () => {
-        this.intervalID = setInterval(this.animate, 1)
+        this.intervalID = setInterval(this.animate, ANIMATION_DELAY)
     }
 
     stopAnimation = () => {
@@ -131,12 +133,14 @@ class WalkingGaitsPage extends Component {
 
     get widgetsSwitch() {
         return (
-            <ToggleSwitch
-                id="gaitWidgetSwitch"
-                value={this.state.showGaitWidgets ? "controlsShown" : "poseShown"}
-                handleChange={this.toggleWidgets}
-                showValue={true}
-            />
+            <p>
+                <ToggleSwitch
+                    id="gaitWidgetSwitch"
+                    value={this.state.showGaitWidgets ? "controlsShown" : "poseShown"}
+                    handleChange={this.toggleWidgets}
+                    showValue={true}
+                />
+            </p>
         )
     }
 
@@ -203,6 +207,14 @@ class WalkingGaitsPage extends Component {
         )
     }
 
+    get widgetsShown() {
+        if (this.state.showGaitWidgets) {
+            return this.gaitWidgets
+        } else {
+            return <PoseTable pose={this.state.pose} />
+        }
+    }
+
     get header() {
         return (
             <div className="row-container flex-wrap">
@@ -210,14 +222,6 @@ class WalkingGaitsPage extends Component {
                 {this.widgetsSwitch}
             </div>
         )
-    }
-
-    get widgetsShown() {
-        if (this.state.showGaitWidgets) {
-            return this.gaitWidgets
-        } else {
-            return <PoseTable pose={this.state.pose} />
-        }
     }
 
     render = () => {
