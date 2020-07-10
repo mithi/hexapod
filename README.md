@@ -7,7 +7,7 @@
 [![](https://img.shields.io/badge/Buy%20me%20-coffee!-orange.svg?logo=buy-me-a-coffee&color=795548)](https://ko-fi.com/minimithi)
 
 
-<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="500" align="left" /> 
+<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="600" align="left" /> 
 
 # Mithi's Bare-Minimum Hexapod Robot Simulator Rewrite
  
