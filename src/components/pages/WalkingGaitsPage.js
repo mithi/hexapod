@@ -215,18 +215,9 @@ class WalkingGaitsPage extends Component {
         }
     }
 
-    get header() {
-        return (
-            <div className="row-container flex-wrap">
-                <h2>{this.pageName}</h2>
-                {this.widgetsSwitch}
-            </div>
-        )
-    }
-
     render = () => {
         return (
-            <Card title={this.header}>
+            <Card title={<h2>{this.pageName}</h2>} other={this.widgetsSwitch}>
                 {this.animatingSwitch}
                 {this.widgetsShown}
             </Card>

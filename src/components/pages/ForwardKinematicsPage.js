@@ -80,25 +80,12 @@ class ForwardKinematicsPage extends Component {
         )
     }
 
-    get header() {
-        return (
-            <div className="row-container flex-wrap">
-                <h2>{this.pageName}</h2>
-                {this.toggleSwitch}
-            </div>
-        )
-    }
-
-    render = () => {
-        const cells = LEG_NAMES.map(name => this.makeCell(name))
-
-        return (
-            <Card title={this.header}>
-                {renderTwoColumns(cells)}
-                <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
-            </Card>
-        )
-    }
+    render = () => (
+        <Card title={<h2>{this.pageName}</h2>} other={this.toggleSwitch}>
+            {renderTwoColumns(LEG_NAMES.map(name => this.makeCell(name)))}
+            <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
+        </Card>
+    )
 }
 
 export default ForwardKinematicsPage
