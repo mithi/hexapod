@@ -5,18 +5,6 @@ import { Card, ToggleSwitch, BasicButton, NumberInputField, Slider } from "../ge
 import { DEFAULT_POSE } from "../../templates"
 import { SECTION_NAMES, LEG_NAMES, RESET_LABEL } from "../vars"
 
-const renderTwoColumns = cells => {
-    // prettier-ignore
-    const stackedCells = [[0, 1], [2, 3], [4, 5]].map(([i, j]) => (
-        <div key={`${i}${j}`} className="row-container">
-            {cells[i]}
-            {cells[j]}
-        </div>
-    ))
-
-    return <div> {stackedCells} </div>
-}
-
 class ForwardKinematicsPage extends Component {
     pageName = SECTION_NAMES.forwardKinematics
     state = { WidgetType: NumberInputField }
@@ -69,7 +57,9 @@ class ForwardKinematicsPage extends Component {
 
     render = () => (
         <Card title={<h2>{this.pageName}</h2>} other={this.toggleSwitch}>
-            {renderTwoColumns(LEG_NAMES.map(name => this.makeCell(name)))}
+            <div className="grid-cols-2">
+                {LEG_NAMES.map(name => this.makeCell(name))}
+            </div>
             <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
         </Card>
     )

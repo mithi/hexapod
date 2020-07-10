@@ -50,7 +50,7 @@ const NavBullets = () => (
 const NavDetailed = () => (
     <footer>
         <nav id="nav">
-            <ul className="column-container no-bullet">
+            <ul className="grid-cols-1 no-bullet">
                 {URL_LINKS.map(link => (
                     <BulletUrlLink
                         path={link.url}

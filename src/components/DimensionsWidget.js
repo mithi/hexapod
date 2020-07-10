@@ -59,18 +59,9 @@ class DimensionsWidget extends Component {
         ))
     }
 
-    get header() {
-        return (
-            <div className="row-container flex-wrap">
-                <h2>{this.sectionName}</h2>
-                {this.toggleSwitch}
-            </div>
-        )
-    }
-
     render = () => (
-        <Card title={this.header}>
-            <div className="row-container flex-wrap">{this.NumberInputFields}</div>
+        <Card title={<h2>{this.sectionName}</h2>} other={this.toggleSwitch}>
+            <div className="grid-cols-6">{this.NumberInputFields}</div>
             <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
         </Card>
     )

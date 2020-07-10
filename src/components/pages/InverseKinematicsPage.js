@@ -64,9 +64,9 @@ class InverseKinematicsPage extends Component {
         const sliders = this.sliders
         return (
             <Card title={<h2>{this.pageName}</h2>}>
-                <div className="row-container">{sliders.slice(0, 3)}</div>
-                <div className="row-container">{sliders.slice(3, 6)}</div>
-                <div className="row-container">{sliders.slice(6, 8)}</div>
+                <div className="grid-cols-3">{sliders.slice(0, 6)}</div>
+                <div className="grid-cols-2">{sliders.slice(6, 8)}</div>
+
                 <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
                 {this.additionalInfo}
             </Card>
