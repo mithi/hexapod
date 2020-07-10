@@ -11,13 +11,13 @@
 <img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" align="left" /> 
 
 
-🎉 Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero server-side computations!
+- [x] Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero server-side computations!
 
-🎉 July 11, 2020 UPDATE! It can also simulate gaits now 🥰 
+- [x] 7JUL20 UPDATE! It can also simulate gaits now 🥰 
 
-🎉 Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
+- [x] Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
 
-🎉 See: [https://hexapod.netlify.app](https://hexapod.netlify.app)
+- [x] See: [https://hexapod.netlify.app](https://hexapod.netlify.app)
 
 
 <img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="250" align="right"/>
