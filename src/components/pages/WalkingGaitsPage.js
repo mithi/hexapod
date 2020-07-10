@@ -98,7 +98,7 @@ class WalkingGaitsPage extends Component {
         const pose = getPose(walkSequence, step)
 
         if (inWalkMode) {
-            this.onUpdate(pose, 0)
+            this.onUpdate(pose, currentTwist)
             return
         }
 
@@ -109,19 +109,15 @@ class WalkingGaitsPage extends Component {
         this.onUpdate(pose, twist)
     }
 
-    onUpdate = (pose, twist) => {
-        this.setState({ pose, currentTwist: twist })
+    onUpdate = (pose, currentTwist) => {
+        this.setState({ pose, currentTwist })
 
         const dimensions = this.props.params.dimensions
-        if (this.state.inWalkMode) {
-            const hexapod = new VirtualHexapod(dimensions, pose)
-            this.props.onUpdate(hexapod)
-            return
-        }
-
         const hexapod = new VirtualHexapod(dimensions, pose, { wontRotate: true })
-        if (hexapod) {
-            this.props.onUpdate(hexapod.cloneTrot(tRotZmatrix(twist)))
+
+        // ❗❗️HACK When we've passed undefined pose values for some reason
+        if (hexapod && hexapod.body) {
+            this.props.onUpdate(hexapod.cloneTrot(tRotZmatrix(currentTwist)))
         }
     }
 
@@ -157,9 +153,8 @@ class WalkingGaitsPage extends Component {
     }
 
     reset = () => {
-        const { isTripodGait, inWalkMode } = this.state
-        const gaitParams = DEFAULT_GAIT_VARS
-        this.setWalkSequence(gaitParams, isTripodGait, inWalkMode)
+        this.setWalkSequence(DEFAULT_GAIT_VARS, true, true)
+        this.setState({ currentTwist: 0 })
     }
 
     toggleWalkMode = () => {
@@ -232,7 +227,11 @@ class WalkingGaitsPage extends Component {
 
     get animationCount() {
         const { isAnimating, animationCount } = this.state
-        return <div className="text" hidden={!isAnimating}>{animationCount}</div>
+        return (
+            <div className="text" hidden={!isAnimating}>
+                {animationCount}
+            </div>
+        )
     }
 
     threeSwitches = (switch1, switch2, switch3) => (
