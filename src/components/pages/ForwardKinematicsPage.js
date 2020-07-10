@@ -19,7 +19,7 @@ const renderTwoColumns = cells => {
 
 class ForwardKinematicsPage extends Component {
     pageName = SECTION_NAMES.forwardKinematics
-    state = { widgetType: NumberInputField }
+    state = { WidgetType: NumberInputField }
 
     componentDidMount() {
         this.props.onMount(this.pageName)
@@ -36,11 +36,11 @@ class ForwardKinematicsPage extends Component {
         this.props.onUpdate(newPose)
     }
 
-    currentlySlider = () => this.state.widgetType === Slider
+    currentlySlider = () => this.state.WidgetType === Slider
 
     toggleMode = () => {
-        const widgetType = this.currentlySlider() ? NumberInputField : Slider
-        this.setState({ widgetType })
+        const WidgetType = this.currentlySlider() ? NumberInputField : Slider
+        this.setState({ WidgetType })
     }
 
     makeCell = name => (
@@ -50,7 +50,7 @@ class ForwardKinematicsPage extends Component {
                 name={name}
                 pose={this.props.params.pose[name]}
                 onUpdate={this.updatePose}
-                WidgetType={this.state.widgetType}
+                WidgetType={this.state.WidgetType}
                 renderStacked={this.currentlySlider()}
             />
         </div>
@@ -60,7 +60,7 @@ class ForwardKinematicsPage extends Component {
         return (
             <ToggleSwitch
                 id="FwdKinematicsSwitch"
-                value={renderToString(this.state.widgetType)}
+                value={renderToString(this.state.WidgetType)}
                 handleChange={this.toggleMode}
                 showValue={false}
             />
