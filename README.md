@@ -9,9 +9,8 @@
 
 # Mithi's Bare-Minimum Hexapod Robot Simulator Rewrite
 _(in Javascript!)_
-  
-<img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="200" align="left" />
-
+ 
+<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="350" align="right" /> 
 
 - Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero server-side computations!
 
@@ -22,13 +21,12 @@ _(in Javascript!)_
 - UPDATE: It can walk now 🥰 (Ripple and tripod gait simulation) 
 
 ## Contributions Welcome!
-
-<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="350" align="right" />
-
-
 - Any contribution to improve the source code will be extremely appreciated. 💙 Anything. Anything at all. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement. [Contributing Guide](./CONTRIBUTING.md).
 
+<img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="150" align="left" />
+
 ## Main Contributors
+
 I will put your name below if I've merged your PR multiple times or if you've substantially contributed to this project in other ways.
 
 - [@mithi](https://github.com/mithi)
