@@ -46,6 +46,10 @@ const getPose = (seq, i) => {
     }, {})
 }
 
+const newSwitch = (id, value, handleChange) => (
+    <ToggleSwitch id={id} handleChange={handleChange} value={value} showValue={true} />
+)
+
 class WalkingGaitsPage extends Component {
     pageName = SECTION_NAMES.walkingGaits
     state = {
@@ -134,47 +138,23 @@ class WalkingGaitsPage extends Component {
     }
 
     get widgetsSwitch() {
-        return (
-            <ToggleSwitch
-                id="gaitWidgetSwitch"
-                value={this.state.showGaitWidgets ? "controlsShown" : "poseShown"}
-                handleChange={this.toggleWidgets}
-                showValue={true}
-            />
-        )
+        const value = this.state.showGaitWidgets ? "controlsShown" : "poseShown"
+        return newSwitch("widgetSw", value, this.toggleWidgets)
     }
 
     get animatingSwitch() {
-        return (
-            <ToggleSwitch
-                id="IsAnimatingSwitch"
-                value={this.state.isAnimating ? "PLAYING... " : "...PAUSED. "}
-                handleChange={this.toggleAnimating}
-                showValue={true}
-            />
-        )
+        const value = this.state.isAnimating ? "PLAYING... " : "...PAUSED. "
+        return newSwitch("animatingSw", value, this.toggleAnimating)
     }
 
     get gaitTypeSwitch() {
-        return (
-            <ToggleSwitch
-                id="gaitTypeSwitch"
-                value={this.state.isTripodGait ? "tripodGait" : "rippleGait"}
-                handleChange={this.toggleGaitType}
-                showValue={true}
-            />
-        )
+        const value = this.state.isTripodGait ? "tripodGait" : "rippleGait"
+        return newSwitch("gaitSw", value, this.toggleGaitType)
     }
 
     get directionSwitch() {
-        return (
-            <ToggleSwitch
-                id="walkDirectionSwitch"
-                value={this.state.isForward ? "goingForward" : "goingBackward"}
-                handleChange={this.toggleDirection}
-                showValue={true}
-            />
-        )
+        const value = this.state.isForward ? "goingForward" : "goingBackward"
+        return newSwitch("directionSw", value, this.toggleDirection)
     }
 
     get sliders() {
