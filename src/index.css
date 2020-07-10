@@ -173,7 +173,7 @@ tr:hover {
 
 .text {
     font-weight: bold;
-    font-size: 0.6rem;
+    font-size: 0.8rem;
 }
 
 .small-icon {
@@ -246,8 +246,7 @@ input[type="number"] {
     display: none;
 }
 
-.row-container,
-.leg-sliders-container {
+.row-container {
     display: flex;
 }
 
@@ -268,9 +267,24 @@ input[type="number"] {
     margin: 5px;
 }
 
+.grid-cols-1 {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.grid-cols-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
 .grid-cols-3 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+}
+
+.grid-cols-6 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 .slider {
@@ -403,7 +417,7 @@ input:checked + .toggle-switch-widget:before {
     }
 
     .sidebar {
-        min-width: 375px;
+        min-width: 325px;
     }
 
     .plot {
@@ -414,10 +428,6 @@ input:checked + .toggle-switch-widget:before {
 
     .page-content {
         flex-grow: 0;
-    }
-
-    .leg-sliders-container {
-        flex-direction: column;
     }
 
     .slider-container.cell {
@@ -482,10 +492,6 @@ input:checked + .toggle-switch-widget:before {
 
     .page-content {
         flex-grow: 0;
-    }
-
-    .leg-sliders-container {
-        flex-direction: column;
     }
 
     .slider-container.cell {

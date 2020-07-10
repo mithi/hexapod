@@ -12,13 +12,13 @@ const ANIMATION_DELAY = 1
 const SLIDER_LABELS = [
     "hipSwing",
     "liftSwing",
-    "stepCount",
-    "tz",
-    "tx",
     "legStance",
+    "hipStance",
+    "tx",
+    "tz",
     "rx",
     "ry",
-    "hipStance",
+    "stepCount",
 ]
 
 const PARAMS = {
@@ -200,7 +200,7 @@ class WalkingGaitsPage extends Component {
     }
 
     get animatingSwitch() {
-        const value = this.state.isAnimating ? "PLAYING... " : "...PAUSED. "
+        const value = this.state.isAnimating ? "PLAYING..." : "...PAUSED. "
         return newSwitch("animatingSw", value, this.toggleAnimating)
     }
 
@@ -227,19 +227,19 @@ class WalkingGaitsPage extends Component {
             handleChange: this.updateGaitParams,
         })
 
-        return <div className="grid-cols-3">{sliders}</div>
+        return <div className="grid-cols-2">{sliders}</div>
     }
 
     get animationCount() {
         const { isAnimating, animationCount } = this.state
-        return <p hidden={!isAnimating}>{animationCount}</p>
+        return <div className="text" hidden={!isAnimating}>{animationCount}</div>
     }
 
     threeSwitches = (switch1, switch2, switch3) => (
-        <div className="row-container" style={{ padding: "8px" }}>
-            <div className="cell">{switch1}</div>
-            <div className="cell">{switch2}</div>
-            <div className="cell">{switch3}</div>
+        <div className="grid-cols-3" style={{ paddingBottom: "20px" }}>
+            {switch1}
+            {switch2}
+            {switch3}
         </div>
     )
 
