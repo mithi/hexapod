@@ -125,40 +125,39 @@ class App extends React.Component {
     /* * * * * * * * * * * * * *
      * Pages
      * * * * * * * * * * * * * */
-
-    pageLanding = () => <LandingPage onMount={this.onPageLoad} />
-
-    pagePatterns = () => (
-        <LegPatternPage onMount={this.onPageLoad} onUpdate={this.updatePose} />
-    )
-
-    pageIk = () => (
-        <InverseKinematicsPage
-            onMount={this.onPageLoad}
-            onUpdate={this.updatePlotWithHexapod}
-            params={{
-                dimensions: this.state.hexapodParams.dimensions,
-            }}
+    pageComponent = (Component, onUpdate, params) =>
+        // prettier-ignore
+        <Component
+            onMount={this.onPageLoad} onUpdate={onUpdate} params={params}
         />
-    )
 
-    pageFk = () => (
-        <ForwardKinematicsPage
-            onMount={this.onPageLoad}
-            onUpdate={this.updatePose}
-            params={{ pose: this.state.hexapodParams.pose }}
-        />
-    )
+    pageLanding = () => this.pageComponent(LandingPage)
 
-    pageWalking = () => (
-        <WalkingGaitsPage
-            onMount={this.onPageLoad}
-            params={{
-                dimensions: this.state.hexapodParams.dimensions,
-            }}
-            onUpdate={this.updatePose}
-        />
-    )
+    pagePatterns = () => this.pageComponent(LegPatternPage, this.updatePose)
+
+    pageIk = () =>
+        // prettier-ignore
+        this.pageComponent(
+            InverseKinematicsPage,
+            this.updatePlotWithHexapod,
+            { dimensions: this.state.hexapodParams.dimensions }
+        )
+
+    pageFk = () =>
+        // prettier-ignore
+        this.pageComponent(
+            ForwardKinematicsPage,
+            this.updatePose,
+            { pose: this.state.hexapodParams.pose }
+        )
+
+    pageWalking = () =>
+        // prettier-ignore
+        this.pageComponent(
+            WalkingGaitsPage,
+            this.updatePose,
+            { dimensions: this.state.hexapodParams.dimensions }
+        )
 
     page = () => (
         <Switch>
