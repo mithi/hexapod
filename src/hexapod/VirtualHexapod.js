@@ -124,9 +124,10 @@ class VirtualHexapod {
     constructor(
         dimensions,
         pose,
-        flags = { hasNoPoints: false, assumeKnownGroundPoints: false }
+        flags = { hasNoPoints: false, assumeKnownGroundPoints: false, wontRotate: false }
     ) {
         Object.assign(this, { dimensions, pose })
+
         if (flags.hasNoPoints) {
             return
         }
@@ -179,6 +180,9 @@ class VirtualHexapod {
         // .................
         // STEP 3: Twist around the zAxis if you have to
         // .................
+        if (flags.wontRotate) {
+            return
+        }
 
         // case 1: hexapod will not twist about z axis
         if (this.legs.every(leg => leg.pose.alpha === 0)) {
