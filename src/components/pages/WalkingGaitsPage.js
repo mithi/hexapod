@@ -70,13 +70,18 @@ class WalkingGaitsPage extends Component {
     }
 
     componentWillUnmount() {
-        this.stopAnimation()
+        clearInterval(this.intervalID)
     }
 
     toggleAnimating = () => {
         const isAnimating = !this.state.isAnimating
 
-        isAnimating ? this.startAnimation() : this.stopAnimation()
+        if (isAnimating) {
+            this.intervalID = setInterval(this.animate, ANIMATION_DELAY)
+        } else {
+            clearInterval(this.intervalID)
+        }
+
         this.setState({ isAnimating })
     }
 
@@ -92,14 +97,6 @@ class WalkingGaitsPage extends Component {
 
     toggleWidgets = () => {
         this.setState({ showGaitWidgets: !this.state.showGaitWidgets })
-    }
-
-    startAnimation = () => {
-        this.intervalID = setInterval(this.animate, ANIMATION_DELAY)
-    }
-
-    stopAnimation = () => {
-        clearInterval(this.intervalID)
     }
 
     animate = () => {
@@ -193,23 +190,21 @@ class WalkingGaitsPage extends Component {
         </div>
     )
 
-    render = () => {
-        return (
-            <Card title={<h2>{this.pageName}</h2>} other={this.animationCount}>
-                {this.twoSwitches(this.animatingSwitch, this.widgetsSwitch)}
+    render = () => (
+        <Card title={<h2>{this.pageName}</h2>} other={this.animationCount}>
+            {this.twoSwitches(this.animatingSwitch, this.widgetsSwitch)}
 
-                <div hidden={!this.state.showGaitWidgets}>
-                    {this.twoSwitches(this.gaitTypeSwitch, this.directionSwitch)}
-                    {this.sliders}
-                    <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
-                </div>
+            <div hidden={!this.state.showGaitWidgets}>
+                {this.twoSwitches(this.gaitTypeSwitch, this.directionSwitch)}
+                {this.sliders}
+                <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
+            </div>
 
-                <div hidden={this.state.showGaitWidgets}>
-                    <PoseTable pose={this.state.pose} />
-                </div>
-            </Card>
-        )
-    }
+            <div hidden={this.state.showGaitWidgets}>
+                <PoseTable pose={this.state.pose} />
+            </div>
+        </Card>
+    )
 }
 
 export default WalkingGaitsPage
