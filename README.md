@@ -20,10 +20,10 @@ _(in Javascript!)_
 
 - UPDATE: It can walk now 🥰 (Ripple and tripod gait simulation) 
 
+<img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="150" align="left" />
+
 ## Contributions Welcome!
 - Any contribution to improve the source code will be extremely appreciated. 💙 Anything. Anything at all. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement. [Contributing Guide](./CONTRIBUTING.md).
-
-<img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="150" align="left" />
 
 ## Main Contributors
 
