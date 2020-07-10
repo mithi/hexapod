@@ -4,6 +4,7 @@ import { SECTION_NAMES, RESET_LABEL } from "../vars"
 import getWalkSequence from "../../hexapod/solvers/walkSequenceSolver"
 import PoseTable from "./PoseTable"
 import { DEFAULT_POSE } from "../../templates"
+import { VirtualHexapod } from "../../hexapod"
 
 const ANIMATION_DELAY = 1
 
@@ -109,8 +110,14 @@ class WalkingGaitsPage extends Component {
             : this.state.totalStepCount - animationCount
 
         const pose = getPose(this.state.walkSequence, step)
-        this.props.onUpdate(pose)
-        this.setState({ animationCount, pose })
+        this.onUpdate(pose)
+        this.setState({ animationCount })
+    }
+
+    onUpdate = pose => {
+        const hexapod = new VirtualHexapod(this.props.params.dimensions, pose)
+        this.props.onUpdate(hexapod)
+        this.setState({ pose })
     }
 
     setWalkSequence = (gaitParams, isTripodGait) => {
@@ -123,8 +130,8 @@ class WalkingGaitsPage extends Component {
         const totalStepCount = walkSequence["leftMiddle"].alpha.length
 
         const pose = getPose(walkSequence, this.state.animationCount)
-        this.props.onUpdate(pose)
-        this.setState({ gaitParams, walkSequence, totalStepCount, pose })
+        this.onUpdate(pose)
+        this.setState({ gaitParams, walkSequence, totalStepCount })
     }
 
     updateGaitParams = (name, value) => {

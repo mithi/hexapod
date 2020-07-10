@@ -140,7 +140,7 @@ class App extends React.Component {
         })
 
     pageWalking = () =>
-        this.pageComponent(WalkingGaitsPage, this.updatePose, {
+        this.pageComponent(WalkingGaitsPage, this.updatePlotWithHexapod, {
             dimensions: this.state.hexapodParams.dimensions,
         })
 
