@@ -37,7 +37,7 @@ class App extends React.Component {
     }
 
     /* * * * * * * * * * * * * *
-     * Handle page load
+     * Page load and plot update handlers
      * * * * * * * * * * * * * */
 
     onPageLoad = pageName => {
@@ -51,10 +51,6 @@ class App extends React.Component {
         this.setState({ inHexapodPage: true })
         this.updatePlot(this.state.hexapodParams.dimensions, defaults.DEFAULT_POSE)
     }
-
-    /* * * * * * * * * * * * * *
-     * Handle plot update
-     * * * * * * * * * * * * * */
 
     updatePlotWithHexapod = hexapod => {
         if (!hexapod || !hexapod.foundSolution) {
@@ -93,7 +89,7 @@ class App extends React.Component {
     updatePose = pose => this.updatePlot(this.state.hexapodParams.dimensions, pose)
 
     /* * * * * * * * * * * * * *
-     * Control display of widgets
+     * Widgets control
      * * * * * * * * * * * * * */
 
     plot = () => (
@@ -125,39 +121,28 @@ class App extends React.Component {
     /* * * * * * * * * * * * * *
      * Pages
      * * * * * * * * * * * * * */
-    pageComponent = (Component, onUpdate, params) =>
-        // prettier-ignore
-        <Component
-            onMount={this.onPageLoad} onUpdate={onUpdate} params={params}
-        />
+    pageComponent = (Component, onUpdate, params) => (
+        <Component onMount={this.onPageLoad} onUpdate={onUpdate} params={params} />
+    )
 
     pageLanding = () => this.pageComponent(LandingPage)
 
     pagePatterns = () => this.pageComponent(LegPatternPage, this.updatePose)
 
     pageIk = () =>
-        // prettier-ignore
-        this.pageComponent(
-            InverseKinematicsPage,
-            this.updatePlotWithHexapod,
-            { dimensions: this.state.hexapodParams.dimensions }
-        )
+        this.pageComponent(InverseKinematicsPage, this.updatePlotWithHexapod, {
+            dimensions: this.state.hexapodParams.dimensions,
+        })
 
     pageFk = () =>
-        // prettier-ignore
-        this.pageComponent(
-            ForwardKinematicsPage,
-            this.updatePose,
-            { pose: this.state.hexapodParams.pose }
-        )
+        this.pageComponent(ForwardKinematicsPage, this.updatePose, {
+            pose: this.state.hexapodParams.pose,
+        })
 
     pageWalking = () =>
-        // prettier-ignore
-        this.pageComponent(
-            WalkingGaitsPage,
-            this.updatePose,
-            { dimensions: this.state.hexapodParams.dimensions }
-        )
+        this.pageComponent(WalkingGaitsPage, this.updatePose, {
+            dimensions: this.state.hexapodParams.dimensions,
+        })
 
     page = () => (
         <Switch>
