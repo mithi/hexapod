@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { renderToString } from "react-dom/server"
 import LegPoseWidget from "./LegPoseWidgets"
 import { Card, ToggleSwitch, BasicButton, NumberInputField, Slider } from "../generic"
 import { DEFAULT_POSE } from "../../templates"
@@ -24,12 +25,7 @@ const renderTwoColumns = cells => (
 class ForwardKinematicsPage extends Component {
     pageName = SECTION_NAMES.forwardKinematics
 
-    widgetTypes = {
-        Slider: Slider,
-        NumberInputField: NumberInputField,
-    }
-
-    state = { modeBool: false, widgetType: "NumberInputField" }
+    state = { widgetType: NumberInputField }
 
     componentDidMount() {
         this.props.onMount(this.pageName)
@@ -48,12 +44,11 @@ class ForwardKinematicsPage extends Component {
         this.props.onUpdate(newPose)
     }
 
+    currentlySlider = () => this.state.widgetType === Slider
+
     toggleMode = () => {
-        const newModeBool = !this.state.modeBool
-        this.setState({
-            modeBool: newModeBool,
-            widgetType: newModeBool ? "Slider" : "NumberInputField",
-        })
+        const widgetType = this.currentlySlider() ? NumberInputField : Slider
+        this.setState({ widgetType })
     }
 
     makeCell = name => (
@@ -63,8 +58,8 @@ class ForwardKinematicsPage extends Component {
                 name={name}
                 pose={this.props.params.pose[name]}
                 onUpdate={this.updatePose}
-                WidgetType={this.widgetTypes[this.state.widgetType]}
-                renderStacked={this.state.modeBool}
+                WidgetType={this.state.widgetType}
+                renderStacked={this.currentlySlider()}
             />
         </div>
     )
@@ -73,7 +68,7 @@ class ForwardKinematicsPage extends Component {
         return (
             <ToggleSwitch
                 id="FwdKinematicsSwitch"
-                value={this.state.widgetType}
+                value={renderToString(this.state.widgetType)}
                 handleChange={this.toggleMode}
                 showValue={false}
             />
