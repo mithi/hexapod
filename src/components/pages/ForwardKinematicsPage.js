@@ -5,35 +5,27 @@ import { Card, ToggleSwitch, BasicButton, NumberInputField, Slider } from "../ge
 import { DEFAULT_POSE } from "../../templates"
 import { SECTION_NAMES, LEG_NAMES, RESET_LABEL } from "../vars"
 
-const renderTwoColumns = cells => (
-    <>
-        <div className="row-container">
-            {cells[0]}
-            {cells[1]}
+const renderTwoColumns = cells => {
+    // prettier-ignore
+    const stackedCells = [[0, 1], [2, 3], [4, 5]].map(([i, j]) => (
+        <div key={`${i}${j}`} className="row-container">
+            {cells[i]}
+            {cells[j]}
         </div>
-        <div className="row-container">
-            {cells[2]}
-            {cells[3]}
-        </div>
-        <div className="row-container">
-            {cells[4]}
-            {cells[5]}
-        </div>
-    </>
-)
+    ))
+
+    return <div> {stackedCells} </div>
+}
 
 class ForwardKinematicsPage extends Component {
     pageName = SECTION_NAMES.forwardKinematics
-
     state = { widgetType: NumberInputField }
 
     componentDidMount() {
         this.props.onMount(this.pageName)
     }
 
-    reset = () => {
-        this.props.onUpdate(DEFAULT_POSE)
-    }
+    reset = () => this.props.onUpdate(DEFAULT_POSE)
 
     updatePose = (name, angle, value) => {
         const pose = this.props.params.pose
