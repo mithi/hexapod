@@ -5,6 +5,7 @@ import getWalkSequence from "../../hexapod/solvers/walkSequenceSolver"
 import PoseTable from "./PoseTable"
 import { DEFAULT_POSE } from "../../templates"
 import { VirtualHexapod } from "../../hexapod"
+import { tRotZmatrix } from "../../hexapod/geometry"
 
 const ANIMATION_DELAY = 1
 
@@ -59,14 +60,21 @@ class WalkingGaitsPage extends Component {
         isAnimating: false,
         isTripodGait: true,
         isForward: true,
+        inWalkMode: true,
         showGaitWidgets: true,
         animationCount: 0,
+        currentTwist: 0,
         totalStepCount: 0,
+        deltaTwist: 0,
     }
 
     componentDidMount() {
         this.props.onMount(this.pageName)
-        this.setWalkSequence(DEFAULT_GAIT_VARS, this.state.isTripodGait)
+        this.setWalkSequence(
+            DEFAULT_GAIT_VARS,
+            this.state.isTripodGait,
+            this.state.inWalkMode
+        )
     }
 
     componentWillUnmount() {
@@ -89,9 +97,15 @@ class WalkingGaitsPage extends Component {
         this.setState({ isForward: !this.state.isForward })
     }
 
+    toggleWalkMode = () => {
+        const inWalkMode = !this.state.inWalkMode
+        this.setWalkSequence(this.state.gaitParams, this.state.isTripodGait, inWalkMode)
+        this.setState({ inWalkMode })
+    }
+
     toggleGaitType = () => {
         const isTripodGait = !this.state.isTripodGait
-        this.setWalkSequence(this.state.gaitParams, isTripodGait)
+        this.setWalkSequence(this.state.gaitParams, isTripodGait, this.state.inWalkMode)
         this.setState({ isTripodGait })
     }
 
@@ -101,44 +115,87 @@ class WalkingGaitsPage extends Component {
 
     animate = () => {
         const animationCount = (this.state.animationCount + 1) % this.state.totalStepCount
+        this.setState({ animationCount })
 
         const step = this.state.isForward
             ? animationCount
             : this.state.totalStepCount - animationCount
 
         const pose = getPose(this.state.walkSequence, step)
-        this.onUpdate(pose)
-        this.setState({ animationCount })
+
+        if (!this.inWalkMode) {
+            const deltaTwist = this.state.deltaTwist
+            const twist = this.state.isForward
+                ? (this.state.currentTwist + deltaTwist) % 360
+                : (this.state.currentTwist - deltaTwist) % 360
+
+            this.onUpdate(pose, twist)
+            this.setState({ currentTwist: twist })
+            return
+        }
+
+        this.onUpdate(pose, 0)
     }
 
-    onUpdate = pose => {
-        const hexapod = new VirtualHexapod(this.props.params.dimensions, pose)
-        this.props.onUpdate(hexapod)
+    onUpdate = (pose, twist) => {
         this.setState({ pose })
+        const dimensions = this.props.params.dimensions
+
+        if (twist !== 0) {
+            const hexapod = new VirtualHexapod(dimensions, pose, { wontRotate: true })
+            if (hexapod) {
+                if (!hexapod.body) {
+                    return
+                }
+                this.props.onUpdate(hexapod.cloneTrot(tRotZmatrix(twist)))
+            }
+            return
+        }
+
+        const hexapod = new VirtualHexapod(dimensions, pose)
+        this.props.onUpdate(hexapod)
     }
 
-    setWalkSequence = (gaitParams, isTripodGait) => {
+    setWalkSequence = (gaitParams, isTripodGait, inWalkMode) => {
         const gaitType = isTripodGait ? "tripod" : "ripple"
+        const walkMode = inWalkMode ? "walking" : "rotating"
 
         const walkSequence =
-            getWalkSequence(this.props.params.dimensions, gaitParams, gaitType) ||
-            this.state.walkSequence
+            getWalkSequence(
+                this.props.params.dimensions,
+                gaitParams,
+                gaitType,
+                walkMode
+            ) || this.state.walkSequence
 
         const totalStepCount = walkSequence["leftMiddle"].alpha.length
-
         const pose = getPose(walkSequence, this.state.animationCount)
-        this.onUpdate(pose)
+
         this.setState({ gaitParams, walkSequence, totalStepCount })
+
+        if (inWalkMode) {
+            this.onUpdate(pose, 0)
+            this.setState({ deltaTwist: 0, currentTwist: 0 })
+            return
+        }
+
+        const deltaTwist = (gaitParams.hipSwing * 2) / totalStepCount
+        this.onUpdate(pose, deltaTwist)
+        this.setState({ deltaTwist })
     }
 
     updateGaitParams = (name, value) => {
         const gaitParams = { ...this.state.gaitParams, [name]: value }
-        this.setWalkSequence(gaitParams, this.state.isTripodGait)
+        this.setWalkSequence(gaitParams, this.state.isTripodGait, this.state.inWalkMode)
     }
 
     reset = () => {
         this.setState({ gaitParams: DEFAULT_GAIT_VARS })
-        this.setWalkSequence(DEFAULT_GAIT_VARS, this.state.isTripodGait)
+        this.setWalkSequence(
+            DEFAULT_GAIT_VARS,
+            this.state.isTripodGait,
+            this.state.inWalkMode
+        )
     }
 
     get widgetsSwitch() {
@@ -159,6 +216,11 @@ class WalkingGaitsPage extends Component {
     get directionSwitch() {
         const value = this.state.isForward ? "goingForward" : "goingBackward"
         return newSwitch("directionSw", value, this.toggleDirection)
+    }
+
+    get rotateSwitch() {
+        const value = this.state.inWalkMode ? "isWalking" : "isRotating"
+        return newSwitch("rotateSw", value, this.toggleWalkMode)
     }
 
     get sliders() {
@@ -182,20 +244,24 @@ class WalkingGaitsPage extends Component {
         return <p hidden={!this.state.isAnimating}>{this.state.animationCount}</p>
     }
 
-    twoSwitches = (switch1, switch2) => (
-        <div className="row-container" style={{ padding: "10px" }}>
+    threeSwitches = (switch1, switch2, switch3) => (
+        <div className="row-container" style={{ padding: "8px" }}>
             <div className="cell">{switch1}</div>
             <div className="cell">{switch2}</div>
-            <div className="cell"></div>
+            <div className="cell">{switch3}</div>
         </div>
     )
 
     render = () => (
         <Card title={<h2>{this.pageName}</h2>} other={this.animationCount}>
-            {this.twoSwitches(this.animatingSwitch, this.widgetsSwitch)}
+            {this.threeSwitches(this.animatingSwitch, this.widgetsSwitch)}
 
             <div hidden={!this.state.showGaitWidgets}>
-                {this.twoSwitches(this.gaitTypeSwitch, this.directionSwitch)}
+                {this.threeSwitches(
+                    this.gaitTypeSwitch,
+                    this.directionSwitch,
+                    this.rotateSwitch
+                )}
                 {this.sliders}
                 <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
             </div>
