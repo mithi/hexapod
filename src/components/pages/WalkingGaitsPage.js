@@ -71,10 +71,8 @@ class WalkingGaitsPage extends Component {
 
     componentDidMount() {
         this.props.onMount(this.pageName)
-        const {isTripodGait, inWalkMode} = this.state
-        this.setWalkSequence(
-            DEFAULT_GAIT_VARS, isTripodGait, inWalkMode
-        )
+        const { isTripodGait, inWalkMode } = this.state
+        this.setWalkSequence(DEFAULT_GAIT_VARS, isTripodGait, inWalkMode)
     }
 
     componentWillUnmount() {
@@ -229,13 +227,7 @@ class WalkingGaitsPage extends Component {
             handleChange: this.updateGaitParams,
         })
 
-        return (
-            <>
-                <div className="row-container">{sliders.slice(6, 9)}</div>
-                <div className="row-container">{sliders.slice(0, 3)}</div>
-                <div className="row-container">{sliders.slice(3, 6)}</div>
-            </>
-        )
+        return <div className="grid-cols-3">{sliders}</div>
     }
 
     get animationCount() {
