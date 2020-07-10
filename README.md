@@ -10,14 +10,13 @@
 
 <img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" align="left" /> 
 
+Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero server-side computations!
 
-- [x] Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero server-side computations!
+7JUL20 UPDATE! It can also simulate gaits now 🥰 
 
-- [x] 7JUL20 UPDATE! It can also simulate gaits now 🥰 
+Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
 
-- [x] Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
-
-- [x] See: [https://hexapod.netlify.app](https://hexapod.netlify.app)
+See: [https://hexapod.netlify.app](https://hexapod.netlify.app)
 
 
 <img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="250" align="right"/>
@@ -33,6 +32,12 @@ I will put your name below if I've merged your PR multiple times or if you've su
 - [@mithi](https://github.com/mithi)
 - [@icyJoseph](https://github.com/icyJoseph)
 - [@mikong](https://github.com/mikong)
+
+| ![](./public/img/screenshot4.png) | ![](./public/img/screenshot5.png) |
+|------|-------|
+
+| ![](./public/img/screenshot6.png) | ![](./public/img/screenshot3.png) |
+|------|-------|
 
 ## I love badges! (Don't we all?)  
 
