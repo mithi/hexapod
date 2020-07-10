@@ -3,6 +3,7 @@ import { sliderList, Card, BasicButton, ToggleSwitch } from "../generic"
 import { SECTION_NAMES, RESET_LABEL } from "../vars"
 import getWalkSequence from "../../hexapod/solvers/walkSequenceSolver"
 import PoseTable from "./PoseTable"
+import { DEFAULT_POSE } from "../../templates"
 
 const ANIMATION_DELAY = 1
 
@@ -14,8 +15,8 @@ const SLIDER_LABELS = [
     "ry",
     "hipStance",
     "hipSwing",
-    "stepCount",
     "liftSwing",
+    "stepCount",
 ]
 
 const PARAMS = {
@@ -49,6 +50,7 @@ class WalkingGaitsPage extends Component {
     pageName = SECTION_NAMES.walkingGaits
     state = {
         gaitParams: DEFAULT_GAIT_VARS,
+        pose: DEFAULT_POSE,
         isAnimating: false,
         isTripodGait: true,
         isForward: true,
@@ -133,29 +135,23 @@ class WalkingGaitsPage extends Component {
 
     get widgetsSwitch() {
         return (
-            <p>
-                <ToggleSwitch
-                    id="gaitWidgetSwitch"
-                    value={this.state.showGaitWidgets ? "controlsShown" : "poseShown"}
-                    handleChange={this.toggleWidgets}
-                    showValue={true}
-                />
-            </p>
+            <ToggleSwitch
+                id="gaitWidgetSwitch"
+                value={this.state.showGaitWidgets ? "controlsShown" : "poseShown"}
+                handleChange={this.toggleWidgets}
+                showValue={true}
+            />
         )
     }
 
     get animatingSwitch() {
         return (
-            <p className="row-container">
-                <ToggleSwitch
-                    id="IsAnimatingSwitch"
-                    value={this.state.isAnimating ? "PLAYING... " : "...PAUSED. "}
-                    handleChange={this.toggleAnimating}
-                    showValue={true}
-                />
-                {" <"}--- Press this!{" "}
-                {this.state.isAnimating ? this.state.animationCount : null}
-            </p>
+            <ToggleSwitch
+                id="IsAnimatingSwitch"
+                value={this.state.isAnimating ? "PLAYING... " : "...PAUSED. "}
+                handleChange={this.toggleAnimating}
+                showValue={true}
+            />
         )
     }
 
@@ -182,44 +178,48 @@ class WalkingGaitsPage extends Component {
     }
 
     get sliders() {
-        return sliderList({
+        const sliders = sliderList({
             names: SLIDER_LABELS,
             values: this.state.gaitParams,
             rangeParams: PARAMS,
             handleChange: this.updateGaitParams,
         })
-    }
 
-    get gaitWidgets() {
-        const sliders = this.sliders
         return (
             <>
                 <div className="row-container">{sliders.slice(6, 9)}</div>
                 <div className="row-container">{sliders.slice(0, 3)}</div>
                 <div className="row-container">{sliders.slice(3, 6)}</div>
-                <p className="row-container">
-                    <div className="cell">{this.gaitTypeSwitch}</div>
-                    <div className="cell">{this.directionSwitch}</div>
-                    <div className="cell"> </div>
-                </p>
-                <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
             </>
         )
     }
 
-    get widgetsShown() {
-        if (this.state.showGaitWidgets) {
-            return this.gaitWidgets
-        } else {
-            return <PoseTable pose={this.state.pose} />
-        }
+    get animationCount() {
+        return <p hidden={!this.state.isAnimating}>{this.state.animationCount}</p>
     }
+
+    twoSwitches = (switch1, switch2) => (
+        <div className="row-container" style={{ padding: "10px" }}>
+            <div className="cell">{switch1}</div>
+            <div className="cell">{switch2}</div>
+            <div className="cell"></div>
+        </div>
+    )
 
     render = () => {
         return (
-            <Card title={<h2>{this.pageName}</h2>} other={this.widgetsSwitch}>
-                {this.animatingSwitch}
-                {this.widgetsShown}
+            <Card title={<h2>{this.pageName}</h2>} other={this.animationCount}>
+                {this.twoSwitches(this.animatingSwitch, this.widgetsSwitch)}
+
+                <div hidden={!this.state.showGaitWidgets}>
+                    {this.twoSwitches(this.gaitTypeSwitch, this.directionSwitch)}
+                    {this.sliders}
+                    <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
+                </div>
+
+                <div hidden={this.state.showGaitWidgets}>
+                    <PoseTable pose={this.state.pose} />
+                </div>
             </Card>
         )
     }
