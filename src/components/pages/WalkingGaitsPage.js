@@ -10,15 +10,15 @@ import { tRotZmatrix } from "../../hexapod/geometry"
 const ANIMATION_DELAY = 1
 
 const SLIDER_LABELS = [
+    "hipSwing",
+    "liftSwing",
+    "stepCount",
     "tz",
     "tx",
     "legStance",
     "rx",
     "ry",
     "hipStance",
-    "hipSwing",
-    "liftSwing",
-    "stepCount",
 ]
 
 const PARAMS = {
@@ -66,19 +66,122 @@ class WalkingGaitsPage extends Component {
         currentTwist: 0,
         totalStepCount: 0,
         deltaTwist: 0,
+        walkSequence: null,
     }
 
     componentDidMount() {
         this.props.onMount(this.pageName)
+        const {isTripodGait, inWalkMode} = this.state
         this.setWalkSequence(
-            DEFAULT_GAIT_VARS,
-            this.state.isTripodGait,
-            this.state.inWalkMode
+            DEFAULT_GAIT_VARS, isTripodGait, inWalkMode
         )
     }
 
     componentWillUnmount() {
         clearInterval(this.intervalID)
+    }
+
+    animate = () => {
+        const {
+            isForward,
+            inWalkMode,
+            totalStepCount,
+            deltaTwist,
+            currentTwist,
+            walkSequence,
+        } = this.state
+
+        const animationCount = (this.state.animationCount + 1) % totalStepCount
+        this.setState({ animationCount })
+
+        const tempStep = isForward ? animationCount : totalStepCount - animationCount
+        const step = Math.max(0, Math.min(totalStepCount - 1, tempStep))
+
+        const pose = getPose(walkSequence, step)
+
+        if (inWalkMode) {
+            this.onUpdate(pose, 0)
+            return
+        }
+
+        const twist = isForward
+            ? (currentTwist + deltaTwist) % 360
+            : (currentTwist - deltaTwist) % 360
+
+        this.onUpdate(pose, twist)
+    }
+
+    onUpdate = (pose, twist) => {
+        this.setState({ pose, currentTwist: twist })
+
+        const dimensions = this.props.params.dimensions
+        if (this.state.inWalkMode) {
+            const hexapod = new VirtualHexapod(dimensions, pose)
+            this.props.onUpdate(hexapod)
+            return
+        }
+
+        const hexapod = new VirtualHexapod(dimensions, pose, { wontRotate: true })
+        if (hexapod) {
+            this.props.onUpdate(hexapod.cloneTrot(tRotZmatrix(twist)))
+        }
+    }
+
+    setWalkSequence = (gaitParams, isTripodGait, inWalkMode) => {
+        const gaitType = isTripodGait ? "tripod" : "ripple"
+        const walkMode = inWalkMode ? "walking" : "rotating"
+
+        const { dimensions } = this.props.params
+        const { walkSequence, animationCount, currentTwist } = this.state
+
+        const newWalkSequence =
+            getWalkSequence(dimensions, gaitParams, gaitType, walkMode) || walkSequence
+
+        const totalStepCount = newWalkSequence["leftMiddle"].alpha.length
+        const newDeltaTwist = inWalkMode ? 0 : (gaitParams.hipSwing * 2) / totalStepCount
+
+        const pose = getPose(newWalkSequence, animationCount)
+        this.onUpdate(pose, currentTwist)
+        this.setState({
+            walkSequence: newWalkSequence,
+            deltaTwist: newDeltaTwist,
+            totalStepCount,
+            gaitParams,
+            isTripodGait,
+            inWalkMode,
+        })
+    }
+
+    updateGaitParams = (name, value) => {
+        const { isTripodGait, inWalkMode } = this.state
+        const gaitParams = { ...this.state.gaitParams, [name]: value }
+        this.setWalkSequence(gaitParams, isTripodGait, inWalkMode)
+    }
+
+    reset = () => {
+        const { isTripodGait, inWalkMode } = this.state
+        const gaitParams = DEFAULT_GAIT_VARS
+        this.setWalkSequence(gaitParams, isTripodGait, inWalkMode)
+    }
+
+    toggleWalkMode = () => {
+        const { gaitParams, isTripodGait } = this.state
+        const inWalkMode = !this.state.inWalkMode
+        this.setWalkSequence(gaitParams, isTripodGait, inWalkMode)
+    }
+
+    toggleGaitType = () => {
+        const { gaitParams, inWalkMode } = this.state
+        const isTripodGait = !this.state.isTripodGait
+        this.setWalkSequence(gaitParams, isTripodGait, inWalkMode)
+    }
+
+    toggleWidgets = () => {
+        this.setState({ showGaitWidgets: !this.state.showGaitWidgets })
+    }
+
+    toggleDirection = () => {
+        this.setState({ isForward: !this.state.isForward })
     }
 
     toggleAnimating = () => {
@@ -91,111 +194,6 @@ class WalkingGaitsPage extends Component {
         }
 
         this.setState({ isAnimating })
-    }
-
-    toggleDirection = () => {
-        this.setState({ isForward: !this.state.isForward })
-    }
-
-    toggleWalkMode = () => {
-        const inWalkMode = !this.state.inWalkMode
-        this.setWalkSequence(this.state.gaitParams, this.state.isTripodGait, inWalkMode)
-        this.setState({ inWalkMode })
-    }
-
-    toggleGaitType = () => {
-        const isTripodGait = !this.state.isTripodGait
-        this.setWalkSequence(this.state.gaitParams, isTripodGait, this.state.inWalkMode)
-        this.setState({ isTripodGait })
-    }
-
-    toggleWidgets = () => {
-        this.setState({ showGaitWidgets: !this.state.showGaitWidgets })
-    }
-
-    animate = () => {
-        const animationCount = (this.state.animationCount + 1) % this.state.totalStepCount
-        this.setState({ animationCount })
-
-        const step = this.state.isForward
-            ? animationCount
-            : this.state.totalStepCount - animationCount
-
-        const pose = getPose(this.state.walkSequence, step)
-
-        if (!this.inWalkMode) {
-            const deltaTwist = this.state.deltaTwist
-            const twist = this.state.isForward
-                ? (this.state.currentTwist + deltaTwist) % 360
-                : (this.state.currentTwist - deltaTwist) % 360
-
-            this.onUpdate(pose, twist)
-            this.setState({ currentTwist: twist })
-            return
-        }
-
-        this.onUpdate(pose, 0)
-    }
-
-    onUpdate = (pose, twist) => {
-        this.setState({ pose })
-        const dimensions = this.props.params.dimensions
-
-        if (twist !== 0) {
-            const hexapod = new VirtualHexapod(dimensions, pose, { wontRotate: true })
-            if (hexapod) {
-                if (!hexapod.body) {
-                    return
-                }
-                this.props.onUpdate(hexapod.cloneTrot(tRotZmatrix(twist)))
-            }
-            return
-        }
-
-        const hexapod = new VirtualHexapod(dimensions, pose)
-        this.props.onUpdate(hexapod)
-    }
-
-    setWalkSequence = (gaitParams, isTripodGait, inWalkMode) => {
-        const gaitType = isTripodGait ? "tripod" : "ripple"
-        const walkMode = inWalkMode ? "walking" : "rotating"
-
-        const walkSequence =
-            getWalkSequence(
-                this.props.params.dimensions,
-                gaitParams,
-                gaitType,
-                walkMode
-            ) || this.state.walkSequence
-
-        const totalStepCount = walkSequence["leftMiddle"].alpha.length
-        const pose = getPose(walkSequence, this.state.animationCount)
-
-        this.setState({ gaitParams, walkSequence, totalStepCount })
-
-        if (inWalkMode) {
-            this.onUpdate(pose, 0)
-            this.setState({ deltaTwist: 0, currentTwist: 0 })
-            return
-        }
-
-        const deltaTwist = (gaitParams.hipSwing * 2) / totalStepCount
-        this.onUpdate(pose, deltaTwist)
-        this.setState({ deltaTwist })
-    }
-
-    updateGaitParams = (name, value) => {
-        const gaitParams = { ...this.state.gaitParams, [name]: value }
-        this.setWalkSequence(gaitParams, this.state.isTripodGait, this.state.inWalkMode)
-    }
-
-    reset = () => {
-        this.setState({ gaitParams: DEFAULT_GAIT_VARS })
-        this.setWalkSequence(
-            DEFAULT_GAIT_VARS,
-            this.state.isTripodGait,
-            this.state.inWalkMode
-        )
     }
 
     get widgetsSwitch() {
@@ -214,12 +212,12 @@ class WalkingGaitsPage extends Component {
     }
 
     get directionSwitch() {
-        const value = this.state.isForward ? "goingForward" : "goingBackward"
+        const value = this.state.isForward ? "isForward" : "isBackward"
         return newSwitch("directionSw", value, this.toggleDirection)
     }
 
     get rotateSwitch() {
-        const value = this.state.inWalkMode ? "isWalking" : "isRotating"
+        const value = this.state.inWalkMode ? "isWalk" : "isRotate"
         return newSwitch("rotateSw", value, this.toggleWalkMode)
     }
 
@@ -241,7 +239,8 @@ class WalkingGaitsPage extends Component {
     }
 
     get animationCount() {
-        return <p hidden={!this.state.isAnimating}>{this.state.animationCount}</p>
+        const { isAnimating, animationCount } = this.state
+        return <p hidden={!isAnimating}>{animationCount}</p>
     }
 
     threeSwitches = (switch1, switch2, switch3) => (
