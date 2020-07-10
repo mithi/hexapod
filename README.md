@@ -12,7 +12,7 @@
 
 Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero server-side computations!
 
-7JUL20 UPDATE! It can also simulate gaits now 🥰 
+:heart: UPDATE! It can also simulate gaits now 🥰 
 
 Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
 
@@ -23,7 +23,8 @@ See: [https://hexapod.netlify.app](https://hexapod.netlify.app)
 
 
 ## Contributions Welcome!
-- Any contribution to improve the source code will be extremely appreciated. 💙 Anything. Anything at all. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement. [Contributing Guide](./CONTRIBUTING.md).
+
+Any contribution to improve the source code will be extremely appreciated. 💙 Anything. Anything at all. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement. [Contributing Guide](./CONTRIBUTING.md).
 
 ## Main Contributors
 
