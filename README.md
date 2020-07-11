@@ -10,7 +10,7 @@
 
 # Mithi's Bare-Minimum Hexapod Robot Simulator 2
 
-<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" align="left" />
+<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="350" align="left" />
 
 You can use this web app to solve inverse kinematics, simulate various gaits and so much more. 
 
