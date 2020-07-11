@@ -10,7 +10,7 @@
 
 # Mithi's Bare-Minimum Hexapod Robot Simulator 2
 
-<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="350" align="left" />
+<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" align="left" />
 
 You can use this web app to solve inverse kinematics, simulate various gaits and so much more. 
 
@@ -22,7 +22,7 @@ Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimith
 
 ## Features 
 
-<img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="400" align="right" /> 
+<img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="350" align="right" /> 
 
 [🤖](https://hexapod.netlify.app/) [🐳](https://mithi.github.io/deep-blueberry/) [☕](https://ko-fi.com/minimithi)
 
