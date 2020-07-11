@@ -17,38 +17,29 @@ class DimensionsWidget extends Component {
         this.props.onUpdate(dimensions)
     }
 
-    toggleMode = () => {
-        const isFine = !this.state.isFine
-        this.setState({
-            isFine,
-            granularity: isFine ? 1 : 5,
-            toggleLabel: isFine ? "1x" : "5x",
-        })
-    }
+    toggleMode = () => this.setState({ isFine: !this.state.isFine })
 
     updateDimensions = (name, value) => {
         const dimensions = { ...this.props.params.dimensions, [name]: value }
         this.props.onUpdate(dimensions)
     }
 
-    updateFieldState = (name, value) => {
-        this.updateDimensions(name, value)
-    }
+    updateFieldState = (name, value) => this.updateDimensions(name, value)
 
     get toggleSwitch() {
-        return (
-            <ToggleSwitch
-                id="DimensionsWidgetSwitch"
-                value={this.state.toggleLabel}
-                handleChange={this.toggleMode}
-                showValue={true}
-            />
-        )
+        const props = {
+            id: "DimensionsWidgetSwitch",
+            value: this.state.isFine ? "1x" : "5x",
+            handleChange: this.toggleMode,
+            showValue: true,
+        }
+
+        return <ToggleSwitch {...props} />
     }
 
     get NumberInputFields() {
         const { minVal, maxVal } = RANGE_PARAMS.dimensionInputs
-        const stepVal = this.state.granularity
+        const stepVal = this.state.isFine ? 1 : 5
         const dimensions = this.props.params.dimensions
 
         const numberInputFields = DIMENSION_NAMES.map(name => {
