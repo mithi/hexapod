@@ -25,12 +25,11 @@ Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimith
 
 Control
 - [x] The robot's dimensions 
-- [x] The orientation and translation of robot's body
+- [x] The robot's orientation and translation
 
 Solve
 - [x] Inverse Kinematics
 - [x] Forward Kinematics
-- [x] Leg Patterns
 
 Simulate
 - [x] Ripple and tripod gait variations
