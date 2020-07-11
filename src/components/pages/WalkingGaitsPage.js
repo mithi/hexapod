@@ -49,6 +49,14 @@ const newSwitch = (id, value, handleChange) => (
     <ToggleSwitch id={id} handleChange={handleChange} value={value} showValue={true} />
 )
 
+const switches = (switch1, switch2, switch3) => (
+    <div className="grid-cols-3" style={{ paddingBottom: "20px" }}>
+        {switch1}
+        {switch2}
+        {switch3}
+    </div>
+)
+
 const countSteps = sequence => sequence["leftMiddle"].alpha.length
 
 class WalkingGaitsPage extends Component {
@@ -65,13 +73,13 @@ class WalkingGaitsPage extends Component {
         animationCount: 0,
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.props.onMount(this.pageName)
         const { isTripodGait, inWalkMode } = this.state
         this.setWalkSequence(DEFAULT_GAIT_VARS, isTripodGait, inWalkMode)
     }
 
-    componentWillUnmount() {
+    componentWillUnmount = () => {
         clearInterval(this.intervalID)
     }
 
@@ -135,16 +143,16 @@ class WalkingGaitsPage extends Component {
         })
     }
 
-    updateGaitParams = (name, value) => {
-        const { isTripodGait, inWalkMode } = this.state
-        const gaitParams = { ...this.state.gaitParams, [name]: value }
-        this.setWalkSequence(gaitParams, isTripodGait, inWalkMode)
-    }
-
     reset = () => {
         const { isTripodGait, inWalkMode } = this.state
         this.currentTwist = 0
         this.setWalkSequence(DEFAULT_GAIT_VARS, isTripodGait, inWalkMode)
+    }
+
+    updateGaitParams = (name, value) => {
+        const { isTripodGait, inWalkMode } = this.state
+        const gaitParams = { ...this.state.gaitParams, [name]: value }
+        this.setWalkSequence(gaitParams, isTripodGait, inWalkMode)
     }
 
     toggleWalkMode = () => {
@@ -219,17 +227,12 @@ class WalkingGaitsPage extends Component {
         )
     }
 
-    switches = (switch1, switch2, switch3) => (
-        <div className="grid-cols-3" style={{ paddingBottom: "20px" }}>
-            {switch1}
-            {switch2}
-            {switch3}
-        </div>
-    )
-
     render() {
-        const switches1 = this.switches(this.animatingSwitch, this.widgetsSwitch)
-        const switches2 = this.switches(
+        const animationControlSwitches = switches(
+            this.animatingSwitch,
+            this.widgetsSwitch
+        )
+        const gaitControlSwitches = switches(
             this.gaitTypeSwitch,
             this.directionSwitch,
             this.rotateSwitch
@@ -240,10 +243,10 @@ class WalkingGaitsPage extends Component {
 
         return (
             <Card title={<h2>{this.pageName}</h2>} other={this.animationCount}>
-                {switches1}
+                {animationControlSwitches}
 
                 <div hidden={!showGaitWidgets}>
-                    {switches2}
+                    {gaitControlSwitches}
                     {this.sliders}
                     <ResetButton reset={this.reset} />
                 </div>
