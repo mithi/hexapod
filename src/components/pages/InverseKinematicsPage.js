@@ -2,12 +2,12 @@ import React, { Component } from "react"
 import { sliderList, Card, ResetButton, AlertBox } from "../generic"
 import { solveInverseKinematics } from "../../hexapod"
 import { SECTION_NAMES, IK_SLIDERS_LABELS } from "../vars"
-import { DEFAULT_IK_PARAMS, DEFAULT_POSE } from "../../templates"
+import { DEFAULT_IK_PARAMS } from "../../templates"
 import PoseTable from "./PoseTable"
 
 class InverseKinematicsPage extends Component {
     pageName = SECTION_NAMES.inverseKinematics
-    state = { ikParams: DEFAULT_IK_PARAMS, errorMessage: null, pose: DEFAULT_POSE }
+    state = { ikParams: DEFAULT_IK_PARAMS, errorMessage: null }
 
     componentDidMount = () => this.props.onMount(this.pageName)
 
@@ -36,7 +36,6 @@ class InverseKinematicsPage extends Component {
         this.setState({
             ikParams,
             errorMessage: null,
-            pose: hexapod.pose,
         })
 
         this.props.onUpdate(hexapod)
@@ -51,8 +50,11 @@ class InverseKinematicsPage extends Component {
     }
 
     get additionalInfo() {
-        const { pose, errorMessage } = this.state
-        return errorMessage ? <AlertBox info={errorMessage} /> : <PoseTable pose={pose} />
+        return this.state.errorMessage ? (
+            <AlertBox info={this.state.errorMessage} />
+        ) : (
+            <PoseTable pose={this.props.params.pose} />
+        )
     }
 
     render = () => (

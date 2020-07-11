@@ -125,6 +125,13 @@ class App extends React.Component {
     /* * * * * * * * * * * * * *
      * Pages
      * * * * * * * * * * * * * */
+    get hexapodParams() {
+        return {
+            dimensions: this.state.hexapodParams.dimensions,
+            pose: this.state.hexapodParams.pose,
+        }
+    }
+
     pageComponent = (Component, onUpdate, params) => (
         <Component onMount={this.onPageLoad} onUpdate={onUpdate} params={params} />
     )
@@ -134,9 +141,11 @@ class App extends React.Component {
     pagePatterns = () => this.pageComponent(LegPatternPage, this.updatePose)
 
     pageIk = () =>
-        this.pageComponent(InverseKinematicsPage, this.updatePlotWithHexapod, {
-            dimensions: this.state.hexapodParams.dimensions,
-        })
+        this.pageComponent(
+            InverseKinematicsPage,
+            this.updatePlotWithHexapod,
+            this.hexapodParams
+        )
 
     pageFk = () =>
         this.pageComponent(ForwardKinematicsPage, this.updatePose, {
@@ -144,9 +153,11 @@ class App extends React.Component {
         })
 
     pageWalking = () =>
-        this.pageComponent(WalkingGaitsPage, this.updatePlotWithHexapod, {
-            dimensions: this.state.hexapodParams.dimensions,
-        })
+        this.pageComponent(
+            WalkingGaitsPage,
+            this.updatePlotWithHexapod,
+            this.hexapodParams
+        )
 
     page = () => (
         <Switch>
