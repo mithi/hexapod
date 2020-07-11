@@ -10,26 +10,32 @@
 
 # Mithi's Bare-Minimum Hexapod Robot Simulator 2
 
-| . | . |
-|--|--|
-| <img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="175" />  | <img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400"/> |
+<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" align="left" />
 
-Use this app to solve and visualize forward and inverse kinematics right on your browser. You simulate variations of the ripple and tripod gait algorithms. Set the dimensions of your hexapod. Make it walk forwards and backwards. Make it rotate clockwise and counter clockwise. At each step of the way you will see exactly which angle your
- 
-# Features 
 
-- [x] Inverse Kinematics
-- [x] Forward Kinematics
-- [x] Leg Patterns
-- [x] Ripple and tripod gait variations
-- [x] Walking forward and backwards
-- [x] Rotating clockwise and counterclockwise
+Use this app to solve and visualize forward and inverse kinematics right on your browser. You simulate variations of the ripple and tripod gait algorithms. Set the dimensions of your hexapod. Make it walk forwards and backwards. Make it rotate clockwise and counter clockwise. In real time, you have the option to view all the angles each of the eighteen joints make. 
+
+Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
 
 [🤖](https://hexapod.netlify.app/) [🐳](https://mithi.github.io/deep-blueberry/) [☕](https://ko-fi.com/minimithi)
 
+## Features 
 
-Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
-  
+<img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="175" align="right" /> 
+
+Control
+- [x] The robot's dimensions 
+- [x] The orientation and translation of robot's body
+
+Solve
+- [x] Inverse Kinematics
+- [x] Forward Kinematics
+- [x] Leg Patterns
+
+Simulate
+- [x] Ripple and tripod gait variations
+- [x] Walking forward and backwards
+- [x] Rotating clockwise and counterclockwise
 
 ## Screenshots
 
