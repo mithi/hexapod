@@ -14,7 +14,7 @@
 
 You can use this web app to solve inverse kinematics, simulate various gaits and so much more. 
 
-In real time, you have the option to view all the angles each of the eighteen joints make. 
+In real time, and at each step of the way, you can view all the angles the robot's eighteen joints make. 
 
 Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
 
@@ -22,9 +22,9 @@ Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimith
 
 ## Features 
 
-[🤖](https://hexapod.netlify.app/) [🐳](https://mithi.github.io/deep-blueberry/) [☕](https://ko-fi.com/minimithi)
-
 <img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="300" align="right" /> 
+
+[🤖](https://hexapod.netlify.app/) [🐳](https://mithi.github.io/deep-blueberry/) [☕](https://ko-fi.com/minimithi)
 
 Control
 - [x] The robot's dimensions 
