@@ -10,20 +10,23 @@
 
 # Mithi's Bare-Minimum Hexapod Robot Simulator 2
 
-<img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="175" align="right" />
-<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" align="right" />
+| . | . |
+|--|--|
+| <img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="175" />  | <img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400"/> |
 
-[🤖](https://hexapod.netlify.app/) [🐳](https://mithi.github.io/deep-blueberry/) [☕](https://ko-fi.com/minimithi)
+Use this app to solve and visualize forward and inverse kinematics right on your browser. You simulate variations of the ripple and tripod gait algorithms. Set the dimensions of your hexapod. Make it walk forwards and backwards. Make it rotate clockwise and counter clockwise. At each step of the way you will see exactly which angle your
+ 
+# Features 
 
-### Visualizations
 - [x] Inverse Kinematics
 - [x] Forward Kinematics
 - [x] Leg Patterns
-
-### Simulations
 - [x] Ripple and tripod gait variations
 - [x] Walking forward and backwards
 - [x] Rotating clockwise and counterclockwise
+
+[🤖](https://hexapod.netlify.app/) [🐳](https://mithi.github.io/deep-blueberry/) [☕](https://ko-fi.com/minimithi)
+
 
 Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
   
@@ -32,6 +35,7 @@ Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimith
 
 | ![](./public/img/screenshot4.png) | ![](./public/img/screenshot5.png) |![](./public/img/screenshot6.png) | ![](./public/img/screenshot3.png) |
 |------|-------|------|-------|
+
 
 
 ## Main Contributors
