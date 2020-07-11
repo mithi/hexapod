@@ -6,25 +6,18 @@ import { SECTION_NAMES, DIMENSION_NAMES, RANGE_PARAMS } from "./vars"
 
 class DimensionsWidget extends Component {
     sectionName = SECTION_NAMES.dimensions
-    state = { isFine: true, granularity: 1 }
+    state = { isFine: true }
 
-    componentDidMount() {
-        this.setState({ granularity: 1, toggleLabel: "1x" })
-    }
-
-    reset = () => {
-        const dimensions = DEFAULT_DIMENSIONS
-        this.props.onUpdate(dimensions)
-    }
+    reset = () => this.props.onUpdate(DEFAULT_DIMENSIONS)
 
     toggleMode = () => this.setState({ isFine: !this.state.isFine })
+
+    updateFieldState = (name, value) => this.updateDimensions(name, value)
 
     updateDimensions = (name, value) => {
         const dimensions = { ...this.props.params.dimensions, [name]: value }
         this.props.onUpdate(dimensions)
     }
-
-    updateFieldState = (name, value) => this.updateDimensions(name, value)
 
     get toggleSwitch() {
         const props = {
@@ -45,13 +38,12 @@ class DimensionsWidget extends Component {
         const numberInputFields = DIMENSION_NAMES.map(name => {
             const props = {
                 name,
-                key: name,
                 value: dimensions[name],
                 rangeParams: { minVal, maxVal, stepVal },
                 handleChange: this.updateFieldState,
             }
 
-            return <NumberInputField {...props} />
+            return <NumberInputField {...props} key={name} />
         })
 
         return <div className="grid-cols-6">{numberInputFields}</div>
