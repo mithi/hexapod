@@ -3,7 +3,6 @@ import { sliderList, Card, ResetButton, ToggleSwitch } from "../generic"
 import { SECTION_NAMES } from "../vars"
 import getWalkSequence from "../../hexapod/solvers/walkSequenceSolver"
 import PoseTable from "./PoseTable"
-import { DEFAULT_POSE } from "../../templates"
 import { VirtualHexapod } from "../../hexapod"
 import { tRotZmatrix } from "../../hexapod/geometry"
 
@@ -50,11 +49,12 @@ const newSwitch = (id, value, handleChange) => (
     <ToggleSwitch id={id} handleChange={handleChange} value={value} showValue={true} />
 )
 
+const countSteps = sequence => sequence["leftMiddle"].alpha.length
+
 class WalkingGaitsPage extends Component {
     pageName = SECTION_NAMES.walkingGaits
     state = {
         gaitParams: DEFAULT_GAIT_VARS,
-        pose: DEFAULT_POSE,
         isAnimating: false,
         isTripodGait: true,
         isForward: true,
@@ -62,7 +62,6 @@ class WalkingGaitsPage extends Component {
         showGaitWidgets: true,
         animationCount: 0,
         currentTwist: 0,
-        totalStepCount: 0,
         deltaTwist: 0,
         walkSequence: null,
     }
@@ -81,17 +80,17 @@ class WalkingGaitsPage extends Component {
         const {
             isForward,
             inWalkMode,
-            totalStepCount,
             deltaTwist,
             currentTwist,
             walkSequence,
         } = this.state
 
-        const animationCount = (this.state.animationCount + 1) % totalStepCount
+        const stepCount = countSteps(walkSequence)
+        const animationCount = (this.state.animationCount + 1) % stepCount
         this.setState({ animationCount })
 
-        const tempStep = isForward ? animationCount : totalStepCount - animationCount
-        const step = Math.max(0, Math.min(totalStepCount - 1, tempStep))
+        const tempStep = isForward ? animationCount : stepCount - animationCount
+        const step = Math.max(0, Math.min(stepCount - 1, tempStep))
 
         const pose = getPose(walkSequence, step)
 
@@ -108,9 +107,9 @@ class WalkingGaitsPage extends Component {
     }
 
     onUpdate = (pose, currentTwist) => {
-        this.setState({ pose, currentTwist })
+        this.setState({ currentTwist })
 
-        const dimensions = this.props.params.dimensions
+        const { dimensions } = this.props.params
         const hexapod = new VirtualHexapod(dimensions, pose, { wontRotate: true })
 
         // ❗❗️HACK When we've passed undefined pose values for some reason
@@ -132,15 +131,14 @@ class WalkingGaitsPage extends Component {
         const newWalkSequence =
             getWalkSequence(dimensions, gaitParams, gaitType, walkMode) || walkSequence
 
-        const totalStepCount = newWalkSequence["leftMiddle"].alpha.length
-        const newDeltaTwist = inWalkMode ? 0 : (gaitParams.hipSwing * 2) / totalStepCount
+        const stepCount = countSteps(newWalkSequence)
+        const deltaTwist = inWalkMode ? 0 : (gaitParams.hipSwing * 2) / stepCount
 
         const pose = getPose(newWalkSequence, animationCount)
         this.onUpdate(pose, currentTwist)
         this.setState({
             walkSequence: newWalkSequence,
-            deltaTwist: newDeltaTwist,
-            totalStepCount,
+            deltaTwist,
             gaitParams,
             isTripodGait,
             inWalkMode,
@@ -248,18 +246,21 @@ class WalkingGaitsPage extends Component {
             this.rotateSwitch
         )
 
+        const { showGaitWidgets } = this.state
+        const { pose } = this.props.params
+
         return (
             <Card title={<h2>{this.pageName}</h2>} other={this.animationCount}>
                 {switches1}
 
-                <div hidden={!this.state.showGaitWidgets}>
+                <div hidden={!showGaitWidgets}>
                     {switches2}
                     {this.sliders}
                     <ResetButton reset={this.reset} />
                 </div>
 
-                <div hidden={this.state.showGaitWidgets}>
-                    <PoseTable pose={this.state.pose} />
+                <div hidden={showGaitWidgets}>
+                    <PoseTable pose={pose} />
                 </div>
             </Card>
         )
