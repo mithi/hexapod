@@ -10,8 +10,10 @@
 
 # Mithi's Bare-Minimum Hexapod Robot Simulator 2
 
-<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" align="right" />
 <img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="175" align="right" />
+<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" align="right" />
+
+[🤖](https://hexapod.netlify.app/) [🐳](https://mithi.github.io/deep-blueberry/) [☕](https://ko-fi.com/minimithi)
 
 ### Visualizations
 - [x] Inverse Kinematics
