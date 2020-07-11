@@ -62,7 +62,6 @@ class WalkingGaitsPage extends Component {
         showGaitWidgets: true,
         animationCount: 0,
         currentTwist: 0,
-        deltaTwist: 0,
         walkSequence: null,
     }
 
@@ -77,13 +76,7 @@ class WalkingGaitsPage extends Component {
     }
 
     animate = () => {
-        const {
-            isForward,
-            inWalkMode,
-            deltaTwist,
-            currentTwist,
-            walkSequence,
-        } = this.state
+        const { isForward, inWalkMode, currentTwist, walkSequence } = this.state
 
         const stepCount = countSteps(walkSequence)
         const animationCount = (this.state.animationCount + 1) % stepCount
@@ -99,6 +92,7 @@ class WalkingGaitsPage extends Component {
             return
         }
 
+        const deltaTwist = (this.state.gaitParams.hipSwing * 2) / stepCount
         const twist = isForward
             ? (currentTwist + deltaTwist) % 360
             : (currentTwist - deltaTwist) % 360
@@ -131,14 +125,10 @@ class WalkingGaitsPage extends Component {
         const newWalkSequence =
             getWalkSequence(dimensions, gaitParams, gaitType, walkMode) || walkSequence
 
-        const stepCount = countSteps(newWalkSequence)
-        const deltaTwist = inWalkMode ? 0 : (gaitParams.hipSwing * 2) / stepCount
-
         const pose = getPose(newWalkSequence, animationCount)
         this.onUpdate(pose, currentTwist)
         this.setState({
             walkSequence: newWalkSequence,
-            deltaTwist,
             gaitParams,
             isTripodGait,
             inWalkMode,
