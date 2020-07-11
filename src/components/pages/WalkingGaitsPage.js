@@ -1,6 +1,6 @@
 import React, { Component } from "react"
-import { sliderList, Card, BasicButton, ToggleSwitch } from "../generic"
-import { SECTION_NAMES, RESET_LABEL } from "../vars"
+import { sliderList, Card, ResetButton, ToggleSwitch } from "../generic"
+import { SECTION_NAMES } from "../vars"
 import getWalkSequence from "../../hexapod/solvers/walkSequenceSolver"
 import PoseTable from "./PoseTable"
 import { DEFAULT_POSE } from "../../templates"
@@ -254,7 +254,7 @@ class WalkingGaitsPage extends Component {
                 <div hidden={!this.state.showGaitWidgets}>
                     {switches2}
                     {this.sliders}
-                    <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
+                    <ResetButton reset={this.reset} />
                 </div>
 
                 <div hidden={this.state.showGaitWidgets}>

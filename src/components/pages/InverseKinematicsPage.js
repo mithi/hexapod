@@ -1,7 +1,7 @@
 import React, { Component } from "react"
-import { sliderList, Card, BasicButton, AlertBox } from "../generic"
+import { sliderList, Card, ResetButton, AlertBox } from "../generic"
 import { solveInverseKinematics } from "../../hexapod"
-import { SECTION_NAMES, IK_SLIDERS_LABELS, RESET_LABEL } from "../vars"
+import { SECTION_NAMES, IK_SLIDERS_LABELS } from "../vars"
 import { DEFAULT_IK_PARAMS, DEFAULT_POSE } from "../../templates"
 import PoseTable from "./PoseTable"
 
@@ -59,7 +59,7 @@ class InverseKinematicsPage extends Component {
         <Card title={<h2>{this.pageName}</h2>}>
             <div className="grid-cols-3">{this.sliders.slice(0, 6)}</div>
             <div className="grid-cols-2">{this.sliders.slice(6, 8)}</div>
-            <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
+            <ResetButton reset={this.reset} />
             {this.additionalInfo}
         </Card>
     )
