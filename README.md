@@ -18,13 +18,10 @@ In real time, and at each step of the way, you can view all the angles the robot
 
 Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
 
-[🤖](https://hexapod.netlify.app/) [🐳](https://mithi.github.io/deep-blueberry/) [☕](https://ko-fi.com/minimithi)
 
 ## Features 
 
 <img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="325" align="right" /> 
-
-[🤖](https://hexapod.netlify.app/) [🐳](https://mithi.github.io/deep-blueberry/) [☕](https://ko-fi.com/minimithi)
 
 Control
 - [x] The robot's dimensions 
@@ -39,11 +36,13 @@ Simulate
 - [x] Walking forward and backwards
 - [x] Rotating clockwise and counterclockwise
 
+[🤖](https://hexapod.netlify.app/) [🐳](https://mithi.github.io/deep-blueberry/) [☕](https://ko-fi.com/minimithi)
+
 ## Screenshots
 
 | ![](./public/img/screenshot4.png) | ![](./public/img/screenshot5.png) |![](./public/img/screenshot6.png) | ![](./public/img/screenshot3.png) |
 |------|-------|------|-------|
-
+| . | . | . | . |
 
 
 ## Main Contributors
