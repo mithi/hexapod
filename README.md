@@ -9,17 +9,10 @@
 
 # Mithi's Bare-Minimum Hexapod Robot Simulator 2
 
-Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero server-side computations! :heart: UPDATE! It can also simulate gaits now 🥰 
-
 Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
-
-
+  
 |<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="450" /> | <img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="200" /> |
 |------|-------|
-
-
-| ![](./public/img/screenshot4.png) | ![](./public/img/screenshot5.png) |![](./public/img/screenshot6.png) | ![](./public/img/screenshot3.png) |
-|------|-------|------|-------|
 
 ## Main Contributors
 PRs welcome! Any contribution to improve the source code will be extremely appreciated. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement. [Contributing Guide](./CONTRIBUTING.md).
@@ -29,8 +22,6 @@ I will put your name below if I've merged your PR multiple times or if you've su
 - [@mithi](https://github.com/mithi)
 - [@icyJoseph](https://github.com/icyJoseph)
 - [@mikong](https://github.com/mikong)
-
-<img src="https://mithi.github.io/robotics-blog/v2-hexapod-1.gif" alt="drawing" width="150" align="right" />
 
 ## I love badges! (Don't we all?)  
 
@@ -49,3 +40,5 @@ I will put your name below if I've merged your PR multiple times or if you've su
 [![](https://tokei.rs/b1/github/mithi/hexapod?category=comments)](https://github.com/mithi/hexapod)
 [![](https://tokei.rs/b1/github/mithi/hexapod?category=code)](https://github.com/mithi/hexapod)
 
+| ![](./public/img/screenshot4.png) | ![](./public/img/screenshot5.png) |![](./public/img/screenshot6.png) | ![](./public/img/screenshot3.png) |
+|------|-------|------|-------|
