@@ -60,26 +60,26 @@ class InputField extends Component {
         const { name, rangeParams, id, value } = this.props
         const newId = id || name
         const { minVal, maxVal, stepVal } = rangeParams
+        const props = {
+            type: "number",
+            input: "numeric",
+            id: newId,
+            ref: this.myRef,
+            value,
+            min: minVal,
+            max: maxVal,
+            step: stepVal,
+            style: { margin: 0 },
+        }
 
         return (
-            <div className="cell">
+            <div>
                 <label htmlFor={newId} className="label">
                     {name}
                 </label>
-                <input
-                    type="number"
-                    inputMode="numeric"
-                    id={newId}
-                    ref={this.myRef}
-                    value={value}
-                    onChange={e => this.handleChange(e.target.value)}
-                    min={minVal}
-                    max={maxVal}
-                    step={stepVal}
-                    style={{ margin: 0 }}
-                />
+                <input {...props} onChange={e => this.handleChange(e.target.value)} />
                 <label className="label red" style={{ opacity: 1 }}>
-                    {this.state.message || " "}
+                    {this.state.message}
                 </label>
             </div>
         )

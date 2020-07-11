@@ -9,9 +9,7 @@ class InverseKinematicsPage extends Component {
     pageName = SECTION_NAMES.inverseKinematics
     state = { ikParams: DEFAULT_IK_PARAMS, errorMessage: null, pose: DEFAULT_POSE }
 
-    componentDidMount() {
-        this.props.onMount(this.pageName)
-    }
+    componentDidMount = () => this.props.onMount(this.pageName)
 
     updateIkParams = (name, value) => {
         const ikParams = { ...this.state.ikParams, [name]: value }
@@ -36,7 +34,7 @@ class InverseKinematicsPage extends Component {
 
     update = (hexapod, ikParams) => {
         this.setState({
-            ikParams: ikParams,
+            ikParams,
             errorMessage: null,
             pose: hexapod.pose,
         })
@@ -53,25 +51,18 @@ class InverseKinematicsPage extends Component {
     }
 
     get additionalInfo() {
-        if (this.state.errorMessage === null) {
-            return <PoseTable pose={this.state.pose} />
-        } else {
-            return <AlertBox info={this.state.errorMessage} />
-        }
+        const { pose, errorMessage } = this.state
+        return errorMessage ? <AlertBox info={errorMessage} /> : <PoseTable pose={pose} />
     }
 
-    render() {
-        const sliders = this.sliders
-        return (
-            <Card title={<h2>{this.pageName}</h2>}>
-                <div className="grid-cols-3">{sliders.slice(0, 6)}</div>
-                <div className="grid-cols-2">{sliders.slice(6, 8)}</div>
-
-                <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
-                {this.additionalInfo}
-            </Card>
-        )
-    }
+    render = () => (
+        <Card title={<h2>{this.pageName}</h2>}>
+            <div className="grid-cols-3">{this.sliders.slice(0, 6)}</div>
+            <div className="grid-cols-2">{this.sliders.slice(6, 8)}</div>
+            <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
+            {this.additionalInfo}
+        </Card>
+    )
 }
 
 export default InverseKinematicsPage
