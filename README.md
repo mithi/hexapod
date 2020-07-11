@@ -6,9 +6,9 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier)
 [![](https://img.shields.io/badge/Buy%20me%20-coffee!-orange.svg?logo=buy-me-a-coffee&color=795548)](https://ko-fi.com/minimithi)
 
-# Mithi's Bare-Minimum Hexapod Robot Simulator Rewrite
-
 <img src="https://mithi.github.io/robotics-blog/v2-hexapod-1.gif" alt="drawing" width="150" align="right" />
+
+# Mithi's Bare-Minimum Hexapod Robot Simulator Rewrite
 
 Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero server-side computations!
 
@@ -18,13 +18,20 @@ Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimith
 
 See: [https://hexapod.netlify.app](https://hexapod.netlify.app)
 
-| ![](https://mithi.github.io/robotics-blog/show-off.gif) | ![](https://mithi.github.io/robotics-blog/show-off-v2-1.gif) |
+
+|<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="450" /> | <img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="200" /> |
 |------|-------|
 
 
 ## Contributions Welcome!
 
 Any contribution to improve the source code will be extremely appreciated. 💙 Anything. Anything at all. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement. [Contributing Guide](./CONTRIBUTING.md).
+
+| ![](./public/img/screenshot4.png) | ![](./public/img/screenshot5.png) |
+|------|-------|
+
+| ![](./public/img/screenshot6.png) | ![](./public/img/screenshot3.png) |
+|------|-------|
 
 ## Main Contributors
 
@@ -33,12 +40,6 @@ I will put your name below if I've merged your PR multiple times or if you've su
 - [@mithi](https://github.com/mithi)
 - [@icyJoseph](https://github.com/icyJoseph)
 - [@mikong](https://github.com/mikong)
-
-| ![](./public/img/screenshot4.png) | ![](./public/img/screenshot5.png) |
-|------|-------|
-
-| ![](./public/img/screenshot6.png) | ![](./public/img/screenshot3.png) |
-|------|-------|
 
 ## I love badges! (Don't we all?)  
 
