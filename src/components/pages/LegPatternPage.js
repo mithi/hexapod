@@ -7,7 +7,7 @@ class LegPatternPage extends Component {
     pageName = SECTION_NAMES.legPatterns
     state = { patternParams: DEFAULT_PATTERN_PARAMS }
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.props.onMount(this.pageName)
         this.reset()
     }
