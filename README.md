@@ -5,40 +5,55 @@
 [![HitCount](http://hits.dwyl.com/mithi/hexapod.svg)](http://hits.dwyl.com/mithi/hexapod)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier)
 [![](https://img.shields.io/badge/Buy%20me%20-coffee!-orange.svg?logo=buy-me-a-coffee&color=795548)](https://ko-fi.com/minimithi)
+[![PRs welcome!](https://img.shields.io/badge/PRs-welcome-orange.svg?style=flat)](./CONTRIBUTING.md)
 
-# Mithi's Bare-Minimum Hexapod Robot Simulator Rewrite
 
-<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" align="left" /> 
+# Mithi's Bare-Minimum Hexapod Robot Simulator 2
 
-Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero server-side computations!
+<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" align="left" />
 
-:heart: UPDATE! It can also simulate gaits now 🥰 
+You can use this web app to solve inverse kinematics, simulate various gaits and so much more. 
+
+In real time, and at each step of the way, you can view all the angles the robot's eighteen joints make. 
 
 Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
 
-See: [https://hexapod.netlify.app](https://hexapod.netlify.app)
+[🤖](https://hexapod.netlify.app/) [🐳](https://mithi.github.io/deep-blueberry/) [☕](https://ko-fi.com/minimithi)
+
+## Features 
+
+<img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="325" align="right" /> 
+
+[🤖](https://hexapod.netlify.app/) [🐳](https://mithi.github.io/deep-blueberry/) [☕](https://ko-fi.com/minimithi)
+
+Control
+- [x] The robot's dimensions 
+- [x] The robot's orientation and translation
+
+Solve
+- [x] Inverse Kinematics
+- [x] Forward Kinematics
+
+Simulate
+- [x] Ripple and tripod gait variations
+- [x] Walking forward and backwards
+- [x] Rotating clockwise and counterclockwise
+
+## Screenshots
+
+| ![](./public/img/screenshot4.png) | ![](./public/img/screenshot5.png) |![](./public/img/screenshot6.png) | ![](./public/img/screenshot3.png) |
+|------|-------|------|-------|
 
 
-<img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="250" align="right"/>
-
-
-## Contributions Welcome!
-
-Any contribution to improve the source code will be extremely appreciated. 💙 Anything. Anything at all. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement. [Contributing Guide](./CONTRIBUTING.md).
 
 ## Main Contributors
+PRs welcome! Any contribution to improve the source code will be extremely appreciated. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement. [Contributing Guide](./CONTRIBUTING.md).
 
 I will put your name below if I've merged your PR multiple times or if you've substantially contributed to this project in other ways.
 
 - [@mithi](https://github.com/mithi)
 - [@icyJoseph](https://github.com/icyJoseph)
 - [@mikong](https://github.com/mikong)
-
-| ![](./public/img/screenshot4.png) | ![](./public/img/screenshot5.png) |
-|------|-------|
-
-| ![](./public/img/screenshot6.png) | ![](./public/img/screenshot3.png) |
-|------|-------|
 
 ## I love badges! (Don't we all?)  
 
@@ -56,4 +71,3 @@ I will put your name below if I've merged your PR multiple times or if you've su
 [![](https://tokei.rs/b1/github/mithi/hexapod?category=files)](https://github.com/mithi/hexapod)
 [![](https://tokei.rs/b1/github/mithi/hexapod?category=comments)](https://github.com/mithi/hexapod)
 [![](https://tokei.rs/b1/github/mithi/hexapod?category=code)](https://github.com/mithi/hexapod)
-
