@@ -10,7 +10,7 @@
 
 # Mithi's Bare-Minimum Hexapod Robot Simulator 2
 
-<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" align="left" />
+<img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="150" align="left" />
 
 
 Use this app to solve and visualize forward and inverse kinematics right on your browser. You simulate variations of the ripple and tripod gait algorithms. Set the dimensions of your hexapod. Make it walk forwards and backwards. Make it rotate clockwise and counter clockwise. In real time, you have the option to view all the angles each of the eighteen joints make. 
@@ -21,7 +21,7 @@ Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimith
 
 ## Features 
 
-<img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="175" align="right" /> 
+<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" align="right" /> 
 
 Control
 - [x] The robot's dimensions 
