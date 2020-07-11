@@ -14,9 +14,7 @@
     <img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" />
 </p>
 
-You can use this web app to solve inverse kinematics, simulate various gaits and so much more. 
-
-In real time, and at each step of the way, you can view all the angles the robot's eighteen joints make. 
+You can use this web app to solve inverse kinematics, simulate various gaits, and so much more. In real time, you can also view all the angles the robot's eighteen joints at any particular pose. All the computations are done in your browser, nobody's fetching data from wherever, so it should be fast. Another (somewhat) cool thing is that this project does NOT depend on any external mathematics libraries, just Javascript's built-in Math object. 
 
 Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
 
@@ -27,7 +25,7 @@ Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimith
 
 Control
 - [x] The robot's dimensions 
-- [x] The robot's orientation and translation
+- [x] The robot's 3d orientation, translation, stance, and more
 
 Solve
 - [x] Inverse Kinematics
@@ -48,7 +46,7 @@ Simulate
 
 
 ## Main Contributors
-PRs welcome! Any contribution to improve the source code will be extremely appreciated. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement. [Contributing Guide](./CONTRIBUTING.md).
+Any contribution to improve the source code is always appreciated. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement. [Contributing Guide](./CONTRIBUTING.md).
 
 I will put your name below if I've merged your PR multiple times or if you've substantially contributed to this project in other ways.
 
