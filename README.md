@@ -12,7 +12,7 @@
     <img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" />
 </p>
 
-You can use this web app to solve inverse kinematics, simulate various gaits, and so much more. In real time, you can also view all the angles the robot's eighteen joints at any particular pose. All the computations are done in your browser, nobody's fetching data from wherever, so it should be fast. Another (somewhat) cool thing is that this project does NOT depend on any external mathematics libraries, just Javascript's built-in Math object. 
+You can use this web app to solve inverse kinematics, simulate various gaits, and more. In real time, you can also view all the angles the robot's eighteen joints makes at any particular pose. All the computations are solely done in your browser, nothing's fetching data from somewhere else, so it should be fast. Another (somewhat) cool thing is that this app does NOT depend on any external mathematics library; it only uses Javascript's built-in Math object. 
 
 Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
 
@@ -21,15 +21,15 @@ Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimith
 
 <img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="325" align="right" /> 
 
-Control
+🎉 Control
 - [x] The robot's dimensions 
 - [x] The robot's 3d orientation, translation, stance, and more
 
-Solve
+🎉 Solve
 - [x] Inverse Kinematics
 - [x] Forward Kinematics
 
-Simulate
+🎉 Simulate
 - [x] Ripple and tripod gait variations
 - [x] Walking forward and backwards
 - [x] Rotating clockwise and counterclockwise
@@ -56,9 +56,9 @@ I will put your name below if I've merged your PR multiple times or if you've su
 ## I love badges! (Don't we all?)  
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg?style=flat)](https://opensource.org/licenses/Apache-2.0)
-![](https://img.shields.io/codeclimate/issues/mithi/hexapod?label=code%20climate%20issues)
-![](https://img.shields.io/github/last-commit/mithi/hexapod)
-![](https://img.shields.io/github/commit-activity/m/mithi/hexapod?color=yellow&style=flat)
+[![](https://img.shields.io/codeclimate/issues/mithi/hexapod?label=code%20climate%20issues)](https://codeclimate.com/github/mithi/hexapod/issues)
+[![](https://img.shields.io/github/last-commit/mithi/hexapod)](https://github.com/mithi/hexapod/commits/master)
+[![](https://img.shields.io/github/commit-activity/m/mithi/hexapod?color=yellow&style=flat)](https://github.com/mithi/hexapod/graphs/commit-activity)
 ![](https://img.shields.io/github/languages/top/mithi/hexapod)
 ![](https://img.shields.io/github/languages/code-size/mithi/hexapod?color=yellow)
 ![](https://img.shields.io/github/repo-size/mithi/hexapod?color=violet)
