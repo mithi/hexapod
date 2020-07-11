@@ -13,7 +13,6 @@
 <img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" align="right" />
 <img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="175" align="right" />
 
-
 ### Visualize:
 - [x] Inverse Kinematics
 - [x] Forward Kinematics
@@ -26,6 +25,12 @@
 
 Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
   
+
+## Screenshots
+
+| ![](./public/img/screenshot4.png) | ![](./public/img/screenshot5.png) |![](./public/img/screenshot6.png) | ![](./public/img/screenshot3.png) |
+|------|-------|------|-------|
+
 
 ## Main Contributors
 PRs welcome! Any contribution to improve the source code will be extremely appreciated. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement. [Contributing Guide](./CONTRIBUTING.md).
@@ -52,6 +57,3 @@ I will put your name below if I've merged your PR multiple times or if you've su
 [![](https://tokei.rs/b1/github/mithi/hexapod?category=files)](https://github.com/mithi/hexapod)
 [![](https://tokei.rs/b1/github/mithi/hexapod?category=comments)](https://github.com/mithi/hexapod)
 [![](https://tokei.rs/b1/github/mithi/hexapod?category=code)](https://github.com/mithi/hexapod)
-
-| ![](./public/img/screenshot4.png) | ![](./public/img/screenshot5.png) |![](./public/img/screenshot6.png) | ![](./public/img/screenshot3.png) |
-|------|-------|------|-------|
