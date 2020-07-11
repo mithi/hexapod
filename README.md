@@ -21,7 +21,7 @@ Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimith
 
 ## Features 
 
-<img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="350" align="right" /> 
+<img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="300" align="right" /> 
 
 Control
 - [x] The robot's dimensions 
