@@ -48,20 +48,27 @@ class DimensionsWidget extends Component {
 
     get NumberInputFields() {
         const { minVal, maxVal } = RANGE_PARAMS.dimensionInputs
-        return DIMENSION_NAMES.map(name => (
-            <NumberInputField
-                key={name}
-                name={name}
-                rangeParams={{ minVal, maxVal, stepVal: this.state.granularity }}
-                value={this.props.params.dimensions[name]}
-                handleChange={this.updateFieldState}
-            />
-        ))
+        const stepVal = this.state.granularity
+        const dimensions = this.props.params.dimensions
+
+        const numberInputFields = DIMENSION_NAMES.map(name => {
+            const props = {
+                name,
+                key: name,
+                value: dimensions[name],
+                rangeParams: { minVal, maxVal, stepVal },
+                handleChange: this.updateFieldState,
+            }
+
+            return <NumberInputField {...props} />
+        })
+
+        return <div className="grid-cols-6">{numberInputFields}</div>
     }
 
     render = () => (
         <Card title={<h2>{this.sectionName}</h2>} other={this.toggleSwitch}>
-            <div className="grid-cols-6">{this.NumberInputFields}</div>
+            {this.NumberInputFields}
             <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
         </Card>
     )

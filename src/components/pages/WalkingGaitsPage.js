@@ -38,13 +38,11 @@ const DEFAULT_GAIT_VARS = SLIDER_LABELS.reduce((gaitParams, gaitVar) => {
     return gaitParams
 }, {})
 
-const getPose = (seq, i) => {
-    return Object.keys(seq).reduce((new_seq, legPosition) => {
-        const { alpha, beta, gamma } = seq[legPosition]
-        return {
-            ...new_seq,
-            [legPosition]: { alpha: alpha[i], beta: beta[i], gamma: gamma[i] },
-        }
+const getPose = (sequences, i) => {
+    return Object.keys(sequences).reduce((newSequences, legPosition) => {
+        const { alpha, beta, gamma } = sequences[legPosition]
+        newSequences[legPosition] = { alpha: alpha[i], beta: beta[i], gamma: gamma[i] }
+        return newSequences
     }, {})
 }
 
@@ -116,9 +114,12 @@ class WalkingGaitsPage extends Component {
         const hexapod = new VirtualHexapod(dimensions, pose, { wontRotate: true })
 
         // ❗❗️HACK When we've passed undefined pose values for some reason
-        if (hexapod && hexapod.body) {
-            this.props.onUpdate(hexapod.cloneTrot(tRotZmatrix(currentTwist)))
+        if (!hexapod || !hexapod.body) {
+            return
         }
+
+        const matrix = tRotZmatrix(currentTwist)
+        this.props.onUpdate(hexapod.cloneTrot(matrix))
     }
 
     setWalkSequence = (gaitParams, isTripodGait, inWalkMode) => {
@@ -169,13 +170,9 @@ class WalkingGaitsPage extends Component {
         this.setWalkSequence(gaitParams, isTripodGait, inWalkMode)
     }
 
-    toggleWidgets = () => {
-        this.setState({ showGaitWidgets: !this.state.showGaitWidgets })
-    }
+    toggleWidgets = () => this.setState({ showGaitWidgets: !this.state.showGaitWidgets })
 
-    toggleDirection = () => {
-        this.setState({ isForward: !this.state.isForward })
-    }
+    toggleDirection = () => this.setState({ isForward: !this.state.isForward })
 
     toggleAnimating = () => {
         const isAnimating = !this.state.isAnimating
@@ -234,7 +231,7 @@ class WalkingGaitsPage extends Component {
         )
     }
 
-    threeSwitches = (switch1, switch2, switch3) => (
+    switches = (switch1, switch2, switch3) => (
         <div className="grid-cols-3" style={{ paddingBottom: "20px" }}>
             {switch1}
             {switch2}
@@ -242,25 +239,30 @@ class WalkingGaitsPage extends Component {
         </div>
     )
 
-    render = () => (
-        <Card title={<h2>{this.pageName}</h2>} other={this.animationCount}>
-            {this.threeSwitches(this.animatingSwitch, this.widgetsSwitch)}
+    render() {
+        const switches1 = this.switches(this.animatingSwitch, this.widgetsSwitch)
+        const switches2 = this.switches(
+            this.gaitTypeSwitch,
+            this.directionSwitch,
+            this.rotateSwitch
+        )
 
-            <div hidden={!this.state.showGaitWidgets}>
-                {this.threeSwitches(
-                    this.gaitTypeSwitch,
-                    this.directionSwitch,
-                    this.rotateSwitch
-                )}
-                {this.sliders}
-                <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
-            </div>
+        return (
+            <Card title={<h2>{this.pageName}</h2>} other={this.animationCount}>
+                {switches1}
 
-            <div hidden={this.state.showGaitWidgets}>
-                <PoseTable pose={this.state.pose} />
-            </div>
-        </Card>
-    )
+                <div hidden={!this.state.showGaitWidgets}>
+                    {switches2}
+                    {this.sliders}
+                    <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
+                </div>
+
+                <div hidden={this.state.showGaitWidgets}>
+                    <PoseTable pose={this.state.pose} />
+                </div>
+            </Card>
+        )
+    }
 }
 
 export default WalkingGaitsPage

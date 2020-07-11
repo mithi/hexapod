@@ -11,18 +11,18 @@ class LegPoseWidget extends Component {
     }
 
     fields = Component => {
-        return ANGLE_NAMES.map(name => {
-            const newId = `${this.props.name}-${name}`
-            return (
-                <Component
-                    key={newId}
-                    name={name}
-                    id={newId}
-                    rangeParams={RANGE_PARAMS[name]}
-                    value={this.props.pose[name]}
-                    handleChange={this.updateFieldState}
-                />
-            )
+        return ANGLE_NAMES.map(angle => {
+            const id = `${this.props.name}-${angle}`
+            const props = {
+                id,
+                name: angle,
+                key: id,
+                value: this.props.pose[angle],
+                rangeParams: RANGE_PARAMS[angle],
+                handleChange: this.updateFieldState,
+            }
+
+            return <Component {...props} />
         })
     }
 

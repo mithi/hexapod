@@ -3,18 +3,17 @@ import Plotly from "plotly.js-gl3d-dist-min"
 import createPlotlyComponent from "react-plotly.js/factory"
 const Plot = createPlotlyComponent(Plotly)
 
-const HexapodPlot = props => {
-    return (
-        <Plot
-            data={props.data}
-            layout={props.layout}
-            useResizeHandler={true}
-            style={{ height: "100%", width: "100%" }}
-            config={{ displaylogo: false, responsive: true }}
-            onRelayout={props.onRelayout}
-            revision={props.revision}
-        />
-    )
+const HexapodPlot = ({ data, layout, onRelayout, revision }) => {
+    const props = {
+        data,
+        layout,
+        onRelayout,
+        revision,
+        config: { displaylogo: false, responsive: true },
+        style: { height: "100%", width: "100%" },
+        useResizeHandler: true,
+    }
+    return <Plot {...props} />
 }
 
 export default HexapodPlot

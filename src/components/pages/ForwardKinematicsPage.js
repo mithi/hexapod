@@ -9,9 +9,7 @@ class ForwardKinematicsPage extends Component {
     pageName = SECTION_NAMES.forwardKinematics
     state = { WidgetType: NumberInputField }
 
-    componentDidMount() {
-        this.props.onMount(this.pageName)
-    }
+    componentDidMount = () => this.props.onMount(this.pageName)
 
     reset = () => this.props.onUpdate(DEFAULT_POSE)
 
@@ -24,35 +22,31 @@ class ForwardKinematicsPage extends Component {
         this.props.onUpdate(newPose)
     }
 
-    currentlySlider = () => this.state.WidgetType === Slider
-
     toggleMode = () => {
-        const WidgetType = this.currentlySlider() ? NumberInputField : Slider
+        const WidgetType = this.state.WidgetType === Slider ? NumberInputField : Slider
         this.setState({ WidgetType })
     }
 
     makeCell = name => (
-        <div className="cell">
-            <LegPoseWidget
-                key={name}
-                name={name}
-                pose={this.props.params.pose[name]}
-                onUpdate={this.updatePose}
-                WidgetType={this.state.WidgetType}
-                renderStacked={this.currentlySlider()}
-            />
-        </div>
+        <LegPoseWidget
+            key={name}
+            name={name}
+            pose={this.props.params.pose[name]}
+            onUpdate={this.updatePose}
+            WidgetType={this.state.WidgetType}
+            renderStacked={this.state.WidgetType === Slider}
+        />
     )
 
     get toggleSwitch() {
-        return (
-            <ToggleSwitch
-                id="FwdKinematicsSwitch"
-                value={renderToString(this.state.WidgetType)}
-                handleChange={this.toggleMode}
-                showValue={false}
-            />
-        )
+        const props = {
+            id: "FwdKinematicsSwitch",
+            value: renderToString(this.state.WidgetType),
+            handleChange: this.toggleMode,
+            showValue: false,
+        }
+
+        return <ToggleSwitch {...props} />
     }
 
     render = () => (

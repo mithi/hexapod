@@ -57,25 +57,24 @@ class App extends React.Component {
             return
         }
 
-        const [data, layout] = getNewPlotParams(hexapod, this.state.plot.latestCameraView)
+        const { plot } = this.state
+        const { dimensions, pose } = hexapod
+        const [data, layout] = getNewPlotParams(hexapod, plot.latestCameraView)
         this.setState({
             plot: {
-                ...this.state.plot,
+                ...plot,
                 data,
                 layout,
-                revisionCounter: this.state.plot.revisionCounter + 1,
+                revisionCounter: plot.revisionCounter + 1,
             },
-            hexapodParams: {
-                dimensions: hexapod.dimensions,
-                pose: hexapod.pose,
-            },
+            hexapodParams: { dimensions, pose },
         })
     }
 
     logCameraView = relayoutData => {
         const newCameraView = relayoutData["scene.camera"]
         const plot = { ...this.state.plot, latestCameraView: newCameraView }
-        this.setState({ ...this.state, plot: plot })
+        this.setState({ ...this.state, plot })
     }
 
     updatePlot = (dimensions, pose) => {
@@ -92,16 +91,21 @@ class App extends React.Component {
      * Widgets control
      * * * * * * * * * * * * * */
 
-    plot = () => (
-        <div hidden={!this.state.inHexapodPage} className="plot border">
-            <HexapodPlot
-                data={this.state.plot.data}
-                layout={this.state.plot.layout}
-                onRelayout={this.logCameraView}
-                revision={this.state.plot.revisionCounter}
-            />
-        </div>
-    )
+    plot = () => {
+        const { data, layout, revisionCounter } = this.state.plot
+        const props = {
+            data,
+            layout,
+            revisionCounter,
+            onRelayout: this.logCameraView,
+        }
+
+        return (
+            <div hidden={!this.state.inHexapodPage} className="plot border">
+                <HexapodPlot {...props} />
+            </div>
+        )
+    }
 
     dimensions = () => (
         <div hidden={!this.state.inHexapodPage}>
