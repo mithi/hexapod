@@ -27,7 +27,7 @@ class ForwardKinematicsPage extends Component {
         this.setState({ WidgetType })
     }
 
-    makeCell = name => (
+    legPoseWidget = name => (
         <LegPoseWidget
             key={name}
             name={name}
@@ -52,7 +52,7 @@ class ForwardKinematicsPage extends Component {
     render = () => (
         <Card title={<h2>{this.pageName}</h2>} other={this.toggleSwitch}>
             <div className="grid-cols-2">
-                {LEG_NAMES.map(name => this.makeCell(name))}
+                {LEG_NAMES.map(name => this.legPoseWidget(name))}
             </div>
             <ResetButton reset={this.reset} />
         </Card>
