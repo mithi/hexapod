@@ -154,7 +154,8 @@ class WalkingGaitsPage extends Component {
     }
 
     reset = () => {
-        this.setWalkSequence(DEFAULT_GAIT_VARS, true, true)
+        const { isTripodGait, inWalkMode } = this.state
+        this.setWalkSequence(DEFAULT_GAIT_VARS, isTripodGait, inWalkMode)
         this.setState({ currentTwist: 0 })
     }
 
