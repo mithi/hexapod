@@ -12,6 +12,11 @@ class LegPatternPage extends Component {
         this.reset()
     }
 
+    reset = () => {
+        this.props.onUpdate(DEFAULT_POSE)
+        this.setState({ patternParams: DEFAULT_PATTERN_PARAMS })
+    }
+
     updatePatternPose = (name, value) => {
         const patternParams = { ...this.state.patternParams, [name]: Number(value) }
         let newPose = {}
@@ -22,11 +27,6 @@ class LegPatternPage extends Component {
 
         this.props.onUpdate(newPose)
         this.setState({ patternParams })
-    }
-
-    reset = () => {
-        this.props.onUpdate(DEFAULT_POSE)
-        this.setState({ patternParams: DEFAULT_PATTERN_PARAMS })
     }
 
     get sliders() {
