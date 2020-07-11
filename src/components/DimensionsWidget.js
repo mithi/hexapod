@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 import NumberInputField from "./generic/NumberInputField"
-import { Card, BasicButton, ToggleSwitch } from "./generic/SmallWidgets"
+import { Card, ResetButton, ToggleSwitch } from "./generic/SmallWidgets"
 import { DEFAULT_DIMENSIONS } from "../templates"
-import { SECTION_NAMES, DIMENSION_NAMES, RESET_LABEL, RANGE_PARAMS } from "./vars"
+import { SECTION_NAMES, DIMENSION_NAMES, RANGE_PARAMS } from "./vars"
 
 class DimensionsWidget extends Component {
     sectionName = SECTION_NAMES.dimensions
@@ -60,7 +60,7 @@ class DimensionsWidget extends Component {
     render = () => (
         <Card title={<h2>{this.sectionName}</h2>} other={this.toggleSwitch}>
             {this.NumberInputFields}
-            <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
+            <ResetButton reset={this.reset} />
         </Card>
     )
 }

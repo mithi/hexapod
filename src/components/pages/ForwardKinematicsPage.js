@@ -1,9 +1,9 @@
 import React, { Component } from "react"
 import { renderToString } from "react-dom/server"
 import LegPoseWidget from "./LegPoseWidgets"
-import { Card, ToggleSwitch, BasicButton, NumberInputField, Slider } from "../generic"
+import { Card, ToggleSwitch, ResetButton, NumberInputField, Slider } from "../generic"
 import { DEFAULT_POSE } from "../../templates"
-import { SECTION_NAMES, LEG_NAMES, RESET_LABEL } from "../vars"
+import { SECTION_NAMES, LEG_NAMES } from "../vars"
 
 class ForwardKinematicsPage extends Component {
     pageName = SECTION_NAMES.forwardKinematics
@@ -54,7 +54,7 @@ class ForwardKinematicsPage extends Component {
             <div className="grid-cols-2">
                 {LEG_NAMES.map(name => this.makeCell(name))}
             </div>
-            <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
+            <ResetButton reset={this.reset} />
         </Card>
     )
 }

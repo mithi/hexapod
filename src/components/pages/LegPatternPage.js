@@ -1,7 +1,7 @@
 import React, { Component } from "react"
-import { sliderList, Card, BasicButton } from "../generic"
+import { sliderList, Card, ResetButton } from "../generic"
 import { DEFAULT_POSE, DEFAULT_PATTERN_PARAMS } from "../../templates"
-import { SECTION_NAMES, ANGLE_NAMES, RESET_LABEL } from "../vars"
+import { SECTION_NAMES, ANGLE_NAMES } from "../vars"
 
 class LegPatternPage extends Component {
     pageName = SECTION_NAMES.legPatterns
@@ -40,7 +40,7 @@ class LegPatternPage extends Component {
     render = () => (
         <Card title={<h2>{this.pageName}</h2>}>
             <div className="grid-cols-1">{this.sliders}</div>
-            <BasicButton handleClick={this.reset}>{RESET_LABEL}</BasicButton>
+            <ResetButton reset={this.reset} />
         </Card>
     )
 }

@@ -1,6 +1,6 @@
 import React from "react"
 import ReactMarkdown from "react-markdown"
-import { ICON_COMPONENTS } from "../vars"
+import { ICON_COMPONENTS, RESET_LABEL } from "../vars"
 
 const AlertBox = ({ info }) => (
     <div className="message">
@@ -39,4 +39,8 @@ const BasicButton = ({ handleClick, children }) => (
     </button>
 )
 
-export { AlertBox, Card, ToggleSwitch, BasicButton }
+const ResetButton = ({ reset }) => (
+    <BasicButton handleClick={reset}>{RESET_LABEL}</BasicButton>
+)
+
+export { AlertBox, Card, ToggleSwitch, BasicButton, ResetButton }
