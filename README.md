@@ -13,7 +13,9 @@
 <img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="450" align="left" />
 
 
-Use this app to solve and visualize forward and inverse kinematics right on your browser. You simulate variations of the ripple and tripod gait algorithms. Set the dimensions of your hexapod. Make it walk forwards and backwards. Make it rotate clockwise and counter clockwise. In real time, you have the option to view all the angles each of the eighteen joints make. 
+You can use this web app to solve inverse kinematics, simulate various gaits and so much more. 
+
+In real time, you have the option to view all the angles each of the eighteen joints make. 
 
 Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
 
