@@ -8,7 +8,7 @@
 
 # Mithi's Bare-Minimum Hexapod Robot Simulator Rewrite
 
-<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" align="left" /> 
+<img src="https://mithi.github.io/robotics-blog/v2-hexapod-1.gif" alt="drawing" width="150" align="right" />
 
 Solve (and visualize) forward and inverse kinematics purely on your browser! It's a complete rewrite of the [one I wrote in Python 🐍](https://github.com/mithi/hexapod-robot-simulator). Extremely fast! Zero server-side computations!
 
@@ -18,8 +18,8 @@ Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimith
 
 See: [https://hexapod.netlify.app](https://hexapod.netlify.app)
 
-
-<img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="250" align="right"/>
+| ![](https://mithi.github.io/robotics-blog/show-off.gif) | ![](https://mithi.github.io/robotics-blog/show-off-v2-1.gif) |
+|------|-------|
 
 
 ## Contributions Welcome!
