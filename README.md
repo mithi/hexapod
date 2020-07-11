@@ -7,12 +7,25 @@
 [![](https://img.shields.io/badge/Buy%20me%20-coffee!-orange.svg?logo=buy-me-a-coffee&color=795548)](https://ko-fi.com/minimithi)
 [![PRs welcome!](https://img.shields.io/badge/PRs-welcome-orange.svg?style=flat)](./CONTRIBUTING.md)
 
+
 # Mithi's Bare-Minimum Hexapod Robot Simulator 2
+
+<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" align="right" />
+<img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="175" align="right" />
+
+
+### Visualize:
+- [x] Inverse Kinematics
+- [x] Forward Kinematics
+- [x] Leg Patterns
+
+### Simulate:
+- [x] Ripple and tripod gait variations
+- [x] Walking forward and backwards
+- [x] Rotating clockwise and counterclockwise
 
 Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
   
-|<img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="450" /> | <img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="200" /> |
-|------|-------|
 
 ## Main Contributors
 PRs welcome! Any contribution to improve the source code will be extremely appreciated. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement. [Contributing Guide](./CONTRIBUTING.md).
