@@ -13,12 +13,12 @@
 <img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" align="right" />
 <img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="175" align="right" />
 
-### Visualize:
+### Visualizations
 - [x] Inverse Kinematics
 - [x] Forward Kinematics
 - [x] Leg Patterns
 
-### Simulate:
+### Simulations
 - [x] Ripple and tripod gait variations
 - [x] Walking forward and backwards
 - [x] Rotating clockwise and counterclockwise
