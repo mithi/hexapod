@@ -11,34 +11,34 @@ class InverseKinematicsPage extends Component {
 
     componentDidMount = () => this.props.onMount(this.pageName)
 
-    updateIkParams = (name, value) => {
-        const ikParams = { ...this.state.ikParams, [name]: value }
-        const result = solveInverseKinematics(this.props.params.dimensions, ikParams)
-
-        if (!result.obtainedSolution) {
-            this.props.onUpdate(null)
-            this.setState({ errorMessage: result.message, pose: null })
-            return
-        }
-
-        this.update(result.hexapod, ikParams)
-    }
-
     reset = () => {
         const result = solveInverseKinematics(
             this.props.params.dimensions,
             DEFAULT_IK_PARAMS
         )
-        this.update(result.hexapod, DEFAULT_IK_PARAMS)
+        this.updateHexapodPlot(result.hexapod, DEFAULT_IK_PARAMS)
     }
 
-    update = (hexapod, ikParams) => {
+    updateHexapodPlot = (hexapod, ikParams) => {
         this.setState({
             ikParams,
             errorMessage: null,
         })
 
         this.props.onUpdate(hexapod)
+    }
+
+    updateIkParams = (name, value) => {
+        const ikParams = { ...this.state.ikParams, [name]: value }
+        const result = solveInverseKinematics(this.props.params.dimensions, ikParams)
+
+        if (!result.obtainedSolution) {
+            this.props.onUpdate(null)
+            this.setState({ errorMessage: result.message })
+            return
+        }
+
+        this.updateHexapodPlot(result.hexapod, ikParams)
     }
 
     get sliders() {
@@ -50,11 +50,11 @@ class InverseKinematicsPage extends Component {
     }
 
     get additionalInfo() {
-        return this.state.errorMessage ? (
-            <AlertBox info={this.state.errorMessage} />
-        ) : (
-            <PoseTable pose={this.props.params.pose} />
-        )
+        if (this.state.errorMessage) {
+            return <AlertBox info={this.state.errorMessage} />
+        }
+
+        return <PoseTable pose={this.props.params.pose} />
     }
 
     render = () => (
