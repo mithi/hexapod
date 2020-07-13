@@ -38,7 +38,7 @@ const getWalkSequence = (
         ty: 0,
         tz,
         legStance,
-        hipStance: walkMode === "rotating" ? 0 : hipStance,
+        hipStance,
         rx,
         ry,
         rz: 0,
