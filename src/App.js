@@ -20,6 +20,7 @@ ReactGA.initialize("UA-170794768-1", {
 })
 
 class App extends React.Component {
+    plotCameraView = defaults.CAMERA_VIEW
     state = {
         inHexapodPage: false,
 
@@ -31,7 +32,6 @@ class App extends React.Component {
         plot: {
             data: defaults.DATA,
             layout: defaults.LAYOUT,
-            latestCameraView: defaults.CAMERA_VIEW,
             revisionCounter: 0,
         },
     }
@@ -59,7 +59,7 @@ class App extends React.Component {
 
         const { plot } = this.state
         const { dimensions, pose } = hexapod
-        const [data, layout] = getNewPlotParams(hexapod, plot.latestCameraView)
+        const [data, layout] = getNewPlotParams(hexapod, this.plotCameraView)
         this.setState({
             plot: {
                 ...plot,
@@ -71,11 +71,7 @@ class App extends React.Component {
         })
     }
 
-    logCameraView = relayoutData => {
-        const newCameraView = relayoutData["scene.camera"]
-        const plot = { ...this.state.plot, latestCameraView: newCameraView }
-        this.setState({ ...this.state, plot })
-    }
+    logCameraView = relayoutData => (this.plotCameraView = relayoutData["scene.camera"])
 
     updatePlot = (dimensions, pose) => {
         const newHexapodModel = new VirtualHexapod(dimensions, pose)
@@ -88,7 +84,7 @@ class App extends React.Component {
     updatePose = pose => this.updatePlot(this.state.hexapodParams.dimensions, pose)
 
     /* * * * * * * * * * * * * *
-     * Widgets control
+     * Widgets
      * * * * * * * * * * * * * */
 
     plot = () => {
