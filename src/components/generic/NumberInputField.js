@@ -1,9 +1,7 @@
 import React, { Component } from "react"
 
 class InputField extends Component {
-    state = {
-        message: null,
-    }
+    state = { message: null }
 
     constructor(props) {
         super(props)
@@ -11,9 +9,7 @@ class InputField extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            message: null,
-        })
+        this.setState({ message: null })
     }
 
     handleChange(value) {
