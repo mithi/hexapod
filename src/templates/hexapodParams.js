@@ -49,7 +49,7 @@ const DEFAULT_GAIT_PARAMS = {
     hipStance: 30,
     hipSwing: 25,
     liftSwing: 40,
-    stepCount: 5
+    stepCount: 5,
 }
 
 export {

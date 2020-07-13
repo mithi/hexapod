@@ -82,12 +82,12 @@ class App extends React.Component {
      * * * * * * * * * * * * * */
 
     hexapodPlot = () => {
-        const { revision } = this.state
+        const { revision, inHexapodPage } = this.state
         const { data, layout } = this.plot
         const props = { data, layout, revision, onRelayout: this.logCameraView }
 
         return (
-            <div hidden={!this.state.inHexapodPage} className="plot border">
+            <div hidden={!inHexapodPage} className="plot border">
                 <HexapodPlot {...props} />
             </div>
         )
