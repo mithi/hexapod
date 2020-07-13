@@ -2,6 +2,7 @@ import { solveHexapodParams } from "./ik/hexapodSolver"
 
 /* * *
 
+Return format:
   poseSequence = {
     leftMiddle: {
         alpha: [],
@@ -11,6 +12,8 @@ import { solveHexapodParams } from "./ik/hexapodSolver"
     ....
   }
 
+  gaitType = ["ripple", "tripod"]
+  walkMode = ["rotating", "walking"]
   * * */
 
 const getWalkSequence = (
@@ -26,8 +29,8 @@ const getWalkSequence = (
         hipSwing: 25,
         liftSwing: 40,
     },
-    gaitType,
-    walkMode
+    gaitType = "tripod",
+    walkMode = "walking"
 ) => {
     const { hipStance, rx, ry, tx, tz, legStance } = params
     const rawIKparams = {
@@ -35,7 +38,7 @@ const getWalkSequence = (
         ty: 0,
         tz,
         legStance,
-        hipStance: walkMode === "rotate" ? 0 : hipStance,
+        hipStance: walkMode === "rotating" ? 0 : hipStance,
         rx,
         ry,
         rz: 0,
