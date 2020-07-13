@@ -20,7 +20,12 @@ ReactGA.initialize("UA-170794768-1", {
 })
 
 class App extends React.Component {
-    plotCameraView = defaults.CAMERA_VIEW
+    plot = {
+        cameraView: defaults.CAMERA_VIEW,
+        data: defaults.DATA,
+        layout: defaults.LAYOUT,
+    }
+
     state = {
         inHexapodPage: false,
 
@@ -29,11 +34,7 @@ class App extends React.Component {
             pose: defaults.DEFAULT_POSE,
         },
 
-        plot: {
-            data: defaults.DATA,
-            layout: defaults.LAYOUT,
-            revisionCounter: 0,
-        },
+        revision: 0,
     }
 
     /* * * * * * * * * * * * * *
@@ -57,21 +58,18 @@ class App extends React.Component {
             return
         }
 
-        const { plot } = this.state
+        const [data, layout] = getNewPlotParams(hexapod, this.plot.cameraView)
+        this.plot = { ...this.plot, data, layout }
+
         const { dimensions, pose } = hexapod
-        const [data, layout] = getNewPlotParams(hexapod, this.plotCameraView)
+
         this.setState({
-            plot: {
-                ...plot,
-                data,
-                layout,
-                revisionCounter: plot.revisionCounter + 1,
-            },
+            revision: this.state.revision + 1,
             hexapodParams: { dimensions, pose },
         })
     }
 
-    logCameraView = relayoutData => (this.plotCameraView = relayoutData["scene.camera"])
+    logCameraView = relayoutData => (this.plot.cameraView = relayoutData["scene.camera"])
 
     updatePlot = (dimensions, pose) => {
         const newHexapodModel = new VirtualHexapod(dimensions, pose)
@@ -87,14 +85,10 @@ class App extends React.Component {
      * Widgets
      * * * * * * * * * * * * * */
 
-    plot = () => {
-        const { data, layout, revisionCounter } = this.state.plot
-        const props = {
-            data,
-            layout,
-            revisionCounter,
-            onRelayout: this.logCameraView,
-        }
+    hexapodPlot = () => {
+        const { revision } = this.state
+        const { data, layout } = this.plot
+        const props = { data, layout, revision, onRelayout: this.logCameraView }
 
         return (
             <div hidden={!this.state.inHexapodPage} className="plot border">
@@ -180,7 +174,7 @@ class App extends React.Component {
                     {this.dimensions()}
                     {this.page()}
                 </div>
-                {this.plot()}
+                {this.hexapodPlot()}
             </div>
             {this.navDetailed()}
         </Router>
