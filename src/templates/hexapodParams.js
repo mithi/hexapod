@@ -40,6 +40,18 @@ const DEFAULT_IK_PARAMS = {
     legStance: 0,
 }
 
+const DEFAULT_GAIT_PARAMS = {
+    tx: 0,
+    tz: 0,
+    rx: 0,
+    ry: 0,
+    legStance: 0,
+    hipStance: 30,
+    hipSwing: 25,
+    liftSwing: 40,
+    stepCount: 5
+}
+
 export {
     DEFAULT_DIMENSIONS,
     DEFAULT_LEG_DIMENSIONS,
@@ -47,4 +59,5 @@ export {
     DEFAULT_POSE,
     DEFAULT_IK_PARAMS,
     DEFAULT_PATTERN_PARAMS,
+    DEFAULT_GAIT_PARAMS,
 }
