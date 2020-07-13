@@ -1,41 +1,13 @@
 import React, { Component } from "react"
 import { sliderList, Card, ResetButton, ToggleSwitch } from "../generic"
-import { SECTION_NAMES } from "../vars"
+import { SECTION_NAMES, GAIT_SLIDER_LABELS, GAIT_RANGE_PARAMS } from "../vars"
 import getWalkSequence from "../../hexapod/solvers/walkSequenceSolver"
 import PoseTable from "./PoseTable"
 import { VirtualHexapod } from "../../hexapod"
 import { tRotZmatrix } from "../../hexapod/geometry"
+import { DEFAULT_GAIT_PARAMS } from "../../templates"
 
 const ANIMATION_DELAY = 1
-
-const SLIDER_LABELS = [
-    "hipSwing",
-    "liftSwing",
-    "legStance",
-    "hipStance",
-    "tx",
-    "tz",
-    "rx",
-    "ry",
-    "stepCount",
-]
-
-const PARAMS = {
-    tx: { minVal: -0.25, maxVal: 0.25, stepVal: 0.01, defaultVal: 0 },
-    tz: { minVal: -0.5, maxVal: 0.5, stepVal: 0.01, defaultVal: 0 },
-    rx: { minVal: -15, maxVal: 15, stepVal: 0.5, defaultVal: 0 },
-    ry: { minVal: -15, maxVal: 15, stepVal: 0.5, defaultVal: 0 },
-    legStance: { minVal: -50, maxVal: 50, stepVal: 0.5, defaultVal: 0 },
-    hipStance: { minVal: 20, maxVal: 40, stepVal: 0.5, defaultVal: 30 },
-    hipSwing: { minVal: 10, maxVal: 40, stepVal: 0.5, defaultVal: 25 },
-    liftSwing: { minVal: 10, maxVal: 70, stepVal: 0.5, defaultVal: 40 },
-    stepCount: { minVal: 3, maxVal: 7, stepVal: 1, defaultVal: 5 },
-}
-
-const DEFAULT_GAIT_VARS = SLIDER_LABELS.reduce((gaitParams, gaitVar) => {
-    gaitParams[gaitVar] = PARAMS[gaitVar].defaultVal
-    return gaitParams
-}, {})
 
 const getPose = (sequences, i) => {
     return Object.keys(sequences).reduce((newSequences, legPosition) => {
@@ -64,7 +36,7 @@ class WalkingGaitsPage extends Component {
     currentTwist = 0
     walkSequence = null
     state = {
-        gaitParams: DEFAULT_GAIT_VARS,
+        gaitParams: DEFAULT_GAIT_PARAMS,
         isAnimating: false,
         isTripodGait: true,
         isForward: true,
@@ -76,7 +48,7 @@ class WalkingGaitsPage extends Component {
     componentDidMount = () => {
         this.props.onMount(this.pageName)
         const { isTripodGait, inWalkMode } = this.state
-        this.setWalkSequence(DEFAULT_GAIT_VARS, isTripodGait, inWalkMode)
+        this.setWalkSequence(DEFAULT_GAIT_PARAMS, isTripodGait, inWalkMode)
     }
 
     componentWillUnmount = () => {
@@ -136,17 +108,13 @@ class WalkingGaitsPage extends Component {
 
         const pose = getPose(this.walkSequence, animationCount)
         this.onUpdate(pose, this.currentTwist)
-        this.setState({
-            gaitParams,
-            isTripodGait,
-            inWalkMode,
-        })
+        this.setState({ gaitParams, isTripodGait, inWalkMode })
     }
 
     reset = () => {
         const { isTripodGait, inWalkMode } = this.state
         this.currentTwist = 0
-        this.setWalkSequence(DEFAULT_GAIT_VARS, isTripodGait, inWalkMode)
+        this.setWalkSequence(DEFAULT_GAIT_PARAMS, isTripodGait, inWalkMode)
     }
 
     updateGaitParams = (name, value) => {
@@ -209,9 +177,9 @@ class WalkingGaitsPage extends Component {
 
     get sliders() {
         const sliders = sliderList({
-            names: SLIDER_LABELS,
+            names: GAIT_SLIDER_LABELS,
             values: this.state.gaitParams,
-            rangeParams: PARAMS,
+            rangeParams: GAIT_RANGE_PARAMS,
             handleChange: this.updateGaitParams,
         })
 
