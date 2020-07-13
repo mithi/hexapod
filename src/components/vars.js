@@ -34,6 +34,18 @@ const LEG_NAMES = [
 const IK_SLIDERS_LABELS = ["tx", "ty", "tz", "rx", "ry", "rz", "hipStance", "legStance"]
 const RESET_LABEL = "reset"
 
+const GAIT_SLIDER_LABELS = [
+    "hipSwing",
+    "liftSwing",
+    "legStance",
+    "hipStance",
+    "tx",
+    "tz",
+    "rx",
+    "ry",
+    "stepCount",
+]
+
 /*************
  * RANGE PARAMS
  *************/
@@ -64,6 +76,17 @@ const RANGE_PARAMS = {
     gamma: RANGES[180],
 }
 
+const GAIT_RANGE_PARAMS = {
+    tx: { minVal: -0.25, maxVal: 0.25, stepVal: 0.01, defaultVal: 0 },
+    tz: { minVal: -0.5, maxVal: 0.5, stepVal: 0.01, defaultVal: 0 },
+    rx: { minVal: -15, maxVal: 15, stepVal: 0.5, defaultVal: 0 },
+    ry: { minVal: -15, maxVal: 15, stepVal: 0.5, defaultVal: 0 },
+    legStance: { minVal: -50, maxVal: 50, stepVal: 0.5, defaultVal: 0 },
+    hipStance: { minVal: 20, maxVal: 40, stepVal: 0.5, defaultVal: 30 },
+    hipSwing: { minVal: 10, maxVal: 40, stepVal: 0.5, defaultVal: 25 },
+    liftSwing: { minVal: 10, maxVal: 70, stepVal: 0.5, defaultVal: 40 },
+    stepCount: { minVal: 3, maxVal: 7, stepVal: 1, defaultVal: 5 },
+}
 /*************
  * ICONS
  *************/
@@ -154,9 +177,11 @@ export {
     DIMENSION_NAMES,
     LEG_NAMES,
     IK_SLIDERS_LABELS,
+    GAIT_SLIDER_LABELS,
     RESET_LABEL,
     PATHS,
     URL_LINKS,
     PATH_LINKS,
     RANGE_PARAMS,
+    GAIT_RANGE_PARAMS,
 }
