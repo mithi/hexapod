@@ -3,7 +3,6 @@ import { Card } from "../generic"
 import { ANGLE_NAMES, RANGE_PARAMS } from "../vars"
 
 class LegPoseWidget extends PureComponent {
-
     updateFieldState = (angle, value) => {
         const numberValue = Number(value)
         if (!isNaN(numberValue)) {

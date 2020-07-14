@@ -238,7 +238,7 @@ input[type="number"] {
     width: 100%;
     font-size: 0.6rem;
     margin-left: 5px;
-    opacity: 1.0;
+    opacity: 1;
     white-space: nowrap;
 }
 

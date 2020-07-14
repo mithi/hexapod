@@ -12,21 +12,21 @@ import { RANGE_PARAMS } from "../vars"
  *
  * */
 const Slider = React.memo(({ name, id, value, rangeParams, handleChange }) => (
-        <div className="slider-container cell">
-            <div className="label">
-                <label htmlFor={id || name}>{name}</label>: <span>{value}</span>
-            </div>
-            <input
-                type="range"
-                id={id || name}
-                min={rangeParams.minVal}
-                max={rangeParams.maxVal}
-                step={rangeParams.stepVal}
-                value={value}
-                onChange={e => handleChange(name, e.target.value)}
-                className="slider"
-            />
+    <div className="slider-container cell">
+        <div className="label">
+            <label htmlFor={id || name}>{name}</label>: <span>{value}</span>
         </div>
+        <input
+            type="range"
+            id={id || name}
+            min={rangeParams.minVal}
+            max={rangeParams.maxVal}
+            step={rangeParams.stepVal}
+            value={value}
+            onChange={e => handleChange(name, e.target.value)}
+            className="slider"
+        />
+    </div>
 ))
 
 const sliderList = ({ names, values, handleChange, rangeParams }) =>
