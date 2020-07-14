@@ -1,8 +1,9 @@
-import React, { Component } from "react"
+import React, { PureComponent } from "react"
 import { Card } from "../generic"
 import { ANGLE_NAMES, RANGE_PARAMS } from "../vars"
 
-class LegPoseWidget extends Component {
+class LegPoseWidget extends PureComponent {
+
     updateFieldState = (angle, value) => {
         const numberValue = Number(value)
         if (!isNaN(numberValue)) {
