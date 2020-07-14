@@ -8,8 +8,15 @@ class InputField extends Component {
         this.myRef = React.createRef()
     }
 
-    componentDidMount() {
-        this.setState({ message: null })
+    shouldComponentUpdate(nextProps, nextState) {
+        const hasNewProp = ["name", "id", "value"].some(
+            name => this.props[name] !== nextProps[name]
+        )
+
+        const hasNewRange = ["minVal", "maxVal", "stepVal"].some(
+            name => this.props.rangeParams[name] !== nextProps.rangeParams[name]
+        )
+        return hasNewProp || hasNewRange || this.state.message !== nextState.message
     }
 
     handleChange(value) {
