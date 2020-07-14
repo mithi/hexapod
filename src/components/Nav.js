@@ -8,9 +8,8 @@ const NAV_DETAILED_PREFIX = "navDetailed"
 const BulletPageLink = React.memo(({ link, showDesc }) => (
     <li>
         <Link to={link.path} className="link-icon">
-            <span>
-                {link.icon} {showDesc ? link.description : null}
-            </span>
+            <span> {link.icon} </span>
+            <span hidden={!showDesc}>{link.description}</span>
         </Link>
     </li>
 ))
@@ -31,7 +30,7 @@ const BulletUrlLink = React.memo(({ path, description, icon }) => (
     </li>
 ))
 
-const NavBullets = () => (
+const Nav = React.memo(() => (
     <ul className="row-container no-bullet" id="top-bar">
         {URL_LINKS.map(link => (
             <BulletUrlLink
@@ -45,7 +44,7 @@ const NavBullets = () => (
             <BulletPageLink key={NAV_BULLETS_PREFIX + link.path} link={link} />
         ))}
     </ul>
-)
+))
 
 const NavDetailed = React.memo(() => (
     <footer>
@@ -71,7 +70,5 @@ const NavDetailed = React.memo(() => (
         </nav>
     </footer>
 ))
-
-const Nav = React.memo(() => <NavBullets />)
 
 export { Nav, NavDetailed }
