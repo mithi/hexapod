@@ -218,10 +218,7 @@ class WalkingGaitsPage extends Component {
                     {this.sliders}
                     <ResetButton reset={this.reset} />
                 </div>
-
-                <div hidden={showGaitWidgets}>
-                    <PoseTable pose={pose} />
-                </div>
+                {showGaitWidgets ? null : <PoseTable pose={pose} />}
             </Card>
         )
     }
