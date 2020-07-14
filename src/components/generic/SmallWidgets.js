@@ -11,7 +11,7 @@ const AlertBox = ({ info }) => (
     </div>
 )
 
-const ToggleSwitch = ({ id, value, handleChange, showValue }) => (
+const ToggleSwitch = React.memo(({ id, value, handleChange, showValue }) => (
     <div className="switch-container">
         <label className="switch" htmlFor={id}>
             <input id={id} type="checkbox" value={value} onChange={handleChange} />
@@ -21,9 +21,9 @@ const ToggleSwitch = ({ id, value, handleChange, showValue }) => (
             {showValue ? value : null}
         </label>
     </div>
-)
+))
 
-const Card = ({ title, other, children }) => (
+const Card = React.memo(({ title, other, children }) => (
     <div>
         <div className="row-container flex-wrap">
             {title}
@@ -31,16 +31,16 @@ const Card = ({ title, other, children }) => (
         </div>
         {children}
     </div>
-)
+))
 
-const BasicButton = ({ handleClick, children }) => (
+const BasicButton = React.memo(({ handleClick, children }) => (
     <button type="button" className="button" onClick={handleClick}>
         {children}
     </button>
-)
+))
 
-const ResetButton = ({ reset }) => (
+const ResetButton = React.memo(({ reset }) => (
     <BasicButton handleClick={reset}>{RESET_LABEL}</BasicButton>
-)
+))
 
 export { AlertBox, Card, ToggleSwitch, BasicButton, ResetButton }
