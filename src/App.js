@@ -33,6 +33,7 @@ class App extends React.Component {
      * * * * * * * * * * * * * */
 
     onPageLoad = pageName => {
+        window.gtag('config', "UA-170794768-1", { page_path: window.location.pathname + window.location.search })
 
         if (pageName === SECTION_NAMES.landingPage) {
             this.setState({ inHexapodPage: false })
@@ -95,12 +96,6 @@ class App extends React.Component {
                 params={{ dimensions: this.state.hexapodDimensions }}
                 onUpdate={this.updateDimensions}
             />
-        </div>
-    )
-
-    navDetailed = () => (
-        <div hidden={!this.state.inHexapodPage}>
-            <NavDetailed />
         </div>
     )
 
@@ -168,7 +163,7 @@ class App extends React.Component {
                 </div>
                 {this.hexapodPlot()}
             </div>
-            {this.navDetailed()}
+            <NavDetailed />
         </Router>
     )
 }
