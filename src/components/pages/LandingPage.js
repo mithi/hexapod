@@ -1,7 +1,6 @@
 import React from "react"
-import ReactMarkdown from "react-markdown"
 import { NavDetailed } from ".."
-import { LANDING_PAGE_MESSAGE, SECTION_NAMES } from "../vars"
+import { SECTION_NAMES } from "../vars"
 
 class LandingPage extends React.Component {
     pageName = SECTION_NAMES.landingPage
@@ -10,9 +9,9 @@ class LandingPage extends React.Component {
 
     render = () => (
         <>
-            <div className="hexapod-img" />{" "}
             <div id="landing">
-                <ReactMarkdown source={LANDING_PAGE_MESSAGE} />
+                <h1>Mithi's Hexapod Robot Simulator</h1>
+                <p>Enjoy your stay and share with your friends!</p>
             </div>
             <NavDetailed />
         </>
