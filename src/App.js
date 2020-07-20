@@ -1,9 +1,9 @@
-import React from "react"
+import React, { Suspense } from "react"
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom"
 import { VirtualHexapod, getNewPlotParams } from "./hexapod"
 import * as defaults from "./templates"
 import { SECTION_NAMES, PATHS } from "./components/vars"
-import { Nav, NavDetailed, HexapodPlot, DimensionsWidget } from "./components"
+import { Nav, NavDetailed, DimensionsWidget } from "./components"
 import {
     ForwardKinematicsPage,
     InverseKinematicsPage,
@@ -11,6 +11,8 @@ import {
     LegPatternPage,
     WalkingGaitsPage,
 } from "./components/pages"
+
+const HexapodPlot = React.lazy(() => import('./components/HexapodPlot'))
 
 class App extends React.Component {
     plot = {
@@ -80,7 +82,9 @@ class App extends React.Component {
 
         return (
             <div hidden={!inHexapodPage} className="plot border">
-                <HexapodPlot {...props} />
+                <Suspense fallback={<h1>Loading 3d plot...</h1>}>
+                    <HexapodPlot {...props} />
+                </Suspense>
             </div>
         )
     }
