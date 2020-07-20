@@ -133,7 +133,7 @@ tr:hover {
 }
 
 .button {
-    color: #ef5777;
+    color: #ffa801;
     background-color: rgb(34, 47, 62);
     border: none;
     font-size: 0.6rem;
@@ -143,7 +143,7 @@ tr:hover {
 }
 
 .button:hover {
-    color: #ffa801;
+    color: #ef5777;
     font-weight: bold;
 }
 
@@ -217,7 +217,7 @@ input[type="number"] {
     width: 100%;
     font-size: 0.6rem;
     margin-left: 5px;
-    opacity: 0.5;
+    opacity: 1.0;
     white-space: nowrap;
 }
 
