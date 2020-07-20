@@ -1,8 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
 
-body, code, input { font-family: Consolas, Monaco, Menlo, Courier, monospace; }
-.button { font-family: Consolas, Monaco, Menlo, Courier, monospace; }
+body,
+code,
+input {
+    font-family: Consolas, Monaco, Menlo, Courier, monospace;
+}
+.button {
+    font-family: Consolas, Monaco, Menlo, Courier, monospace;
+}
 
-h1, h2, h3, th {
+h1,
+h2,
+h3,
+th {
     font-family: "Permanent Marker", Consolas, Monaco, Menlo, Courier, monospace;
 }
