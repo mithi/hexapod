@@ -12,7 +12,7 @@ import {
     WalkingGaitsPage,
 } from "./components/pages"
 
-const HexapodPlot = React.lazy(() => import('./components/HexapodPlot'))
+const HexapodPlot = React.lazy(() => import("./components/HexapodPlot"))
 
 class App extends React.Component {
     plot = {
@@ -33,7 +33,9 @@ class App extends React.Component {
      * * * * * * * * * * * * * */
 
     onPageLoad = pageName => {
-        window.gtag('config', "UA-170794768-1", { page_path: window.location.pathname + window.location.search })
+        window.gtag("config", "UA-170794768-1", {
+            page_path: window.location.pathname + window.location.search,
+        })
 
         if (pageName === SECTION_NAMES.landingPage) {
             this.setState({ inHexapodPage: false })
