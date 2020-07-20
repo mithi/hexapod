@@ -169,7 +169,7 @@ class App extends React.Component {
                 </div>
                 {this.hexapodPlot()}
             </div>
-            <NavDetailed />
+            {this.state.inHexapodPage ? <NavDetailed /> : null}
         </Router>
     )
 }
