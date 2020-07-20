@@ -14,7 +14,9 @@ import {
 
 const HexapodPlot = React.lazy(() => import("./components/HexapodPlot"))
 window.dataLayer = window.dataLayer || []
-function gtag() { window.dataLayer.push(arguments) }
+function gtag() {
+    window.dataLayer.push(arguments)
+}
 
 class App extends React.Component {
     plot = {

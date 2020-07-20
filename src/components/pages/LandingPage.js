@@ -9,7 +9,7 @@ class LandingPage extends React.Component {
     render = () => (
         <>
             <div id="landing">
-                <h1>Mithi's Hexapod Robot Simulator</h1>
+                <h1>Mithi's Bare Minimum Hexapod Robot Simulator</h1>
                 <p>Enjoy your stay and share with your friends!</p>
             </div>
         </>
