@@ -1,6 +1,5 @@
 import React from "react"
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom"
-import ReactGA from "react-ga"
 import { VirtualHexapod, getNewPlotParams } from "./hexapod"
 import * as defaults from "./templates"
 import { SECTION_NAMES, PATHS } from "./components/vars"
@@ -12,12 +11,6 @@ import {
     LegPatternPage,
     WalkingGaitsPage,
 } from "./components/pages"
-
-ReactGA.initialize("UA-170794768-1", {
-    //debug: true,
-    //testMode: process.env.NODE_ENV === 'test',
-    gaOptions: { siteSpeedSampleRate: 100 },
-})
 
 class App extends React.Component {
     plot = {
@@ -38,7 +31,6 @@ class App extends React.Component {
      * * * * * * * * * * * * * */
 
     onPageLoad = pageName => {
-        ReactGA.pageview(window.location.pathname + window.location.search)
 
         if (pageName === SECTION_NAMES.landingPage) {
             this.setState({ inHexapodPage: false })
