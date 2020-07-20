@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import { renderToString } from "react-dom/server"
 import LegPoseWidget from "./LegPoseWidgets"
 import { Card, ToggleSwitch, ResetButton, NumberInputField, Slider } from "../generic"
 import { DEFAULT_POSE } from "../../templates"
@@ -41,9 +40,9 @@ class ForwardKinematicsPage extends Component {
     get toggleSwitch() {
         const props = {
             id: "FwdKinematicsSwitch",
-            value: renderToString(this.state.WidgetType),
+            value: this.state.WidgetType === Slider ? "Slider" : "Field",
             handleChange: this.toggleMode,
-            showValue: false,
+            showValue: true,
         }
 
         return <ToggleSwitch {...props} />
