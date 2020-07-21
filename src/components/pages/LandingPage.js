@@ -12,7 +12,7 @@ class LandingPage extends React.Component {
     render = () => (
         <>
             <div id="landing">
-                <Suspense fallback={<p>A cute random robot coming soon...</p>}>
+                <Suspense fallback={<p>A cute random robot will be displayed here...</p>}>
                     <RandomRobotGif />
                 </Suspense>
                 <h1>Mithi's Bare Minimum Hexapod Robot Simulator</h1>
