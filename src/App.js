@@ -86,12 +86,12 @@ class App extends React.Component {
      * * * * * * * * * * * * * */
 
     hexapodPlot = () => {
-        const { revision, inHexapodPage } = this.state
+        const { revision } = this.state
         const { data, layout } = this.plot
         const props = { data, layout, revision, onRelayout: this.logCameraView }
 
         return (
-            <div hidden={!inHexapodPage} className="plot border">
+            <div className="plot border">
                 <Suspense fallback={<h1>Loading 3d plot...</h1>}>
                     <HexapodPlot {...props} />
                 </Suspense>
@@ -172,7 +172,7 @@ class App extends React.Component {
                     {this.dimensions()}
                     {this.page()}
                 </div>
-                {this.hexapodPlot()}
+                {this.state.inHexapodPage ? this.hexapodPlot() : null}
             </div>
             {this.state.inHexapodPage ? <NavDetailed /> : null}
         </Router>
