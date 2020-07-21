@@ -4,16 +4,17 @@ import { VirtualHexapod, getNewPlotParams } from "./hexapod"
 import * as defaults from "./templates"
 import { SECTION_NAMES, PATHS } from "./components/vars"
 import { Nav, NavDetailed, DimensionsWidget } from "./components"
-import {
-    ForwardKinematicsPage,
-    LegPatternPage,
-    LandingPage,
-} from "./components/pages"
+import { ForwardKinematicsPage, LegPatternPage, LandingPage } from "./components/pages"
 
-const HexapodPlot = React.lazy(() => import("./components/HexapodPlot"))
-const InverseKinematicsPage = React.lazy(() => import("./components/pages/InverseKinematicsPage"))
-const WalkingGaitsPage = React.lazy(() => import("./components/pages/WalkingGaitsPage"))
-
+const HexapodPlot = React.lazy(() =>
+    import(/* webpackPrefetch: true */ "./components/HexapodPlot")
+)
+const InverseKinematicsPage = React.lazy(() =>
+    import(/* webpackPrefetch: true */ "./components/pages/InverseKinematicsPage")
+)
+const WalkingGaitsPage = React.lazy(() =>
+    import(/* webpackPrefetch: true */ "./components/pages/WalkingGaitsPage")
+)
 
 window.dataLayer = window.dataLayer || []
 function gtag() {
