@@ -3,7 +3,7 @@ import { SECTION_NAMES } from "../vars"
 import { NavDetailed } from "../Nav"
 
 const getImageUrl = () =>
-    Math.random() > 0.5 ? "./img/small-robot.gif" : "./img/small-robot-2.gif"
+    Math.random() > 0.5 ? "./img/small-robot-small.gif" : "./img/small-robot-2-small.gif"
 
 class LandingPage extends React.Component {
     pageName = SECTION_NAMES.landingPage

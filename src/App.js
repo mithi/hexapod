@@ -13,6 +13,7 @@ import {
 } from "./components/pages"
 
 const HexapodPlot = React.lazy(() => import("./components/HexapodPlot"))
+
 window.dataLayer = window.dataLayer || []
 function gtag() {
     window.dataLayer.push(arguments)
