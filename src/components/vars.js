@@ -1,6 +1,6 @@
 import React from "react"
 import { GiCoffeeMug } from "react-icons/gi"
-import { FaGithubAlt, FaTimes, FaCheck, FaHome, FaSquare } from "react-icons/fa"
+import { FaGithubAlt, FaTimes, FaHome } from "react-icons/fa"
 import { GrStatusGoodSmall } from "react-icons/gr"
 
 const SECTION_NAMES = {
@@ -94,9 +94,7 @@ const GAIT_RANGE_PARAMS = {
 const ICON_COMPONENTS = {
     mug: <GiCoffeeMug className="vertical-align" />,
     circle: <GrStatusGoodSmall className="small-icon" />,
-    square: <FaSquare className="small-icon" />,
     octocat: <FaGithubAlt className="vertical-align" />,
-    check: <FaCheck className="vertical-align" />,
     times: <FaTimes className="vertical-align" />,
     home: <FaHome className="vertical-align" />,
 }
