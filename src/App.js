@@ -6,13 +6,14 @@ import { SECTION_NAMES, PATHS } from "./components/vars"
 import { Nav, NavDetailed, DimensionsWidget } from "./components"
 import {
     ForwardKinematicsPage,
-    InverseKinematicsPage,
-    LandingPage,
     LegPatternPage,
-    WalkingGaitsPage,
+    LandingPage,
 } from "./components/pages"
 
 const HexapodPlot = React.lazy(() => import("./components/HexapodPlot"))
+const InverseKinematicsPage = React.lazy(() => import("./components/pages/InverseKinematicsPage"))
+const WalkingGaitsPage = React.lazy(() => import("./components/pages/WalkingGaitsPage"))
+
 
 window.dataLayer = window.dataLayer || []
 function gtag() {
@@ -117,7 +118,9 @@ class App extends React.Component {
     }
 
     pageComponent = (Component, onUpdate, params) => (
-        <Component onMount={this.onPageLoad} onUpdate={onUpdate} params={params} />
+        <Suspense fallback={<h1>Loading page</h1>}>
+            <Component onMount={this.onPageLoad} onUpdate={onUpdate} params={params} />
+        </Suspense>
     )
 
     pageLanding = () => this.pageComponent(LandingPage)
