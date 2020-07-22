@@ -16,6 +16,29 @@ const HexapodPlot = React.lazy(() =>
     import(/* webpackPrefetch: true */ "./components/HexapodPlot")
 )
 
+const Page = ({ pageComponent} ) => (
+    <Switch>
+        <Route path="/" exact>
+            {pageComponent(LandingPage)}
+        </Route>
+        <Route path={PATHS.legPatterns.path} exact>
+            {pageComponent(LegPatternPage)}
+        </Route>
+        <Route path={PATHS.forwardKinematics.path} exact>
+            {pageComponent(ForwardKinematicsPage)}
+        </Route>
+        <Route path={PATHS.inverseKinematics.path} exact>
+            {pageComponent(InverseKinematicsPage)}
+        </Route>
+        <Route path={PATHS.walkingGaits.path} exact>
+            {pageComponent(WalkingGaitsPage)}
+        </Route>
+        <Route>
+            <Redirect to="/" />
+        </Route>
+    </Switch>
+)
+
 window.dataLayer = window.dataLayer || []
 function gtag() {
     window.dataLayer.push(arguments)
@@ -48,6 +71,7 @@ class App extends React.Component {
         document.title = pageName + " - Mithi's Bare Minimum Hexapod Robot Simulator"
     }
 
+    //updateType, newParam, state => newState
     manageState = (updateType, newParam) => {
         let hexapod = null
         const { pose, dimensions } = this.state.hexapod
@@ -88,28 +112,7 @@ class App extends React.Component {
         />
     )
 
-    page = () => (
-        <Switch>
-            <Route path="/" exact>
-                {this.pageComponent(LandingPage)}
-            </Route>
-            <Route path={PATHS.legPatterns.path} exact>
-                {this.pageComponent(LegPatternPage)}
-            </Route>
-            <Route path={PATHS.forwardKinematics.path} exact>
-                {this.pageComponent(ForwardKinematicsPage)}
-            </Route>
-            <Route path={PATHS.inverseKinematics.path} exact>
-                {this.pageComponent(InverseKinematicsPage)}
-            </Route>
-            <Route path={PATHS.walkingGaits.path} exact>
-                {this.pageComponent(WalkingGaitsPage)}
-            </Route>
-            <Route>
-                <Redirect to="/" />
-            </Route>
-        </Switch>
-    )
+
 
     /* * * * * * * * * * * * * *
      * Layout
@@ -126,7 +129,7 @@ class App extends React.Component {
                             onUpdate={this.manageState}
                         />
                     </div>
-                    {this.page()}
+                    <Page pageComponent={this.pageComponent} />
                 </div>
                 <Suspense fallback={<p>Preloading the plot for later... </p>}>
                     <div id="plot" className="border" hidden={!this.state.inHexapodPage}>
