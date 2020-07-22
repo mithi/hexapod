@@ -32,7 +32,7 @@ const BulletUrlLink = ({ path, description, icon }) => (
 )
 
 const NavBullets = () => (
-    <ul className="row-container no-bullet" id="top-bar">
+    <ul id="top-bar">
         {URL_LINKS.map(link => (
             <BulletUrlLink
                 path={link.url}

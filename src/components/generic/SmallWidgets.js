@@ -25,7 +25,7 @@ const ToggleSwitch = ({ id, value, handleChange, showValue }) => (
 
 const Card = ({ title, other, children }) => (
     <div>
-        <div className="row-container flex-wrap">
+        <div className="card-header">
             {title}
             {other}
         </div>
