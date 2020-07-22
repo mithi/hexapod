@@ -14,6 +14,9 @@ class HexapodPlot extends React.Component {
     }
 
     render() {
+        if (!this.props.hexapod) {
+            return null
+        }
         const [data, layout] = getNewPlotParams(this.props.hexapod, this.cameraView)
 
         const props = {

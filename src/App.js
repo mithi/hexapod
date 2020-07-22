@@ -39,7 +39,7 @@ class App extends React.Component {
         }
 
         this.setState({ inHexapodPage: true })
-        this.updatePlot(this.state.hexapod.dimensions, defaults.DEFAULT_POSE)
+        this.manageState("pose", { pose: defaults.DEFAULT_POSE })
 
         gtag("config", "UA-170794768-1", {
             page_path: window.location.pathname + window.location.search,
@@ -48,33 +48,39 @@ class App extends React.Component {
         document.title = pageName + " - Mithi's Bare Minimum Hexapod Robot Simulator"
     }
 
-    updatePlotWithHexapod = hexapod => {
+    manageState = (updateType, newParam) => {
+        let hexapod = null
+        const { pose, dimensions } = this.state.hexapod
+
+        if (updateType === "pose") {
+            hexapod = new VirtualHexapod(dimensions, newParam.pose)
+        }
+
+        if (updateType === "dimensions") {
+            hexapod = new VirtualHexapod(newParam.dimensions, pose)
+        }
+
+        if (updateType === "hexapod") {
+            hexapod = newParam.hexapod
+        }
+
         if (!hexapod || !hexapod.foundSolution) {
             return
         }
+
         this.setState({
             revision: this.state.revision + 1,
             hexapod,
         })
     }
-
-    updatePlot = (dimensions, pose) => {
-        const newHexapodModel = new VirtualHexapod(dimensions, pose)
-        this.updatePlotWithHexapod(newHexapodModel)
-    }
-
-    updateDimensions = dimensions => this.updatePlot(dimensions, this.state.hexapod.pose)
-
-    updatePose = pose => this.updatePlot(this.state.hexapod.dimensions, pose)
-
     /* * * * * * * * * * * * * *
      * Pages
      * * * * * * * * * * * * * */
 
-    pageComponent = (Component, onUpdate) => (
+    pageComponent = Component => (
         <Component
             onMount={this.onPageLoad}
-            onUpdate={onUpdate}
+            onUpdate={this.manageState}
             params={{
                 dimensions: this.state.hexapod.dimensions,
                 pose: this.state.hexapod.pose,
@@ -88,16 +94,16 @@ class App extends React.Component {
                 {this.pageComponent(LandingPage)}
             </Route>
             <Route path={PATHS.legPatterns.path} exact>
-                {this.pageComponent(LegPatternPage, this.updatePose)}
+                {this.pageComponent(LegPatternPage)}
             </Route>
             <Route path={PATHS.forwardKinematics.path} exact>
-                {this.pageComponent(ForwardKinematicsPage, this.updatePose)}
+                {this.pageComponent(ForwardKinematicsPage)}
             </Route>
             <Route path={PATHS.inverseKinematics.path} exact>
-                {this.pageComponent(InverseKinematicsPage, this.updatePlotWithHexapod)}
+                {this.pageComponent(InverseKinematicsPage)}
             </Route>
             <Route path={PATHS.walkingGaits.path} exact>
-                {this.pageComponent(WalkingGaitsPage, this.updatePlotWithHexapod)}
+                {this.pageComponent(WalkingGaitsPage)}
             </Route>
             <Route>
                 <Redirect to="/" />
@@ -117,7 +123,7 @@ class App extends React.Component {
                     <div hidden={!this.state.inHexapodPage}>
                         <DimensionsWidget
                             params={{ dimensions: this.state.hexapod.dimensions }}
-                            onUpdate={this.updateDimensions}
+                            onUpdate={this.manageState}
                         />
                     </div>
                     {this.page()}

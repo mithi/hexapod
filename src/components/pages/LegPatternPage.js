@@ -13,7 +13,7 @@ class LegPatternPage extends Component {
     }
 
     reset = () => {
-        this.props.onUpdate(DEFAULT_POSE)
+        this.props.onUpdate("pose", { pose: DEFAULT_POSE })
         this.setState({ patternParams: DEFAULT_PATTERN_PARAMS })
     }
 
@@ -25,7 +25,7 @@ class LegPatternPage extends Component {
             newPose[leg] = patternParams
         }
 
-        this.props.onUpdate(newPose)
+        this.props.onUpdate("pose", { pose: newPose })
         this.setState({ patternParams })
     }
 

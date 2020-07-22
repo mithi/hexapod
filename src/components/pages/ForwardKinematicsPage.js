@@ -10,7 +10,7 @@ class ForwardKinematicsPage extends Component {
 
     componentDidMount = () => this.props.onMount(this.pageName)
 
-    reset = () => this.props.onUpdate(DEFAULT_POSE)
+    reset = () => this.props.onUpdate("pose", { pose: DEFAULT_POSE })
 
     updatePose = (name, angle, value) => {
         const pose = this.props.params.pose
@@ -18,7 +18,7 @@ class ForwardKinematicsPage extends Component {
             ...pose,
             [name]: { ...pose[name], [angle]: value },
         }
-        this.props.onUpdate(newPose)
+        this.props.onUpdate("pose", { pose: newPose })
     }
 
     toggleMode = () => {
