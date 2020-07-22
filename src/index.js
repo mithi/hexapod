@@ -1,7 +1,8 @@
 import React, { Suspense } from "react"
 import ReactDOM from "react-dom"
-import "./index.css"
-import "./font.css"
+
+//import "./index.css"
+//import "./font.css"
 import * as serviceWorker from "./serviceWorker"
 
 const App = React.lazy(() => import("./App"))
