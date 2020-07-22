@@ -1,15 +1,17 @@
-import React from "react"
+import React, { Suspense } from "react"
 import ReactDOM from "react-dom"
 
-import "./index.css"
+//import "./index.css"
 //import "./font.css"
 import * as serviceWorker from "./serviceWorker"
 
-import App from "./App"
+const App = React.lazy(() => import("./App"))
 
 ReactDOM.render(
     <React.StrictMode>
-        <App />
+        <Suspense fallback={<p>Mithi's Bare Minimum Hexapod Robot Simulator...</p>}>
+            <App />
+        </Suspense>
     </React.StrictMode>,
     document.getElementById("root")
 )
