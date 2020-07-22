@@ -16,10 +16,6 @@ const HexapodPlot = React.lazy(() =>
     import(/* webpackPrefetch: true */ "./components/HexapodPlot")
 )
 
-const RandomRobotGif = React.lazy(() =>
-    import(/* webpackPrefetch: true */ "./components/pages/RandomRobotGif")
-)
-
 window.dataLayer = window.dataLayer || []
 function gtag() {
     window.dataLayer.push(arguments)
@@ -74,69 +70,39 @@ class App extends React.Component {
     /* * * * * * * * * * * * * *
      * Pages
      * * * * * * * * * * * * * */
-    get hexapodParams() {
-        return {
-            dimensions: this.state.hexapod.dimensions,
-            pose: this.state.hexapod.pose,
-        }
-    }
 
-    pageComponent = (Component, onUpdate, params) => (
-        <Component onMount={this.onPageLoad} onUpdate={onUpdate} params={params} />
+    pageComponent = (Component, onUpdate) => (
+        <Component
+            onMount={this.onPageLoad}
+            onUpdate={onUpdate}
+            params={{
+                dimensions: this.state.hexapod.dimensions,
+                pose: this.state.hexapod.pose,
+            }}
+        />
     )
-
-    pageLanding = () => this.pageComponent(LandingPage)
-
-    pagePatterns = () => this.pageComponent(LegPatternPage, this.updatePose)
-
-    pageIk = () =>
-        this.pageComponent(
-            InverseKinematicsPage,
-            this.updatePlotWithHexapod,
-            this.hexapodParams
-        )
-
-    pageFk = () =>
-        this.pageComponent(ForwardKinematicsPage, this.updatePose, {
-            pose: this.state.hexapod.pose,
-        })
-
-    pageWalking = () =>
-        this.pageComponent(
-            WalkingGaitsPage,
-            this.updatePlotWithHexapod,
-            this.hexapodParams
-        )
 
     page = () => (
         <Switch>
-            <Route path="/" exact component={this.pageLanding} />
-            <Route path={PATHS.legPatterns.path} exact component={this.pagePatterns} />
-            <Route path={PATHS.forwardKinematics.path} exact component={this.pageFk} />
-            <Route path={PATHS.inverseKinematics.path} exact component={this.pageIk} />
-            <Route path={PATHS.walkingGaits.path} exact component={this.pageWalking} />
+            <Route path="/" exact>
+                {this.pageComponent(LandingPage)}
+            </Route>
+            <Route path={PATHS.legPatterns.path} exact>
+                {this.pageComponent(LegPatternPage, this.updatePose)}
+            </Route>
+            <Route path={PATHS.forwardKinematics.path} exact>
+                {this.pageComponent(ForwardKinematicsPage, this.updatePose)}
+            </Route>
+            <Route path={PATHS.inverseKinematics.path} exact>
+                {this.pageComponent(InverseKinematicsPage, this.updatePlotWithHexapod)}
+            </Route>
+            <Route path={PATHS.walkingGaits.path} exact>
+                {this.pageComponent(WalkingGaitsPage, this.updatePlotWithHexapod)}
+            </Route>
             <Route>
                 <Redirect to="/" />
             </Route>
         </Switch>
-    )
-
-    hexapodPage = () => (
-        <div id="main">
-            <div id="sidebar">
-                <DimensionsWidget
-                    params={{ dimensions: this.state.hexapod.dimensions }}
-                    onUpdate={this.updateDimensions}
-                />
-                {this.page()}
-            </div>
-            <div id="plot" className="border">
-                <HexapodPlot
-                    revision={this.state.revision}
-                    hexapod={this.state.hexapod}
-                />
-            </div>
-        </div>
     )
 
     /* * * * * * * * * * * * * *
@@ -146,10 +112,25 @@ class App extends React.Component {
     render = () => (
         <Router>
             <Nav />
-            <Suspense fallback={<p>Loading page... </p>}>{this.hexapodPage()}</Suspense>
-            <Suspense fallback={<p>Cute robot will be displayed here</p>}>
-            <RandomRobotGif />
-            </Suspense>
+            <div id="main">
+                <div id="sidebar">
+                    <div hidden={!this.state.inHexapodPage}>
+                        <DimensionsWidget
+                            params={{ dimensions: this.state.hexapod.dimensions }}
+                            onUpdate={this.updateDimensions}
+                        />
+                    </div>
+                    {this.page()}
+                </div>
+                <Suspense fallback={<p>Preloading the plot for later... </p>}>
+                    <div id="plot" className="border" hidden={!this.state.inHexapodPage}>
+                        <HexapodPlot
+                            revision={this.state.revision}
+                            hexapod={this.state.hexapod}
+                        />
+                    </div>
+                </Suspense>
+            </div>
             <NavDetailed />
         </Router>
     )
