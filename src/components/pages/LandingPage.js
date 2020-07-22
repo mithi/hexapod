@@ -11,11 +11,19 @@ class LandingPage extends React.Component {
     render = () => (
         <>
             <div id="landing">
-                <Suspense fallback={<p>A cute random robot will be displayed here...</p>}>
+                <Suspense fallback={<p>A cute random robot will soon appear!</p>}>
                     <RandomRobotGif />
                 </Suspense>
                 <h1>Mithi's Bare Minimum Hexapod Robot Simulator</h1>
-                <p>Enjoy your stay and share with your friends!</p>
+                <p>
+                    This page may <span className="red">feel slow</span> because it is
+                    also eagerly loading the 3d plot (behind the scenes) for a smoother
+                    experience later.
+                    <span className="red"> Actually</span>, you can already navigate to
+                    any of the links below (which I recommend)
+                    <span className="red"> right now</span>, even if the page hasn't fully
+                    loaded yet. Enjoy your stay and share with your friends!
+                </p>
             </div>
         </>
     )
