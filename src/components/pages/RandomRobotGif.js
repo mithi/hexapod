@@ -5,10 +5,9 @@ const getImageUrl = () =>
 
 const RandomRobotGif = () => (
     <img
-        loading="lazy"
         src={getImageUrl()}
+        height="75px"
         alt="hexapod robot animation"
-        height="75"
         style={{ marginTop: "20px", borderRadius: "20px" }}
     />
 )
