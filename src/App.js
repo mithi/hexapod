@@ -1,70 +1,13 @@
 import React, { Suspense } from "react"
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom"
-import { VirtualHexapod } from "./hexapod"
-import * as defaults from "./templates"
-import { SECTION_NAMES, PATHS } from "./components/vars"
+import { BrowserRouter as Router } from "react-router-dom"
+import { DEFAULT_POSE } from "./templates"
+import { SECTION_NAMES } from "./components/vars"
 import { Nav, NavDetailed, DimensionsWidget } from "./components"
-import {
-    InverseKinematicsPage,
-    WalkingGaitsPage,
-    ForwardKinematicsPage,
-    LegPatternPage,
-    LandingPage,
-} from "./components/pages"
+import { updateHexapod, Page } from "./AppHelpers"
 
 const HexapodPlot = React.lazy(() =>
     import(/* webpackPrefetch: true */ "./components/HexapodPlot")
 )
-
-const Page = ({ pageComponent }) => (
-    <Switch>
-        <Route path="/" exact>
-            {pageComponent(LandingPage)}
-        </Route>
-        <Route path={PATHS.legPatterns.path} exact>
-            {pageComponent(LegPatternPage)}
-        </Route>
-        <Route path={PATHS.forwardKinematics.path} exact>
-            {pageComponent(ForwardKinematicsPage)}
-        </Route>
-        <Route path={PATHS.inverseKinematics.path} exact>
-            {pageComponent(InverseKinematicsPage)}
-        </Route>
-        <Route path={PATHS.walkingGaits.path} exact>
-            {pageComponent(WalkingGaitsPage)}
-        </Route>
-        <Route>
-            <Redirect to="/" />
-        </Route>
-    </Switch>
-)
-
-const updateHexapod = (updateType, newParam, oldHexapod) => {
-    if (updateType === "default") {
-        return new VirtualHexapod(defaults.DEFAULT_DIMENSIONS, defaults.DEFAULT_POSE)
-    }
-
-    let hexapod = null
-    const { pose, dimensions } = oldHexapod
-
-    if (updateType === "pose") {
-        hexapod = new VirtualHexapod(dimensions, newParam.pose)
-    }
-
-    if (updateType === "dimensions") {
-        hexapod = new VirtualHexapod(newParam.dimensions, pose)
-    }
-
-    if (updateType === "hexapod") {
-        hexapod = newParam.hexapod
-    }
-
-    if (!hexapod || !hexapod.foundSolution) {
-        return null
-    }
-
-    return hexapod
-}
 
 window.dataLayer = window.dataLayer || []
 function gtag() {
@@ -79,7 +22,7 @@ class App extends React.Component {
     }
 
     /* * * * * * * * * * * * * *
-     * Page load and plot update handlers
+     * Page load Callback
      * * * * * * * * * * * * * */
 
     onPageLoad = pageName => {
@@ -94,8 +37,12 @@ class App extends React.Component {
         }
 
         this.setState({ inHexapodPage: true })
-        this.manageState("pose", { pose: defaults.DEFAULT_POSE })
+        this.manageState("pose", { pose: DEFAULT_POSE })
     }
+
+    /* * * * * * * * * * * * * *
+     * State Management Callback
+     * * * * * * * * * * * * * */
 
     manageState = (updateType, newParam) => {
         const hexapod = updateHexapod(updateType, newParam, this.state.hexapod)
@@ -106,7 +53,7 @@ class App extends React.Component {
         })
     }
     /* * * * * * * * * * * * * *
-     * Pages
+     * Page Component Prototype
      * * * * * * * * * * * * * */
 
     pageComponent = Component => (
