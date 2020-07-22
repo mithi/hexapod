@@ -83,6 +83,7 @@ class App extends React.Component {
                         />
                     </div>
                     <Page pageComponent={this.pageComponent} />
+                    {!this.state.inHexapodPage ? <NavDetailed /> : null}
                 </div>
                 <div id="plot" className="border" hidden={!this.state.inHexapodPage}>
                     <Suspense fallback={<p>Preloading the plot for later... </p>}>
@@ -93,7 +94,7 @@ class App extends React.Component {
                     </Suspense>
                 </div>
             </div>
-            <NavDetailed />
+            {this.state.inHexapodPage ? <NavDetailed /> : null}
         </Router>
     )
 }
