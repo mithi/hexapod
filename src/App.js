@@ -16,7 +16,7 @@ const HexapodPlot = React.lazy(() =>
     import(/* webpackPrefetch: true */ "./components/HexapodPlot")
 )
 
-const Page = ({ pageComponent} ) => (
+const Page = ({ pageComponent }) => (
     <Switch>
         <Route path="/" exact>
             {pageComponent(LandingPage)}
@@ -39,6 +39,33 @@ const Page = ({ pageComponent} ) => (
     </Switch>
 )
 
+const updateHexapod = (updateType, newParam, oldHexapod) => {
+    if (updateType === "default") {
+        return new VirtualHexapod(defaults.DEFAULT_DIMENSIONS, defaults.DEFAULT_POSE)
+    }
+
+    let hexapod = null
+    const { pose, dimensions } = oldHexapod
+
+    if (updateType === "pose") {
+        hexapod = new VirtualHexapod(dimensions, newParam.pose)
+    }
+
+    if (updateType === "dimensions") {
+        hexapod = new VirtualHexapod(newParam.dimensions, pose)
+    }
+
+    if (updateType === "hexapod") {
+        hexapod = newParam.hexapod
+    }
+
+    if (!hexapod || !hexapod.foundSolution) {
+        return null
+    }
+
+    return hexapod
+}
+
 window.dataLayer = window.dataLayer || []
 function gtag() {
     window.dataLayer.push(arguments)
@@ -47,7 +74,7 @@ function gtag() {
 class App extends React.Component {
     state = {
         inHexapodPage: false,
-        hexapod: new VirtualHexapod(defaults.DEFAULT_DIMENSIONS, defaults.DEFAULT_POSE),
+        hexapod: updateHexapod("default"),
         revision: 0,
     }
 
@@ -56,6 +83,11 @@ class App extends React.Component {
      * * * * * * * * * * * * * */
 
     onPageLoad = pageName => {
+        document.title = pageName + " - Mithi's Bare Minimum Hexapod Robot Simulator"
+        gtag("config", "UA-170794768-1", {
+            page_path: window.location.pathname + window.location.search,
+        })
+
         if (pageName === SECTION_NAMES.landingPage) {
             this.setState({ inHexapodPage: false })
             return
@@ -63,34 +95,10 @@ class App extends React.Component {
 
         this.setState({ inHexapodPage: true })
         this.manageState("pose", { pose: defaults.DEFAULT_POSE })
-
-        gtag("config", "UA-170794768-1", {
-            page_path: window.location.pathname + window.location.search,
-        })
-
-        document.title = pageName + " - Mithi's Bare Minimum Hexapod Robot Simulator"
     }
 
-    //updateType, newParam, state => newState
     manageState = (updateType, newParam) => {
-        let hexapod = null
-        const { pose, dimensions } = this.state.hexapod
-
-        if (updateType === "pose") {
-            hexapod = new VirtualHexapod(dimensions, newParam.pose)
-        }
-
-        if (updateType === "dimensions") {
-            hexapod = new VirtualHexapod(newParam.dimensions, pose)
-        }
-
-        if (updateType === "hexapod") {
-            hexapod = newParam.hexapod
-        }
-
-        if (!hexapod || !hexapod.foundSolution) {
-            return
-        }
+        const hexapod = updateHexapod(updateType, newParam, this.state.hexapod)
 
         this.setState({
             revision: this.state.revision + 1,
@@ -112,8 +120,6 @@ class App extends React.Component {
         />
     )
 
-
-
     /* * * * * * * * * * * * * *
      * Layout
      * * * * * * * * * * * * * */
@@ -131,14 +137,14 @@ class App extends React.Component {
                     </div>
                     <Page pageComponent={this.pageComponent} />
                 </div>
-                <Suspense fallback={<p>Preloading the plot for later... </p>}>
-                    <div id="plot" className="border" hidden={!this.state.inHexapodPage}>
+                <div id="plot" className="border" hidden={!this.state.inHexapodPage}>
+                    <Suspense fallback={<p>Preloading the plot for later... </p>}>
                         <HexapodPlot
                             revision={this.state.revision}
                             hexapod={this.state.hexapod}
                         />
-                    </div>
-                </Suspense>
+                    </Suspense>
+                </div>
             </div>
             <NavDetailed />
         </Router>
