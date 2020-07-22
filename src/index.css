@@ -132,8 +132,6 @@ tr:hover {
     font-size: 13px;
 }
 
-
-
 .button {
     color: #ffa801;
     background-color: rgb(34, 47, 62);
@@ -148,7 +146,6 @@ tr:hover {
     color: #ef5777;
     font-weight: bold;
 }
-
 
 .text {
     font-weight: bold;
@@ -183,10 +180,6 @@ tr:hover {
     white-space: nowrap;
 }
 
-
-
-
-
 .card-header {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -216,7 +209,7 @@ tr:hover {
   INPUT
  ********************/
 
- input {
+input {
     font-size: 0.6rem;
     text-align: justify;
     font-weight: bolder;
@@ -397,7 +390,6 @@ input:checked + .toggle-switch-widget:before {
         height: 300px;
         min-width: 250px;
     }
-
 
     th,
     td {
