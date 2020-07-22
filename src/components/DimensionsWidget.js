@@ -8,7 +8,7 @@ class DimensionsWidget extends Component {
     sectionName = SECTION_NAMES.dimensions
     state = { isFine: true }
 
-    reset = () => this.props.onUpdate(DEFAULT_DIMENSIONS)
+    reset = () => this.props.onUpdate("dimensions", { dimensions: DEFAULT_DIMENSIONS })
 
     toggleMode = () => this.setState({ isFine: !this.state.isFine })
 
@@ -16,7 +16,7 @@ class DimensionsWidget extends Component {
 
     updateDimensions = (name, value) => {
         const dimensions = { ...this.props.params.dimensions, [name]: value }
-        this.props.onUpdate(dimensions)
+        this.props.onUpdate("dimensions", { dimensions })
     }
 
     get toggleSwitch() {
