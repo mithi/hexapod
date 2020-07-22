@@ -1,19 +1,13 @@
 import React, { Suspense } from "react"
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom"
-import { VirtualHexapod, getNewPlotParams } from "./hexapod"
+import { VirtualHexapod } from "./hexapod"
 import * as defaults from "./templates"
 import { SECTION_NAMES, PATHS } from "./components/vars"
 import { Nav, NavDetailed, DimensionsWidget } from "./components"
-import { ForwardKinematicsPage, LegPatternPage, LandingPage } from "./components/pages"
+import { InverseKinematicsPage, WalkingGaitsPage, ForwardKinematicsPage, LegPatternPage, LandingPage } from "./components/pages"
 
 const HexapodPlot = React.lazy(() =>
     import(/* webpackPrefetch: true */ "./components/HexapodPlot")
-)
-const InverseKinematicsPage = React.lazy(() =>
-    import(/* webpackPrefetch: true */ "./components/pages/InverseKinematicsPage")
-)
-const WalkingGaitsPage = React.lazy(() =>
-    import(/* webpackPrefetch: true */ "./components/pages/WalkingGaitsPage")
 )
 
 window.dataLayer = window.dataLayer || []
@@ -22,16 +16,9 @@ function gtag() {
 }
 
 class App extends React.Component {
-    plot = {
-        cameraView: defaults.CAMERA_VIEW,
-        data: defaults.DATA,
-        layout: defaults.LAYOUT,
-    }
-
     state = {
         inHexapodPage: false,
-        hexapodDimensions: defaults.DEFAULT_DIMENSIONS,
-        hexapodPose: defaults.DEFAULT_POSE,
+        hexapod: new VirtualHexapod(defaults.DEFAULT_DIMENSIONS, defaults.DEFAULT_POSE ),
         revision: 0,
     }
 
@@ -40,9 +27,6 @@ class App extends React.Component {
      * * * * * * * * * * * * * */
 
     onPageLoad = pageName => {
-        gtag("config", "UA-170794768-1", {
-            page_path: window.location.pathname + window.location.search,
-        })
 
         if (pageName === SECTION_NAMES.landingPage) {
             this.setState({ inHexapodPage: false })
@@ -50,7 +34,13 @@ class App extends React.Component {
         }
 
         this.setState({ inHexapodPage: true })
-        this.updatePlot(this.state.hexapodDimensions, defaults.DEFAULT_POSE)
+        this.updatePlot(this.state.hexapod.dimensions, defaults.DEFAULT_POSE)
+
+        gtag("config", "UA-170794768-1", {
+            page_path: window.location.pathname + window.location.search,
+        })
+
+        document.title = pageName + " - Mithi's Bare Minimum Hexapod Robot Simulator"
     }
 
     updatePlotWithHexapod = hexapod => {
@@ -58,18 +48,10 @@ class App extends React.Component {
             return
         }
 
-        const [data, layout] = getNewPlotParams(hexapod, this.plot.cameraView)
-        this.plot = { ...this.plot, data, layout }
-
         this.setState({
             revision: this.state.revision + 1,
-            hexapodDimensions: hexapod.dimensions,
-            hexapodPose: hexapod.pose,
+            hexapod
         })
-    }
-
-    logCameraView = relayoutData => {
-        this.plot.cameraView = relayoutData["scene.camera"]
     }
 
     updatePlot = (dimensions, pose) => {
@@ -77,18 +59,19 @@ class App extends React.Component {
         this.updatePlotWithHexapod(newHexapodModel)
     }
 
-    updateDimensions = dimensions => this.updatePlot(dimensions, this.state.hexapodPose)
+    updateDimensions = dimensions => this.updatePlot(dimensions, this.state.hexapod.pose)
 
-    updatePose = pose => this.updatePlot(this.state.hexapodDimensions, pose)
+    updatePose = pose => this.updatePlot(this.state.hexapod.dimensions, pose)
 
     /* * * * * * * * * * * * * *
      * Widgets
      * * * * * * * * * * * * * */
 
     hexapodPlot = () => {
-        const { revision } = this.state
-        const { data, layout } = this.plot
-        const props = { data, layout, revision, onRelayout: this.logCameraView }
+        const props = {
+            revision: this.state.revision,
+            hexapod: this.state.hexapod
+        }
 
         return (
             <div className="plot border">
@@ -102,7 +85,7 @@ class App extends React.Component {
     dimensions = () => (
         <div hidden={!this.state.inHexapodPage}>
             <DimensionsWidget
-                params={{ dimensions: this.state.hexapodDimensions }}
+                params={{ dimensions: this.state.hexapod.dimensions }}
                 onUpdate={this.updateDimensions}
             />
         </div>
@@ -113,16 +96,14 @@ class App extends React.Component {
      * * * * * * * * * * * * * */
     get hexapodParams() {
         return {
-            dimensions: this.state.hexapodDimensions,
-            pose: this.state.hexapodPose,
+            dimensions: this.state.hexapod.dimensions,
+            pose: this.state.hexapod.pose,
         }
     }
 
-    pageComponent = (Component, onUpdate, params) => (
-        <Suspense fallback={<h1>Loading page</h1>}>
-            <Component onMount={this.onPageLoad} onUpdate={onUpdate} params={params} />
-        </Suspense>
-    )
+    pageComponent = (Component, onUpdate, params) =>
+        <Component onMount={this.onPageLoad} onUpdate={onUpdate} params={params} />
+
 
     pageLanding = () => this.pageComponent(LandingPage)
 
@@ -137,7 +118,7 @@ class App extends React.Component {
 
     pageFk = () =>
         this.pageComponent(ForwardKinematicsPage, this.updatePose, {
-            pose: this.state.hexapodPose,
+            pose: this.state.hexapod.pose,
         })
 
     pageWalking = () =>
@@ -159,7 +140,7 @@ class App extends React.Component {
             </Route>
         </Switch>
     )
-
+    
     /* * * * * * * * * * * * * *
      * Layout
      * * * * * * * * * * * * * */
