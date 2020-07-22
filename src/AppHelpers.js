@@ -55,7 +55,7 @@ const updateHexapod = (updateType, newParam, oldHexapod) => {
     }
 
     if (!hexapod || !hexapod.foundSolution) {
-        return null
+        return oldHexapod
     }
 
     return hexapod
