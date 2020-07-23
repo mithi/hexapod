@@ -7,7 +7,7 @@
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
         "jest-canvas-mock": "^2.2.0",
-        "plotly.js-gl3d-dist-min": "^1.54.2",
+        "plotly.js-gl3d-dist-min": "^1.54.7",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-icons": "^3.10.0",
