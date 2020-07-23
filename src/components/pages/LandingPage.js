@@ -1,7 +1,9 @@
 import React, { Suspense } from "react"
 import { SECTION_NAMES } from "../vars"
 
-const RandomRobotGif = React.lazy(() => import("./RandomRobotGif"))
+const RandomRobotGif = React.lazy(() =>
+    import(/* webpackChunkName: "GIF" */ "./RandomRobotGif")
+)
 
 class LandingPage extends React.Component {
     pageName = SECTION_NAMES.landingPage
@@ -17,12 +19,11 @@ class LandingPage extends React.Component {
                 <h1>Mithi's Bare Minimum Hexapod Robot Simulator</h1>
                 <p>
                     This page may <span className="red">feel slow</span> because it is
-                    also eagerly loading the 3d plot (behind the scenes) for a smoother
-                    experience later.
-                    <span className="red"> Actually</span>, you can already navigate to
-                    any of the links below (which I recommend)
-                    <span className="red"> right now</span>, even if the page hasn't fully
-                    loaded yet. Enjoy your stay and share with your friends!
+                    also eagerly loading and mounting the 3d plot (behind the scenes) so
+                    you don't have to wait for it later.. You can actually already
+                    navigate to any of the links below (which I recommend) right now, even
+                    if this page hasn't fully loaded yet. Enjoy your stay and share with
+                    your friends!
                 </p>
             </div>
         </>
