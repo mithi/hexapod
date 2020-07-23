@@ -25,12 +25,12 @@ const formatPose = pose =>
 const PoseTable = ({ rm, rf, lf, lm, lb, rb }) => (
     <table>
         <thead>
-        <tr>
-            <th>POSITION</th>
-            <th>ALPHA</th>
-            <th>BETA</th>
-            <th>GAMMA</th>
-        </tr>
+            <tr>
+                <th>POSITION</th>
+                <th>ALPHA</th>
+                <th>BETA</th>
+                <th>GAMMA</th>
+            </tr>
         </thead>
         <tbody>
             <TableRow label="rightMiddle" leg={rm} />

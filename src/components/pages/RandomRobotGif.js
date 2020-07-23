@@ -1,15 +1,13 @@
-import React from "react"
+import React, { Suspense } from "react"
 
-const getImageUrl = () =>
-    Math.random() > 0.5 ? "./img/small-robot-small.gif" : "./img/small-robot-2-small.gif"
+const MinimumRandomRobotGif = React.lazy(() => import("./MinimumRandomRobotGif"))
 
-const RandomRobotGif = () => (
-    <img
-        src={getImageUrl()}
-        height="75px"
-        alt="hexapod robot animation"
-        style={{ marginTop: "20px", borderRadius: "20px" }}
-    />
-)
+const RandomRobotGif = () => {
+    return (
+        <Suspense fallback={<p>A cute random robot will soon appear!</p>}>
+            <MinimumRandomRobotGif />
+        </Suspense>
+    )
+}
 
 export default RandomRobotGif

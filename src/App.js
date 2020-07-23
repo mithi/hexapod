@@ -83,10 +83,10 @@ class App extends React.Component {
                     {!this.state.inHexapodPage ? <NavDetailed /> : null}
                 </div>
                 <div id="plot" className="border" hidden={!this.state.inHexapodPage}>
-                        <HexapodPlot
-                            revision={this.state.revision}
-                            hexapod={this.state.hexapod}
-                        />
+                    <HexapodPlot
+                        revision={this.state.revision}
+                        hexapod={this.state.hexapod}
+                    />
                 </div>
             </div>
             {this.state.inHexapodPage ? <NavDetailed /> : null}

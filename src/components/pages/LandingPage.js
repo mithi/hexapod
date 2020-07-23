@@ -1,9 +1,6 @@
-import React, { Suspense } from "react"
+import React from "react"
 import { SECTION_NAMES } from "../vars"
-
-const RandomRobotGif = React.lazy(() =>
-    import(/* webpackChunkName: "GIF" */ "./RandomRobotGif")
-)
+import RandomRobotGif from "./RandomRobotGif"
 
 class LandingPage extends React.Component {
     pageName = SECTION_NAMES.landingPage
@@ -13,9 +10,7 @@ class LandingPage extends React.Component {
     render = () => (
         <>
             <div id="landing">
-                <Suspense fallback={<p>A cute random robot will soon appear!</p>}>
-                    <RandomRobotGif />
-                </Suspense>
+                <RandomRobotGif />
                 <h1>Mithi's Bare Minimum Hexapod Robot Simulator</h1>
                 <p>
                     This page may <span className="red">feel slow</span> because it is
