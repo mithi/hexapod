@@ -2,6 +2,7 @@ import React from "react"
 import createPlotlyComponent from "react-plotly.js/factory"
 import * as defaults from "../templates"
 import { getNewPlotParams } from "../hexapod"
+import RandomRobotGif from "./pages/RandomRobotGif"
 
 class HexapodPlot extends React.Component {
     cameraView = defaults.CAMERA_VIEW
@@ -21,7 +22,7 @@ class HexapodPlot extends React.Component {
 
     render() {
         if (!this.state.ready) {
-            return <p>Loading the plot.. </p>
+            return <RandomRobotGif />
         }
 
         if (!this.props.hexapod) {
