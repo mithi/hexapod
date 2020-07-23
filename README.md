@@ -1,4 +1,5 @@
-![build status](https://github.com/mithi/hexapod/workflows/build/badge.svg)
+
+[![build status](https://github.com/mithi/hexapod/workflows/build/badge.svg)](https://hexapod.netlify.app)
 [![Code Climate](https://codeclimate.com/github/mithi/hexapod/badges/gpa.svg)](https://codeclimate.com/github/mithi/hexapod)
 [![technical debt](https://img.shields.io/codeclimate/tech-debt/mithi/hexapod)](https://codeclimate.com/github/mithi/hexapod/trends/technical_debt)
 [![codecov](https://codecov.io/gh/mithi/hexapod/branch/master/graph/badge.svg)](https://codecov.io/gh/mithi/hexapod)
@@ -37,12 +38,6 @@ Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimith
 - [x] Rotating clockwise and counterclockwise
 
 [🤖](https://hexapod.netlify.app/) [🐳](https://mithi.github.io/deep-blueberry/) [☕](https://ko-fi.com/minimithi)
-
-## Screenshots
-
-| ![leg patterns page portrait](./public/img/screenshot4.png) | ![inverse kinematics page with pose table](./public/img/screenshot5.png) |![forward kinematics page](./public/img/screenshot6.png) | ![walking gait page with footer nav](./public/img/screenshot3.png) |
-|------|-------|------|-------|
-| . | . | . | . |
 
 ## Main Contributors [![PRs welcome!](https://img.shields.io/badge/PRs-welcome-orange.svg?style=flat)](./CONTRIBUTING.md)
 
