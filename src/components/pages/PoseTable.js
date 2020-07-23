@@ -1,5 +1,4 @@
 import React from "react"
-import ReactMarkdown from "react-markdown"
 import { POSITION_NAMES_LIST } from "../../hexapod"
 
 const POSITION_ALIAS = {
@@ -23,26 +22,41 @@ const formatPose = pose =>
         return formattedPose
     }, {})
 
-const poseMessage = ({ rm, rf, lf, lm, lb, rb }) => `
+const PoseTable = ({ rm, rf, lf, lm, lb, rb }) => (
+    <table>
+        <thead>
+        <tr>
+            <th>POSITION</th>
+            <th>ALPHA</th>
+            <th>BETA</th>
+            <th>GAMMA</th>
+        </tr>
+        </thead>
+        <tbody>
+            <TableRow label="rightMiddle" leg={rm} />
+            <TableRow label="rightFront" leg={rf} />
+            <TableRow label="leftFront" leg={lf} />
+            <TableRow label="leftMiddle" leg={lm} />
+            <TableRow label="leftBack" leg={lb} />
+            <TableRow label="rightBack" leg={rb} />
+        </tbody>
+    </table>
+)
 
-| POSITION    | ALPHA       | BETA        | GAMMA       |
-|-------------|:-----------:|:-----------:|:-----------:|
-| rightMiddle | ${rm.alpha} | ${rm.beta}  | ${rm.gamma} |
-| rightFront  | ${rf.alpha} | ${rf.beta}  | ${rf.gamma} |
-| leftFront   | ${lf.alpha} | ${lf.beta}  | ${lf.gamma} |
-| leftMiddle  | ${lm.alpha} | ${lm.beta}  | ${lm.gamma} |
-| leftBack    | ${lb.alpha} | ${lb.beta}  | ${lb.gamma} |
-| rightBack   | ${rb.alpha} | ${rb.beta}  | ${rb.gamma} |
-
-`
+const TableRow = ({ label, leg }) => (
+    <tr>
+        <td>{label}</td>
+        <td>{leg.alpha}</td>
+        <td>{leg.beta}</td>
+        <td>{leg.gamma}</td>
+    </tr>
+)
 
 const poseTable = ({ pose }) => {
-    const formattedPose = formatPose(pose)
-    const { rm, rf, lf, lm, lb, rb } = formattedPose
-    const markdownMessage = poseMessage({ rm, rf, lf, lm, lb, rb })
+    const props = formatPose(pose)
     return (
         <div className="table-container">
-            <ReactMarkdown source={markdownMessage} />
+            <PoseTable {...props} />
         </div>
     )
 }
