@@ -1,19 +1,20 @@
 const BODY_MESH_COLOR = "#ff6348"
-const BODY_MESH_OPACITY = 0.3
 const BODY_COLOR = "#FC427B"
-const BODY_OUTLINE_WIDTH = 12
 const COG_COLOR = "#32ff7e"
+const LEG_COLOR = "#EE5A24"
+const SUPPORT_POLYGON_MESH_COLOR = "#3c6382"
+const AXIS_ZERO_LINE_COLOR = "#079992"
+const PAPER_BG_COLOR = "rgb(23, 33, 43)"
+const GROUND_COLOR = "rgb(14, 40, 69)"
+const LEGEND_FONT_COLOR = "#2ecc71"
+const LEGENDS_BG_COLOR = "rgba(44, 62, 80, 0.8)"
+
+const BODY_MESH_OPACITY = 0.3
+const BODY_OUTLINE_WIDTH = 12
 const COG_SIZE = 14
 const HEAD_SIZE = 14
-const LEG_COLOR = "#EE5A24"
 const LEG_OUTLINE_WIDTH = 10
-const SUPPORT_POLYGON_MESH_COLOR = "#3c6382"
 const SUPPORT_POLYGON_MESH_OPACITY = 0.2
-const LEGENDS_BG_COLOR = "rgba(44, 62, 80, 0.8)"
-const AXIS_ZERO_LINE_COLOR = "#079992"
-const PAPER_BG_COLOR = "#222f3e"
-const GROUND_COLOR = "#0a3d62"
-const LEGEND_FONT_COLOR = "#2ecc71"
 
 const DATA_INDEX_MAP = {
     bodyMesh: 0,

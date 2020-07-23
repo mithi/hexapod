@@ -1,7 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+
+:root {
+    --c0-dark-grey: rgb(23, 33, 43);
+    --c1-green: rgb(50, 255, 126);
+    --c2-pink: #fc427b;
+    --c3-orange: #ff793f;
+    --c4-blue: rgb(41, 128, 185);
+    --c6-red: #ea2027;
+}
+
+body,
+code,
+input {
+    font-family: Consolas, Monaco, Menlo, Courier, monospace;
+}
+.button {
+    font-family: Consolas, Monaco, Menlo, Courier, monospace;
+}
+
+h1,
+h2,
+h3,
+th {
+    font-family: "Permanent Marker", Consolas, Monaco, Menlo, Courier, monospace;
+}
+
 body {
+    background-color: var(--c0-dark-grey);
+    color: var(--c1-green);
     font-weight: bold;
-    background-color: rgb(34, 47, 62);
-    color: rgb(50, 255, 126);
     font-size: 3px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -12,14 +39,14 @@ body {
 }
 
 a {
-    color: #ef5777;
+    color: var(--c2-pink);
     text-decoration: none;
     cursor: pointer;
 }
 
 a:hover,
 a:active {
-    color: #ffa801;
+    color: var(--c3-orange);
     font-weight: bold;
 }
 
@@ -68,14 +95,14 @@ table {
 
 th,
 td {
-    border-bottom: 1px solid rgba(41, 128, 185, 0.5);
+    border-bottom: 1px solid var(--c4-blue);
     font-size: 12px;
     line-height: 16px;
     padding: 10px;
 }
 
 tr:hover {
-    color: #ffa801;
+    color: var(--c3-orange);
 }
 
 .table-container {
@@ -134,8 +161,8 @@ tr:hover {
 }
 
 .button {
-    color: #ffa801;
-    background-color: rgb(34, 47, 62);
+    color: var(--c2-pink);
+    background-color: var(--c0-dark-grey);
     border: none;
     font-size: 0.6rem;
     font-weight: bold;
@@ -144,7 +171,7 @@ tr:hover {
 }
 
 .button:hover {
-    color: #ef5777;
+    color: var(--c3-orange);
     font-weight: bold;
 }
 
@@ -163,13 +190,13 @@ tr:hover {
 }
 
 .red {
-    color: #e74c3c;
+    color: #ea2027;
 }
 
 .border {
     margin: 5px;
     padding: 5px;
-    border: 1px solid rgb(41, 128, 185);
+    border: 1px solid var(--c4-blue);
     border-radius: 10px;
 }
 
@@ -211,6 +238,9 @@ tr:hover {
  ********************/
 
 input {
+    border: 1px solid var(--c4-blue);
+    background-color: var(--c0-dark-grey);
+    color: var(--c1-green);
     font-size: 0.6rem;
     text-align: justify;
     font-weight: bolder;
@@ -219,9 +249,6 @@ input {
     height: 2rem;
     box-sizing: border-box;
     border-radius: 10px;
-    border: 1px solid rgb(41, 128, 185);
-    background-color: rgb(44, 62, 80);
-    color: rgb(46, 204, 113);
     box-sizing: border-box;
     padding-right: 7px;
     text-align: right;
@@ -229,8 +256,8 @@ input {
 
 input:hover,
 input:active {
-    color: #ef5777;
-    border: 2px solid #ffa801;
+    color: var(--c2-pink);
+    border: 2px solid var(--c3-orange);
 }
 
 input::-webkit-outer-spin-button,
@@ -252,38 +279,38 @@ input[type="number"] {
 }
 
 .slider {
+    background: var(--c2-pink);
     -webkit-appearance: none;
     height: 4px;
     border: 0px;
     border-radius: 5px;
-    background: #ef5777;
     outline: none;
     margin: 6px;
 }
 
 .slider:hover,
 .slider:active {
-    background: #ffa801;
+    background: var(--c3-orange);
     height: 8px;
     margin: 4px;
 }
 
 .slider::-webkit-slider-thumb {
+    background: rgb(46, 204, 113);
     -webkit-appearance: none;
     appearance: none;
     width: 15px;
     height: 15px;
     border-radius: 50%;
-    background: rgb(46, 204, 113);
     cursor: pointer;
     border: 0;
 }
 
 .slider::-moz-range-thumb {
+    background: var(--c1-green);
     width: 15px;
     height: 15px;
     border-radius: 50%;
-    background: rgb(46, 204, 113);
     cursor: pointer;
     border: 0;
 }
@@ -300,11 +327,11 @@ input[type="number"] {
 }
 
 .switch {
+    border: 1px var(--c1-green);
     position: relative;
     display: inline-block;
     width: 30px;
     height: 17px;
-    border: 1px rgb(46, 204, 113);
 }
 
 .switch + .label {
@@ -321,36 +348,35 @@ input[type="number"] {
 
 /* The toggle switch */
 .toggle-switch-widget {
+    background-color: var(--c2-pink);
     position: absolute;
-    /*border: 2px solid rgb(41, 128, 185);*/
     cursor: pointer;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ef5777;
     -webkit-transition: 0.4s;
     transition: 0.4s;
 }
 
 .toggle-switch-widget:before {
+    background-color: var(--c0-dark-grey);
     position: absolute;
     content: "";
     height: 13px;
     width: 13px;
     left: 2px;
     bottom: 2px;
-    background-color: rgb(44, 62, 80);
     -webkit-transition: 0.4s;
     transition: 0.4s;
 }
 
 input:checked + .toggle-switch-widget {
-    background-color: rgb(46, 204, 113);
+    background-color: var(--c1-green);
 }
 
 input:focus + .toggle-switch-widget {
-    box-shadow: 0 0 1px rgb(46, 204, 113);
+    box-shadow: 0 0 0;
 }
 
 input:checked + .toggle-switch-widget:before {
@@ -365,12 +391,6 @@ input:checked + .toggle-switch-widget:before {
 
 .toggle-switch-widget.round:before {
     border-radius: 50%;
-}
-
-@media screen and (min-height: 625px) and (min-width: 900px) {
-    #sidebar {
-        min-height: 600px;
-    }
 }
 
 @media screen and (max-width: 900px) {
@@ -458,6 +478,12 @@ input:checked + .toggle-switch-widget:before {
         font-size: 8px;
         padding-top: 10px;
         padding-bottom: 10px;
+    }
+}
+
+@media screen and (min-height: 625px) and (min-width: 900px) {
+    #sidebar {
+        min-height: 600px;
     }
 }
 
