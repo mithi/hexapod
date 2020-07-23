@@ -1,11 +1,11 @@
 import React, { Suspense } from "react"
 import ReactDOM from "react-dom"
-
 //import "./index.css"
-//import "./font.css"
 import * as serviceWorker from "./serviceWorker"
 
-const App = React.lazy(() => import("./App"))
+const App = React.lazy(() =>
+    import(/* webpackChunkName: "APP", webpackPrefetch: true */ "./App")
+)
 
 ReactDOM.render(
     <React.StrictMode>
@@ -19,4 +19,4 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister()
+serviceWorker.register()

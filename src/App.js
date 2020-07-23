@@ -1,13 +1,10 @@
-import React, { Suspense } from "react"
+import React from "react"
 import { BrowserRouter as Router } from "react-router-dom"
 import { DEFAULT_POSE } from "./templates"
 import { SECTION_NAMES } from "./components/vars"
 import { Nav, NavDetailed, DimensionsWidget } from "./components"
 import { updateHexapod, Page } from "./AppHelpers"
-
-const HexapodPlot = React.lazy(() =>
-    import(/* webpackPrefetch: true */ "./components/HexapodPlot")
-)
+import HexapodPlot from "./components/HexapodPlot"
 
 window.dataLayer = window.dataLayer || []
 function gtag() {
@@ -86,12 +83,10 @@ class App extends React.Component {
                     {!this.state.inHexapodPage ? <NavDetailed /> : null}
                 </div>
                 <div id="plot" className="border" hidden={!this.state.inHexapodPage}>
-                    <Suspense fallback={<p>Preloading the plot for later... </p>}>
                         <HexapodPlot
                             revision={this.state.revision}
                             hexapod={this.state.hexapod}
                         />
-                    </Suspense>
                 </div>
             </div>
             {this.state.inHexapodPage ? <NavDetailed /> : null}
