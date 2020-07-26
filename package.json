@@ -9,16 +9,17 @@
         "jest-canvas-mock": "^2.2.0",
         "plotly.js": "^1.54.7",
         "plotly.js-gl3d-dist-min": "^1.54.7",
+        "progress-bar-webpack-plugin": "^2.1.0",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-icons": "^3.10.0",
         "react-plotly.js": "^2.4.0",
         "react-router-dom": "^5.2.0",
         "react-scripts": "3.4.1",
-        "source-map-explorer": "^2.4.2"
+        "webpack-bundle-analyzer": "^3.8.0"
     },
     "scripts": {
-        "analyze": "source-map-explorer 'build/static/js/*.js'",
+        "analyze": "node scripts/analyze.js",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
