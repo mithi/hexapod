@@ -12,9 +12,10 @@ const AlertBox = ({ info }) => (
 
 const ToggleSwitch = ({ id, value, handleChange, showValue }) => (
     <div className="switch-container">
-        <label className="switch" htmlFor={id}>
+        <label className="switch">
             <input id={id} type="checkbox" value={value} onChange={handleChange} />
             <span className="toggle-switch-widget round"></span>
+            <span style={{ opacity: 0 }}>{value}</span>
         </label>
         <label className="label">{showValue ? value : null}</label>
     </div>

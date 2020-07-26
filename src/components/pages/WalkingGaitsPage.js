@@ -7,7 +7,7 @@ import { VirtualHexapod } from "../../hexapod"
 import { tRotZmatrix } from "../../hexapod/geometry"
 import { DEFAULT_GAIT_PARAMS } from "../../templates"
 
-const ANIMATION_DELAY = 100
+const ANIMATION_DELAY = 50
 
 const getPose = (sequences, i) => {
     return Object.keys(sequences).reduce((newSequences, legPosition) => {
