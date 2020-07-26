@@ -2,12 +2,12 @@ import React, { Component } from "react"
 import { sliderList, Card, ResetButton, ToggleSwitch } from "../generic"
 import { SECTION_NAMES, GAIT_SLIDER_LABELS, GAIT_RANGE_PARAMS } from "../vars"
 import getWalkSequence from "../../hexapod/solvers/walkSequenceSolver"
-import PoseTable from "./PoseTable"
+import PoseTable from "../pagePartials/PoseTable"
 import { VirtualHexapod } from "../../hexapod"
 import { tRotZmatrix } from "../../hexapod/geometry"
 import { DEFAULT_GAIT_PARAMS } from "../../templates"
 
-const ANIMATION_DELAY = 10
+const ANIMATION_DELAY = 100
 
 const getPose = (sequences, i) => {
     return Object.keys(sequences).reduce((newSequences, legPosition) => {

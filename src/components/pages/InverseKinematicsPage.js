@@ -3,7 +3,7 @@ import { sliderList, Card, ResetButton, AlertBox } from "../generic"
 import { solveInverseKinematics } from "../../hexapod"
 import { SECTION_NAMES, IK_SLIDERS_LABELS } from "../vars"
 import { DEFAULT_IK_PARAMS } from "../../templates"
-import PoseTable from "./PoseTable"
+import PoseTable from "../pagePartials/PoseTable"
 
 class InverseKinematicsPage extends Component {
     pageName = SECTION_NAMES.inverseKinematics
