@@ -4,9 +4,11 @@ const MinimumRandomRobotGif = React.lazy(() => import("./MinimumRandomRobotGif")
 
 const RandomRobotGif = () => {
     return (
-        <Suspense fallback={<p>A cute random robot will soon appear!</p>}>
-            <MinimumRandomRobotGif />
-        </Suspense>
+        <div style={{ height: "80px" }}>
+            <Suspense fallback={<p>A cute random robot will soon appear!</p>}>
+                <MinimumRandomRobotGif />
+            </Suspense>
+        </div>
     )
 }
 
