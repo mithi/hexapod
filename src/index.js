@@ -1,10 +1,11 @@
 import React, { Suspense } from "react"
 import ReactDOM from "react-dom"
-//import "./index.css"
+import "./index.css"
+//import "./font.css"
 import * as serviceWorker from "./serviceWorker"
 
 const App = React.lazy(() =>
-    import(/* webpackChunkName: "APP", webpackPrefetch: true */ "./App")
+    import(/* webpackChunkName: "APP", webpackPreload: true */ "./App")
 )
 
 ReactDOM.render(

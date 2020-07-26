@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"); */
 
 :root {
     --c0-dark-grey: rgb(23, 33, 43);
@@ -6,7 +6,7 @@
     --c2-pink: #fc427b;
     --c3-orange: #ff793f;
     --c4-blue: rgb(41, 128, 185);
-    --c6-red: #ea2027;
+    --c6-red:#FF3333;
 }
 
 body,
@@ -190,7 +190,7 @@ tr:hover {
 }
 
 .red {
-    color: #ea2027;
+    color: var(--c6-red);
 }
 
 .border {
