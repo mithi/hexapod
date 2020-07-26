@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import LegPoseWidget from "./LegPoseWidgets"
+import LegPoseWidget from "../pagePartials/LegPoseWidgets"
 import { Card, ToggleSwitch, ResetButton, NumberInputField, Slider } from "../generic"
 import { DEFAULT_POSE } from "../../templates"
 import { SECTION_NAMES, LEG_NAMES } from "../vars"
