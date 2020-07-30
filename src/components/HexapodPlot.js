@@ -6,7 +6,6 @@ import Plot from "./CustomPlot"
 class HexapodPlot extends React.Component {
     cameraView = defaults.CAMERA_VIEW
     state = { ready: false }
-    Plot = Plot
 
     logCameraView = relayoutData => {
         this.cameraView = relayoutData["scene.camera"]
@@ -36,7 +35,6 @@ class HexapodPlot extends React.Component {
             useResizeHandler: true,
         }
 
-        const Plot = this.Plot
         return <Plot {...props} />
     }
 }
