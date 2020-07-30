@@ -6,11 +6,13 @@
         "@testing-library/jest-dom": "^4.2.4",
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
+        "ify-loader": "^1.1.0",
         "jest-canvas-mock": "^2.2.0",
         "plotly.js": "^1.54.7",
         "plotly.js-gl3d-dist-min": "^1.54.7",
         "progress-bar-webpack-plugin": "^2.1.0",
         "react": "^16.13.1",
+        "react-app-rewired": "^2.1.6",
         "react-dom": "^16.13.1",
         "react-icons": "^3.10.0",
         "react-plotly.js": "^2.4.0",
@@ -20,9 +22,9 @@
     },
     "scripts": {
         "analyze": "node scripts/analyze.js",
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
+        "start": "react-app-rewired start",
+        "build": "react-app-rewired build",
+        "test": "react-app-rewired test",
         "eject": "react-scripts eject"
     },
     "eslintConfig": {
@@ -41,6 +43,8 @@
         ]
     },
     "devDependencies": {
-        "prettier": "2.0.5"
+        "prettier": "2.0.5",
+        "ify-loader": "^1.1.0",
+        "react-app-rewired": "^2.1.6"
     }
 }
