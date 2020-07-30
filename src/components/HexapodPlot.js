@@ -1,22 +1,19 @@
 import React from "react"
-import createPlotlyComponent from "react-plotly.js/factory"
 import * as defaults from "../templates"
 import { getNewPlotParams } from "../hexapod"
+import Plot from "./CustomPlot"
 
 class HexapodPlot extends React.Component {
     cameraView = defaults.CAMERA_VIEW
     state = { ready: false }
-    Plot = null
+    Plot = Plot
 
     logCameraView = relayoutData => {
         this.cameraView = relayoutData["scene.camera"]
     }
 
     componentDidMount() {
-        import("plotly.js-gl3d-dist-min").then(Plotly => {
-            this.Plot = createPlotlyComponent(Plotly)
-            this.setState({ ready: true })
-        })
+       this.setState({ ready: true})
     }
 
     render() {
