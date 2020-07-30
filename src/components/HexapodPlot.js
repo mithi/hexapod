@@ -2,17 +2,16 @@ import React from "react"
 import * as defaults from "../templates"
 import { getNewPlotParams } from "../hexapod"
 
+const Plot = React.lazy(() => import('./CustomPlot'))
 class HexapodPlot extends React.Component {
     cameraView = defaults.CAMERA_VIEW
     state = { ready: false }
-    Plot = null
 
     logCameraView = relayoutData => {
         this.cameraView = relayoutData["scene.camera"]
     }
 
     componentDidMount() {
-        this.Plot = React.lazy(() => import('./CustomPlot'))
         this.setState({ready: true})
     }
 
@@ -35,8 +34,6 @@ class HexapodPlot extends React.Component {
             style: { height: "100%", width: "100%" },
             useResizeHandler: true,
         }
-
-        const Plot = this.Plot
         return <Plot {...props} />
     }
 }
