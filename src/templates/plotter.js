@@ -1,4 +1,4 @@
-import { DATA, SCENE, LAYOUT, CAMERA_VIEW } from "../templates"
+import { DATA, SCENE, LAYOUT, CAMERA_VIEW } from "./"
 
 const _getSumOfDimensions = dimensions =>
     Object.values(dimensions).reduce((sum, dimension) => sum + dimension, 0)

@@ -1,7 +1,7 @@
 import React from "react"
 import createPlotlyComponent from "react-plotly.js/factory"
 import * as defaults from "../templates"
-import { getNewPlotParams } from "../hexapod"
+import getNewPlotParams from "../templates/plotter"
 
 class HexapodPlot extends React.Component {
     cameraView = defaults.CAMERA_VIEW
