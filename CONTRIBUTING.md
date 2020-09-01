@@ -16,6 +16,14 @@ These are mostly guidelines, not rules. Use your best judgment.
 
 - I try to adhere to this [commit style guide][commit_style_guide_link] when I word my commit messages.
 
+- Each commit **MUST** sucessfully build, not just the last one! That way, we can checkout any commit and be confident that the app works at that point in time! Your PR will most likely NOT be merged if the CI build fails.
+
+- I prefer PRs with commits with fewer changes, so it's easier to code review. If the commit is easy to understand, the more confident I would be to merge it. All the changes in a single commit must be logically connected!
+
+- Of course, don't get too crazy with extremely small commits! That would just pollute the commit history. [Squash the commits and push force][rewriting_git_history_link] if you need to. 
+
+- If somebody else's changes were merged to the main repo before your pull request is approved. Please do NOT merge. Please REBASE instead! [Merging vs Rebasing](https://www.atlassian.com/git/tutorials/merging-vs-rebasing). It keeps the history tidy! `git pull --rebase`
+
 - I like it when people are nice to each other. I don't like mean or rude people. [![Contributor Covenant][contributor_covenant_badge]](./CODE_OF_CONDUCT.md)
 
 ## ❤️ Nice to have
@@ -25,10 +33,6 @@ These are mostly guidelines, not rules. Use your best judgment.
 - Thoughtfully-written explanations and the rationale of the pull request is always appreciated!
 
 - Explanations of issues and PRs don't have to be long. Two or three sentences might be sufficient in a lot of cases, probably.
-
-- Your PR will most likely NOT be merged if the CI build fails.
-
-- I prefer PRs with fewer commits. [Squash the commits and push force][rewriting_git_history_link] if you need to. But of course, it's better if all the changes in a single commit are logically connected.
 
 - Including corresponding tests in your PR is always appreciated.
 
