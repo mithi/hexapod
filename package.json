@@ -15,7 +15,7 @@
         "react-icons": "^3.10.0",
         "react-plotly.js": "^2.4.0",
         "react-router-dom": "^5.2.0",
-        "react-scripts": "3.4.1",
+        "react-scripts": "3.4.4",
         "webpack-bundle-analyzer": "^3.8.0"
     },
     "scripts": {
