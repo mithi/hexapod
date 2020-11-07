@@ -6,8 +6,6 @@ const SUPPORT_POLYGON_MESH_COLOR = "#3c6382"
 const AXIS_ZERO_LINE_COLOR = "#079992"
 const PAPER_BG_COLOR = "rgb(23, 33, 43)"
 const GROUND_COLOR = "rgb(14, 40, 69)"
-const LEGEND_FONT_COLOR = "#2ecc71"
-const LEGENDS_BG_COLOR = "rgba(44, 62, 80, 0.8)"
 
 const BODY_MESH_OPACITY = 0.3
 const BODY_OUTLINE_WIDTH = 12
@@ -140,7 +138,7 @@ const DATA = [
     },
     {
         name: "supportPolygonMesh",
-        showlegend: true,
+        showlegend: false,
         type: "mesh3d",
         opacity: SUPPORT_POLYGON_MESH_OPACITY,
         color: SUPPORT_POLYGON_MESH_COLOR,
@@ -277,12 +275,6 @@ const LAYOUT = {
     scene: SCENE,
     margin: { b: 20, l: 10, r: 10, t: 20 },
     paper_bgcolor: PAPER_BG_COLOR,
-    legend: {
-        x: 0,
-        y: 0,
-        bgcolor: LEGENDS_BG_COLOR,
-        font: { family: "courier", size: 12, color: LEGEND_FONT_COLOR },
-    },
     showlegend: false,
     autosize: true,
 }
