@@ -298,13 +298,6 @@ class VirtualHexapod {
         this.legs = this.legs.map(leg => leg.cloneTrot(twistMatrix))
         this.localAxes = transformLocalAxes(this.localAxes, twistMatrix)
     }
-
-    _danglingHexapod(body, legs) {
-        this.body = body
-        this.legs = legs
-        this.localAxes = DEFAULT_LOCAL_AXES
-        this.legPositionsOnGround = []
-    }
 }
 
 export default VirtualHexapod
