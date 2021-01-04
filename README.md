@@ -39,6 +39,14 @@ Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimith
 
 [🤖](https://hexapod.netlify.app/) [🐳](https://mithi.github.io/deep-blueberry/) [☕](https://ko-fi.com/minimithi)
 
+## Related Things
+
+If you'd like to build you're own user interface with Node, you can download the algorithm alone as a package: [Hexapod Kinematics Library](https://github.com/mithi/hexapod-kinematics-library). There is also [a "fork" modified where you can use the app to control a physical hexapod robot](https://github.com/mithi/hexapod-irl) as you can see in the gif below. 
+
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/1670421/103467765-451a2180-4d8d-11eb-8f94-1a23201595b9.gif" alt="drawing" />
+</p>
+
 ## Main Contributors [![PRs welcome!](https://img.shields.io/badge/PRs-welcome-orange.svg?style=flat)](./CONTRIBUTING.md)
 
 Any contribution to improve the source code is always appreciated. This is my first time coding in Javascript and this is also my first React app, so I'm sure there is a lot of room for improvement. [Contributing Guide](./CONTRIBUTING.md).
