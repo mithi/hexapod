@@ -25,11 +25,8 @@ test.each(CASES)("Should return the correct orientation properties %p", thisCase
             )
     )
 
-    const {
-        nAxis,
-        height,
-        groundLegsNoGravity,
-    } = specificOSolver.computeOrientationProperties(legs)
+    const { nAxis, height, groundLegsNoGravity } =
+        specificOSolver.computeOrientationProperties(legs)
     expectPointsSameValues(nAxis, thisCase.result.nAxis)
 
     expect(height).toBeCloseTo(thisCase.result.height)

@@ -35,6 +35,7 @@ const DATA_INDEX_MAP = {
     worldZaxis: 17,
 }
 
+// prettier-ignore
 const DATA = [
     {
         name: "bodyMesh",
