@@ -39,8 +39,8 @@
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
         "jest-canvas-mock": "^2.2.0",
+        "prettier": "^2.3.0",
         "progress-bar-webpack-plugin": "^2.1.0",
-        "prettier": "2.0.5",
         "webpack-bundle-analyzer": "^3.8.0"
     }
 }
