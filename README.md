@@ -40,7 +40,7 @@ Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimith
 
 ## Related Things
 
-If you'd like to build you're own user interface with Node, you can download the algorithm alone as a package: [Hexapod Kinematics Library](https://github.com/mithi/hexapod-kinematics-library). There is also [a "fork" modified where you can use the app to control a physical hexapod robot](https://github.com/mithi/hexapod-irl) as you can see in the gifa below. 
+If you'd like to build your own user interface with Node, you can download the algorithm alone as a package: [Hexapod Kinematics Library](https://github.com/mithi/hexapod-kinematics-library). There is also [a "fork" modified where you can use the app to control a physical hexapod robot](https://github.com/mithi/hexapod-irl) as you can see in the gif below. 
 
 |![](https://user-images.githubusercontent.com/1670421/103467849-46981980-4d8e-11eb-911e-7cb63282c0c2.gif)|![](https://user-images.githubusercontent.com/1670421/103467765-451a2180-4d8d-11eb-8f94-1a23201595b9.gif)|
 |--------|-------|
