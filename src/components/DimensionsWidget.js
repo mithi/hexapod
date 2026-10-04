@@ -22,7 +22,7 @@ class DimensionsWidget extends Component {
     get toggleSwitch() {
         const props = {
             id: "DimensionsWidgetSwitch",
-            value: this.state.isFine ? "1x" : "5x",
+            value: this.state.isFine ? "0.01 mm" : "1 mm",
             handleChange: this.toggleMode,
             showValue: true,
         }
@@ -32,7 +32,7 @@ class DimensionsWidget extends Component {
 
     get NumberInputFields() {
         const { minVal, maxVal } = RANGE_PARAMS.dimensionInputs
-        const stepVal = this.state.isFine ? 1 : 5
+        const stepVal = this.state.isFine ? 0.01 : 1
         const dimensions = this.props.params.dimensions
 
         const numberInputFields = DIMENSION_NAMES.map(name => {
@@ -51,6 +51,7 @@ class DimensionsWidget extends Component {
 
     render = () => (
         <Card title={<h2>{this.sectionName}</h2>} other={this.toggleSwitch}>
+            <p>All dimensions are in millimetres.</p>
             {this.NumberInputFields}
             <ResetButton reset={this.reset} />
         </Card>

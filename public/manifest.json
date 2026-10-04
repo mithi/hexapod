@@ -1,6 +1,6 @@
 {
-    "short_name": "Hexapod",
-    "name": "Mithi's Hexapod Robot Simulator",
+    "short_name": "Hexapod Sim",
+    "name": "Hexapod Robot Simulator",
     "icons": [
         {
             "src": "favicon.ico",
@@ -17,9 +17,10 @@
             "src": "img/icon-512x512.png",
             "sizes": "512x512",
             "type": "image/png"
-        }],
+        }
+    ],
     "start_url": ".",
     "display": "standalone",
-    "theme_color": "#32ff7e",
-    "background_color": "#17212B"
+    "theme_color": "#35c9bb",
+    "background_color": "#0b1422"
 }

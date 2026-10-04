@@ -1,77 +1,50 @@
 import React from "react"
-import { URL_LINKS, PATH_LINKS } from "./vars"
-import { Link } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
+import { PATH_LINKS } from "./vars"
 
-const NAV_BULLETS_PREFIX = "navBullet"
-const NAV_DETAILED_PREFIX = "navDetailed"
-
-const BulletPageLink = ({ link, showDesc }) => (
+const BulletPageLink = ({ link }) => (
     <li>
-        <Link to={link.path} className="link-icon">
-            <span>
-                {link.icon} {showDesc ? link.description : null}
+        <NavLink
+            to={link.path}
+            exact={link.path === "/"}
+            className="nav-link"
+            activeClassName="is-active"
+        >
+            <span className="nav-link-icon" aria-hidden="true">
+                {link.icon}
+            </span>
+            <span>{link.description}</span>
+        </NavLink>
+    </li>
+)
+
+const Nav = () => (
+    <header className="app-header">
+        <Link to="/" className="brand-lockup" aria-label="Hexapod Robot Simulator home">
+            <span className="brand-mark" aria-hidden="true">
+                H
+            </span>
+            <span className="brand-copy">
+                <strong>HEXAPOD</strong>
+                <small>Robot simulator</small>
             </span>
         </Link>
-    </li>
-)
 
-const BulletUrlLink = ({ path, description, icon }) => (
-    <li>
-        <a
-            href={path}
-            className="link-icon"
-            target="_blank"
-            rel="noopener noreferrer"
-            children={
-                <span>
-                    {icon} {description}
-                </span>
-            }
-        />
-    </li>
-)
-
-const NavBullets = () => (
-    <ul id="top-bar">
-        {URL_LINKS.map(link => (
-            <BulletUrlLink
-                path={link.url}
-                key={NAV_BULLETS_PREFIX + link.url}
-                icon={link.icon}
-            />
-        ))}
-
-        {PATH_LINKS.map(link => (
-            <BulletPageLink key={NAV_BULLETS_PREFIX + link.path} link={link} />
-        ))}
-    </ul>
-)
-
-const NavDetailed = () => (
-    <footer>
-        <nav id="nav">
-            <ul className="grid-cols-1 no-bullet">
-                {URL_LINKS.map(link => (
-                    <BulletUrlLink
-                        path={link.url}
-                        key={NAV_DETAILED_PREFIX + link.url}
-                        icon={link.icon}
-                        description={link.description}
-                    />
-                ))}
-
+        <nav className="primary-navigation" aria-label="Primary navigation">
+            <ul id="top-bar">
                 {PATH_LINKS.map(link => (
-                    <BulletPageLink
-                        key={NAV_DETAILED_PREFIX + link.path}
-                        link={link}
-                        showDesc={true}
-                    />
+                    <BulletPageLink key={link.path} link={link} />
                 ))}
             </ul>
         </nav>
-    </footer>
+    </header>
 )
 
-const Nav = () => <NavBullets />
+const NavDetailed = () => (
+    <footer className="app-footer">
+        <span>Hexapod Robot Simulator</span>
+        <span>Prototype kinematics · millimetres · tail omitted</span>
+    </footer>
+)
 
 export { Nav, NavDetailed }

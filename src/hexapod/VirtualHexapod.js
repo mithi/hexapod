@@ -67,9 +67,9 @@ Property types:
              ...
          }
 
-[] this.body: A hexagon object
-    which contains all the info of the 8 points defining the hexapod body
-    (6 vertices, 1 head, 1 center of gravity)
+[] this.body: A chassis geometry object
+    which contains the six leg-mount points, chassis outline, head marker,
+    and center of gravity.
 
 [] this.legs: A list which has elements that point to six Linkage objects.
     The order goes counter clockwise starting from the first element

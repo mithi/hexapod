@@ -1,21 +1,20 @@
+// Scorpion hexapod prototype dimensions in millimetres.
+// The body values are offsets from the body centre to the hip axes:
+// front/middle = half the left-right spacing; side = each fore/aft spacing.
 const DEFAULT_BODY_DIMENSIONS = {
-    front: 100,
-    side: 100,
-    middle: 100,
+    front: 60,
+    side: 115,
+    middle: 60,
 }
 const DEFAULT_LEG_DIMENSIONS = {
-    coxia: 100,
-    femur: 100,
-    tibia: 100,
+    coxia: 64.5,
+    femur: 64.5,
+    tibia: 130.59,
 }
 
 const DEFAULT_DIMENSIONS = {
-    front: 100,
-    side: 100,
-    middle: 100,
-    coxia: 100,
-    femur: 100,
-    tibia: 100,
+    ...DEFAULT_BODY_DIMENSIONS,
+    ...DEFAULT_LEG_DIMENSIONS,
 }
 
 const DEFAULT_POSE = {
@@ -47,8 +46,9 @@ const DEFAULT_GAIT_PARAMS = {
     ry: 0,
     legStance: 0,
     hipStance: 20,
-    hipSwing: 25,
-    liftSwing: 40,
+    // Start near the prototype's reference tripod step (forward 15, lift 20).
+    hipSwing: 15,
+    liftSwing: 20,
     stepCount: 5,
 }
 

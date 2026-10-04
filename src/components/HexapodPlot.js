@@ -21,7 +21,7 @@ class HexapodPlot extends React.Component {
 
     render() {
         if (!this.state.ready) {
-            return <p>Loading your cute robot...</p>
+            return <p>Loading 3D robot model...</p>
         }
 
         if (!this.props.hexapod) {

@@ -32,33 +32,17 @@ const MAX_ANGLES = {
 }
 
 /*
+  Body frame: +Y is forward, +X is right, and +Z is vertical.
+  The six coxa mounts are arranged as three stations along each side rail:
 
-   hexapodYaxis
-       ^
-       |
-       |
-       *-----> hexapodXaxis
-      / (cog)
-     /
-  hexapodZaxis
+      left side                         right side
+      leftFront                         rightFront
+      leftMiddle                        rightMiddle
+      leftBack                          rightBack
 
-  Relative x-axis, for each attached linkage
-
-  (+135)  x2          x1 (+45)
-           \   head  /
-            *---*---*
-           /    |    \
-          /     |     \
- (+180)  /      |      \
-   x3 --*------cog------*-- x0 (+0)
-         \      |      /
-          \     |     /
-           \    |    /
-            *---*---*
-           /         \
-         x4           x5
-      (+225)        (+315)
- */
+  The following values are the default local X-axis directions for each leg,
+  in degrees from the body +X axis. They are not hip-mount coordinates.
+*/
 const POSITION_NAME_TO_AXIS_ANGLE_MAP = {
     rightMiddle: 0,
     rightFront: 45,

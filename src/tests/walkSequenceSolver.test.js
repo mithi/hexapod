@@ -1,74 +1,35 @@
 import getWalkSequence from "../hexapod/solvers/walkSequenceSolver"
+import { DEFAULT_DIMENSIONS, DEFAULT_GAIT_PARAMS } from "../templates"
+import { POSITION_NAMES_LIST } from "../hexapod/constants"
 
-const DEFAULT_DIMENSIONS = {
-    front: 100,
-    side: 100,
-    middle: 100,
-    coxia: 100,
-    femur: 100,
-    tibia: 100,
-}
-
-const POSITION_NAMES_LIST = [
-    "rightMiddle",
-    "rightFront",
-    "leftFront",
-    "leftMiddle",
-    "leftBack",
-    "rightBack",
-]
+const JOINT_NAMES = ["alpha", "beta", "gamma"]
 
 const cases = [
-    {
-        params: {
-            dimensions: DEFAULT_DIMENSIONS,
-            gaitParams: {
-                tx: 0,
-                tz: 0,
-                rx: 0,
-                ry: 0,
-                legStance: 0,
-                hipStance: 25,
-                stepCount: 5,
-                hipSwing: 25,
-                liftSwing: 40,
-            },
-        },
-        result: { answer: true },
-        description: "first sequence",
-    },
+    { gaitType: "tripod", walkMode: "walking", frameMultiplier: 4 },
+    { gaitType: "ripple", walkMode: "walking", frameMultiplier: 6 },
+    { gaitType: "tripod", walkMode: "rotating", frameMultiplier: 4 },
 ]
 
-test.each(cases)("test walkSequence:", example => {
-    const stepCount = example.params.gaitParams.stepCount
-
-    const sequence1 = getWalkSequence(
-        example.params.dimensions,
-        example.params.gaitParams
+test.each(cases)("generates a reachable IK gait", example => {
+    const sequence = getWalkSequence(
+        DEFAULT_DIMENSIONS,
+        DEFAULT_GAIT_PARAMS,
+        example.gaitType,
+        example.walkMode
     )
-    testSequence(sequence1, stepCount * 4)
 
-    const sequence2 = getWalkSequence(
-        example.params.dimensions,
-        example.params.gaitParams,
-        "ripple"
-    )
-    testSequence(sequence2, stepCount * 6)
+    expect(sequence).not.toBeNull()
+    expectSequence(sequence, DEFAULT_GAIT_PARAMS.stepCount * example.frameMultiplier)
 })
 
-const testSequence = (sequence, actualStepCount) => {
+const expectSequence = (sequence, expectedFrameCount) => {
     POSITION_NAMES_LIST.forEach(position => {
-        const alphaSeq = sequence[position].alpha
-        const betaSeq = sequence[position].beta
-        const gammaSeq = sequence[position].gamma
+        const legSequence = sequence[position]
+        expect(legSequence).toBeDefined()
 
-        expect(alphaSeq).toBeDefined()
-        expect(alphaSeq).toHaveLength(actualStepCount)
-
-        expect(betaSeq).toBeDefined()
-        expect(betaSeq).toHaveLength(actualStepCount)
-
-        expect(gammaSeq).toBeDefined()
-        expect(gammaSeq).toHaveLength(actualStepCount)
+        JOINT_NAMES.forEach(joint => {
+            expect(legSequence[joint]).toHaveLength(expectedFrameCount)
+            legSequence[joint].forEach(angle => expect(Number.isFinite(angle)).toBe(true))
+        })
     })
 }

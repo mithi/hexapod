@@ -62,8 +62,7 @@ class WalkingGaitsPage extends Component {
         const animationCount = (this.state.animationCount + 1) % stepCount
         this.setState({ animationCount })
 
-        const tempStep = isForward ? animationCount : stepCount - animationCount
-        const step = Math.max(0, Math.min(stepCount - 1, tempStep))
+        const step = isForward ? animationCount : (stepCount - animationCount) % stepCount
 
         const pose = getPose(this.walkSequence, step)
 
@@ -72,7 +71,8 @@ class WalkingGaitsPage extends Component {
             return
         }
 
-        const deltaTwist = (this.state.gaitParams.hipSwing * 2) / stepCount
+        // Apply one complete hip-swing rotation over the full IK gait cycle.
+        const deltaTwist = (Math.abs(this.state.gaitParams.hipSwing) * 2) / stepCount
         const twist = isForward
             ? (this.currentTwist + deltaTwist) % 360
             : (this.currentTwist - deltaTwist) % 360

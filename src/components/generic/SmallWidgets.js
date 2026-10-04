@@ -22,13 +22,13 @@ const ToggleSwitch = ({ id, value, handleChange, showValue }) => (
 )
 
 const Card = ({ title, other, children }) => (
-    <div>
+    <section className="card">
         <div className="card-header">
             {title}
             {other}
         </div>
         {children}
-    </div>
+    </section>
 )
 
 const BasicButton = ({ handleClick, children }) => (

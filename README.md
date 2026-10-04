@@ -1,67 +1,65 @@
+# Hexapod Robot Simulator
 
-[![build status](https://github.com/mithi/hexapod/workflows/build/badge.svg)](https://hexapod.netlify.app)
-[![Code Climate](https://codeclimate.com/github/mithi/hexapod/badges/gpa.svg)](https://codeclimate.com/github/mithi/hexapod)
-[![buy me coffee](https://img.shields.io/badge/Buy%20me%20-coffee!-orange.svg?logo=buy-me-a-coffee&color=795548)](https://ko-fi.com/minimithi)
+A browser-based kinematics and gait simulator adapted from Mithi's Bare-Minimum Hexapod Robot Simulator for the scorpion-style hexapod prototype described below. The calculations run in the browser; this project does not send commands to the physical servos.
 
-# Mithi's Bare-Minimum Hexapod Robot Simulator 2
+## Prototype configuration
 
-<p align="center">
-    <img src="https://mithi.github.io/robotics-blog/show-off.gif" alt="drawing" width="400" />
-</p>
+All model dimensions are in **millimetres**. The six coxa axes are arranged in three left/right pairs:
 
-You can use this web app to solve inverse kinematics, simulate various gaits, and more. In real time, you can also view all the angles the robot's eighteen joints make at any particular pose. All the computations are solely done in your browser, nothing's fetching data from somewhere else, so it should be fast. Another (somewhat) cool thing is that this app does NOT depend on any external mathematics library; it only uses Javascript's built-in Math object.
+| Measurement | Value |
+| --- | ---: |
+| Left-to-right coxa-axis spacing, at each station | 120 mm |
+| Front-to-middle and middle-to-rear coxa-axis spacing | 115 mm each |
+| Coxia link: body axis to femur axis | 64.5 mm |
+| Femur link: femur axis to tibia axis | 64.5 mm |
+| Tibia link: tibia axis to foot tip | 130.59 mm |
 
-👉 [hexapod.netlify.app](https://hexapod.netlify.app)
+The current body parameters are `front: 60`, `middle: 60`, and `side: 115` in `src/templates/hexapodParams.js`. In this model, `front` and `middle` are offsets from the body centre (half the 120 mm spacing); `side` is the offset of the front and rear stations from the middle station. All six hip mounts sit along the two side rails, not at the chassis corners. The simple outline currently extends 30 mm beyond the front and rear mounts; replace that visual estimate when the chassis edge dimensions are available.
 
-Consider buying me [a few cups of coffee ☕ ☕ ☕](https://ko-fi.com/minimithi) to motivate me to build other robotics-related visualizers. (Quadrotors?!)
+The prototype uses 18 RDS3218 servos (three per leg, specified as 20 kg and 270°). The simulator currently has **no tail model**, as requested.
 
 ## Features
 
-<img src="https://mithi.github.io/robotics-blog/show-off-v2-1.gif" alt="drawing" width="325" align="right" />
+- Interactive 3D hexapod view and editable dimensions.
+- Forward kinematics, inverse kinematics, leg-pose controls, and support/stability checks.
+- Tripod and ripple gait options, forward/backward playback, and rotation mode.
+- Gait frames are generated from Cartesian foot paths and solved through IK. If a requested stride or lift is unreachable, the solver reduces the gait amplitude until it finds a reachable sequence.
+- The initial gait settings use the prototype's tripod reference values: 15° hip swing and 20° lift swing.
 
-🎉 Control
+The body and legs are rendered as a simplified kinematic model, not as the physical CAD solids.
 
-- [x] The robot's dimensions
-- [x] The robot's 3d orientation, translation, stance, and more
+## Run locally
 
-🎉 Solve
+Requirements: Node.js and Yarn.
 
-- [x] Inverse Kinematics
-- [x] Forward Kinematics
+```bash
+yarn install
+yarn start
+```
 
-🎉 Simulate
+The development server normally opens at <http://localhost:3000>.
 
-- [x] Ripple and tripod gait variations
-- [x] Walking forward and backwards
-- [x] Rotating clockwise and counterclockwise
+Other useful commands:
 
-[🤖](https://hexapod.netlify.app/) [🐳](https://mithi.github.io/deep-blueberry/) [☕](https://ko-fi.com/minimithi)
+```bash
+yarn test --watchAll=false --runInBand
+yarn build
+```
 
-## Related Things
+## Hardware and angle conventions
 
-If you'd like to build your own user interface with Node, you can download the algorithm alone as a package: [Hexapod Kinematics Library](https://github.com/mithi/hexapod-kinematics-library). There is also [a "fork" modified where you can use the app to control a physical hexapod robot](https://github.com/mithi/hexapod-irl) as you can see in the gif below. 
+This repository is a **kinematic simulator**, not a dynamics simulator or servo controller. It does not model servo torque, electrical limits, collisions, mass/inertia, or ground friction, and it does not output PWM signals.
 
-|![](https://user-images.githubusercontent.com/1670421/103467849-46981980-4d8e-11eb-911e-7cb63282c0c2.gif)|![](https://user-images.githubusercontent.com/1670421/103467765-451a2180-4d8d-11eb-8f94-1a23201595b9.gif)|
-|--------|-------|
-| Walking Gaits | Kinematics |
+The hardware `stand`, `sit`, and `belly_touch` poses in the reference Python controller use servo command angles. They are not automatically the same as the simulator's `alpha`, `beta`, and `gamma` angles. A hardware mapping needs each joint's zero offset, direction (including any mirrored joints), and installed usable travel. A servo's advertised 270° travel should not be treated as a safe ±270° joint range; calibrate mechanical limits before using any simulated angles to drive hardware.
 
-## Main Contributors [![PRs welcome!](https://img.shields.io/badge/PRs-welcome-orange.svg?style=flat)](./CONTRIBUTING.md)
+## Main code locations
 
-Any contribution to improve the source code is always appreciated. [See contributing Guide](./CONTRIBUTING.md). I will put your name below if I've merged your PR multiple times or if you've substantially contributed to this project in other ways.
+- `src/templates/hexapodParams.js` — prototype dimensions, default pose, and gait parameters.
+- `src/hexapod/VirtualHexapod.js`, `src/hexapod/Linkage.js` — robot geometry and forward kinematics.
+- `src/hexapod/solvers/ik/` — inverse-kinematics solvers.
+- `src/hexapod/solvers/walkSequenceSolver.js` — Cartesian gait paths and per-frame IK.
+- `src/components/pages/WalkingGaitsPage.js` — gait controls and animation.
 
-- [@mithi](https://github.com/mithi)
-- [@icyJoseph](https://github.com/icyJoseph)
-- [@mikong](https://github.com/mikong)
+## Attribution
 
-## I love badges! (Don't we all?)
-
-[![last commit](https://img.shields.io/github/last-commit/mithi/hexapod)](https://github.com/mithi/hexapod/commits/master)
-[![commits per month](https://img.shields.io/github/commit-activity/m/mithi/hexapod?color=yellow&style=flat)](https://github.com/mithi/hexapod/graphs/commit-activity)
-![top language](https://img.shields.io/github/languages/top/mithi/hexapod)
-![code files size](https://img.shields.io/github/languages/code-size/mithi/hexapod?color=yellow)
-![repo size](https://img.shields.io/github/repo-size/mithi/hexapod?color=violet)
-[![codecov](https://codecov.io/gh/mithi/hexapod/branch/master/graph/badge.svg)](https://codecov.io/gh/mithi/hexapod)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier)
-[![License](https://img.shields.io/badge/License-Apache%202.0-orange.svg?style=flat)](https://opensource.org/licenses/Apache-2.0)
-
-
+This project is based on Mithi's Bare-Minimum Hexapod Robot Simulator 2 and its contributors. The upstream project is licensed under the Apache License 2.0; see [LICENSE](./LICENSE).

@@ -1,11 +1,11 @@
-const BODY_MESH_COLOR = "#ff6348"
-const BODY_COLOR = "#FC427B"
-const COG_COLOR = "#32ff7e"
-const LEG_COLOR = "#EE5A24"
-const SUPPORT_POLYGON_MESH_COLOR = "#3c6382"
-const AXIS_ZERO_LINE_COLOR = "#079992"
-const PAPER_BG_COLOR = "rgb(23, 33, 43)"
-const GROUND_COLOR = "rgb(14, 40, 69)"
+const BODY_MESH_COLOR = "#42d2c1"
+const BODY_COLOR = "#7ce8dc"
+const COG_COLOR = "#ffbd76"
+const LEG_COLOR = "#ffbd76"
+const SUPPORT_POLYGON_MESH_COLOR = "#4f7593"
+const AXIS_ZERO_LINE_COLOR = "#33566a"
+const PAPER_BG_COLOR = "#111f30"
+const GROUND_COLOR = "#17283b"
 
 const BODY_MESH_OPACITY = 0.3
 const BODY_OUTLINE_WIDTH = 12
@@ -162,7 +162,7 @@ const DATA = [
         z: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
     },
     {
-        line: { color: "#2f3640", width: 2 },
+        line: { color: "#ff8585", width: 2 },
         name: "hexapodXaxis",
         mode: "lines",
         showlegend: false,
@@ -173,7 +173,7 @@ const DATA = [
         z: [100.0, 100.0],
     },
     {
-        line: { color: "#e67e22", width: 2 },
+        line: { color: "#42d2c1", width: 2 },
         name: "hexapodYaxis",
         mode: "lines",
         showlegend: false,
@@ -184,7 +184,7 @@ const DATA = [
         z: [100.0, 100.0],
     },
     {
-        line: { color: "#0097e6", width: 2 },
+        line: { color: "#7baeff", width: 2 },
         name: "hexapodZaxis",
         mode: "lines",
         showlegend: false,
@@ -195,7 +195,7 @@ const DATA = [
         z: [100.0, 150.0],
     },
     {
-        line: { color: "#2f3640", width: 2 },
+        line: { color: "#ff8585", width: 2 },
         name: "worldXaxis",
         showlegend: false,
         mode: "lines",
@@ -206,7 +206,7 @@ const DATA = [
         z: [0, 0],
     },
     {
-        line: { color: "#e67e22", width: 2 },
+        line: { color: "#42d2c1", width: 2 },
         name: "worldYaxis",
         showlegend: false,
         mode: "lines",
@@ -217,7 +217,7 @@ const DATA = [
         z: [0, 0],
     },
     {
-        line: { color: "#0097e6", width: 2 },
+        line: { color: "#7baeff", width: 2 },
         name: "worldZaxis",
         showlegend: false,
         mode: "lines",
@@ -248,6 +248,7 @@ const CAMERA_VIEW = {
 }
 
 const SCENE = {
+    bgcolor: PAPER_BG_COLOR,
     xaxis: {
         nticks: 1,
         range: [-600, 600],
@@ -274,6 +275,7 @@ const SCENE = {
 
 const LAYOUT = {
     scene: SCENE,
+    font: { color: "#cbd8e5", family: "Inter, system-ui, sans-serif" },
     margin: { b: 20, l: 10, r: 10, t: 20 },
     paper_bgcolor: PAPER_BG_COLOR,
     showlegend: false,
